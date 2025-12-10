@@ -5,13 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Qumran Watch | Maskil</title>
     <meta name="theme-color" content="#1a120b">
-    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIlF1bXJhbiBXYXRjaCIsCiAgInNob3J0X25hbWUiOiAiUXVtdXJhbiIsCiAgInN0YXJ0X3VybCI6ICIvIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWExMjBiIiwKICAidGhlbWVfY29sb3IiOiAiIzFhMTIwYiIsCiAgImljb25zIjogW3sKICAgICJzcmMiOiAiaHR0cHM6Ly9wbGFjZWhvbGRlci5jb20vMTkyIiwKICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICJ0eXBlIjogImltYWdlL3BuZyIKICB9XQp9">
+    
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="apple-touch-icon" href="icon.png">
+    
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIlF1bXJhbiBXYXRjaCIsCiAgInNob3J0X25hbWUiOiAiUXVtdXJhbiIsCiAgInN0YXJ0X3VybCI6ICIuL2luZGV4Lmh0bWwiLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMxYTEyMGIiLAogICJ0aGVtZV9jb2xvciI6ICIjMWExMjBiIiwKICAiaWNvbnMiOiBbCiAgICB7CiAgICAgICJzcmMiOiAiaWNvbi5wbmciLAogICAgICAic2l6ZXMiOiAiMTkyeDE5MiIsCiAgICAgICJ0eXBlIjogImltYWdlL3BuZyIKICAgIH0sCiAgICB7CiAgICAgICJzcmMiOiAiaWNvbi5wbmciLAogICAgICAic2l6ZXMiOiAiNTEyeDUxMiIsCiAgICAgICJ0eXBlIjogImltYWdlL3BuZyIKICAgIH0KICBdCn0=">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=David+Libre:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
-        /* --- ESTÉTICA DANIEL V1.5 --- */
+        /* --- ESTÉTICA DANIEL V1.6 (UX MEJORADO) --- */
         :root {
             --bg-dark: #1a120b;
             --paper: #e0d2bc;
@@ -95,7 +99,11 @@
         .view { display: none; animation: fade 0.4s; }
         .view.active { display: block; }
         @keyframes fade { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:translateY(0);} }
-        .btn-action { width: 100%; padding: 15px; background: var(--gold); color: #1a120b; font-family: 'Cinzel'; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; text-transform: uppercase; margin-top: 10px; }
+        .btn-action { width: 100%; padding: 15px; background: var(--gold); color: #1a120b; font-family: 'Cinzel'; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; text-transform: uppercase; margin-top: 5px; }
+        
+        /* FORMULARIO CICLO (CORRECCIÓN UX) */
+        .cycle-form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+        .cycle-input { background:#2a2018; border:1px solid var(--faint); color:var(--paper); padding:15px; text-align:center; font-family:'Cinzel'; font-size:1.2rem; border-radius:4px; width: 100%; }
 
         /* GRÁFICOS */
         .shabat-container { margin-top: 15px; text-align: center; }
@@ -169,10 +177,12 @@
 
     <div id="view-cal" class="view">
         <h2>Ciclo Anual</h2>
-        <div style="display:flex; gap:10px; margin-bottom:15px;">
-            <input type="number" id="cal-year" value="2025" style="background:#2a2018; border:1px solid var(--faint); color:var(--paper); padding:10px; flex:1; text-align:center; font-family:'Cinzel'; font-size:1.1rem; border-radius:4px;">
-            <button class="btn-action" style="flex:1; margin:0;" onclick="App.renderCalendar()">Ver Ciclo</button>
+        
+        <div class="cycle-form">
+            <input type="number" id="cal-year" value="2025" class="cycle-input" placeholder="Año">
+            <button class="btn-action" onclick="App.renderCalendar()">VER CICLO</button>
         </div>
+
         <div style="text-align:center; font-size:0.8rem; color:var(--faint); margin-bottom:10px;">Toca una fiesta para ver la instrucción</div>
         <div id="cal-lista"></div>
     </div>
@@ -234,7 +244,6 @@ const App = {
         TURNOS: ["Yehoiarib", "Jedaiah", "Harim", "Seorim", "Malquías", "Mijamín", "Hacoz", "Abías", "Jesúa", "Secanías", "Eliasib", "Jaquim", "Hupa", "Jesebeab", "Bilga", "Imer", "Hezir", "Hapises", "Petaías", "Ezequiel", "Jaquín", "Gamul", "Delaía", "Maaziah"],
         PUERTAS_SOLARES: [4, 5, 6, 6, 5, 4, 3, 2, 1, 1, 2, 3],
         
-        // FIESTAS CON INSTRUCCIÓN CORREGIDA
         FIESTAS: [
             {m:0, d:1, n:"Rosh Hashaná", es:"Inicio de Año (Mes 1)", instr:"Tocad trompeta en el inicio del mes (Jodesh), en el día señalado, en el día de nuestra fiesta solemne. Estatuto para Israel es.", ref:"Salmo 81:3-4", nota:"NOTA DE ESTUDIO: La palabra 'Jodesh' implica renovación. En el contexto del calendario de Enoc, esto marca la entrada solar (Tekufah), no la fase de luna nueva rabínica."},
             {m:0, d:10, n:"Selección Cordero", es:"Separación del Cordero", instr:"En el décimo día de este mes tomarán cada uno un cordero según las familias de los padres, un cordero por familia.", ref:"Éxodo 12:3"},
@@ -251,7 +260,7 @@ const App = {
             {m:6, d:15, n:"SUCOT", es:"Fiesta de los Tabernáculos", dur:7, instr:"En tabernáculos habitaréis siete días; todo natural de Israel habitará en tabernáculos, para que sepan vuestros descendientes que en tabernáculos hice yo habitar a los hijos de Israel.", ref:"Levítico 23:42"}, 
             {m:6, d:22, n:"Shemini Atzeret", es:"El Octavo Día", instr:"El octavo día tendréis solemnidad; ninguna obra de siervos haréis.", ref:"Números 29:35"}
         ],
-        // SALMOS COMPLETOS
+        
         SALMOS: [
             {t: "Salmo 24", v: "De YHWH es la tierra y su plenitud;\nEl mundo, y los que en él habitan.\nPorque él la fundó sobre los mares,\nY la afirmó sobre los ríos.\n¿Quién subirá al monte de YHWH?\n¿Y quién estará en su lugar santo?\nEl limpio de manos y puro de corazón;\nEl que no ha elevado su alma a cosas vanas,\nNi jurado con engaño.\nÉl recibirá bendición de YHWH,\nY justicia del Dios de salvación.\nTal es la generación de los que le buscan,\nDe los que buscan tu rostro, oh Dios de Jacob.\nAlzad, oh puertas, vuestras cabezas,\nY alzaos vosotras, puertas eternas,\nY entrará el Rey de gloria.\n¿Quién es este Rey de gloria?\nYHWH el fuerte y valiente,\nYHWH el poderoso en batalla.\nAlzad, oh puertas, vuestras cabezas,\nY alzaos vosotras, puertas eternas,\nY entrará el Rey de gloria.\n¿Quién es este Rey de gloria?\nYHWH de los ejércitos,\nÉl es el Rey de la gloria."},
             {t: "Salmo 48", v: "Grande es YHWH, y digno de ser en gran manera alabado\nEn la ciudad de nuestro Dios, en su monte santo.\nHermosa provincia, el gozo de toda la tierra,\nEs el monte de Sion, a los lados del norte,\nLa ciudad del gran Rey.\nEn sus palacios Dios es conocido por refugio.\nPorque he aquí los reyes de la tierra se reunieron;\nPasaron todos.\nY viéndola ellos así, se maravillaron,\nSe turbaron, se apresuraron a huir.\nLes tomó allí temblor;\nDolor como de mujer que da a luz.\nCon viento solano quiebras tú las naves de Tarsis.\nComo lo oímos, así lo hemos visto\nEn la ciudad de YHWH de los ejércitos, en la ciudad de nuestro Dios;\nLa afirmará Dios para siempre.\nNos acordamos de tu misericordia, oh Dios,\nEn medio de tu templo.\nConforme a tu nombre, oh Dios,\nAsí es tu loor hasta los fines de la tierra;\nDe justicia está llena tu diestra.\nSe alegrará el monte de Sion;\nSe gozarán las hijas de Judá\nPor tus juicios.\nAndad alrededor de Sion, y rodeadla;\nContad sus torres.\nConsiderad bien sus antemuros,\nMirad sus palacios,\nPara que lo contéis a la generación venidera.\nPorque este Dios es Dios nuestro eternamente y para siempre;\nÉl nos guiará aun más allá de la muerte."},
@@ -264,7 +273,6 @@ const App = {
     },
     ANCHOR: { y: 2019, m: 2, d: 20, turnoIdx: 21 }, 
     
-    // VARIABLES TEMPORALES
     currentFiestaIdx: null,
     todayFiesta: null,
 
@@ -323,10 +331,7 @@ const App = {
     openFiesta: (index, forceYear) => {
         let f = App.DATA.FIESTAS[index];
         let year = forceYear || new Date().getFullYear();
-        
-        // Calcular fecha gregoriana de inicio
         let anchorGreg = new Date(year, 2, 20);
-        // Busqueda rapida aproximada
         let foundDate = null;
         for(let i=-20; i<370; i++){
             let d = new Date(anchorGreg.getTime() + (i*86400000));
@@ -343,12 +348,8 @@ const App = {
         if(foundDate) {
             let endDate = new Date(foundDate);
             if(f.dur && f.dur > 1) endDate.setDate(endDate.getDate() + f.dur - 1);
-            
             dateStr = foundDate.toLocaleDateString('es-ES', {day:'numeric', month:'long'});
-            if(f.dur > 1) {
-                dateStr += " al " + endDate.toLocaleDateString('es-ES', {day:'numeric', month:'long'});
-                hebStr += ` (Duración: ${f.dur} días)`;
-            }
+            if(f.dur > 1) dateStr += " al " + endDate.toLocaleDateString('es-ES', {day:'numeric', month:'long'});
         }
 
         document.getElementById('mod-title').innerText = f.n;
@@ -357,16 +358,10 @@ const App = {
         document.getElementById('mod-instr').innerText = f.instr;
         document.getElementById('mod-ref').innerText = f.ref;
         
-        // NOTA TEOLOGICA
         let noteDiv = document.getElementById('mod-note');
-        if(f.nota) {
-            noteDiv.innerText = f.nota;
-            noteDiv.style.display = 'block';
-        } else {
-            noteDiv.style.display = 'none';
-        }
+        if(f.nota) { noteDiv.innerText = f.nota; noteDiv.style.display = 'block'; }
+        else noteDiv.style.display = 'none';
 
-        // YOM KIPUR SPECIAL
         let warn = document.getElementById('mod-warn');
         if(f.especial) warn.style.display = 'block';
         else warn.style.display = 'none';
@@ -394,7 +389,6 @@ const App = {
             document.getElementById('heb-turno').innerText = q.turno;
             document.getElementById('heb-estacion').innerText = q.est;
             
-            // FIESTAS
             let fIdx = App.DATA.FIESTAS.findIndex(x => x.m === q.m && x.d === q.d);
             if(fIdx !== -1) {
                 App.todayFiesta = fIdx;
@@ -404,13 +398,11 @@ const App = {
                 document.getElementById('heb-fiesta').innerText = "";
             }
 
-            // VISUAL PUERTAS
             document.querySelectorAll('.gate-dot').forEach((d,i) => {
                 d.classList.toggle('active', (i+1) === q.puerta);
             });
             document.getElementById('heb-puerta-num').innerText = q.puerta + "ª Puerta";
 
-            // BARRA SHABAT
             let diasRestantes = 6 - q.idxSem;
             let percent = ((q.idxSem + 1) / 7) * 100;
             if(diasRestantes === 0) {
@@ -422,7 +414,6 @@ const App = {
             }
             document.getElementById('shabat-progress').style.width = percent + "%";
 
-            // SALMO
             let s = App.DATA.SALMOS[q.idxSem];
             document.getElementById('salmo-titulo').innerText = s.t;
             document.getElementById('salmo-texto').innerText = s.v;
@@ -435,37 +426,20 @@ const App = {
         list.innerHTML = "";
         let test = new Date(y, 2, 15);
         let html = "";
-        
-        // Iteramos para encontrar todas las fiestas del año
         for(let i=0; i<370; i++) {
             let d = new Date(test.getTime() + (i*86400000));
             let q = App.calc(d);
             if(!q || q.special) continue;
-            
-            // Verificamos si es INICIO de fiesta
             let fIdx = App.DATA.FIESTAS.findIndex(x => x.m === q.m && x.d === q.d);
-            
             if(fIdx !== -1) {
                 let f = App.DATA.FIESTAS[fIdx];
                 let dateLabel = d.toLocaleDateString('es-ES', {day:'numeric', month:'short'});
-                
-                // Si dura más de 1 día, calculamos fin
                 if(f.dur > 1) {
                     let end = new Date(d);
                     end.setDate(end.getDate() + f.dur - 1);
                     dateLabel += " - " + end.toLocaleDateString('es-ES', {day:'numeric', month:'short'});
                 }
-
-                html += `<div class="cal-row fiesta" onclick="App.openFiesta(${fIdx}, ${y})">
-                    <div>
-                        <span class="cal-fiesta-name">${f.n}</span>
-                        <span class="cal-fiesta-sub">${f.es}</span>
-                    </div>
-                    <div style="text-align:right;">
-                        <span style="display:block; font-weight:bold;">${dateLabel}</span>
-                        <span style="font-size:0.8rem;">${q.d}/${q.m+1}</span>
-                    </div>
-                </div>`;
+                html += `<div class="cal-row fiesta" onclick="App.openFiesta(${fIdx}, ${y})"><div><span class="cal-fiesta-name">${f.n}</span><span class="cal-fiesta-sub">${f.es}</span></div><div style="text-align:right;"><span style="display:block; font-weight:bold;">${dateLabel}</span><span style="font-size:0.8rem;">${q.d}/${q.m+1}</span></div></div>`;
             }
         }
         list.innerHTML = html || "<div class='card'>Sin datos.</div>";
