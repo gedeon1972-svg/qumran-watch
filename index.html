@@ -5,19 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Qumran Watch | Maskil</title>
     <meta name="theme-color" content="#1a120b">
-    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIlF1bXJhbiBXYXRjaCIsCiAgInNob3J0X25hbWUiOiAiUXVtdXJhbiIsCiAgInN0YXJ0X3VybCI6ICIvIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWExMjBiIiwKICAidGhlbWVfY29sb3IiOiAiIzFhMTIwYiIsCiAgImljb25zIjogW3sKICAgICJzcmMiOiAiaHR0cHM6Ly9wbGFjZWhvbGRlci5jb20vMTkyIiwKICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICJ0eXBlIjogImltYWdlL3BuZyIKICB9XQp9">
+    <meta name="description" content="Herramienta litúrgica para los Hijos de Sadoc. Calendario 364 días y estudios bíblicos.">
+    
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="apple-touch-icon" href="icon.png">
+    
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIlF1bXJhbiBXYXRjaCIsCiAgInNob3J0X25hbWUiOiAiUXVtdXJhbiIsCiAgInN0YXJ0X3VybCI6ICIuL2luZGV4Lmh0bWwiLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMxYTEyMGIiLAogICJ0aGVtZV9jb2xvciI6ICIjMWExMjBiIiwKICAiaWNvbnMiOiBbCiAgICB7CiAgICAgICJzcmMiOiAiaWNvbi5wbmciLAogICAgICAic2l6ZXMiOiAiMTkyeDE5MiIsCiAgICAgICJ0eXBlIjogImltYWdlL3BuZyIKICAgIH0sCiAgICB7CiAgICAgICJzcmMiOiAiaWNvbi5wbmciLAogICAgICAic2l6ZXMiOiAiNTEyeDUxMiIsCiAgICAgICJ0eXBlIjogImltYWdlL3BuZyIKICAgIH0KICBdCn0=">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=David+Libre:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
-        /* --- ESTÉTICA DANIEL V1.5 --- */
+        /* --- ESTÉTICA DANIEL V1.7 (OPTIMIZADA) --- */
         :root {
             --bg-dark: #1a120b;
             --paper: #e0d2bc;
             --gold: #c5a059;
-            --red: #8a2c2c;
+            --red: #8a2c2c; /* Usado para bordes */
+            --red-text: #ff8e8e; /* Rojo accesible para texto oscuro */
             --faint: #5a4d3f;
+            --brown-text: #806950;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -42,21 +49,26 @@
         h1 { font-size: 1.8rem; border-bottom: 2px solid var(--gold); padding-bottom: 15px; margin-bottom: 20px; text-transform: uppercase; }
         h2 { font-size: 1.3rem; margin-bottom: 15px; }
 
-        .card {
+        /* SEMÁNTICA: TARJETAS COMO ARTÍCULOS */
+        article.card {
             background: rgba(30, 20, 15, 0.6);
             border: 1px solid var(--faint);
             border-left: 4px solid var(--gold);
             padding: 20px; border-radius: 6px;
             margin-bottom: 20px;
             backdrop-filter: blur(5px);
+            transition: transform 0.2s;
         }
+        
+        /* Efecto táctil para tarjetas clicables */
+        article.card.clickable:active { transform: scale(0.98); background: rgba(30, 20, 15, 0.8); }
 
         .fecha-hebrea { font-size: 2.2rem; color: var(--paper); text-align: center; font-weight: bold; margin: 5px 0; font-family: 'Cinzel'; line-height: 1.1; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-        .fecha-greg { font-size: 1.3rem; color: #806950; text-align: center; font-style: italic; display: block; }
+        .fecha-greg { font-size: 1rem; color: var(--brown-text); text-align: center; font-style: italic; display: block; font-weight: bold;}
         .lbl { font-size: 0.75rem; color: var(--gold); text-transform: uppercase; display: block; margin-bottom: 4px; font-weight: bold; letter-spacing: 1px;}
         .val { font-size: 1.2rem; font-weight: bold; color: #fff; }
 
-        /* MODAL DE FIESTA */
+        /* MODAL */
         #modal-fiesta {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.9); z-index: 2000;
@@ -68,34 +80,39 @@
             position: relative; box-shadow: 0 0 30px var(--gold);
             max-height: 90vh; overflow-y: auto;
         }
-        .close-modal { position: absolute; top: 10px; right: 15px; font-size: 2rem; color: var(--red); cursor: pointer; }
+        .close-modal { position: absolute; top: 10px; right: 15px; font-size: 2rem; color: var(--red); cursor: pointer; padding: 10px;}
         .modal-title { font-family: 'Cinzel'; font-size: 1.5rem; color: var(--gold); border-bottom: 1px solid var(--faint); padding-bottom: 10px; margin-bottom: 15px; text-align: center;}
         .modal-data-row { margin-bottom: 15px; border-bottom: 1px dashed var(--faint); padding-bottom: 10px; }
         .modal-instr { font-size: 1.1rem; line-height: 1.5; color: #fff; text-align: justify; margin-bottom: 15px; }
         .modal-ref { font-style: italic; color: var(--gold); text-align: right; display: block; font-size: 0.9rem; }
-        .special-warn { background: rgba(138, 44, 44, 0.2); border: 1px solid var(--red); color: #ff9999; padding: 10px; border-radius: 4px; font-size: 0.95rem; margin-top: 15px; text-align: center; font-weight: bold; display: none; line-height: 1.4; }
+        /* Corrección de contraste para alerta */
+        .special-warn { background: rgba(80, 20, 20, 0.4); border: 1px solid var(--red-text); color: var(--red-text); padding: 10px; border-radius: 4px; font-size: 0.95rem; margin-top: 15px; text-align: center; font-weight: bold; display: none; line-height: 1.4; }
         .teological-note { font-size: 0.85rem; background: rgba(197, 160, 89, 0.1); padding: 10px; border-left: 2px solid var(--gold); margin-top: 10px; color: #ccc; font-style: italic;}
 
-        /* SALMOS TEXTO */
+        /* SALMOS */
         .psalm-box { max-height: 300px; overflow-y: auto; margin-top: 10px; padding-right: 5px; font-size: 1.1rem; line-height: 1.6; color: #d0c0a8; text-align: justify; display: none; border-top: 1px dashed var(--faint); padding-top: 15px; white-space: pre-wrap; }
         .psalm-toggle { cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 5px; color: var(--gold); font-size: 0.9rem; margin-top: 5px; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 4px;}
         
-        /* CALENDARIO TABLA INTERACTIVA */
+        /* CALENDARIO */
         .cal-row { display: flex; justify-content: space-between; padding: 12px 10px; border-bottom: 1px dashed var(--faint); font-size: 1rem; cursor: pointer; transition: 0.2s; }
         .cal-row:active { background: rgba(255,255,255,0.1); }
         .cal-row.fiesta { color: var(--gold); font-weight: bold; background: rgba(197, 160, 89, 0.1); border-left: 3px solid var(--gold); border-radius: 4px; margin-bottom: 5px;}
         .cal-fiesta-name { display: block; font-weight: bold; font-size: 1.05rem; }
         .cal-fiesta-sub { font-size: 0.8rem; opacity: 0.8; font-weight: normal; }
 
-        /* NAVEGACIÓN & UTILS */
-        .nav-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: #140e08; border-top: 3px solid var(--gold); display: flex; justify-content: space-around; padding: 12px 0 20px 0; z-index: 100; }
+        /* NAV */
+        nav.nav-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: #140e08; border-top: 3px solid var(--gold); display: flex; justify-content: space-around; padding: 12px 0 20px 0; z-index: 100; }
         .nav-btn { background: none; border: none; color: var(--faint); font-family: 'Cinzel'; font-size: 0.7rem; font-weight: bold; cursor: pointer; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 5px; }
         .nav-btn.active { color: var(--gold); transform: scale(1.1); text-shadow: 0 0 10px rgba(197, 160, 89, 0.6); }
         .nav-icon { font-size: 1.4rem; }
+        
         .view { display: none; animation: fade 0.4s; }
         .view.active { display: block; }
         @keyframes fade { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:translateY(0);} }
-        .btn-action { width: 100%; padding: 15px; background: var(--gold); color: #1a120b; font-family: 'Cinzel'; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; text-transform: uppercase; margin-top: 10px; }
+        
+        .btn-action { width: 100%; padding: 15px; background: var(--gold); color: #1a120b; font-family: 'Cinzel'; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; text-transform: uppercase; margin-top: 5px; }
+        .cycle-form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+        .cycle-input { background:#2a2018; border:1px solid var(--faint); color:var(--paper); padding:15px; text-align:center; font-family:'Cinzel'; font-size:1.2rem; border-radius:4px; width: 100%; }
 
         /* GRÁFICOS */
         .shabat-container { margin-top: 15px; text-align: center; }
@@ -105,7 +122,6 @@
         .gate-dot { width: 25px; height: 25px; border-radius: 50%; border: 2px solid var(--faint); display: flex; justify-content: center; align-items: center; font-size: 0.7rem; color: var(--faint); font-weight: bold; }
         .gate-dot.active { border-color: var(--gold); background-color: var(--gold); color: var(--bg-dark); box-shadow: 0 0 10px var(--gold); transform: scale(1.1); }
         
-        /* TEXTO EDUCATIVO */
         .fundamento-txt { font-size: 1.15rem; line-height: 1.7; color: #d0c0a8; margin-bottom: 20px; text-align: justify; }
         .fundamento-txt strong { color: var(--gold); }
         .versiculo { font-style: italic; color: #998; border-left: 3px solid var(--red); padding-left: 15px; margin: 15px 0; font-size: 1.1rem; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 0 4px 4px 0;}
@@ -113,14 +129,14 @@
 </head>
 <body>
 
-<div class="app-frame">
+<main class="app-frame">
     <h1>Qumran Watch</h1>
 
     <div id="view-hoy" class="view active">
-        <div class="card">
+        <article class="card">
             <span class="fecha-greg" id="greg-date">...</span>
             <div class="fecha-hebrea" id="heb-date">Cargando...</div>
-            <div style="text-align:center; font-size:1.1rem; color:var(--red); font-weight:bold; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px; cursor:pointer;" id="heb-fiesta" onclick="App.openFiestaHoy()"></div>
+            <div style="text-align:center; font-size:1.1rem; color:var(--red-text); font-weight:bold; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px; cursor:pointer;" id="heb-fiesta"></div>
             
             <div style="text-align:center; margin-bottom:15px;">
                 <span class="lbl">DÍA DE LA SEMANA</span>
@@ -147,62 +163,78 @@
                     <div class="gate-dot">1</div><div class="gate-dot">2</div><div class="gate-dot">3</div>
                     <div class="gate-dot">4</div><div class="gate-dot">5</div><div class="gate-dot">6</div>
                 </div>
-                <div style="text-align:center; font-size:1rem; color:#806950; margin-top:5px;">El Sol sale por la <span id="heb-puerta-num" style="color:var(--gold);">...</span></div>
+                <div style="text-align:center; font-size:1rem; color:var(--brown-text); margin-top:5px;">El Sol sale por la <span id="heb-puerta-num" style="color:var(--gold);">...</span></div>
             </div>
-        </div>
+        </article>
 
-        <div class="card">
-            <div onclick="App.togglePsalm()" style="cursor:pointer;">
+        <article class="card">
+            <div id="btn-psalm-toggle" style="cursor:pointer;">
                 <span class="lbl" style="text-align:center;">SALMO DEL DÍA (Shir Shel Yom)</span>
                 <div id="salmo-titulo" style="text-align:center; font-style:italic; margin-top:5px; font-size:1.1rem; font-weight:bold; color:#fff;"></div>
                 <div class="psalm-toggle">▼ Leer Salmo Completo</div>
             </div>
             <div id="salmo-texto" class="psalm-box"></div>
-        </div>
+        </article>
 
-        <div class="card" onclick="window.open('https://youtube.com/playlist?list=PLr4MABEXstnDLUVcD7EenO4vN8EglZoSz', '_blank')" style="cursor:pointer; border-color:var(--red); border-left-width:4px;">
-            <span class="lbl" style="color:var(--red);">🎙️ PODCAST OFICIAL</span>
+        <article id="btn-podcast-hoy" class="card clickable" style="border-color:var(--red); border-left-width:4px; cursor:pointer;">
+            <span class="lbl" style="color:var(--red-text);">🎙️ PODCAST OFICIAL</span>
             <div style="text-align:center; font-weight:bold; font-size:1.1rem; margin-top:5px; color:#fff;">Diseñados para Gobernar</div>
-            <div style="text-align:center; font-size:0.8rem; color:#aaa; margin-top:5px;">Escuchar enseñanza de hoy ➔</div>
-        </div>
+            <div style="text-align:center; font-size:0.85rem; color:#ccc; margin-top:5px; line-height:1.4;">Recupera tu gobierno interior a través del análisis profundo de la filología hebrea y el diseño original.</div>
+            <div style="text-align:center; font-size:0.8rem; color:#aaa; margin-top:8px;">Escuchar enseñanza de hoy ➔</div>
+        </article>
+        
+        <article id="btn-institute-hoy" class="card clickable" style="border-color:#4a90e2; border-left-width:4px; cursor:pointer;">
+            <span class="lbl" style="color:#4a90e2;">🎓 ESTUDIOS BÍBLICOS</span>
+            <div style="text-align:center; font-weight:bold; font-size:1.1rem; margin-top:5px; color:#fff;">Instituto Descubre la Biblia</div>
+            <div style="text-align:center; font-size:0.85rem; color:#ccc; margin-top:5px; line-height:1.4;">Formación bíblica profunda y cursos online para entender la armonía sobrenatural de las Escrituras.</div>
+            <div style="text-align:center; font-size:0.8rem; color:#aaa; margin-top:8px;">Visitar Sitio Web ➔</div>
+        </article>
     </div>
 
     <div id="view-cal" class="view">
         <h2>Ciclo Anual</h2>
-        <div style="display:flex; gap:10px; margin-bottom:15px;">
-            <input type="number" id="cal-year" value="2025" style="background:#2a2018; border:1px solid var(--faint); color:var(--paper); padding:10px; flex:1; text-align:center; font-family:'Cinzel'; font-size:1.1rem; border-radius:4px;">
-            <button class="btn-action" style="flex:1; margin:0;" onclick="App.renderCalendar()">Ver Ciclo</button>
+        
+        <div class="cycle-form">
+            <input type="number" id="cal-year" value="2025" class="cycle-input" placeholder="Año">
+            <button id="btn-render-cal" class="btn-action">VER CICLO</button>
         </div>
+
         <div style="text-align:center; font-size:0.8rem; color:var(--faint); margin-bottom:10px;">Toca una fiesta para ver la instrucción</div>
         <div id="cal-lista"></div>
     </div>
 
     <div id="view-edu" class="view">
         <h2>Verdad Restaurada</h2>
-        <div class="card">
+        <article class="card">
             <p class="fundamento-txt">El calendario que tienes en tus manos no es una invención moderna, sino la <strong>restauración matemática</strong> del orden entregado a Enoc y Moisés.</p>
             
-            <h3 style="font-size:1.2rem; color:var(--red); margin-top:25px; text-align:left; border-bottom:1px solid var(--faint); padding-bottom:5px;">1. El Año de 364 Días</h3>
+            <h3 style="font-size:1.2rem; color:var(--red-text); margin-top:25px; text-align:left; border-bottom:1px solid var(--faint); padding-bottom:5px;">1. El Año de 364 Días</h3>
             <p class="fundamento-txt">A diferencia del calendario lunar (354 días) o gregoriano (365), el calendario bíblico perfecto consta de <strong>52 semanas exactas</strong> (52 x 7 = 364). Esto asegura que las fiestas de YHWH caigan siempre en el mismo día de la semana, evitando profanar el Shabat.</p>
 
-            <h3 style="font-size:1.2rem; color:var(--red); margin-top:25px; text-align:left; border-bottom:1px solid var(--faint); padding-bottom:5px;">2. El Ciclo de 6 Años</h3>
+            <h3 style="font-size:1.2rem; color:var(--red-text); margin-top:25px; text-align:left; border-bottom:1px solid var(--faint); padding-bottom:5px;">2. El Ciclo de 6 Años</h3>
             <p class="fundamento-txt">Para alinearse con el sol real (365.25 días), no usamos años bisiestos desordenados. Seguimos el patrón de los Sacerdotes (Mishmarot): 6 años de 364 días seguidos de una <strong>Semana de Ajuste (Intercalar)</strong>. Esto reinicia el ciclo solar sin romper el orden sabático.</p>
 
             <div class="versiculo">"Y el sol y las estrellas traen todos los años exactamente, para que ellos no adelanten ni retrasen su posición ni un solo día..."<br><br><span style="font-size:0.9em; opacity:0.7">1 Enoc 74:12</span></div>
 
-            <h3 style="font-size:1.2rem; color:var(--red); margin-top:25px; text-align:left; border-bottom:1px solid var(--faint); padding-bottom:5px;">3. El Ancla 2019-2025</h3>
+            <h3 style="font-size:1.2rem; color:var(--red-text); margin-top:25px; text-align:left; border-bottom:1px solid var(--faint); padding-bottom:5px;">3. El Ancla 2019-2025</h3>
             <p class="fundamento-txt">Nuestros cálculos se basan en el Jubileo Sacerdotal restaurado. El ciclo actual inició en <strong>2019 (Turno Gamul)</strong>. En Marzo de 2025 se aplicó el primer Gran Ajuste (Semana Intercalar) para alinearnos con el <strong>Equilux</strong> (equilibrio perfecto de luz).</p>
-        </div>
-        <div class="card" onclick="window.open('https://youtube.com/playlist?list=PLr4MABEXstnDLUVcD7EenO4vN8EglZoSz', '_blank')" style="cursor:pointer; border-color:var(--red); border-left-width:4px;">
-            <span class="lbl" style="color:var(--red);">🎙️ PODCAST OFICIAL</span>
+        </article>
+        
+        <article id="btn-podcast-edu" class="card clickable" style="border-color:var(--red); border-left-width:4px; cursor:pointer;">
+            <span class="lbl" style="color:var(--red-text);">🎙️ PODCAST OFICIAL</span>
             <div style="text-align:center; font-weight:bold; font-size:1.1rem; margin-top:5px; color:#fff;">Diseñados para Gobernar</div>
-        </div>
+        </article>
+        
+        <article id="btn-institute-edu" class="card clickable" style="border-color:#4a90e2; border-left-width:4px; cursor:pointer;">
+            <span class="lbl" style="color:#4a90e2;">🎓 ESTUDIOS BÍBLICOS</span>
+            <div style="text-align:center; font-weight:bold; font-size:1.1rem; margin-top:5px; color:#fff;">Instituto Descubre la Biblia</div>
+        </article>
     </div>
-</div>
+</main>
 
 <div id="modal-fiesta">
     <div class="modal-content">
-        <span class="close-modal" onclick="document.getElementById('modal-fiesta').style.display='none'">&times;</span>
+        <span id="btn-close-modal" class="close-modal">&times;</span>
         <div id="mod-title" class="modal-title"></div>
         <div class="modal-data-row">
             <span class="lbl">FECHA GREGORIANA</span>
@@ -220,11 +252,11 @@
     </div>
 </div>
 
-<div class="nav-bar">
-    <button class="nav-btn active" onclick="App.nav('hoy', this)"><span class="nav-icon">☀</span>Hoy</button>
-    <button class="nav-btn" onclick="App.nav('cal', this)"><span class="nav-icon">📅</span>Ciclo</button>
-    <button class="nav-btn" onclick="App.nav('edu', this)"><span class="nav-icon">📜</span>Saber</button>
-</div>
+<nav class="nav-bar">
+    <button id="nav-hoy" class="nav-btn active"><span class="nav-icon">☀</span>Hoy</button>
+    <button id="nav-cal" class="nav-btn"><span class="nav-icon">📅</span>Ciclo</button>
+    <button id="nav-edu" class="nav-btn"><span class="nav-icon">📜</span>Saber</button>
+</nav>
 
 <script>
 const App = {
@@ -234,7 +266,6 @@ const App = {
         TURNOS: ["Yehoiarib", "Jedaiah", "Harim", "Seorim", "Malquías", "Mijamín", "Hacoz", "Abías", "Jesúa", "Secanías", "Eliasib", "Jaquim", "Hupa", "Jesebeab", "Bilga", "Imer", "Hezir", "Hapises", "Petaías", "Ezequiel", "Jaquín", "Gamul", "Delaía", "Maaziah"],
         PUERTAS_SOLARES: [4, 5, 6, 6, 5, 4, 3, 2, 1, 1, 2, 3],
         
-        // FIESTAS CON INSTRUCCIÓN CORREGIDA
         FIESTAS: [
             {m:0, d:1, n:"Rosh Hashaná", es:"Inicio de Año (Mes 1)", instr:"Tocad trompeta en el inicio del mes (Jodesh), en el día señalado, en el día de nuestra fiesta solemne. Estatuto para Israel es.", ref:"Salmo 81:3-4", nota:"NOTA DE ESTUDIO: La palabra 'Jodesh' implica renovación. En el contexto del calendario de Enoc, esto marca la entrada solar (Tekufah), no la fase de luna nueva rabínica."},
             {m:0, d:10, n:"Selección Cordero", es:"Separación del Cordero", instr:"En el décimo día de este mes tomarán cada uno un cordero según las familias de los padres, un cordero por familia.", ref:"Éxodo 12:3"},
@@ -251,7 +282,7 @@ const App = {
             {m:6, d:15, n:"SUCOT", es:"Fiesta de los Tabernáculos", dur:7, instr:"En tabernáculos habitaréis siete días; todo natural de Israel habitará en tabernáculos, para que sepan vuestros descendientes que en tabernáculos hice yo habitar a los hijos de Israel.", ref:"Levítico 23:42"}, 
             {m:6, d:22, n:"Shemini Atzeret", es:"El Octavo Día", instr:"El octavo día tendréis solemnidad; ninguna obra de siervos haréis.", ref:"Números 29:35"}
         ],
-        // SALMOS COMPLETOS
+        
         SALMOS: [
             {t: "Salmo 24", v: "De YHWH es la tierra y su plenitud;\nEl mundo, y los que en él habitan.\nPorque él la fundó sobre los mares,\nY la afirmó sobre los ríos.\n¿Quién subirá al monte de YHWH?\n¿Y quién estará en su lugar santo?\nEl limpio de manos y puro de corazón;\nEl que no ha elevado su alma a cosas vanas,\nNi jurado con engaño.\nÉl recibirá bendición de YHWH,\nY justicia del Dios de salvación.\nTal es la generación de los que le buscan,\nDe los que buscan tu rostro, oh Dios de Jacob.\nAlzad, oh puertas, vuestras cabezas,\nY alzaos vosotras, puertas eternas,\nY entrará el Rey de gloria.\n¿Quién es este Rey de gloria?\nYHWH el fuerte y valiente,\nYHWH el poderoso en batalla.\nAlzad, oh puertas, vuestras cabezas,\nY alzaos vosotras, puertas eternas,\nY entrará el Rey de gloria.\n¿Quién es este Rey de gloria?\nYHWH de los ejércitos,\nÉl es el Rey de la gloria."},
             {t: "Salmo 48", v: "Grande es YHWH, y digno de ser en gran manera alabado\nEn la ciudad de nuestro Dios, en su monte santo.\nHermosa provincia, el gozo de toda la tierra,\nEs el monte de Sion, a los lados del norte,\nLa ciudad del gran Rey.\nEn sus palacios Dios es conocido por refugio.\nPorque he aquí los reyes de la tierra se reunieron;\nPasaron todos.\nY viéndola ellos así, se maravillaron,\nSe turbaron, se apresuraron a huir.\nLes tomó allí temblor;\nDolor como de mujer que da a luz.\nCon viento solano quiebras tú las naves de Tarsis.\nComo lo oímos, así lo hemos visto\nEn la ciudad de YHWH de los ejércitos, en la ciudad de nuestro Dios;\nLa afirmará Dios para siempre.\nNos acordamos de tu misericordia, oh Dios,\nEn medio de tu templo.\nConforme a tu nombre, oh Dios,\nAsí es tu loor hasta los fines de la tierra;\nDe justicia está llena tu diestra.\nSe alegrará el monte de Sion;\nSe gozarán las hijas de Judá\nPor tus juicios.\nAndad alrededor de Sion, y rodeadla;\nContad sus torres.\nConsiderad bien sus antemuros,\nMirad sus palacios,\nPara que lo contéis a la generación venidera.\nPorque este Dios es Dios nuestro eternamente y para siempre;\nÉl nos guiará aun más allá de la muerte."},
@@ -264,11 +295,50 @@ const App = {
     },
     ANCHOR: { y: 2019, m: 2, d: 20, turnoIdx: 21 }, 
     
-    // VARIABLES TEMPORALES
     currentFiestaIdx: null,
     todayFiesta: null,
 
-    init: () => { App.renderHoy(); },
+    // INICIALIZACIÓN CON EVENT LISTENERS (Mejora Arquitectura)
+    init: () => {
+        App.setupListeners();
+        App.renderHoy();
+    },
+
+    setupListeners: () => {
+        // Nav
+        document.getElementById('nav-hoy').addEventListener('click', () => App.nav('hoy', document.getElementById('nav-hoy')));
+        document.getElementById('nav-cal').addEventListener('click', () => App.nav('cal', document.getElementById('nav-cal')));
+        document.getElementById('nav-edu').addEventListener('click', () => App.nav('edu', document.getElementById('nav-edu')));
+        
+        // Acciones Hoy
+        document.getElementById('heb-fiesta').addEventListener('click', App.openFiestaHoy);
+        document.getElementById('btn-psalm-toggle').addEventListener('click', App.togglePsalm);
+        
+        // Enlaces Externos
+        const openPodcast = () => window.open('https://youtube.com/playlist?list=PLr4MABEXstnDLUVcD7EenO4vN8EglZoSz', '_blank');
+        const openInstitute = () => window.open('https://www.descubrelabiblia.online/', '_blank');
+        
+        document.getElementById('btn-podcast-hoy').addEventListener('click', openPodcast);
+        document.getElementById('btn-institute-hoy').addEventListener('click', openInstitute);
+        document.getElementById('btn-podcast-edu').addEventListener('click', openPodcast);
+        document.getElementById('btn-institute-edu').addEventListener('click', openInstitute);
+
+        // Calendario
+        document.getElementById('btn-render-cal').addEventListener('click', App.renderCalendar);
+        
+        // Modal
+        document.getElementById('btn-close-modal').addEventListener('click', () => document.getElementById('modal-fiesta').style.display='none');
+        
+        // Delegación de eventos para la lista del calendario
+        document.getElementById('cal-lista').addEventListener('click', (e) => {
+            const row = e.target.closest('.cal-row.fiesta');
+            if (row) {
+                const idx = parseInt(row.dataset.index);
+                const year = parseInt(row.dataset.year);
+                App.openFiesta(idx, year);
+            }
+        });
+    },
 
     nav: (viewId, btn) => {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -323,10 +393,7 @@ const App = {
     openFiesta: (index, forceYear) => {
         let f = App.DATA.FIESTAS[index];
         let year = forceYear || new Date().getFullYear();
-        
-        // Calcular fecha gregoriana de inicio
         let anchorGreg = new Date(year, 2, 20);
-        // Busqueda rapida aproximada
         let foundDate = null;
         for(let i=-20; i<370; i++){
             let d = new Date(anchorGreg.getTime() + (i*86400000));
@@ -343,12 +410,8 @@ const App = {
         if(foundDate) {
             let endDate = new Date(foundDate);
             if(f.dur && f.dur > 1) endDate.setDate(endDate.getDate() + f.dur - 1);
-            
             dateStr = foundDate.toLocaleDateString('es-ES', {day:'numeric', month:'long'});
-            if(f.dur > 1) {
-                dateStr += " al " + endDate.toLocaleDateString('es-ES', {day:'numeric', month:'long'});
-                hebStr += ` (Duración: ${f.dur} días)`;
-            }
+            if(f.dur > 1) dateStr += " al " + endDate.toLocaleDateString('es-ES', {day:'numeric', month:'long'});
         }
 
         document.getElementById('mod-title').innerText = f.n;
@@ -357,16 +420,10 @@ const App = {
         document.getElementById('mod-instr').innerText = f.instr;
         document.getElementById('mod-ref').innerText = f.ref;
         
-        // NOTA TEOLOGICA
         let noteDiv = document.getElementById('mod-note');
-        if(f.nota) {
-            noteDiv.innerText = f.nota;
-            noteDiv.style.display = 'block';
-        } else {
-            noteDiv.style.display = 'none';
-        }
+        if(f.nota) { noteDiv.innerText = f.nota; noteDiv.style.display = 'block'; }
+        else noteDiv.style.display = 'none';
 
-        // YOM KIPUR SPECIAL
         let warn = document.getElementById('mod-warn');
         if(f.especial) warn.style.display = 'block';
         else warn.style.display = 'none';
@@ -394,7 +451,6 @@ const App = {
             document.getElementById('heb-turno').innerText = q.turno;
             document.getElementById('heb-estacion').innerText = q.est;
             
-            // FIESTAS
             let fIdx = App.DATA.FIESTAS.findIndex(x => x.m === q.m && x.d === q.d);
             if(fIdx !== -1) {
                 App.todayFiesta = fIdx;
@@ -404,13 +460,11 @@ const App = {
                 document.getElementById('heb-fiesta').innerText = "";
             }
 
-            // VISUAL PUERTAS
             document.querySelectorAll('.gate-dot').forEach((d,i) => {
                 d.classList.toggle('active', (i+1) === q.puerta);
             });
             document.getElementById('heb-puerta-num').innerText = q.puerta + "ª Puerta";
 
-            // BARRA SHABAT
             let diasRestantes = 6 - q.idxSem;
             let percent = ((q.idxSem + 1) / 7) * 100;
             if(diasRestantes === 0) {
@@ -422,7 +476,6 @@ const App = {
             }
             document.getElementById('shabat-progress').style.width = percent + "%";
 
-            // SALMO
             let s = App.DATA.SALMOS[q.idxSem];
             document.getElementById('salmo-titulo').innerText = s.t;
             document.getElementById('salmo-texto').innerText = s.v;
@@ -435,37 +488,21 @@ const App = {
         list.innerHTML = "";
         let test = new Date(y, 2, 15);
         let html = "";
-        
-        // Iteramos para encontrar todas las fiestas del año
         for(let i=0; i<370; i++) {
             let d = new Date(test.getTime() + (i*86400000));
             let q = App.calc(d);
             if(!q || q.special) continue;
-            
-            // Verificamos si es INICIO de fiesta
             let fIdx = App.DATA.FIESTAS.findIndex(x => x.m === q.m && x.d === q.d);
-            
             if(fIdx !== -1) {
                 let f = App.DATA.FIESTAS[fIdx];
                 let dateLabel = d.toLocaleDateString('es-ES', {day:'numeric', month:'short'});
-                
-                // Si dura más de 1 día, calculamos fin
                 if(f.dur > 1) {
                     let end = new Date(d);
                     end.setDate(end.getDate() + f.dur - 1);
                     dateLabel += " - " + end.toLocaleDateString('es-ES', {day:'numeric', month:'short'});
                 }
-
-                html += `<div class="cal-row fiesta" onclick="App.openFiesta(${fIdx}, ${y})">
-                    <div>
-                        <span class="cal-fiesta-name">${f.n}</span>
-                        <span class="cal-fiesta-sub">${f.es}</span>
-                    </div>
-                    <div style="text-align:right;">
-                        <span style="display:block; font-weight:bold;">${dateLabel}</span>
-                        <span style="font-size:0.8rem;">${q.d}/${q.m+1}</span>
-                    </div>
-                </div>`;
+                // Usamos dataset para la delegación de eventos
+                html += `<div class="cal-row fiesta" data-index="${fIdx}" data-year="${y}"><div><span class="cal-fiesta-name">${f.n}</span><span class="cal-fiesta-sub">${f.es}</span></div><div style="text-align:right;"><span style="display:block; font-weight:bold;">${dateLabel}</span><span style="font-size:0.8rem;">${q.d}/${q.m+1}</span></div></div>`;
             }
         }
         list.innerHTML = html || "<div class='card'>Sin datos.</div>";
