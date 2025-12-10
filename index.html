@@ -5,21 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Qumran Watch | Maskil</title>
     <meta name="theme-color" content="#1a120b">
-    <meta name="description" content="Herramienta litúrgica para los Hijos de Sadoc. Calendario 364 días.">
-    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIlF1bXJhbiBXYXRjaCIsCiAgInNob3J0X25hbWUiOiAiUXVtdXJhbiIsCiAgInN0YXJ0X3VybCI6ICIvIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWExMjBiIiwKICAidGhlbWVfY29sb3IiOiAiIzFhMTIwYiIsCiAgImljb25zIjogW3sKICAgICJzcmMiOiAiaHR0cHM6Ly9pbWcuY29tL3NhbXBsZS5wbmciLAogICAgInNpemVzIjogIjE5MngxOTIiLAogICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogIH1dCn0=">
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIlF1bXJhbiBXYXRjaCIsCiAgInNob3J0X25hbWUiOiAiUXVtdXJhbiIsCiAgInN0YXJ0X3VybCI6ICIvIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWExMjBiIiwKICAidGhlbWVfY29sb3IiOiAiIzFhMTIwYiIsCiAgImljb25zIjogW3sKICAgICJzcmMiOiAiaHR0cHM6Ly9wbGFjZWhvbGRlci5jb20vMTkyIiwKICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICJ0eXBlIjogImltYWdlL3BuZyIKICB9XQp9">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=David+Libre:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
-        /* --- ESTÉTICA DANIEL V1.2 (VISUAL) --- */
+        /* --- ESTÉTICA DANIEL V1.5 --- */
         :root {
             --bg-dark: #1a120b;
             --paper: #e0d2bc;
             --gold: #c5a059;
             --red: #8a2c2c;
             --faint: #5a4d3f;
-            --active-gate: #ffdb8b;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -44,7 +42,6 @@
         h1 { font-size: 1.8rem; border-bottom: 2px solid var(--gold); padding-bottom: 15px; margin-bottom: 20px; text-transform: uppercase; }
         h2 { font-size: 1.3rem; margin-bottom: 15px; }
 
-        /* TARJETA GENERICA */
         .card {
             background: rgba(30, 20, 15, 0.6);
             border: 1px solid var(--faint);
@@ -54,70 +51,64 @@
             backdrop-filter: blur(5px);
         }
 
-        /* COMPONENTES DE TIEMPO */
         .fecha-hebrea { font-size: 2.2rem; color: var(--paper); text-align: center; font-weight: bold; margin: 5px 0; font-family: 'Cinzel'; line-height: 1.1; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
         .fecha-greg { font-size: 1rem; color: var(--faint); text-align: center; font-style: italic; display: block; }
-        
         .lbl { font-size: 0.75rem; color: var(--gold); text-transform: uppercase; display: block; margin-bottom: 4px; font-weight: bold; letter-spacing: 1px;}
         .val { font-size: 1.2rem; font-weight: bold; color: #fff; }
 
-        /* GRÁFICO DE PUERTAS DE ENOC */
-        .gate-container {
-            display: flex; justify-content: center; gap: 8px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--faint);
+        /* MODAL DE FIESTA */
+        #modal-fiesta {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 2000;
+            justify-content: center; align-items: center; padding: 20px;
         }
-        .gate-dot {
-            width: 25px; height: 25px;
-            border-radius: 50%;
-            border: 2px solid var(--faint);
-            display: flex; justify-content: center; align-items: center;
-            font-size: 0.7rem; color: var(--faint); font-weight: bold;
-            transition: 0.3s;
+        .modal-content {
+            background: #251a12; border: 2px solid var(--gold);
+            padding: 25px; border-radius: 8px; width: 100%; max-width: 450px;
+            position: relative; box-shadow: 0 0 30px var(--gold);
+            max-height: 90vh; overflow-y: auto;
         }
-        .gate-dot.active {
-            border-color: var(--gold);
-            background-color: var(--gold);
-            color: var(--bg-dark);
-            box-shadow: 0 0 10px var(--gold);
-            transform: scale(1.1);
-        }
-        .gate-label { text-align: center; font-size: 0.7rem; color: var(--gold); margin-top: 5px; text-transform: uppercase; }
-
-        /* BARRA SHABAT */
-        .shabat-container { margin-top: 15px; text-align: center; }
-        .shabat-bar-bg { width: 100%; height: 6px; background: var(--faint); border-radius: 3px; margin-top: 5px; overflow: hidden; }
-        .shabat-bar-fill { height: 100%; background: var(--gold); width: 0%; transition: width 1s ease; }
-        .shabat-text { font-size: 0.8rem; color: var(--paper); margin-top: 5px; font-style: italic; }
+        .close-modal { position: absolute; top: 10px; right: 15px; font-size: 2rem; color: var(--red); cursor: pointer; }
+        .modal-title { font-family: 'Cinzel'; font-size: 1.5rem; color: var(--gold); border-bottom: 1px solid var(--faint); padding-bottom: 10px; margin-bottom: 15px; text-align: center;}
+        .modal-data-row { margin-bottom: 15px; border-bottom: 1px dashed var(--faint); padding-bottom: 10px; }
+        .modal-instr { font-size: 1.1rem; line-height: 1.5; color: #fff; text-align: justify; margin-bottom: 15px; }
+        .modal-ref { font-style: italic; color: var(--gold); text-align: right; display: block; font-size: 0.9rem; }
+        .special-warn { background: rgba(138, 44, 44, 0.2); border: 1px solid var(--red); color: #ff9999; padding: 10px; border-radius: 4px; font-size: 0.95rem; margin-top: 15px; text-align: center; font-weight: bold; display: none; line-height: 1.4; }
+        .teological-note { font-size: 0.85rem; background: rgba(197, 160, 89, 0.1); padding: 10px; border-left: 2px solid var(--gold); margin-top: 10px; color: #ccc; font-style: italic;}
 
         /* SALMOS TEXTO */
-        .psalm-box { max-height: 200px; overflow-y: auto; margin-top: 10px; padding-right: 5px; font-size: 1.05rem; line-height: 1.6; color: #d0c0a8; text-align: justify; display: none; border-top: 1px dashed var(--faint); padding-top: 10px; }
-        .psalm-toggle { cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 5px; color: var(--gold); font-size: 0.9rem; margin-top: 5px; }
+        .psalm-box { max-height: 300px; overflow-y: auto; margin-top: 10px; padding-right: 5px; font-size: 1.1rem; line-height: 1.6; color: #d0c0a8; text-align: justify; display: none; border-top: 1px dashed var(--faint); padding-top: 15px; white-space: pre-wrap; }
+        .psalm-toggle { cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 5px; color: var(--gold); font-size: 0.9rem; margin-top: 5px; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 4px;}
         
-        /* NAVEGACIÓN */
-        .nav-bar {
-            position: fixed; bottom: 0; left: 0; width: 100%;
-            background: #140e08; border-top: 3px solid var(--gold);
-            display: flex; justify-content: space-around;
-            padding: 12px 0 20px 0; z-index: 100;
-        }
-        .nav-btn {
-            background: none; border: none; color: var(--faint);
-            font-family: 'Cinzel'; font-size: 0.7rem; font-weight: bold;
-            cursor: pointer; text-transform: uppercase;
-            display: flex; flex-direction: column; align-items: center; gap: 5px;
-        }
+        /* CALENDARIO TABLA INTERACTIVA */
+        .cal-row { display: flex; justify-content: space-between; padding: 12px 10px; border-bottom: 1px dashed var(--faint); font-size: 1rem; cursor: pointer; transition: 0.2s; }
+        .cal-row:active { background: rgba(255,255,255,0.1); }
+        .cal-row.fiesta { color: var(--gold); font-weight: bold; background: rgba(197, 160, 89, 0.1); border-left: 3px solid var(--gold); border-radius: 4px; margin-bottom: 5px;}
+        .cal-fiesta-name { display: block; font-weight: bold; font-size: 1.05rem; }
+        .cal-fiesta-sub { font-size: 0.8rem; opacity: 0.8; font-weight: normal; }
+
+        /* NAVEGACIÓN & UTILS */
+        .nav-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: #140e08; border-top: 3px solid var(--gold); display: flex; justify-content: space-around; padding: 12px 0 20px 0; z-index: 100; }
+        .nav-btn { background: none; border: none; color: var(--faint); font-family: 'Cinzel'; font-size: 0.7rem; font-weight: bold; cursor: pointer; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 5px; }
         .nav-btn.active { color: var(--gold); transform: scale(1.1); text-shadow: 0 0 10px rgba(197, 160, 89, 0.6); }
         .nav-icon { font-size: 1.4rem; }
-
-        /* UTILS */
         .view { display: none; animation: fade 0.4s; }
         .view.active { display: block; }
         @keyframes fade { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:translateY(0);} }
         .btn-action { width: 100%; padding: 15px; background: var(--gold); color: #1a120b; font-family: 'Cinzel'; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; text-transform: uppercase; margin-top: 10px; }
-        
-        /* CALENDARIO TABLA */
-        .cal-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px dashed var(--faint); font-size: 1rem; }
-        .cal-row.fiesta { color: var(--gold); font-weight: bold; background: rgba(197, 160, 89, 0.1); padding: 10px; border-radius: 4px; border-left: 3px solid var(--gold); margin-bottom: 5px;}
 
+        /* GRÁFICOS */
+        .shabat-container { margin-top: 15px; text-align: center; }
+        .shabat-bar-bg { width: 100%; height: 6px; background: var(--faint); border-radius: 3px; margin-top: 5px; overflow: hidden; }
+        .shabat-bar-fill { height: 100%; background: var(--gold); width: 0%; transition: width 1s ease; }
+        .gate-container { display: flex; justify-content: center; gap: 8px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--faint); }
+        .gate-dot { width: 25px; height: 25px; border-radius: 50%; border: 2px solid var(--faint); display: flex; justify-content: center; align-items: center; font-size: 0.7rem; color: var(--faint); font-weight: bold; }
+        .gate-dot.active { border-color: var(--gold); background-color: var(--gold); color: var(--bg-dark); box-shadow: 0 0 10px var(--gold); transform: scale(1.1); }
+        
+        /* TEXTO EDUCATIVO */
+        .fundamento-txt { font-size: 1.15rem; line-height: 1.7; color: #d0c0a8; margin-bottom: 20px; text-align: justify; }
+        .fundamento-txt strong { color: var(--gold); }
+        .versiculo { font-style: italic; color: #998; border-left: 3px solid var(--red); padding-left: 15px; margin: 15px 0; font-size: 1.1rem; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 0 4px 4px 0;}
     </style>
 </head>
 <body>
@@ -126,19 +117,17 @@
     <h1>Qumran Watch</h1>
 
     <div id="view-hoy" class="view active">
-        
         <div class="card">
             <span class="fecha-greg" id="greg-date">...</span>
             <div class="fecha-hebrea" id="heb-date">Cargando...</div>
-            <div style="text-align:center; font-size:1.1rem; color:var(--red); font-weight:bold; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;" id="heb-fiesta"></div>
+            <div style="text-align:center; font-size:1.1rem; color:var(--red); font-weight:bold; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px; cursor:pointer;" id="heb-fiesta" onclick="App.openFiestaHoy()"></div>
             
             <div style="text-align:center; margin-bottom:15px;">
                 <span class="lbl">DÍA DE LA SEMANA</span>
                 <span class="val" id="heb-dia"></span>
-                
                 <div class="shabat-container">
                     <div class="shabat-bar-bg"><div class="shabat-bar-fill" id="shabat-progress"></div></div>
-                    <div class="shabat-text" id="shabat-text"></div>
+                    <div class="shabat-text" id="shabat-text" style="font-size:0.8rem; font-style:italic; margin-top:5px;"></div>
                 </div>
             </div>
 
@@ -154,7 +143,6 @@
             </div>
 
             <div style="margin-top:15px;">
-                <div class="gate-label">PUERTAS DEL CIELO (ENOC 72)</div>
                 <div class="gate-container" id="gate-visuals">
                     <div class="gate-dot">1</div><div class="gate-dot">2</div><div class="gate-dot">3</div>
                     <div class="gate-dot">4</div><div class="gate-dot">5</div><div class="gate-dot">6</div>
@@ -175,6 +163,7 @@
         <div class="card" onclick="window.open('https://youtube.com/playlist?list=PLr4MABEXstnDLUVcD7EenO4vN8EglZoSz', '_blank')" style="cursor:pointer; border-color:var(--red); border-left-width:4px;">
             <span class="lbl" style="color:var(--red);">🎙️ PODCAST OFICIAL</span>
             <div style="text-align:center; font-weight:bold; font-size:1.1rem; margin-top:5px; color:#fff;">Diseñados para Gobernar</div>
+            <div style="text-align:center; font-size:0.8rem; color:#aaa; margin-top:5px;">Escuchar enseñanza de hoy ➔</div>
         </div>
     </div>
 
@@ -184,19 +173,50 @@
             <input type="number" id="cal-year" value="2025" style="background:#2a2018; border:1px solid var(--faint); color:var(--paper); padding:10px; flex:1; text-align:center; font-family:'Cinzel'; font-size:1.1rem; border-radius:4px;">
             <button class="btn-action" style="flex:1; margin:0;" onclick="App.renderCalendar()">Ver Ciclo</button>
         </div>
+        <div style="text-align:center; font-size:0.8rem; color:var(--faint); margin-bottom:10px;">Toca una fiesta para ver la instrucción</div>
         <div id="cal-lista"></div>
     </div>
 
     <div id="view-edu" class="view">
         <h2>Verdad Restaurada</h2>
-        <div class="card" style="font-size:1rem; line-height:1.6; text-align:justify;">
-            <p><strong>El Tiempo es Santo.</strong> No usamos el calendario de Roma (Gregoriano) ni el de Babilonia (Lunar Rabínico), sino el entregado a Enoc.</p>
-            <ul style="padding-left:20px; color:#ccc;">
-                <li><strong>364 Días:</strong> 52 semanas exactas.</li>
-                <li><strong>Alineación:</strong> El sol gobierna el día.</li>
-                <li><strong>Mishmarot:</strong> Los turnos sacerdotales marcan el ritmo de 6 años hasta el ajuste del Equilux.</li>
-            </ul>
+        <div class="card">
+            <p class="fundamento-txt">El calendario que tienes en tus manos no es una invención moderna, sino la <strong>restauración matemática</strong> del orden entregado a Enoc y Moisés.</p>
+            
+            <h3 style="font-size:1.2rem; color:var(--red); margin-top:25px; text-align:left; border-bottom:1px solid var(--faint); padding-bottom:5px;">1. El Año de 364 Días</h3>
+            <p class="fundamento-txt">A diferencia del calendario lunar (354 días) o gregoriano (365), el calendario bíblico perfecto consta de <strong>52 semanas exactas</strong> (52 x 7 = 364). Esto asegura que las fiestas de YHWH caigan siempre en el mismo día de la semana, evitando profanar el Shabat.</p>
+
+            <h3 style="font-size:1.2rem; color:var(--red); margin-top:25px; text-align:left; border-bottom:1px solid var(--faint); padding-bottom:5px;">2. El Ciclo de 6 Años</h3>
+            <p class="fundamento-txt">Para alinearse con el sol real (365.25 días), no usamos años bisiestos desordenados. Seguimos el patrón de los Sacerdotes (Mishmarot): 6 años de 364 días seguidos de una <strong>Semana de Ajuste (Intercalar)</strong>. Esto reinicia el ciclo solar sin romper el orden sabático.</p>
+
+            <div class="versiculo">"Y el sol y las estrellas traen todos los años exactamente, para que ellos no adelanten ni retrasen su posición ni un solo día..."<br><br><span style="font-size:0.9em; opacity:0.7">1 Enoc 74:12</span></div>
+
+            <h3 style="font-size:1.2rem; color:var(--red); margin-top:25px; text-align:left; border-bottom:1px solid var(--faint); padding-bottom:5px;">3. El Ancla 2019-2025</h3>
+            <p class="fundamento-txt">Nuestros cálculos se basan en el Jubileo Sacerdotal restaurado. El ciclo actual inició en <strong>2019 (Turno Gamul)</strong>. En Marzo de 2025 se aplicó el primer Gran Ajuste (Semana Intercalar) para alinearnos con el <strong>Equilux</strong> (equilibrio perfecto de luz).</p>
         </div>
+        <div class="card" onclick="window.open('https://youtube.com/playlist?list=PLr4MABEXstnDLUVcD7EenO4vN8EglZoSz', '_blank')" style="cursor:pointer; border-color:var(--red); border-left-width:4px;">
+            <span class="lbl" style="color:var(--red);">🎙️ PODCAST OFICIAL</span>
+            <div style="text-align:center; font-weight:bold; font-size:1.1rem; margin-top:5px; color:#fff;">Diseñados para Gobernar</div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-fiesta">
+    <div class="modal-content">
+        <span class="close-modal" onclick="document.getElementById('modal-fiesta').style.display='none'">&times;</span>
+        <div id="mod-title" class="modal-title"></div>
+        <div class="modal-data-row">
+            <span class="lbl">FECHA GREGORIANA</span>
+            <div id="mod-fechas" class="val"></div>
+        </div>
+        <div class="modal-data-row">
+            <span class="lbl">FECHA HEBREA</span>
+            <div id="mod-fechas-heb" class="val" style="font-size:1rem; color:var(--gold);"></div>
+        </div>
+        <div class="lbl">INSTRUCCIÓN BÍBLICA:</div>
+        <div id="mod-instr" class="modal-instr"></div>
+        <span id="mod-ref" class="modal-ref"></span>
+        <div id="mod-note" class="teological-note" style="display:none;"></div>
+        <div id="mod-warn" class="special-warn">⚠️ AYUNO: DE TARDE A TARDE (Lev 23:32)</div>
     </div>
 </div>
 
@@ -212,24 +232,41 @@ const App = {
         MESES: ["Mes 1 (Aviv)", "Mes 2 (Ziv)", "Mes 3 (Siván)", "Mes 4", "Mes 5 (Av)", "Mes 6 (Elul)", "Mes 7 (Etanim)", "Mes 8 (Bul)", "Mes 9", "Mes 10", "Mes 11", "Mes 12"],
         DIAS: ["Yom Rishon (Día Uno)", "Yom Sheni (Día Dos)", "Yom Shlishi (Día Tres)", "Yom Revii (Día Cuatro)", "Yom Hamishi (Día Cinco)", "Yom Shishi (Día Seis)", "Shabat (Reposo)"],
         TURNOS: ["Yehoiarib", "Jedaiah", "Harim", "Seorim", "Malquías", "Mijamín", "Hacoz", "Abías", "Jesúa", "Secanías", "Eliasib", "Jaquim", "Hupa", "Jesebeab", "Bilga", "Imer", "Hezir", "Hapises", "Petaías", "Ezequiel", "Jaquín", "Gamul", "Delaía", "Maaziah"],
-        PUERTAS_SOLARES: [4, 5, 6, 6, 5, 4, 3, 2, 1, 1, 2, 3], // Según Mes 1-12
+        PUERTAS_SOLARES: [4, 5, 6, 6, 5, 4, 3, 2, 1, 1, 2, 3],
+        
+        // FIESTAS CON INSTRUCCIÓN CORREGIDA
         FIESTAS: [
-            {m:0, d:1, n:"Rosh Jodesh (Año Nuevo)"}, {m:0, d:10, n:"Selección del Cordero"}, {m:0, d:14, n:"PESAJ (Cena)"}, {m:0, d:15, n:"Hag Hamatzot", dur:7}, {m:0, d:26, n:"Primicias (Omer)"},
-            {m:1, d:14, n:"Pesaj Sheni"}, {m:2, d:15, n:"SHAVUOT"}, 
-            {m:3, d:1, n:"Inicio Verano"}, {m:4, d:3, n:"Fiesta Vino Nuevo"}, {m:4, d:9, n:"Ayuno 5° Mes"},
-            {m:5, d:22, n:"Fiesta Aceite"}, {m:6, d:1, n:"YOM TERUAH"}, {m:6, d:10, n:"YOM KIPUR"}, {m:6, d:15, n:"SUCOT", dur:7}, {m:6, d:22, n:"Shemini Atzeret"}
+            {m:0, d:1, n:"Rosh Hashaná", es:"Inicio de Año (Mes 1)", instr:"Tocad trompeta en el inicio del mes (Jodesh), en el día señalado, en el día de nuestra fiesta solemne. Estatuto para Israel es.", ref:"Salmo 81:3-4", nota:"NOTA DE ESTUDIO: La palabra 'Jodesh' implica renovación. En el contexto del calendario de Enoc, esto marca la entrada solar (Tekufah), no la fase de luna nueva rabínica."},
+            {m:0, d:10, n:"Selección Cordero", es:"Separación del Cordero", instr:"En el décimo día de este mes tomarán cada uno un cordero según las familias de los padres, un cordero por familia.", ref:"Éxodo 12:3"},
+            {m:0, d:14, n:"PESAJ", es:"Cena de Pascua", instr:"Y lo guardaréis hasta el día catorce de este mes, y lo inmolará toda la congregación de Israel entre las dos tardes. Es la Pascua de YHWH.", ref:"Éxodo 12:6"},
+            {m:0, d:15, n:"Hag Hamatzot", es:"Panes Sin Levadura", dur:7, instr:"Siete días comeréis panes sin levadura. El primer día será santa convocación; el séptimo día será santa convocación. Ninguna obra se hará en ellos.", ref:"Éxodo 12:15-16"},
+            {m:0, d:26, n:"Bikurim", es:"Primicias (Omer)", instr:"Traeréis la gavilla de las primicias de vuestra siega al sacerdote, el cual mecerá la gavilla delante de YHWH.", ref:"Levítico 23:10-11"},
+            {m:1, d:14, n:"Pesaj Sheni", es:"Segunda Pascua", instr:"Si alguno de vosotros estuviere inmundo o lejos de viaje, celebrará la pascua a YHWH en el mes segundo.", ref:"Números 9:10-11"},
+            {m:2, d:15, n:"SHAVUOT", es:"Fiesta de las Semanas", instr:"Y contaréis siete semanas cumplidas... hasta el día siguiente del séptimo día de reposo. Ofreceréis nuevo grano a YHWH.", ref:"Levítico 23:15-16"}, 
+            {m:3, d:1, n:"Inicio Verano", es:"Estación de Verano", instr:"Tú has establecido todos los términos de la tierra; el verano y el invierno tú los formaste.", ref:"Salmo 74:17"},
+            {m:4, d:3, n:"Tirosh", es:"Fiesta del Vino Nuevo", instr:"Cuando siegues tu mies... traerás vino nuevo. Alegrate delante de YHWH tu Dios.", ref:"Rollo del Templo 11QT"}, 
+            {m:5, d:22, n:"Yitzhar", es:"Fiesta del Aceite", instr:"Ofrenda de las primicias del aceite fresco, para iluminar el santuario.", ref:"Rollo del Templo 11QT"}, 
+            {m:6, d:1, n:"YOM TERUAH", es:"Fiesta de las Trompetas", instr:"En el mes séptimo, al primero del mes, tendréis día de reposo, una conmemoración al son de trompetas, y una santa convocación.", ref:"Levítico 23:24"}, 
+            {m:6, d:10, n:"YOM KIPUR", es:"Día de Expiación", especial:true, instr:"A los diez días de este mes séptimo será día de expiación. El ayuno total inicia al atardecer del día 9 y concluye al atardecer del día 10. Ninguna obra haréis.", ref:"Levítico 23:32"}, 
+            {m:6, d:15, n:"SUCOT", es:"Fiesta de los Tabernáculos", dur:7, instr:"En tabernáculos habitaréis siete días; todo natural de Israel habitará en tabernáculos, para que sepan vuestros descendientes que en tabernáculos hice yo habitar a los hijos de Israel.", ref:"Levítico 23:42"}, 
+            {m:6, d:22, n:"Shemini Atzeret", es:"El Octavo Día", instr:"El octavo día tendréis solemnidad; ninguna obra de siervos haréis.", ref:"Números 29:35"}
         ],
+        // SALMOS COMPLETOS
         SALMOS: [
-            {t: "Salmo 24", v: "De YHWH es la tierra y su plenitud; El mundo, y los que en él habitan. Porque él la fundó sobre los mares, Y la afirmó sobre los ríos. ¿Quién subirá al monte de YHWH? ¿Y quién estará en su lugar santo? El limpio de manos y puro de corazón..."},
-            {t: "Salmo 48", v: "Grande es YHWH, y digno de ser en gran manera alabado En la ciudad de nuestro Dios, en su monte santo. Hermosa provincia, el gozo de toda la tierra, Es el monte de Sion, a los lados del norte, La ciudad del gran Rey..."},
-            {t: "Salmo 82", v: "Dios está en la reunión de los dioses; En medio de los dioses juzga. ¿Hasta cuándo juzgaréis injustamente, Y aceptaréis las personas de los impíos? Defended al débil y al huérfano; Haced justicia al afligido y al menesteroso..."},
-            {t: "Salmo 94", v: "YHWH, Dios de las venganzas, Dios de las venganzas, muéstrate. Engrandécete, oh Juez de la tierra; Da el pago a los soberbios. ¿Hasta cuándo los impíos, Hasta cuándo, oh YHWH, se gozarán los impíos?..."},
-            {t: "Salmo 81", v: "Cantad con gozo a Dios, fortaleza nuestra; Al Dios de Jacob aclamad con júbilo. Entonad canción, y tañed el pandero, El arpa deliciosa y el salterio. Tocad la trompeta en la nueva luna, En el día señalado, en el día de nuestra fiesta solemne..."},
-            {t: "Salmo 93", v: "YHWH reina; se vistió de magnificencia; YHWH se vistió, se ciñó de poder. Afirmó también el mundo, y no se moverá. Firme es tu trono desde entonces; Tú eres eternamente..."},
-            {t: "Salmo 92", v: "Bueno es alabarte, oh YHWH, Y cantar salmos a tu nombre, oh Altísimo; Anunciar por la mañana tu misericordia, Y tu fidelidad cada noche... Por cuanto me has alegrado, oh YHWH, con tus obras; En las obras de tus manos me gozo."}
+            {t: "Salmo 24", v: "De YHWH es la tierra y su plenitud;\nEl mundo, y los que en él habitan.\nPorque él la fundó sobre los mares,\nY la afirmó sobre los ríos.\n¿Quién subirá al monte de YHWH?\n¿Y quién estará en su lugar santo?\nEl limpio de manos y puro de corazón;\nEl que no ha elevado su alma a cosas vanas,\nNi jurado con engaño.\nÉl recibirá bendición de YHWH,\nY justicia del Dios de salvación.\nTal es la generación de los que le buscan,\nDe los que buscan tu rostro, oh Dios de Jacob.\nAlzad, oh puertas, vuestras cabezas,\nY alzaos vosotras, puertas eternas,\nY entrará el Rey de gloria.\n¿Quién es este Rey de gloria?\nYHWH el fuerte y valiente,\nYHWH el poderoso en batalla.\nAlzad, oh puertas, vuestras cabezas,\nY alzaos vosotras, puertas eternas,\nY entrará el Rey de gloria.\n¿Quién es este Rey de gloria?\nYHWH de los ejércitos,\nÉl es el Rey de la gloria."},
+            {t: "Salmo 48", v: "Grande es YHWH, y digno de ser en gran manera alabado\nEn la ciudad de nuestro Dios, en su monte santo.\nHermosa provincia, el gozo de toda la tierra,\nEs el monte de Sion, a los lados del norte,\nLa ciudad del gran Rey.\nEn sus palacios Dios es conocido por refugio.\nPorque he aquí los reyes de la tierra se reunieron;\nPasaron todos.\nY viéndola ellos así, se maravillaron,\nSe turbaron, se apresuraron a huir.\nLes tomó allí temblor;\nDolor como de mujer que da a luz.\nCon viento solano quiebras tú las naves de Tarsis.\nComo lo oímos, así lo hemos visto\nEn la ciudad de YHWH de los ejércitos, en la ciudad de nuestro Dios;\nLa afirmará Dios para siempre.\nNos acordamos de tu misericordia, oh Dios,\nEn medio de tu templo.\nConforme a tu nombre, oh Dios,\nAsí es tu loor hasta los fines de la tierra;\nDe justicia está llena tu diestra.\nSe alegrará el monte de Sion;\nSe gozarán las hijas de Judá\nPor tus juicios.\nAndad alrededor de Sion, y rodeadla;\nContad sus torres.\nConsiderad bien sus antemuros,\nMirad sus palacios,\nPara que lo contéis a la generación venidera.\nPorque este Dios es Dios nuestro eternamente y para siempre;\nÉl nos guiará aun más allá de la muerte."},
+            {t: "Salmo 82", v: "Dios está en la reunión de los dioses;\nEn medio de los dioses juzga.\n¿Hasta cuándo juzgaréis injustamente,\nY aceptaréis las personas de los impíos?\nDefended al débil y al huérfano;\nHaced justicia al afligido y al menesteroso.\nLibrad al afligido y al necesitado;\nLibradlo de mano de los impíos.\nNo saben, no entienden,\nAndan en tinieblas;\nTiemblan todos los cimientos de la tierra.\nYo dije: Vosotros sois dioses,\nY todos vosotros hijos del Altísimo;\nPero como hombres moriréis,\nY como cualquiera de los príncipes caeréis.\nLevántate, oh Dios, juzga la tierra;\nPorque tú heredarás todas las naciones."},
+            {t: "Salmo 94", v: "YHWH, Dios de las venganzas,\nDios de las venganzas, muéstrate.\nEngrandécete, oh Juez de la tierra;\nDa el pago a los soberbios.\n¿Hasta cuándo los impíos,\nHasta cuándo, oh YHWH, se gozarán los impíos?\n¿Hasta cuándo pronunciarán, hablarán cosas duras,\nY se vanagloriarán todos los que hacen iniquidad?\nA tu pueblo, oh YHWH, quebrantan,\nY a tu heredad afligen.\nA la viuda y al extranjero matan,\nY a los huérfanos quitan la vida.\nY dijeron: No verá JAH,\nNi entenderá el Dios de Jacob.\nEntended, necios del pueblo;\nY vosotros, fatuos, ¿cuándo seréis sabios?\nEl que hizo el oído, ¿no oirá?\nEl que formó el ojo, ¿no verá?\nEl que castiga a las naciones, ¿no reprenderá?\n¿No sabrá el que enseña al hombre la ciencia?\nYHWH conoce los pensamientos de los hombres,\nQue son vanidad.\nBienaventurado el hombre a quien tú, JAH, corriges,\nY en tu ley lo instruyes,\nPara hacerle descansar en los días de aflicción,\nEn tanto que para el impío se cava el hoyo.\nPorque no abandonará YHWH a su pueblo,\nNi desamparará su heredad,\nSino que el juicio será vuelto a la justicia,\nY en pos de ella irán todos los rectos de corazón.\n¿Quién se levantará por mí contra los malignos?\n¿Quién estará por mí contra los que hacen iniquidad?\nSi no me ayudara YHWH,\nPronto moraría mi alma en el silencio.\nCuando yo decía: Mi pie resbala,\nTu misericordia, oh YHWH, me sustentaba.\nEn la multitud de mis pensamientos dentro de mí,\nTus consolaciones alegraban mi alma.\n¿Se juntará contigo el trono de iniquidades\nQue hace agravio bajo forma de ley?\nSe juntan contra la vida del justo,\nY condenan la sangre inocente.\nMas YHWH me ha sido por refugio,\nY mi Dios por roca de mi confianza.\nY él hará volver sobre ellos su iniquidad,\nY los destruirá en su propia maldad;\nLos destruirá YHWH nuestro Dios."},
+            {t: "Salmo 81", v: "Cantad con gozo a Dios, fortaleza nuestra;\nAl Dios de Jacob aclamad con júbilo.\nEntonad canción, y tañed el pandero,\nEl arpa deliciosa y el salterio.\nTocad la trompeta en el inicio del mes (Jodesh),\nEn el día señalado, en el día de nuestra fiesta solemne.\nPorque estatuto es de Israel,\nOrdenanza del Dios de Jacob.\nLo constituyó como testimonio en José\nCuando salió por la tierra de Egipto.\nOí lenguaje que no entendía;\nAparté su hombro de la carga;\nSus manos se descargaron de los cestos.\nEn la calamidad clamaste, y yo te libré;\nTe respondí en lo secreto del trueno;\nTe probé junto a las aguas de Meriba.\nOye, pueblo mío, y te amonestaré.\nIsrael, si me oyeres,\nNo habrá en ti dios ajeno,\nNi te inclinarás a dios extraño.\nYo soy YHWH tu Dios,\nQue te hice subir de la tierra de Egipto;\nAbre tu boca, y yo la llenaré.\nPero mi pueblo no oyó mi voz,\nE Israel no me quiso a mí.\nLos dejé, por tanto, a la dureza de su corazón;\nCaminaron en sus propios consejos.\n¡Oh, si me hubiera oído mi pueblo,\nSi en mis caminos hubiera andado Israel!\nEn un momento habría yo derribado a sus enemigos,\nY vuelto mi mano contra sus adversarios.\nLos que aborrecen a YHWH se le habrían sometido,\nY el tiempo de ellos sería para siempre.\nLes sustentaría Dios con lo mejor del trigo,\nY con miel de la peña les saciaría."},
+            {t: "Salmo 93", v: "YHWH reina; se vistió de magnificencia;\nYHWH se vistió, se ciñó de poder.\nAfirmó también el mundo, y no se moverá.\nFirme es tu trono desde entonces;\nTú eres eternamente.\nAlzaron los ríos, oh YHWH,\nLos ríos alzaron su sonido;\nAlzaron los ríos sus ondas.\nYHWH en las alturas es más poderoso\nQue el estruendo de las muchas aguas,\nMás que las recias ondas del mar.\nTus testimonios son muy firmes;\nLa santidad conviene a tu casa,\nOh YHWH, por los siglos y para siempre."},
+            {t: "Salmo 92", v: "Bueno es alabarte, oh YHWH,\nY cantar salmos a tu nombre, oh Altísimo;\nAnunciar por la mañana tu misericordia,\nY tu fidelidad cada noche,\nEn el decacordio y en el salterio,\nEn tono suave con el arpa.\nPor cuanto me has alegrado, oh YHWH, con tus obras;\nEn las obras de tus manos me gozo.\n¡Cuán grandes son tus obras, oh YHWH!\nMuy profundos son tus pensamientos.\nEl hombre necio no sabe,\nY el insensato no entiende esto.\nCuando brotan los impíos como la hierba,\nY florecen todos los que hacen iniquidad,\nEs para ser destruidos eternamente.\nMas tú, YHWH, para siempre eres Altísimo.\nPorque he aquí tus enemigos, oh YHWH,\nPorque he aquí, perecerán tus enemigos;\nSerán esparcidos todos los que hacen maldad.\nPero tú aumentarás mis fuerzas como las del búfalo;\nSeré ungido con aceite fresco.\nY mirarán mis ojos sobre mis enemigos;\nOirán mis oídos de los que se levantaron contra mí, de los malignos.\nEl justo florecerá como la palmera;\nCrecerá como cedro en el Líbano.\nPlantados en la casa de YHWH,\nEn los atrios de nuestro Dios florecerán.\nAun en la vejez fructificarán;\nEstarán vigorosos y verdes,\nPara anunciar que YHWH mi fortaleza es recto,\nY que en él no hay injusticia."}
         ]
     },
     ANCHOR: { y: 2019, m: 2, d: 20, turnoIdx: 21 }, 
+    
+    // VARIABLES TEMPORALES
+    currentFiestaIdx: null,
+    todayFiesta: null,
 
     init: () => { App.renderHoy(); },
 
@@ -282,6 +319,65 @@ const App = {
 
     turn: (days) => App.DATA.TURNOS[(App.ANCHOR.turnoIdx + Math.floor(days/7)) % 24],
 
+    // MODAL LOGIC
+    openFiesta: (index, forceYear) => {
+        let f = App.DATA.FIESTAS[index];
+        let year = forceYear || new Date().getFullYear();
+        
+        // Calcular fecha gregoriana de inicio
+        let anchorGreg = new Date(year, 2, 20);
+        // Busqueda rapida aproximada
+        let foundDate = null;
+        for(let i=-20; i<370; i++){
+            let d = new Date(anchorGreg.getTime() + (i*86400000));
+            let q = App.calc(d);
+            if(q && !q.special && q.m === f.m && q.d === f.d) {
+                foundDate = d;
+                break;
+            }
+        }
+        
+        let dateStr = "Calculando...";
+        let hebStr = `${f.d} del ${App.DATA.MESES[f.m]}`;
+        
+        if(foundDate) {
+            let endDate = new Date(foundDate);
+            if(f.dur && f.dur > 1) endDate.setDate(endDate.getDate() + f.dur - 1);
+            
+            dateStr = foundDate.toLocaleDateString('es-ES', {day:'numeric', month:'long'});
+            if(f.dur > 1) {
+                dateStr += " al " + endDate.toLocaleDateString('es-ES', {day:'numeric', month:'long'});
+                hebStr += ` (Duración: ${f.dur} días)`;
+            }
+        }
+
+        document.getElementById('mod-title').innerText = f.n;
+        document.getElementById('mod-fechas').innerText = dateStr + ` (${year})`;
+        document.getElementById('mod-fechas-heb').innerText = hebStr + "\n" + f.es;
+        document.getElementById('mod-instr').innerText = f.instr;
+        document.getElementById('mod-ref').innerText = f.ref;
+        
+        // NOTA TEOLOGICA
+        let noteDiv = document.getElementById('mod-note');
+        if(f.nota) {
+            noteDiv.innerText = f.nota;
+            noteDiv.style.display = 'block';
+        } else {
+            noteDiv.style.display = 'none';
+        }
+
+        // YOM KIPUR SPECIAL
+        let warn = document.getElementById('mod-warn');
+        if(f.especial) warn.style.display = 'block';
+        else warn.style.display = 'none';
+
+        document.getElementById('modal-fiesta').style.display = 'flex';
+    },
+
+    openFiestaHoy: () => {
+        if(App.todayFiesta !== null) App.openFiesta(App.todayFiesta);
+    },
+
     renderHoy: () => {
         let hoy = new Date();
         if (hoy.getHours() < 6) hoy.setDate(hoy.getDate() - 1);
@@ -299,8 +395,14 @@ const App = {
             document.getElementById('heb-estacion').innerText = q.est;
             
             // FIESTAS
-            let f = App.DATA.FIESTAS.find(x => x.m === q.m && x.d === q.d);
-            document.getElementById('heb-fiesta').innerText = f ? "★ " + f.n : "";
+            let fIdx = App.DATA.FIESTAS.findIndex(x => x.m === q.m && x.d === q.d);
+            if(fIdx !== -1) {
+                App.todayFiesta = fIdx;
+                document.getElementById('heb-fiesta').innerText = "★ " + App.DATA.FIESTAS[fIdx].n;
+            } else {
+                App.todayFiesta = null;
+                document.getElementById('heb-fiesta').innerText = "";
+            }
 
             // VISUAL PUERTAS
             document.querySelectorAll('.gate-dot').forEach((d,i) => {
@@ -333,13 +435,37 @@ const App = {
         list.innerHTML = "";
         let test = new Date(y, 2, 15);
         let html = "";
+        
+        // Iteramos para encontrar todas las fiestas del año
         for(let i=0; i<370; i++) {
             let d = new Date(test.getTime() + (i*86400000));
             let q = App.calc(d);
             if(!q || q.special) continue;
-            let f = App.DATA.FIESTAS.find(x => x.m === q.m && x.d === q.d);
-            if(f) {
-                html += `<div class="card cal-row fiesta"><div><span style="display:block; font-weight:bold;">${f.n}</span><span style="font-size:0.9rem; opacity:0.8;">${q.d} / ${App.DATA.MESES[q.m]}</span></div><div style="text-align:right;"><span style="display:block;">${d.toLocaleDateString('es-ES', {day:'numeric', month:'short'})}</span><span style="font-size:0.8rem;">${App.DATA.DIAS[q.idxSem].split(' ')[0]}</span></div></div>`;
+            
+            // Verificamos si es INICIO de fiesta
+            let fIdx = App.DATA.FIESTAS.findIndex(x => x.m === q.m && x.d === q.d);
+            
+            if(fIdx !== -1) {
+                let f = App.DATA.FIESTAS[fIdx];
+                let dateLabel = d.toLocaleDateString('es-ES', {day:'numeric', month:'short'});
+                
+                // Si dura más de 1 día, calculamos fin
+                if(f.dur > 1) {
+                    let end = new Date(d);
+                    end.setDate(end.getDate() + f.dur - 1);
+                    dateLabel += " - " + end.toLocaleDateString('es-ES', {day:'numeric', month:'short'});
+                }
+
+                html += `<div class="cal-row fiesta" onclick="App.openFiesta(${fIdx}, ${y})">
+                    <div>
+                        <span class="cal-fiesta-name">${f.n}</span>
+                        <span class="cal-fiesta-sub">${f.es}</span>
+                    </div>
+                    <div style="text-align:right;">
+                        <span style="display:block; font-weight:bold;">${dateLabel}</span>
+                        <span style="font-size:0.8rem;">${q.d}/${q.m+1}</span>
+                    </div>
+                </div>`;
             }
         }
         list.innerHTML = html || "<div class='card'>Sin datos.</div>";
