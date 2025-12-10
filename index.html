@@ -9,17 +9,17 @@
     <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIlF1bXJhbiBXYXRjaCIsCiAgInNob3J0X25hbWUiOiAiUXVtdXJhbiIsCiAgInN0YXJ0X3VybCI6ICIvIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMWExMjBiIiwKICAidGhlbWVfY29sb3IiOiAiIzFhMTIwYiIsCiAgImljb25zIjogW3sKICAgICJzcmMiOiAiaHR0cHM6Ly9pbWcuY29tL3NhbXBsZS5wbmciLAogICAgInNpemVzIjogIjE5MngxOTIiLAogICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogIH1dCn0=">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=David+Libre:wght@400;700&family=Noto+Sans+Phoenician&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=David+Libre:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
-        /* --- ESTÉTICA DANIEL V1.1 (LETRAS GRANDES) --- */
+        /* --- ESTÉTICA DANIEL V1.2 (VISUAL) --- */
         :root {
-            --bg-dark: #1a120b; /* Cueva */
-            --paper: #e0d2bc;   /* Pergamino */
-            --gold: #c5a059;    /* Divino/Sacerdotal */
-            --red: #8a2c2c;     /* Sangre/Alerta */
-            --faint: #5a4d3f;   /* Texto secundario */
-            --shadow: 0 4px 20px rgba(0,0,0,0.6);
+            --bg-dark: #1a120b;
+            --paper: #e0d2bc;
+            --gold: #c5a059;
+            --red: #8a2c2c;
+            --faint: #5a4d3f;
+            --active-gate: #ffdb8b;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -38,78 +38,86 @@
             padding: 20px; padding-bottom: 90px;
             background: radial-gradient(circle at top, #251a12, #1a120b);
             box-shadow: 0 0 50px rgba(0,0,0,0.5);
-            position: relative;
         }
 
-        /* TIPOGRAFÍA JERÁRQUICA AUMENTADA */
-        h1, h2, h3 { font-family: 'Cinzel', serif; margin: 0; text-align: center; color: var(--gold); letter-spacing: 1px; }
-        h1 { font-size: 1.8rem; border-bottom: 2px solid var(--gold); padding-bottom: 15px; margin-bottom: 25px; text-transform: uppercase; }
-        h2 { font-size: 1.4rem; margin-bottom: 15px; }
-        
-        /* TARJETA PRINCIPAL (EL TIEMPO) */
+        h1, h2, h3 { font-family: 'Cinzel', serif; margin: 0; text-align: center; color: var(--gold); }
+        h1 { font-size: 1.8rem; border-bottom: 2px solid var(--gold); padding-bottom: 15px; margin-bottom: 20px; text-transform: uppercase; }
+        h2 { font-size: 1.3rem; margin-bottom: 15px; }
+
+        /* TARJETA GENERICA */
         .card {
             background: rgba(30, 20, 15, 0.6);
             border: 1px solid var(--faint);
             border-left: 4px solid var(--gold);
-            padding: 25px 20px; border-radius: 6px;
-            margin-bottom: 25px;
-            box-shadow: var(--shadow);
+            padding: 20px; border-radius: 6px;
+            margin-bottom: 20px;
             backdrop-filter: blur(5px);
         }
 
-        /* AJUSTE DE TAMAÑOS CLAVE */
-        .fecha-hebrea { font-size: 2.4rem; color: var(--paper); text-align: center; font-weight: bold; margin: 10px 0 15px 0; font-family: 'Cinzel'; line-height: 1.1; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-        .fecha-greg { font-size: 1.1rem; color: var(--faint); text-align: center; font-style: italic; margin-bottom: 10px; display: block; }
+        /* COMPONENTES DE TIEMPO */
+        .fecha-hebrea { font-size: 2.2rem; color: var(--paper); text-align: center; font-weight: bold; margin: 5px 0; font-family: 'Cinzel'; line-height: 1.1; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .fecha-greg { font-size: 1rem; color: var(--faint); text-align: center; font-style: italic; display: block; }
         
-        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; border-top: 1px solid var(--faint); padding-top: 15px; }
-        .info-box { text-align: center; }
-        .lbl { font-size: 0.8rem; color: var(--gold); text-transform: uppercase; display: block; margin-bottom: 6px; letter-spacing: 1px; font-weight: bold;}
-        .val { font-size: 1.3rem; font-weight: bold; color: #fff; }
+        .lbl { font-size: 0.75rem; color: var(--gold); text-transform: uppercase; display: block; margin-bottom: 4px; font-weight: bold; letter-spacing: 1px;}
+        .val { font-size: 1.2rem; font-weight: bold; color: #fff; }
 
-        /* NAVEGACIÓN INFERIOR */
+        /* GRÁFICO DE PUERTAS DE ENOC */
+        .gate-container {
+            display: flex; justify-content: center; gap: 8px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--faint);
+        }
+        .gate-dot {
+            width: 25px; height: 25px;
+            border-radius: 50%;
+            border: 2px solid var(--faint);
+            display: flex; justify-content: center; align-items: center;
+            font-size: 0.7rem; color: var(--faint); font-weight: bold;
+            transition: 0.3s;
+        }
+        .gate-dot.active {
+            border-color: var(--gold);
+            background-color: var(--gold);
+            color: var(--bg-dark);
+            box-shadow: 0 0 10px var(--gold);
+            transform: scale(1.1);
+        }
+        .gate-label { text-align: center; font-size: 0.7rem; color: var(--gold); margin-top: 5px; text-transform: uppercase; }
+
+        /* BARRA SHABAT */
+        .shabat-container { margin-top: 15px; text-align: center; }
+        .shabat-bar-bg { width: 100%; height: 6px; background: var(--faint); border-radius: 3px; margin-top: 5px; overflow: hidden; }
+        .shabat-bar-fill { height: 100%; background: var(--gold); width: 0%; transition: width 1s ease; }
+        .shabat-text { font-size: 0.8rem; color: var(--paper); margin-top: 5px; font-style: italic; }
+
+        /* SALMOS TEXTO */
+        .psalm-box { max-height: 200px; overflow-y: auto; margin-top: 10px; padding-right: 5px; font-size: 1.05rem; line-height: 1.6; color: #d0c0a8; text-align: justify; display: none; border-top: 1px dashed var(--faint); padding-top: 10px; }
+        .psalm-toggle { cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 5px; color: var(--gold); font-size: 0.9rem; margin-top: 5px; }
+        
+        /* NAVEGACIÓN */
         .nav-bar {
             position: fixed; bottom: 0; left: 0; width: 100%;
             background: #140e08; border-top: 3px solid var(--gold);
             display: flex; justify-content: space-around;
             padding: 12px 0 20px 0; z-index: 100;
-            box-shadow: 0 -10px 30px rgba(0,0,0,0.8);
         }
         .nav-btn {
-            background: none; border: none;
-            color: var(--faint); font-family: 'Cinzel'; font-size: 0.75rem; font-weight: bold;
-            cursor: pointer; text-transform: uppercase; transition: 0.3s;
-            display: flex; flex-direction: column; align-items: center; gap: 8px;
+            background: none; border: none; color: var(--faint);
+            font-family: 'Cinzel'; font-size: 0.7rem; font-weight: bold;
+            cursor: pointer; text-transform: uppercase;
+            display: flex; flex-direction: column; align-items: center; gap: 5px;
         }
-        .nav-btn.active { color: var(--gold); transform: scale(1.1); text-shadow: 0 0 15px rgba(197, 160, 89, 0.6); }
-        .nav-icon { font-size: 1.5rem; display: block; }
+        .nav-btn.active { color: var(--gold); transform: scale(1.1); text-shadow: 0 0 10px rgba(197, 160, 89, 0.6); }
+        .nav-icon { font-size: 1.4rem; }
 
-        /* SECCIONES */
+        /* UTILS */
         .view { display: none; animation: fade 0.4s; }
         .view.active { display: block; }
         @keyframes fade { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:translateY(0);} }
-
-        /* TABLAS Y LISTAS */
-        .cal-row { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px dashed var(--faint); font-size: 1.1rem; }
-        .cal-row.fiesta { color: var(--gold); font-weight: bold; background: rgba(197, 160, 89, 0.08); padding: 15px 10px; border-radius: 4px; border-left: 3px solid var(--gold);}
+        .btn-action { width: 100%; padding: 15px; background: var(--gold); color: #1a120b; font-family: 'Cinzel'; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; text-transform: uppercase; margin-top: 10px; }
         
-        /* BOTONES */
-        .btn-action {
-            width: 100%; padding: 18px;
-            background: var(--gold); color: #1a120b;
-            font-family: 'Cinzel'; font-weight: bold; font-size: 1.1rem;
-            border: none; border-radius: 4px;
-            cursor: pointer; margin-top: 15px;
-            box-shadow: 0 4px 15px rgba(197, 160, 89, 0.3);
-            text-transform: uppercase; letter-spacing: 1px;
-        }
+        /* CALENDARIO TABLA */
+        .cal-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px dashed var(--faint); font-size: 1rem; }
+        .cal-row.fiesta { color: var(--gold); font-weight: bold; background: rgba(197, 160, 89, 0.1); padding: 10px; border-radius: 4px; border-left: 3px solid var(--gold); margin-bottom: 5px;}
 
-        /* FUNDAMENTOS (TEXTO) */
-        .fundamento-txt { font-size: 1.15rem; line-height: 1.7; color: #d0c0a8; margin-bottom: 20px; text-align: justify; }
-        .fundamento-txt strong { color: var(--gold); }
-        .versiculo { font-style: italic; color: #998; border-left: 3px solid var(--red); padding-left: 15px; margin: 15px 0; font-size: 1.1rem; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 0 4px 4px 0;}
-
-        /* NOTIFICACIONES */
-        .aviso { padding: 15px; border: 1px solid var(--gold); background: rgba(197,160,89,0.15); color: var(--gold); text-align: center; font-size: 0.95rem; margin-bottom: 20px; border-radius: 4px; font-weight: bold; display:none; }
     </style>
 </head>
 <body>
@@ -118,96 +126,112 @@
     <h1>Qumran Watch</h1>
 
     <div id="view-hoy" class="view active">
-        <div id="alerta-vigilia" class="aviso">🌙 MODO VIGILIA: Litúrgicamente ya es mañana</div>
         
         <div class="card">
             <span class="fecha-greg" id="greg-date">...</span>
             <div class="fecha-hebrea" id="heb-date">Cargando...</div>
-            <div style="text-align:center; margin-bottom:15px; font-size:1.1rem; color:var(--red); font-weight:bold; text-transform:uppercase; letter-spacing:1px;" id="heb-fiesta"></div>
+            <div style="text-align:center; font-size:1.1rem; color:var(--red); font-weight:bold; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;" id="heb-fiesta"></div>
             
-            <div class="info-grid">
-                <div class="info-box"><span class="lbl">DÍA SEMANA</span><span class="val" id="heb-dia"></span></div>
-                <div class="info-box"><span class="lbl">TURNO (MISHMAR)</span><span class="val" id="heb-turno"></span></div>
+            <div style="text-align:center; margin-bottom:15px;">
+                <span class="lbl">DÍA DE LA SEMANA</span>
+                <span class="val" id="heb-dia"></span>
+                
+                <div class="shabat-container">
+                    <div class="shabat-bar-bg"><div class="shabat-bar-fill" id="shabat-progress"></div></div>
+                    <div class="shabat-text" id="shabat-text"></div>
+                </div>
             </div>
-            <div class="info-grid" style="border:none; padding-top:10px;">
-                <div class="info-box"><span class="lbl">PUERTA SOLAR</span><span class="val" id="heb-puerta"></span></div>
-                <div class="info-box"><span class="lbl">ESTACIÓN</span><span class="val" id="heb-estacion"></span></div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; border-top:1px solid var(--faint); padding-top:10px;">
+                <div style="text-align:center;">
+                    <span class="lbl">TURNO (MISHMAR)</span>
+                    <span class="val" id="heb-turno"></span>
+                </div>
+                <div style="text-align:center;">
+                    <span class="lbl">ESTACIÓN</span>
+                    <span class="val" id="heb-estacion" style="font-size:1rem;"></span>
+                </div>
+            </div>
+
+            <div style="margin-top:15px;">
+                <div class="gate-label">PUERTAS DEL CIELO (ENOC 72)</div>
+                <div class="gate-container" id="gate-visuals">
+                    <div class="gate-dot">1</div><div class="gate-dot">2</div><div class="gate-dot">3</div>
+                    <div class="gate-dot">4</div><div class="gate-dot">5</div><div class="gate-dot">6</div>
+                </div>
+                <div style="text-align:center; font-size:0.8rem; color:var(--faint); margin-top:5px;">El Sol sale por la <span id="heb-puerta-num" style="color:var(--gold);">...</span></div>
             </div>
         </div>
 
         <div class="card">
-            <span class="lbl" style="text-align:center; border-bottom:1px solid var(--faint); padding-bottom:5px; margin-bottom:10px;">SALMO DEL DÍA (Shir Shel Yom)</span>
-            <div id="salmo-dia" style="text-align:center; font-style:italic; margin-top:10px; font-size:1.25rem; line-height:1.4;"></div>
+            <div onclick="App.togglePsalm()" style="cursor:pointer;">
+                <span class="lbl" style="text-align:center;">SALMO DEL DÍA (Shir Shel Yom)</span>
+                <div id="salmo-titulo" style="text-align:center; font-style:italic; margin-top:5px; font-size:1.1rem; font-weight:bold; color:#fff;"></div>
+                <div class="psalm-toggle">▼ Leer Salmo Completo</div>
+            </div>
+            <div id="salmo-texto" class="psalm-box"></div>
         </div>
 
         <div class="card" onclick="window.open('https://youtube.com/playlist?list=PLr4MABEXstnDLUVcD7EenO4vN8EglZoSz', '_blank')" style="cursor:pointer; border-color:var(--red); border-left-width:4px;">
             <span class="lbl" style="color:var(--red);">🎙️ PODCAST OFICIAL</span>
-            <div style="text-align:center; font-weight:bold; font-size:1.2rem; margin-top:5px; color:#fff;">Diseñados para Gobernar</div>
-            <div style="text-align:center; font-size:0.9rem; color:#aaa; margin-top:5px;">Escuchar enseñanza de hoy ➔</div>
+            <div style="text-align:center; font-weight:bold; font-size:1.1rem; margin-top:5px; color:#fff;">Diseñados para Gobernar</div>
         </div>
     </div>
 
     <div id="view-cal" class="view">
         <h2>Ciclo Anual</h2>
-        <div style="display:flex; gap:10px; margin-bottom:20px;">
-            <input type="number" id="cal-year" value="2025" style="background:#2a2018; border:1px solid var(--faint); color:var(--paper); padding:15px; flex:1; text-align:center; font-family:'Cinzel'; font-size:1.2rem; border-radius:4px;">
+        <div style="display:flex; gap:10px; margin-bottom:15px;">
+            <input type="number" id="cal-year" value="2025" style="background:#2a2018; border:1px solid var(--faint); color:var(--paper); padding:10px; flex:1; text-align:center; font-family:'Cinzel'; font-size:1.1rem; border-radius:4px;">
             <button class="btn-action" style="flex:1; margin:0;" onclick="App.renderCalendar()">Ver Ciclo</button>
         </div>
         <div id="cal-lista"></div>
     </div>
 
     <div id="view-edu" class="view">
-        <h2>La Restauración</h2>
-        <div class="card">
-            <p class="fundamento-txt">El calendario que tienes en tus manos no es una invención moderna, sino la <strong>restauración matemática</strong> del orden entregado a Enoc y Moisés.</p>
-            
-            <h3 style="font-size:1.2rem; color:var(--red); margin-top:25px; text-align:left; border-bottom:1px solid var(--faint); padding-bottom:5px;">1. El Año de 364 Días</h3>
-            <p class="fundamento-txt">A diferencia del calendario lunar (354 días) o gregoriano (365), el calendario bíblico perfecto consta de <strong>52 semanas exactas</strong> (52 x 7 = 364). Esto asegura que las fiestas de YHWH caigan siempre en el mismo día de la semana, evitando profanar el Shabat.</p>
-
-            <h3 style="font-size:1.2rem; color:var(--red); margin-top:25px; text-align:left; border-bottom:1px solid var(--faint); padding-bottom:5px;">2. El Ciclo de 6 Años</h3>
-            <p class="fundamento-txt">Para alinearse con el sol real (365.25 días), no usamos años bisiestos desordenados. Seguimos el patrón de los Sacerdotes (Mishmarot): 6 años de 364 días seguidos de una <strong>Semana de Ajuste (Intercalar)</strong>. Esto reinicia el ciclo solar sin romper el orden sabático.</p>
-
-            <div class="versiculo">"Y el sol y las estrellas traen todos los años exactamente, para que ellos no adelanten ni retrasen su posición ni un solo día..."<br><br><span style="font-size:0.9em; opacity:0.7">1 Enoc 74:12</span></div>
-
-            <h3 style="font-size:1.2rem; color:var(--red); margin-top:25px; text-align:left; border-bottom:1px solid var(--faint); padding-bottom:5px;">3. El Ancla 2019-2025</h3>
-            <p class="fundamento-txt">Nuestros cálculos se basan en el Jubileo Sacerdotal restaurado. El ciclo actual inició en <strong>2019 (Turno Gamul)</strong>. En Marzo de 2025 se aplicó el primer Gran Ajuste (Semana Intercalar) para alinearnos con el <strong>Equilux</strong> (equilibrio perfecto de luz).</p>
+        <h2>Verdad Restaurada</h2>
+        <div class="card" style="font-size:1rem; line-height:1.6; text-align:justify;">
+            <p><strong>El Tiempo es Santo.</strong> No usamos el calendario de Roma (Gregoriano) ni el de Babilonia (Lunar Rabínico), sino el entregado a Enoc.</p>
+            <ul style="padding-left:20px; color:#ccc;">
+                <li><strong>364 Días:</strong> 52 semanas exactas.</li>
+                <li><strong>Alineación:</strong> El sol gobierna el día.</li>
+                <li><strong>Mishmarot:</strong> Los turnos sacerdotales marcan el ritmo de 6 años hasta el ajuste del Equilux.</li>
+            </ul>
         </div>
     </div>
-
 </div>
 
 <div class="nav-bar">
     <button class="nav-btn active" onclick="App.nav('hoy', this)"><span class="nav-icon">☀</span>Hoy</button>
     <button class="nav-btn" onclick="App.nav('cal', this)"><span class="nav-icon">📅</span>Ciclo</button>
-    <button class="nav-btn" onclick="App.nav('edu', this)"><span class="nav-icon">📜</span>Verdad</button>
+    <button class="nav-btn" onclick="App.nav('edu', this)"><span class="nav-icon">📜</span>Saber</button>
 </div>
 
 <script>
-/**
- * MOTOR DE CALENDARIO GWDF (Gospel Worth Dying For Logic)
- * Ancla Maestra: 2019 (Inicio Jubileo, Gamul)
- * Lógica: Ciclos de 6 años. Años 1-5 = 364 días. Año 6 = 364 + 7 días (Intercalar).
- */
 const App = {
     DATA: {
         MESES: ["Mes 1 (Aviv)", "Mes 2 (Ziv)", "Mes 3 (Siván)", "Mes 4", "Mes 5 (Av)", "Mes 6 (Elul)", "Mes 7 (Etanim)", "Mes 8 (Bul)", "Mes 9", "Mes 10", "Mes 11", "Mes 12"],
-        DIAS: ["Yom Rishon", "Yom Sheni", "Yom Shlishi", "Yom Revii", "Yom Hamishi", "Yom Shishi", "Shabat"],
+        DIAS: ["Yom Rishon (Día Uno)", "Yom Sheni (Día Dos)", "Yom Shlishi (Día Tres)", "Yom Revii (Día Cuatro)", "Yom Hamishi (Día Cinco)", "Yom Shishi (Día Seis)", "Shabat (Reposo)"],
         TURNOS: ["Yehoiarib", "Jedaiah", "Harim", "Seorim", "Malquías", "Mijamín", "Hacoz", "Abías", "Jesúa", "Secanías", "Eliasib", "Jaquim", "Hupa", "Jesebeab", "Bilga", "Imer", "Hezir", "Hapises", "Petaías", "Ezequiel", "Jaquín", "Gamul", "Delaía", "Maaziah"],
+        PUERTAS_SOLARES: [4, 5, 6, 6, 5, 4, 3, 2, 1, 1, 2, 3], // Según Mes 1-12
         FIESTAS: [
-            {m:0, d:1, n:"Rosh Jodesh (Año Nuevo)"}, {m:0, d:10, n:"Selección del Cordero"}, {m:0, d:14, n:"PESAJ (Cena)"}, {m:0, d:15, n:"Hag Hamatzot (Panes)", dur:7}, {m:0, d:26, n:"Primicias (Gavilla)"},
-            {m:1, d:14, n:"Pesaj Sheni"}, {m:2, d:15, n:"SHAVUOT (Semanas)"}, 
-            {m:3, d:1, n:"Inicio Verano"}, {m:4, d:3, n:"Fiesta del Vino Nuevo"}, {m:4, d:9, n:"Ayuno 5° Mes"},
-            {m:5, d:22, n:"Fiesta del Aceite"}, {m:6, d:1, n:"YOM TERUAH (Trompetas)"}, {m:6, d:10, n:"YOM KIPUR (Expiación)"}, {m:6, d:15, n:"SUCOT (Tabernáculos)", dur:7}, {m:6, d:22, n:"Shemini Atzeret"}
+            {m:0, d:1, n:"Rosh Jodesh (Año Nuevo)"}, {m:0, d:10, n:"Selección del Cordero"}, {m:0, d:14, n:"PESAJ (Cena)"}, {m:0, d:15, n:"Hag Hamatzot", dur:7}, {m:0, d:26, n:"Primicias (Omer)"},
+            {m:1, d:14, n:"Pesaj Sheni"}, {m:2, d:15, n:"SHAVUOT"}, 
+            {m:3, d:1, n:"Inicio Verano"}, {m:4, d:3, n:"Fiesta Vino Nuevo"}, {m:4, d:9, n:"Ayuno 5° Mes"},
+            {m:5, d:22, n:"Fiesta Aceite"}, {m:6, d:1, n:"YOM TERUAH"}, {m:6, d:10, n:"YOM KIPUR"}, {m:6, d:15, n:"SUCOT", dur:7}, {m:6, d:22, n:"Shemini Atzeret"}
         ],
-        SALMOS: ["Salmo 24 (La Tierra es de YHWH)", "Salmo 48 (Ciudad del Rey)", "Salmo 82 (Dios en la reunión)", "Salmo 94 (Dios de venganzas)", "Salmo 81 (Cantad con gozo)", "Salmo 93 (YHWH Reina)", "Salmo 92 (Cántico para el Shabat)"]
+        SALMOS: [
+            {t: "Salmo 24", v: "De YHWH es la tierra y su plenitud; El mundo, y los que en él habitan. Porque él la fundó sobre los mares, Y la afirmó sobre los ríos. ¿Quién subirá al monte de YHWH? ¿Y quién estará en su lugar santo? El limpio de manos y puro de corazón..."},
+            {t: "Salmo 48", v: "Grande es YHWH, y digno de ser en gran manera alabado En la ciudad de nuestro Dios, en su monte santo. Hermosa provincia, el gozo de toda la tierra, Es el monte de Sion, a los lados del norte, La ciudad del gran Rey..."},
+            {t: "Salmo 82", v: "Dios está en la reunión de los dioses; En medio de los dioses juzga. ¿Hasta cuándo juzgaréis injustamente, Y aceptaréis las personas de los impíos? Defended al débil y al huérfano; Haced justicia al afligido y al menesteroso..."},
+            {t: "Salmo 94", v: "YHWH, Dios de las venganzas, Dios de las venganzas, muéstrate. Engrandécete, oh Juez de la tierra; Da el pago a los soberbios. ¿Hasta cuándo los impíos, Hasta cuándo, oh YHWH, se gozarán los impíos?..."},
+            {t: "Salmo 81", v: "Cantad con gozo a Dios, fortaleza nuestra; Al Dios de Jacob aclamad con júbilo. Entonad canción, y tañed el pandero, El arpa deliciosa y el salterio. Tocad la trompeta en la nueva luna, En el día señalado, en el día de nuestra fiesta solemne..."},
+            {t: "Salmo 93", v: "YHWH reina; se vistió de magnificencia; YHWH se vistió, se ciñó de poder. Afirmó también el mundo, y no se moverá. Firme es tu trono desde entonces; Tú eres eternamente..."},
+            {t: "Salmo 92", v: "Bueno es alabarte, oh YHWH, Y cantar salmos a tu nombre, oh Altísimo; Anunciar por la mañana tu misericordia, Y tu fidelidad cada noche... Por cuanto me has alegrado, oh YHWH, con tus obras; En las obras de tus manos me gozo."}
+        ]
     },
+    ANCHOR: { y: 2019, m: 2, d: 20, turnoIdx: 21 }, 
 
-    // FECHA ANCLA: 20 de Marzo de 2019 (Inicio del ciclo moderno)
-    ANCHOR: { y: 2019, m: 2, d: 20, turnoIdx: 21 }, // Gamul es index 21
-
-    init: () => {
-        App.renderHoy();
-    },
+    init: () => { App.renderHoy(); },
 
     nav: (viewId, btn) => {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -215,131 +239,91 @@ const App = {
         document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
     },
+    
+    togglePsalm: () => {
+        let box = document.getElementById('salmo-texto');
+        let btn = document.querySelector('.psalm-toggle');
+        if(box.style.display === 'block'){ box.style.display='none'; btn.innerText='▼ Leer Salmo Completo'; }
+        else { box.style.display='block'; btn.innerText='▲ Ocultar'; }
+    },
 
-    // MOTOR MATEMÁTICO AUTÓNOMO
-    calcularFechaQumran: (dateObj) => {
-        // 1. Calcular días transcurridos desde el Ancla (20 Marzo 2019)
-        let anchorDate = new Date(2019, 2, 20); // Mes 2 es Marzo en JS
-        let diffTime = dateObj - anchorDate;
-        let diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    // ALGORITMO GWDF AUTONOMO
+    calc: (dateObj) => {
+        let anchor = new Date(2019, 2, 20);
+        let diff = Math.floor((dateObj - anchor) / 86400000);
+        if (diff < 0) return null;
 
-        if (diffDays < 0) return null; // No soporta fechas pre-2019 en esta versión
-
-        // 2. Determinar ciclos de 6 años completados
-        // Un ciclo de 6 años tiene: (364*6) + 7 = 2191 días
-        let diasCicloSexenal = 2191;
-        let ciclosCompletos = Math.floor(diffDays / diasCicloSexenal);
-        let diasEnCicloActual = diffDays % diasCicloSexenal;
-
-        // 3. Determinar en qué año del ciclo (1-6) estamos
-        let yearInCycle = 1;
-        let daysCount = 0;
-        let isIntercalaryYear = false;
-
-        // Años 1 al 5 duran 364 días. Año 6 dura 364 + 7 = 371
-        for (let y = 1; y <= 6; y++) {
-            let diasEsteAno = (y === 6) ? 371 : 364;
-            if (diasEnCicloActual < diasEsteAno) {
-                yearInCycle = y;
-                if(y === 6) isIntercalaryYear = true; // Estamos en el año del ajuste
-                daysCount = diasEnCicloActual;
-                break;
-            }
-            diasEnCicloActual -= diasEsteAno;
-        }
-
-        // 4. Manejo de la Semana Intercalar (Solo al final del año 6)
-        // Si estamos en el año 6 y pasamos el día 364, es la semana extra.
-        let isIntercalaryWeek = (isIntercalaryYear && daysCount >= 364);
+        let cicloSex = 2191; // (364*6)+7
+        let enCiclo = diff % cicloSex;
         
-        if (isIntercalaryWeek) {
-            return {
-                special: "Semana de Ajuste Solar",
-                diaSemanaIdx: (daysCount % 7) + 3, // Ajuste simple de día semana
-                turno: App.calcularTurno(diffDays)
-            };
+        let yInC = 1, dCount = 0, isInter = false;
+        for (let y = 1; y <= 6; y++) {
+            let dYear = (y === 6) ? 371 : 364;
+            if (enCiclo < dYear) { yInC = y; if(y===6) isInter=true; dCount = enCiclo; break; }
+            enCiclo -= dYear;
         }
 
-        // 5. Calcular Mes y Día Qumránico (Año normal de 364)
-        // Estructura: 30, 30, 31 (Tekufah) repetido 4 veces
-        let daysRest = daysCount;
-        let mesQ = 0;
-        let diaQ = 0;
-        let pattern = [30, 30, 31, 30, 30, 31, 30, 30, 31, 30, 30, 31];
+        if (isInter && dCount >= 364) return { special: true, turno: App.turn(diff), idxSem: (dCount % 7) + 3 }; // Ajuste semana
 
+        let ptrn = [30,30,31,30,30,31,30,30,31,30,30,31];
+        let dRest = dCount, mQ = 0, dQ = 0;
         for (let i = 0; i < 12; i++) {
-            if (daysRest < pattern[i]) {
-                mesQ = i;
-                diaQ = daysRest + 1;
-                break;
-            }
-            daysRest -= pattern[i];
+            if (dRest < ptrn[i]) { mQ = i; dQ = dRest + 1; break; }
+            dRest -= ptrn[i];
         }
-
-        // 6. Día de la Semana (Fijo en Qumrán: Día 1 siempre es Miércoles si start es Wed)
-        // Pero usamos el real calculado desde el ancla para sincronizar.
-        // El ancla 2019-03-20 fue Miércoles (Día 4).
-        let diaSemanaReal = (3 + diffDays) % 7; // 0=Domingo, 3=Miercoles
-
+        
         return {
-            mes: mesQ,
-            dia: diaQ,
-            diaSemanaIdx: diaSemanaReal,
-            turno: App.calcularTurno(diffDays),
-            estacion: App.getEstacion(mesQ)
+            m: mQ, d: dQ, idxSem: (3 + diff) % 7, 
+            turno: App.turn(diff), 
+            est: (mQ<3?"Primavera":(mQ<6?"Verano":(mQ<9?"Otoño":"Invierno"))),
+            puerta: App.DATA.PUERTAS_SOLARES[mQ]
         };
     },
 
-    calcularTurno: (totalDays) => {
-        // El ciclo sacerdotal corre ininterrumpido cada 7 días
-        let semanasPasadas = Math.floor(totalDays / 7);
-        let indice = (App.ANCHOR.turnoIdx + semanasPasadas) % 24;
-        return App.DATA.TURNOS[indice];
-    },
-
-    getEstacion: (m) => {
-        if (m < 3) return "Primavera (Siembra)";
-        if (m < 6) return "Verano (Cosecha)";
-        if (m < 9) return "Otoño (Vino/Aceite)";
-        return "Invierno (Lluvias)";
-    },
+    turn: (days) => App.DATA.TURNOS[(App.ANCHOR.turnoIdx + Math.floor(days/7)) % 24],
 
     renderHoy: () => {
         let hoy = new Date();
-        // Ajuste Vigilia: Si es antes de las 6 AM, es el día anterior litúrgico
-        if (hoy.getHours() < 6) {
-            hoy.setDate(hoy.getDate() - 1);
-            document.getElementById('alerta-vigilia').style.display = 'block';
-        }
-
-        let qData = App.calcularFechaQumran(hoy);
+        if (hoy.getHours() < 6) hoy.setDate(hoy.getDate() - 1);
         
-        document.getElementById('greg-date').innerText = hoy.toLocaleDateString('es-ES', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+        let q = App.calc(hoy);
+        document.getElementById('greg-date').innerText = hoy.toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long'});
 
-        if (qData && qData.special) {
+        if (q && q.special) {
             document.getElementById('heb-date').innerText = "SEMANA DE AJUSTE";
             document.getElementById('heb-dia').innerText = "Reset Solar";
-            document.getElementById('heb-fiesta').innerText = "Alineación Equilux";
-        } else if (qData) {
-            document.getElementById('heb-date').innerText = `${qData.dia} del ${App.DATA.MESES[qData.mes]}`;
-            document.getElementById('heb-dia').innerText = App.DATA.DIAS[qData.diaSemanaIdx];
-            document.getElementById('heb-turno').innerText = qData.turno;
-            document.getElementById('heb-estacion').innerText = qData.estacion;
+        } else if (q) {
+            document.getElementById('heb-date').innerText = `${q.d} del ${App.DATA.MESES[q.m]}`;
+            document.getElementById('heb-dia').innerText = App.DATA.DIAS[q.idxSem];
+            document.getElementById('heb-turno').innerText = q.turno;
+            document.getElementById('heb-estacion').innerText = q.est;
             
-            // Puerta Solar (Simplificada por mes)
-            let puertas = ["4ta", "5ta", "6ta", "6ta", "5ta", "4ta", "3ra", "2da", "1ra", "1ra", "2da", "3ra"];
-            document.getElementById('heb-puerta').innerText = puertas[qData.mes] + " Puerta";
+            // FIESTAS
+            let f = App.DATA.FIESTAS.find(x => x.m === q.m && x.d === q.d);
+            document.getElementById('heb-fiesta').innerText = f ? "★ " + f.n : "";
 
-            // Salmo
-            document.getElementById('salmo-dia').innerText = App.DATA.SALMOS[qData.diaSemanaIdx];
+            // VISUAL PUERTAS
+            document.querySelectorAll('.gate-dot').forEach((d,i) => {
+                d.classList.toggle('active', (i+1) === q.puerta);
+            });
+            document.getElementById('heb-puerta-num').innerText = q.puerta + "ª Puerta";
 
-            // Fiestas
-            let f = App.DATA.FIESTAS.find(x => x.m === qData.mes && x.d === qData.dia);
-            if(f) document.getElementById('heb-fiesta').innerText = "★ " + f.n;
-            else document.getElementById('heb-fiesta').innerText = "";
-        } else {
-            // Manejo de error si fecha es pre-2019
-            document.getElementById('heb-date').innerText = "Fuera de rango";
+            // BARRA SHABAT
+            let diasRestantes = 6 - q.idxSem;
+            let percent = ((q.idxSem + 1) / 7) * 100;
+            if(diasRestantes === 0) {
+                document.getElementById('shabat-text').innerText = "¡SHABAT SHALOM!";
+                document.getElementById('shabat-progress').style.background = "#fff";
+                percent = 100;
+            } else {
+                document.getElementById('shabat-text').innerText = `Faltan ${diasRestantes} días para el Shabat`;
+            }
+            document.getElementById('shabat-progress').style.width = percent + "%";
+
+            // SALMO
+            let s = App.DATA.SALMOS[q.idxSem];
+            document.getElementById('salmo-titulo').innerText = s.t;
+            document.getElementById('salmo-texto').innerText = s.v;
         }
     },
 
@@ -347,44 +331,21 @@ const App = {
         let y = parseInt(document.getElementById('cal-year').value);
         let list = document.getElementById('cal-lista');
         list.innerHTML = "";
-
-        // Generar hitos del año
-        // Buscamos el 1 de Aviv de ese año gregoriano
-        // Estrategia: Buscar el 20 de Marzo y ver qué fecha Qumrán es
-        let testDate = new Date(y, 2, 15); // Empezar a buscar desde Marzo 15
-        
+        let test = new Date(y, 2, 15);
         let html = "";
-        
-        // Iteramos buscando las fiestas
-        // Límite de seguridad: 365 días
         for(let i=0; i<370; i++) {
-            let d = new Date(testDate.getTime() + (i * 86400000));
-            let q = App.calcularFechaQumran(d);
+            let d = new Date(test.getTime() + (i*86400000));
+            let q = App.calc(d);
             if(!q || q.special) continue;
-
-            let fiesta = App.DATA.FIESTAS.find(x => x.m === q.mes && x.d === q.dia);
-            if(fiesta) {
-                html += `<div class="card cal-row fiesta">
-                    <div>
-                        <span style="display:block; font-weight:bold;">${fiesta.n}</span>
-                        <span style="font-size:0.9rem; opacity:0.8;">${q.dia} / ${App.DATA.MESES[q.mes]}</span>
-                    </div>
-                    <div style="text-align:right;">
-                        <span style="display:block;">${d.toLocaleDateString('es-ES', {day:'numeric', month:'short'})}</span>
-                        <span style="font-size:0.8rem;">${App.DATA.DIAS[q.diaSemanaIdx]}</span>
-                    </div>
-                </div>`;
+            let f = App.DATA.FIESTAS.find(x => x.m === q.m && x.d === q.d);
+            if(f) {
+                html += `<div class="card cal-row fiesta"><div><span style="display:block; font-weight:bold;">${f.n}</span><span style="font-size:0.9rem; opacity:0.8;">${q.d} / ${App.DATA.MESES[q.m]}</span></div><div style="text-align:right;"><span style="display:block;">${d.toLocaleDateString('es-ES', {day:'numeric', month:'short'})}</span><span style="font-size:0.8rem;">${App.DATA.DIAS[q.idxSem].split(' ')[0]}</span></div></div>`;
             }
         }
-        
-        if(html === "") html = "<div class='card'>No se encontraron datos para este rango.</div>";
-        list.innerHTML = html;
+        list.innerHTML = html || "<div class='card'>Sin datos.</div>";
     }
 };
-
-// Iniciar App
 document.addEventListener('DOMContentLoaded', App.init);
-
 </script>
 </body>
 </html>
