@@ -92,7 +92,7 @@
         .teological-note { font-size: 0.85rem; background: rgba(197, 160, 89, 0.1); padding: 10px; border-left: 2px solid var(--gold); margin-top: 10px; color: #ccc; font-style: italic;}
 
         /* SALMOS */
-        .psalm-box { max-height: 300px; overflow-y: auto; margin-top: 10px; padding-right: 5px; font-size: 1.1rem; line-height: 1.6; color: #d0c0a8; text-align: justify; display: none; border-top: 1px dashed var(--faint); padding-top: 15px; white-space: pre-wrap; }
+        .psalm-box { max-height: 300px; overflow-y: auto; margin-top: 10px; padding-right: 5px; font-size: 1.1rem; line-height: 1.6; color: #ffff; text-align: justify; display: none; border-top: 1px dashed var(--faint); padding-top: 15px; white-space: pre-wrap; }
         .psalm-toggle { cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 5px; color: var(--gold); font-size: 0.9rem; margin-top: 5px; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 4px;}
         
         /* CALENDARIO */
@@ -219,7 +219,7 @@
         <div id="cal-lista"></div>
     </div>
 
-    <div id="view-edu" class="view">
+   <div id="view-edu" class="view">
         <h2>Verdad Restaurada</h2>
         <article class="card">
             <p class="fundamento-txt">El calendario que tienes en tus manos no es una invención moderna, sino la <strong>restauración matemática</strong> del orden entregado a Enoc y Moisés.</p>
@@ -241,17 +241,6 @@
 
             <p class="fundamento-txt">Fijamos el reinicio del ciclo sacerdotal en <strong>2019</strong> debido a una señal astronómica precisa: El Equinoccio de Primavera (Tekufah) en Jerusalén se alineó matemáticamente con un <strong>Miércoles</strong>. Esto permitió sincronizar el "reloj solar" con el "reloj sacerdotal" (Turno Gamul) en perfecta armonía con el diseño del Génesis.</p>
         </article>
-        
-        <article id="btn-podcast-edu" class="card clickable" style="border-color:var(--red); border-left-width:4px; cursor:pointer;">
-            <span class="lbl" style="color:var(--red-text);">🎙️ PODCAST OFICIAL</span>
-            <div style="text-align:center; font-weight:bold; font-size:1.1rem; margin-top:5px; color:#fff;">Diseñados para Gobernar</div>
-        </article>
-        
-        <article id="btn-institute-edu" class="card clickable" style="border-color:#4a90e2; border-left-width:4px; cursor:pointer;">
-            <span class="lbl" style="color:#4a90e2;">🎓 ESTUDIOS BÍBLICOS</span>
-            <div style="text-align:center; font-weight:bold; font-size:1.1rem; margin-top:5px; color:#fff;">Instituto Descubre la Biblia</div>
-        </article>
-    </div>
         
         <article id="btn-podcast-edu" class="card clickable" style="border-color:var(--red); border-left-width:4px; cursor:pointer;">
             <span class="lbl" style="color:var(--red-text);">🎙️ PODCAST OFICIAL</span>
@@ -593,5 +582,4 @@ const App = {
 document.addEventListener('DOMContentLoaded', App.init);
 </script>
 </body>
-
 </html>
