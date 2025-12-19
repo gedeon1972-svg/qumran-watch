@@ -1,0 +1,558 @@
+/* --- ESTÉTICA DANIEL V6.4 (PÁGINA INDEPENDIENTE LITURGIA) --- */
+
+:root {
+    /* Base */
+    --bg-dark: #1a120b;
+    --paper: #e0d2bc;
+    --gold: #c5a059;
+    --gold-dim: #8a703d;
+    --red: #8a2c2c;
+    --red-text: #ff8e8e;
+    --blue: #4a90e2; 
+    
+    /* Paleta Sacerdotal */
+    --tekhelet: #1c2e36; /* Azul Oscuro (Mesías) */
+    --argaman: #3c1414;  /* Púrpura/Rojo Oscuro (Salmos) */
+    --shani: #4a1515;    /* Escarlata (Días de Temor) */
+    --omer: #4a3b15;     /* Trigo/Omer */
+    
+    --faint: #5a4d3f;
+    --brown-text: #bfa588;
+    --alert-bg: #3d2b1f;
+}
+
+/* --- RESET & BASE --- */
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+body { 
+    font-family: 'David Libre', serif; 
+    background-color: var(--bg-dark); 
+    color: var(--paper); 
+    margin: 0; padding: 0; 
+    min-height: 100vh; 
+    display: flex; 
+    justify-content: center; 
+}
+
+.app-frame { 
+    width: 100%; 
+    max-width: 500px; 
+    min-height: 100vh; 
+    padding: 20px; 
+    padding-bottom: 90px; 
+    background: radial-gradient(circle at top, #251a12, #1a120b); 
+    box-shadow: 0 0 50px rgba(0,0,0,0.5); 
+}
+
+/* --- TIPOGRAFÍA --- */
+h1, h2, h3 { font-family: 'Cinzel', serif; margin: 0; text-align: center; color: var(--gold); }
+
+h1 { 
+    font-size: 1.8rem; 
+    border-bottom: 2px solid var(--gold); 
+    padding-bottom: 15px; 
+    margin-bottom: 20px; 
+    text-transform: uppercase; 
+    letter-spacing: 2px; 
+}
+
+h2 { 
+    font-size: 1.3rem; 
+    margin-bottom: 15px; 
+    border-bottom: 1px solid var(--faint); 
+    display: inline-block; 
+    padding-bottom: 5px; 
+}
+
+h3.edu-heading {
+    font-size: 1.2rem;
+    color: var(--red-text);
+    margin-top: 25px;
+    text-align: left;
+    border-bottom: 1px solid var(--faint);
+    padding-bottom: 5px;
+}
+.liturgy-heading {
+    font-size: 1.4rem;
+    margin: 15px 0;
+    color: #1a0b0b; /* Color oscuro sobre papel claro */
+}
+
+/* --- UTILIDADES --- */
+.text-center { text-align: center; }
+.text-gold { color: var(--gold) !important; font-weight: bold; }
+.red-text { color: var(--red-text) !important; }
+.blue-text { color: var(--blue) !important; }
+.gold-text { color: var(--gold); font-size: 1rem; }
+.italic-sub { font-style: italic; font-size: 0.9rem; }
+
+.lbl { 
+    font-size: 0.75rem; 
+    color: var(--gold); 
+    text-transform: uppercase; 
+    display: block; 
+    margin-bottom: 4px; 
+    font-weight: bold; 
+    letter-spacing: 1px;
+}
+
+.val { font-size: 1.2rem; font-weight: bold; color: #fff; }
+
+/* --- ALERTAS --- */
+.watcher-alert { 
+    background: var(--alert-bg); 
+    border: 1px solid var(--gold); 
+    border-left: 5px solid var(--gold); 
+    color: #fff; 
+    padding: 1rem; 
+    margin-bottom: 1.5rem; 
+    border-radius: 4px; 
+    display: none; 
+    animation: slideIn 0.5s ease-out; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5); 
+}
+.watcher-title { 
+    font-family: 'Cinzel'; 
+    color: var(--gold); 
+    font-size: 0.9rem; 
+    font-weight: bold; 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    margin-bottom: 5px; 
+}
+.watcher-msg { font-size: 1rem; line-height: 1.4; }
+
+@keyframes slideIn { from {opacity:0; transform:translateY(-10px);} to {opacity:1; transform:translateY(0);} }
+
+/* --- TARJETAS GENERALES --- */
+article.card { 
+    background: rgba(30, 20, 15, 0.6); 
+    border: 1px solid var(--faint); 
+    border-left: 4px solid var(--gold); 
+    padding: 20px; 
+    border-radius: 6px; 
+    margin-bottom: 20px; 
+    backdrop-filter: blur(5px); 
+    transition: transform 0.2s, box-shadow 0.2s; 
+}
+article.card.clickable:active { transform: scale(0.98); background: rgba(30, 20, 15, 0.8); }
+
+/* --- TARJETA PRINCIPAL (HOY) --- */
+.fecha-hebrea { 
+    font-size: 2.2rem; 
+    color: var(--paper); 
+    text-align: center; 
+    font-weight: bold; 
+    margin: 5px 0; 
+    font-family: 'Cinzel'; 
+    line-height: 1.1; 
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5); 
+}
+.fecha-greg { 
+    font-size: 1rem; 
+    color: var(--brown-text); 
+    text-align: center; 
+    font-style: italic; 
+    display: block; 
+    font-weight: bold;
+}
+.fiesta-badge {
+    text-align: center; 
+    font-size: 1.1rem; 
+    color: var(--red-text); 
+    font-weight: bold; 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+    margin-bottom: 10px; 
+    cursor: pointer;
+}
+.info-block-center { text-align: center; margin-bottom: 15px; }
+.info-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 10px; 
+    border-top: 1px solid var(--faint); 
+    padding-top: 10px; 
+}
+
+/* SHABAT BAR */
+.shabat-container { margin-top: 5px; }
+.shabat-bar-bg { 
+    width: 100%; 
+    height: 6px; 
+    background: var(--faint); 
+    border-radius: 3px; 
+    margin-top: 5px; 
+    overflow: hidden; 
+}
+.shabat-bar-fill { height: 100%; background: var(--gold); width: 0%; transition: width 1s ease; }
+.shabat-text { font-size: 0.8rem; font-style: italic; margin-top: 5px; color: #ccc; }
+
+/* SOL Y PUERTAS */
+.solar-section { margin-top: 20px; }
+.gate-container { 
+    display: flex; 
+    justify-content: center; 
+    gap: 10px; 
+    margin-top: 15px; 
+    padding-top: 15px; 
+    border-top: 1px solid var(--faint); 
+}
+.gate-dot { 
+    width: 28px; height: 28px; 
+    border-radius: 50%; 
+    border: 2px solid var(--faint); 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    font-size: 0.75rem; 
+    color: var(--faint); 
+    font-weight: bold; 
+}
+.gate-dot.active { 
+    border-color: var(--gold); 
+    background-color: var(--gold); 
+    color: var(--bg-dark); 
+    box-shadow: 0 0 10px var(--gold); 
+    transform: scale(1.1); 
+}
+.solar-info-text { 
+    text-align: center; 
+    font-size: 1.05rem; 
+    color: var(--brown-text); 
+    margin-top: 12px; 
+    margin-bottom: 12px; 
+}
+.sun-times { 
+    display: flex; 
+    justify-content: space-around; 
+    background: rgba(0,0,0,0.2); 
+    padding: 12px; 
+    border-radius: 6px; 
+    border: 1px solid var(--faint); 
+    margin-top: 5px; 
+}
+.sun-item { 
+    font-size: 0.9rem; 
+    color: var(--paper); 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 2px;
+}
+.sun-val { color: var(--gold); font-weight: bold; font-size: 1.1rem; }
+#geo-btn { 
+    text-align: center; 
+    margin-top: 10px; 
+    font-size: 0.85rem; 
+    text-decoration: underline; 
+    cursor: pointer; 
+    color: var(--brown-text); 
+    transition: 0.3s; 
+    padding: 5px; 
+}
+#geo-btn:hover { color: var(--gold); }
+
+/* --- TARJETAS ESPECÍFICAS --- */
+
+/* OMER */
+article.card.omer { 
+    background: linear-gradient(135deg, var(--omer), #1a120b); 
+    border: 1px solid var(--gold); 
+    border-left: 4px solid #fff; 
+    display: none; 
+    text-align: center; 
+}
+.omer-count { 
+    font-size: 2.5rem; 
+    font-family: 'Cinzel'; 
+    color: #fff; 
+    font-weight: bold; 
+    line-height: 1; 
+    margin: 10px 0; 
+    text-shadow: 0 0 10px var(--gold); 
+}
+.omer-lbl { color: var(--gold); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; }
+
+/* TESHUVA */
+article.card.teshuva { 
+    background: linear-gradient(135deg, var(--shani), #1a0b0b); 
+    border: 1px solid #ff4d4d; 
+    border-left: 4px solid #ff4d4d; 
+    animation: pulse 2s infinite; 
+    display: none; 
+}
+.teshuva-title { 
+    color: #ff4d4d; 
+    font-family: 'Cinzel'; 
+    font-weight: bold; 
+    text-transform: uppercase; 
+    border-bottom: 1px solid rgba(255,77,77,0.3); 
+    padding-bottom: 8px; 
+    margin-bottom: 10px; 
+}
+.teshuva-cmd { font-size: 1.1rem; color: #fff; text-align: center; font-weight: bold; margin-bottom: 5px; }
+.teshuva-ref { font-size: 0.9rem; color: #ff8e8e; text-align: center; font-style: italic; }
+@keyframes pulse { 0% {box-shadow: 0 0 0 rgba(255,77,77,0);} 50% {box-shadow: 0 0 15px rgba(255,77,77,0.2);} 100% {box-shadow: 0 0 0 rgba(255,77,77,0);} }
+
+/* MESÍAS (Tekhelet) */
+article.card.messiah { 
+    background: linear-gradient(135deg, var(--tekhelet), #12181b); 
+    border: 1px solid var(--gold-dim); 
+    border-left: 4px solid #6dd5fa; 
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4); 
+}
+.messiah-title { 
+    color: #6dd5fa; 
+    font-family: 'Cinzel'; 
+    font-size: 1.1rem; 
+    border-bottom: 1px solid rgba(255,255,255,0.1); 
+    padding-bottom: 8px; 
+    margin-bottom: 12px; 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+    font-weight: bold; 
+}
+.messiah-theme { 
+    color: #fff; 
+    font-size: 1.05rem; 
+    font-weight: bold; 
+    margin-bottom: 8px; 
+    text-transform: uppercase; 
+    color: var(--gold); 
+}
+.messiah-quote { 
+    font-style: italic; 
+    color: #e0e6ed; 
+    font-size: 1.1rem; 
+    margin-bottom: 15px; 
+    border-left: 2px solid #6dd5fa; 
+    padding-left: 12px; 
+    line-height: 1.5; 
+}
+.messiah-action { 
+    background: rgba(0,0,0,0.3); 
+    padding: 12px; 
+    border-radius: 4px; 
+    color: #ccc; 
+    font-size: 0.95rem; 
+    border-top: 1px solid rgba(255,255,255,0.1); 
+}
+.messiah-label { color: var(--gold); font-weight: bold; font-size: 0.8rem; display: block; margin-bottom: 3px; }
+
+/* LITURGIA (PÁGINA DEDICADA) */
+.liturgy-tag { 
+    font-size: 0.8rem; 
+    color: var(--red); 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+    font-weight: bold; 
+    border: 1px solid var(--red); 
+    padding: 4px 8px; 
+    border-radius: 4px; 
+}
+.liturgy-paper {
+    background: #e0d2bc; /* Papel claro */
+    color: #1a0b0b;      /* Tinta oscura */
+    padding: 25px;
+    border-radius: 6px;
+    box-shadow: inset 0 0 40px rgba(0,0,0,0.15);
+    border: 4px double #bfa588;
+    margin-bottom: 20px;
+}
+.liturgy-paper.full-page {
+    min-height: 60vh;
+}
+.separator-gold {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(197, 160, 89, 0), rgba(197, 160, 89, 0.75), rgba(197, 160, 89, 0));
+    margin: 20px 0;
+}
+.liturgy-body {
+    font-family: 'David Libre', serif;
+    font-size: 1.3rem;
+    line-height: 1.6;
+    white-space: pre-wrap; 
+    text-align: justify;
+}
+.liturgy-footer {
+    text-align: center;
+    font-style: italic;
+    color: #8a703d;
+    margin-top: 30px;
+    font-weight: bold;
+}
+
+/* ENLACES EXTERNOS */
+.card-podcast { border-color: var(--red); border-left-width: 4px; cursor: pointer; }
+.card-institute { border-color: var(--blue); border-left-width: 4px; cursor: pointer; }
+.card-main-text { text-align: center; font-weight: bold; font-size: 1.1rem; margin-top: 5px; color: #fff; }
+.card-link { text-align: center; font-size: 0.8rem; color: #aaa; margin-top: 8px; }
+
+/* EDUCACIÓN TEXTOS */
+.fundamento-txt { margin-bottom: 10px; line-height: 1.5; font-size: 1.05rem; }
+.versiculo { 
+    background: rgba(0,0,0,0.3); 
+    padding: 15px; 
+    border-left: 2px solid var(--gold); 
+    font-style: italic; 
+    color: #d0c0a8; 
+    margin: 10px 0; 
+}
+.ref { font-size: 0.9em; opacity: 0.7; display: block; margin-top: 5px; text-align: right;}
+
+/* --- MODAL --- */
+#modal-fiesta { 
+    display: none; 
+    position: fixed; 
+    top: 0; left: 0; 
+    width: 100%; height: 100%; 
+    background: rgba(0,0,0,0.95); 
+    z-index: 2000; 
+    justify-content: center; 
+    align-items: center; 
+    padding: 20px; 
+}
+.modal-content { 
+    background: #251a12; 
+    border: 2px solid var(--gold); 
+    padding: 25px; 
+    border-radius: 8px; 
+    width: 100%; 
+    max-width: 450px; 
+    position: relative; 
+    box-shadow: 0 0 30px var(--gold); 
+    max-height: 90vh; 
+    overflow-y: auto; 
+}
+.close-modal { 
+    position: absolute; 
+    top: 10px; right: 15px; 
+    font-size: 2rem; 
+    color: var(--red); 
+    cursor: pointer; 
+    padding: 10px;
+}
+.modal-title { 
+    font-family: 'Cinzel'; 
+    font-size: 1.5rem; 
+    color: var(--gold); 
+    border-bottom: 1px solid var(--faint); 
+    padding-bottom: 10px; 
+    margin-bottom: 15px; 
+    text-align: center;
+}
+.modal-data-row { margin-bottom: 8px; }
+.modal-instr { font-size: 1.1rem; line-height: 1.5; color: #fff; text-align: justify; margin-bottom: 15px; }
+.modal-ref { font-style: italic; color: var(--gold); text-align: right; display: block; font-size: 0.9rem; }
+.special-warn { 
+    background: rgba(80, 20, 20, 0.4); 
+    border: 1px solid var(--red-text); 
+    color: var(--red-text); 
+    padding: 10px; 
+    border-radius: 4px; 
+    font-size: 0.95rem; 
+    margin-top: 15px; 
+    text-align: center; 
+    font-weight: bold; 
+    display: none; 
+    line-height: 1.4; 
+}
+.teological-note { 
+    font-size: 0.85rem; 
+    background: rgba(197, 160, 89, 0.1); 
+    padding: 10px; 
+    border-left: 2px solid var(--gold); 
+    margin-top: 10px; 
+    color: #ccc; 
+    font-style: italic;
+    display: none;
+}
+
+/* --- CALENDARIO LISTA --- */
+.cal-row { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 15px; 
+    background: rgba(40, 30, 25, 0.6); 
+    border: 1px solid var(--faint); 
+    border-left: 4px solid var(--faint); 
+    margin-bottom: 10px; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    transition: all 0.2s; 
+}
+.cal-row.fiesta { 
+    border-left: 4px solid var(--gold); 
+    background: linear-gradient(to right, rgba(197, 160, 89, 0.1), rgba(40, 30, 25, 0.6)); 
+}
+.cal-fiesta-name { display: block; font-weight: bold; font-size: 1.1rem; color: var(--gold); font-family: 'Cinzel'; }
+.cal-fiesta-sub { font-size: 0.85rem; color: #aaa; display: block; margin-top: 2px;}
+
+.cycle-form { display: flex; gap: 10px; margin-bottom: 15px; }
+.cycle-input { 
+    background: #2a2018; 
+    border: 1px solid var(--faint); 
+    color: var(--paper); 
+    padding: 15px; 
+    text-align: center; 
+    font-family: 'Cinzel'; 
+    font-size: 1.2rem; 
+    border-radius: 4px; 
+    width: 100%; 
+}
+.btn-action { 
+    width: 100%; 
+    padding: 15px; 
+    background: var(--gold); 
+    color: #1a120b; 
+    font-family: 'Cinzel'; 
+    font-weight: bold; 
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    text-transform: uppercase; 
+}
+.hint-text { text-align: center; font-size: 0.8rem; color: var(--faint); margin-bottom: 10px; }
+
+/* --- NAVEGACIÓN (4 ITEMS) --- */
+nav.nav-bar { 
+    position: fixed; 
+    bottom: 0; left: 0; 
+    width: 100%; 
+    background: #140e08; 
+    border-top: 3px solid var(--gold); 
+    display: flex; 
+    justify-content: space-around; 
+    padding: 12px 0 20px 0; 
+    z-index: 100; 
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.7); 
+}
+.nav-btn { 
+    background: none; 
+    border: none; 
+    color: var(--faint); 
+    font-family: 'Cinzel'; 
+    font-size: 0.7rem; 
+    font-weight: bold; 
+    cursor: pointer; 
+    text-transform: uppercase; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 5px; 
+}
+.nav-btn.active { 
+    color: var(--gold); 
+    transform: scale(1.1); 
+    text-shadow: 0 0 10px rgba(197, 160, 89, 0.6); 
+}
+.nav-icon { font-size: 1.4rem; }
+
+/* --- VISTAS --- */
+.view { display: none; animation: fade 0.4s; }
+.view.active { display: block; }
+@keyframes fade { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:translateY(0);} }
