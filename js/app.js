@@ -1,7 +1,24 @@
 /* * js/app.js
  * EL ESPÍRITU (CONTROLADOR)
- * Actualizado: Amanecer Dinámico (GPS)
+ * Actualizado: Instalación PWA + Amanecer Dinámico
  */
+
+// Variable global para guardar el evento de instalación
+let deferredPrompt;
+
+// 1. Escuchar el evento 'beforeinstallprompt' (Antes de que la app inicie del todo)
+window.addEventListener('beforeinstallprompt', (e) => {
+  // Prevenir que Chrome muestre su propia barra mini automáticamente
+  e.preventDefault();
+  // Guardar el evento para usarlo después
+  deferredPrompt = e;
+  // Mostrar nuestro botón personalizado
+  const installContainer = document.getElementById('install-container');
+  if (installContainer) {
+      installContainer.style.display = 'block';
+      console.log("Evento de instalación capturado. Botón mostrado.");
+  }
+});
 
 // REGISTRO DEL SERVICE WORKER
 if ('serviceWorker' in navigator) {
@@ -16,7 +33,7 @@ const QumranApp = {
     // Estado interno
     currentFiestaIdx: null,
     todayFiesta: null,
-    sunriseHour: 6.0, // NUEVO: Hora por defecto (6:00 AM) hasta que el GPS detecte la real
+    sunriseHour: 6.0,
 
     // INICIO
     init: () => {
@@ -38,6 +55,26 @@ const QumranApp = {
         // Interacciones
         document.getElementById('heb-fiesta').addEventListener('click', QumranApp.openFiestaHoy);
         document.getElementById('geo-btn').addEventListener('click', QumranApp.getLocationAndSun);
+        
+        // BOTÓN INSTALAR PWA (NUEVO)
+        const btnInstall = document.getElementById('btn-install-app');
+        if(btnInstall) {
+            btnInstall.addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    // Mostrar el prompt nativo
+                    deferredPrompt.prompt();
+                    // Esperar la elección del usuario
+                    const { outcome } = await deferredPrompt.userChoice;
+                    console.log(`Usuario eligió: ${outcome}`);
+                    // Limpiar
+                    deferredPrompt = null;
+                    // Ocultar botón si aceptó
+                    if(outcome === 'accepted'){
+                        document.getElementById('install-container').style.display = 'none';
+                    }
+                }
+            });
+        }
         
         // Enlaces
         const openPodcast = () => window.open('https://youtube.com/playlist?list=PLr4MABEXstnDLUVcD7EenO4vN8EglZoSz', '_blank');
@@ -74,18 +111,13 @@ const QumranApp = {
         if(navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((pos) => {
                 let now = new Date();
-                // Calculamos tiempos
                 let times = QumranApp.calcSunTimes(now, pos.coords.latitude, pos.coords.longitude);
                 
-                // NUEVO: Guardamos la hora exacta (decimal) del amanecer para la lógica
                 if(times && times.riseDecimal) {
                     QumranApp.sunriseHour = times.riseDecimal;
-                    console.log("Amanecer detectado a las:", QumranApp.sunriseHour);
-                    // Recalculamos toda la app con el nuevo horario
                     QumranApp.renderHoy();
                 }
 
-                // Mostramos en pantalla
                 let div = document.getElementById('sun-container');
                 document.getElementById('sun-rise').innerText = times.rise;
                 document.getElementById('sun-set').innerText = times.set;
@@ -93,12 +125,10 @@ const QumranApp = {
                 document.getElementById('geo-btn').style.display = 'none';
             }, (err) => { 
                 console.warn(err);
-                // Si falla o no aceptan, seguimos usando las 6:00 AM por defecto
             });
         }
     },
 
-    // ALGORITMO ASTRONÓMICO
     calcSunTimes: (date, lat, lng) => {
         const toRad = Math.PI / 180;
         const toDeg = 180 / Math.PI;
@@ -129,18 +159,16 @@ const QumranApp = {
             let UT = T - lngHour;
             if(UT > 24) UT -= 24; else if(UT < 0) UT += 24;
             
-            // Ajuste zona horaria local
             const offset = -date.getTimezoneOffset() / 60;
             let localT = UT + offset;
             if(localT > 24) localT -= 24; else if(localT < 0) localT += 24;
             
-            return localT; // Devolvemos el valor decimal (ej: 6.5 para las 6:30)
+            return localT;
         };
 
         let riseDecimal = calcTime(true);
         let setDecimal = calcTime(false);
 
-        // Formateador de hora HH:MM
         const format = (dec) => {
             if(dec === null) return "--:--";
             let h = Math.floor(dec);
@@ -151,11 +179,10 @@ const QumranApp = {
         return { 
             rise: format(riseDecimal), 
             set: format(setDecimal),
-            riseDecimal: riseDecimal // Devolvemos el valor crudo para la lógica
+            riseDecimal: riseDecimal
         };
     },
 
-    // --- VIGÍA Y ALERTAS ---
     checkWatcher: (hoy, qHoy) => {
         let msg = ""; 
         let alertBox = document.getElementById('alert-container');
@@ -205,16 +232,9 @@ const QumranApp = {
         }
     },
 
-    // --- RENDERIZADO PRINCIPAL ---
     renderHoy: () => {
         let hoy = new Date();
-        
-        // --- NUEVA LÓGICA DE AMANECER ---
-        // Obtenemos la hora actual en formato decimal (ej: 6:30 = 6.5)
         let currentHourDecimal = hoy.getHours() + (hoy.getMinutes() / 60);
-        
-        // Si la hora actual es MENOR que la hora del amanecer calculada (o 6.0 por defecto),
-        // seguimos en el día anterior.
         if (currentHourDecimal < QumranApp.sunriseHour) {
             hoy.setDate(hoy.getDate() - 1);
         }
@@ -314,7 +334,6 @@ const QumranApp = {
         document.getElementById('mod-fechas-heb').innerText = `${f.d} del ${QumranData.MESES[f.m]}\n${f.es}`;
         document.getElementById('mod-instr').innerText = f.instr;
         document.getElementById('mod-ref').innerText = f.ref;
-        
         let noteDiv = document.getElementById('mod-note');
         if(f.nota) { noteDiv.innerText = f.nota; noteDiv.style.display = 'block'; } else { noteDiv.style.display = 'none'; }
         let warn = document.getElementById('mod-warn');

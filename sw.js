@@ -1,5 +1,5 @@
-/* sw.js - Service Worker V2 */
-const CACHE_NAME = 'qumran-watch-v2'; // ¡Versión actualizada!
+/* sw.js - Service Worker V7.2 */
+const CACHE_NAME = 'qumran-watch-v7.2'; // ¡Versión actualizada!
 const urlsToCache = [
   './',
   './index.html',
