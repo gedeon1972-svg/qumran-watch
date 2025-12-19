@@ -1,48 +1,51 @@
-// sw.js - Service Worker FINAL (Estructura Modular)
-const CACHE_NAME = 'qumran-cache-v2'; // Subimos versión para forzar actualización
-const ASSETS_TO_CACHE = [
+/* sw.js - Service Worker V2 */
+const CACHE_NAME = 'qumran-watch-v2'; // ¡Versión actualizada!
+const urlsToCache = [
   './',
   './index.html',
+  './css/styles.css',
+  './js/app.js',
+  './js/data.js',
+  './js/calendar.js',
   './manifest.json',
-  './icon.png',
-  './css/styles.css',    // <-- Nueva ruta añadida
-  './js/data.js',        // <-- Nueva ruta añadida
-  './js/calendar.js',    // <-- Nueva ruta añadida
-  './js/app.js'          // <-- Nueva ruta añadida
+  './icon.png'
 ];
 
-// 1. Instalación
-self.addEventListener('install', (event) => {
+// INSTALACIÓN (Guardar recursos)
+self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then((cache) => {
-        console.log('[Service Worker] Cacheando estructura modular...');
-        return cache.addAll(ASSETS_TO_CACHE);
+      .then(cache => {
+        console.log('Cache abierta');
+        return cache.addAll(urlsToCache);
       })
   );
+  self.skipWaiting(); // Forzar activación inmediata
 });
 
-// 2. Activación (Limpieza de versiones viejas)
-self.addEventListener('activate', (event) => {
+// ACTIVACIÓN (Limpiar caches viejas v1)
+self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then((keyList) => {
-      return Promise.all(keyList.map((key) => {
-        if (key !== CACHE_NAME) {
-          console.log('[Service Worker] Borrando caché antigua:', key);
-          return caches.delete(key);
-        }
-      }));
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheName !== CACHE_NAME) {
+            console.log('Borrando cache antigua:', cacheName);
+            return caches.delete(cacheName);
+          }
+        })
+      );
     })
   );
-  // Reclamar el control inmediatamente para que funcione sin recargar
-  return self.clients.claim();
+  self.clients.claim(); // Tomar control de inmediato
 });
 
-// 3. Interceptación de red (Offline First)
-self.addEventListener('fetch', (event) => {
+// INTERCEPTOR (Servir contenido)
+self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
-      .then((response) => {
+      .then(response => {
+        // Devuelve cache si existe, sino busca en red
         return response || fetch(event.request);
       })
   );

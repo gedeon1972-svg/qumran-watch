@@ -26,7 +26,7 @@ const QumranApp = {
 
     // EVENTOS
     setupListeners: () => {
-        // Navegación (Tabs - Orden: Hoy, Lit, Cal, Con, Edu)
+        // Navegación (Tabs)
         document.getElementById('nav-hoy').addEventListener('click', (e) => QumranApp.nav('hoy', e.currentTarget));
         document.getElementById('nav-lit').addEventListener('click', (e) => QumranApp.nav('lit', e.currentTarget));
         document.getElementById('nav-cal').addEventListener('click', (e) => QumranApp.nav('cal', e.currentTarget));
@@ -37,12 +37,10 @@ const QumranApp = {
         document.getElementById('heb-fiesta').addEventListener('click', QumranApp.openFiestaHoy);
         document.getElementById('geo-btn').addEventListener('click', QumranApp.getLocationAndSun);
         
-        // Enlaces Externos (Ahora en vista Conexión)
+        // Enlaces Externos
         const openPodcast = () => window.open('https://youtube.com/playlist?list=PLr4MABEXstnDLUVcD7EenO4vN8EglZoSz', '_blank');
         const openInstitute = () => window.open('https://www.descubrelabiblia.online/', '_blank');
         
-        // Nota: Los ID cambiaron en HTML para evitar duplicados si se renderizaran dinámicamente, 
-        // pero aquí mantenemos el listener a los botones de la vista conexión
         document.getElementById('btn-podcast-con').addEventListener('click', openPodcast);
         document.getElementById('btn-institute-con').addEventListener('click', openInstitute);
         
@@ -69,7 +67,6 @@ const QumranApp = {
         document.getElementById('view-'+viewId).classList.add('active');
         document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        
         window.scrollTo(0,0);
     },
     
@@ -129,27 +126,34 @@ const QumranApp = {
         return { rise: calcTime(true), set: calcTime(false) };
     },
 
-    // --- VIGÍA Y ALERTAS ---
+    // --- VIGÍA Y ALERTAS (CORREGIDO) ---
     checkWatcher: (hoy, qHoy) => {
-        let msg = "";
+        let msg = ""; // Iniciamos vacío
         let alertBox = document.getElementById('alert-container');
         let alertMsg = document.getElementById('alert-msg');
         alertBox.style.display = 'none';
         
+        // 1. Alerta de Shabat (Viernes / Día 6)
         if(qHoy.idxSem === 5) { 
-            msg = "<strong>¡Día de Preparación!</strong><br>El Shabat entra al próximo amanecer. Completa tus labores."; 
+            msg += "<strong>¡Día de Preparación!</strong><br>El Shabat entra al próximo amanecer. Completa tus labores."; 
         }
         
+        // 2. Alerta de Fiestas Próximas (Acumulativa)
         for(let i=1; i<=3; i++) {
             let fut = new Date(hoy); 
             fut.setDate(fut.getDate() + i); 
             let qFut = QumranCalendar.calculate(fut);
             if(qFut && !qFut.special) {
                 let fIdx = QumranData.FIESTAS.findIndex(x => x.m === qFut.m && x.d === qFut.d);
-                if(fIdx !== -1) msg = `<strong>¡Atención!</strong><br>En ${i} día(s) es <strong>${QumranData.FIESTAS[fIdx].n}</strong>.`; 
+                if(fIdx !== -1) {
+                    // Si ya había mensaje, agregamos salto de línea
+                    if(msg !== "") msg += "<br><hr style='border-color:var(--gold); opacity:0.3; margin:8px 0;'>";
+                    msg += `<strong>¡Atención!</strong><br>En ${i} día(s) es <strong>${QumranData.FIESTAS[fIdx].n}</strong>.`;
+                }
             }
         }
         
+        // 3. Tarjetas Especiales (Omer y Teshuva)
         if(qHoy.m !== undefined && !qHoy.special) {
             let isOmer = false, omerDay = 0;
             if (qHoy.m === 0 && qHoy.d >= 26) { isOmer = true; omerDay = qHoy.d - 25; } 
@@ -170,6 +174,7 @@ const QumranApp = {
             document.getElementById('teshuva-ref').innerText = `Lectura: ${tData.r}`;
         } else { document.getElementById('card-teshuva').style.display = 'none'; }
 
+        // MOSTRAR ALERTAS SI EXISTEN
         if(msg !== "") { 
             alertMsg.innerHTML = msg; 
             alertBox.style.display = 'block'; 
@@ -179,7 +184,9 @@ const QumranApp = {
     // --- RENDERIZADO PRINCIPAL ---
     renderHoy: () => {
         let hoy = new Date();
+        // REGLA DE ORO: El día comienza a las 6 AM
         if (hoy.getHours() < 6) hoy.setDate(hoy.getDate() - 1);
+        
         let q = QumranCalendar.calculate(hoy);
         
         document.getElementById('greg-date').innerText = hoy.toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long'});
@@ -193,6 +200,7 @@ const QumranApp = {
             document.getElementById('heb-date').innerText = "SEMANA DE AJUSTE";
             document.getElementById('heb-dia').innerText = "Reset Solar";
         } else {
+            // VERIFICAR VIGÍA
             QumranApp.checkWatcher(hoy, q); 
 
             // Datos Principales
@@ -206,11 +214,9 @@ const QumranApp = {
             let h = QumranData.HALAKHA[hIndex];
             
             document.getElementById('messiah-theme').innerText = h.t;
-            // Nuevos Campos
             document.getElementById('messiah-hebrew').innerText = h.h || "";
             document.getElementById('messiah-context').innerText = h.c ? `Contexto: ${h.c}` : "";
             document.getElementById('messiah-philology').innerText = h.f || "";
-            
             document.getElementById('messiah-quote').innerText = `"${h.q}"`;
             document.getElementById('messiah-action').innerText = `${h.a} (${h.r})`;
 
@@ -253,7 +259,7 @@ const QumranApp = {
             }
             document.getElementById('shabat-progress').style.width = percent + "%";
             
-            // --- INYECCIÓN EN LA NUEVA PÁGINA INDEPENDIENTE ---
+            // Inyección en página Liturgia
             if (s) {
                 document.getElementById('lit-main-title').innerText = litMain;
                 document.getElementById('page-lit-type').innerText = litType;
