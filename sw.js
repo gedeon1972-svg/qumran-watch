@@ -1,52 +1,52 @@
-/* sw.js - Service Worker V7.2 */
-const CACHE_NAME = 'qumran-watch-v7.2'; // ¡Versión actualizada!
-const urlsToCache = [
-  './',
-  './index.html',
-  './css/styles.css',
-  './js/app.js',
-  './js/data.js',
-  './js/calendar.js',
-  './manifest.json',
-  './icon.png'
+/* * sw.js (RAÍZ)
+ * EL GUARDIÁN DEL UMBRAL: Service Worker para modo offline.
+ * Actualizado para incluir fuentes locales.
+ */
+
+const CACHE_NAME = 'qumran-v5-offline-complete'; // Versión actualizada
+const ASSETS_TO_CACHE = [
+    './',
+    './index.html',
+    './manifest.json',
+    './icon.png',
+    './src/css/styles.css',
+    './src/js/data.js',
+    './src/js/calendar.js',
+    './src/js/app.js',
+    
+    // FUENTES LOCALES (Nombres exactos según tu descarga)
+    './src/css/fonts/cinzel-v26-latin-regular.woff2',
+    './src/css/fonts/cinzel-v26-latin-700.woff2',
+    './src/css/fonts/david-libre-v17-latin-regular.woff2',
+    './src/css/fonts/david-libre-v17-latin-700.woff2'
 ];
 
-// INSTALACIÓN (Guardar recursos)
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('Cache abierta');
-        return cache.addAll(urlsToCache);
-      })
-  );
-  self.skipWaiting(); // Forzar activación inmediata
-});
-
-// ACTIVACIÓN (Limpiar caches viejas v1)
-self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheName !== CACHE_NAME) {
-            console.log('Borrando cache antigua:', cacheName);
-            return caches.delete(cacheName);
-          }
+self.addEventListener('install', (e) => {
+    e.waitUntil(
+        caches.open(CACHE_NAME).then((cache) => {
+            console.log('[SW] Cacheando el santuario completo...');
+            return cache.addAll(ASSETS_TO_CACHE);
         })
-      );
-    })
-  );
-  self.clients.claim(); // Tomar control de inmediato
+    );
 });
 
-// INTERCEPTOR (Servir contenido)
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Devuelve cache si existe, sino busca en red
-        return response || fetch(event.request);
-      })
-  );
+self.addEventListener('activate', (e) => {
+    e.waitUntil(
+        caches.keys().then((keyList) => {
+            return Promise.all(keyList.map((key) => {
+                if (key !== CACHE_NAME) {
+                    console.log('[SW] Limpiando cache antigua:', key);
+                    return caches.delete(key);
+                }
+            }));
+        })
+    );
+});
+
+self.addEventListener('fetch', (e) => {
+    e.respondWith(
+        caches.match(e.request).then((res) => {
+            return res || fetch(e.request);
+        })
+    );
 });

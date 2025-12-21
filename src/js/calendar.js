@@ -1,4 +1,5 @@
-/* * js/calendar.js
+/**
+ * src/js/calendar.js
  * EL MOTOR MATEMÁTICO: Lógica pura de conversión de fechas.
  * No toca el DOM (HTML). Solo recibe fechas y devuelve datos.
  * Depende de: QumranData (data.js)
@@ -6,17 +7,19 @@
 
 const QumranCalendar = {
 
-    // Función Principal: Convierte fecha Gregoriana a Qumrán
+    /**
+     * Calcula la fecha Qumrán para una fecha Gregoriana dada.
+     * @param {Date} dateObj - Fecha Gregoriana
+     * @returns {Object|null} - Objeto con datos del calendario o null si es anterior al ancla.
+     */
     calculate: (dateObj) => {
         // 1. Definir el Ancla (20 Marzo 2019)
-        // Usamos datos de data.js
         let anchor = new Date(QumranData.ANCHOR.y, QumranData.ANCHOR.m, QumranData.ANCHOR.d);
         
         // 2. Calcular diferencia en días
-        // 86400000 es la cantidad de milisegundos en un día
         let diff = Math.floor((dateObj - anchor) / 86400000);
         
-        // Si la fecha es anterior al 2019, devolvemos null (o podríamos manejar fechas pasadas)
+        // Si la fecha es anterior al 2019, devolvemos null
         if (diff < 0) return null;
 
         // 3. Ciclo de 6 Años (Sexenio)
@@ -84,21 +87,14 @@ const QumranCalendar = {
         };
     },
 
-    // Cálculo del Turno Sacerdotal (Ciclo continuo de 24 semanas)
+    /**
+     * Cálculo del Turno Sacerdotal (Ciclo continuo de 24 semanas)
+     */
     getTurno: (totalDays) => {
         // Semanas transcurridas desde el ancla
         let weeksPassed = Math.floor(totalDays / 7);
         // Índice base del ancla + semanas pasadas, módulo 24 turnos
         let turnoIndex = (QumranData.ANCHOR.turnoIdx + weeksPassed) % 24;
         return QumranData.TURNOS[turnoIndex];
-    },
-
-    // Cálculo Aproximado del Sol (Stub para futura expansión con librerías astronómicas reales)
-    // Recibe Latitud y Longitud, devuelve horas
-    getSunTimes: (lat, lng, date) => {
-        // NOTA: Para un cálculo preciso se requeriría una librería como 'suncalc'.
-        // Por ahora, mantenemos tu lógica base o valores por defecto.
-        // En una PWA avanzada, aquí conectaríamos la API de Sunrise-Sunset.
-        return { rise: "06:45 AM", set: "18:30 PM" }; 
     }
 };

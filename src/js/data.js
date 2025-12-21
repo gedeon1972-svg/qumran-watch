@@ -1,6 +1,7 @@
-/* * js/data.js
+/**
+ * src/js/data.js
  * EL TESORO SAGRADO: Textos, fechas y liturgia estática.
- * Este archivo alimenta al resto de la aplicación.
+ * Este archivo alimenta al resto de la aplicación con datos puros.
  */
 
 const QumranData = {
@@ -162,7 +163,7 @@ const QumranData = {
             t:"Sin Afán", 
             h: "Bitachon (בִּטָּחוֹן)",
             c: "Providencia Divina",
-            f: "Confianza activa. No es pasividad, sino la certeza de que el Padre sustenta. El afán divide la mente; la fe la unifica.",
+            f: "Confianza activa. No es pasividad, es la certeza de que el Padre sustenta. El afán divide la mente; la fe la unifica.",
             q:"No os afanéis por el día de mañana.", 
             a:"Cuando sientas ansiedad, da gracias por 3 cosas que ya tienes.", 
             r:"Mt 6:34"
@@ -195,7 +196,7 @@ const QumranData = {
         {t:"Grandeza", h:"Gedulah (גְּדֻלָּה)", c:"Petición de Zebedeos", f:"En el Reino, subir es bajar. El esclavo de todos es el rey de todos.", q:"El que quiera hacerse grande entre vosotros será vuestro servidor.", a:"Busca cómo servir, no cómo ser servido.", r:"Mt 20:26"},
         {t:"Fe Activa", h:"Bitachon (בִּטָּחוֹן)", c:"La higuera estéril", f:"Certeza de que la oración ya ha sido respondida en el cielo.", q:"Todo lo que pidiereis en oración, creyendo, lo recibiréis.", a:"Pide con certeza, sin dudar.", r:"Mt 21:22"},
         {t:"Amor Total", h:"Shema (שְׁמַע)", c:"El Gran Mandamiento", f:"Escucha y obedece. Amar con todo el ser, sin reservas.", q:"Amarás al Señor tu Dios con todo tu corazón.", a:"Dile a Dios que lo amas con voz audible.", r:"Mt 22:37"},
-        {t:"Prójimo", h:"Rea (רֵעַ)", c:"Segundo Mandamiento", f:"El otro no es ajeno, es tu espejo. Tu compañero de pacto.", q:"Amarás a tu prójimo como a ti mismo.", a:"Trata al extraño con la dignidad de un rey.", r:"Mt 22:39"},
+        {t:"Prójimo", h:"Rea (רֵעַ)", c:"Segundo Mandamiento", f:"El otro no es ajeno, es tu espejo. Tu compañero de pacto.", q:"Amarás al Señor tu Dios como a ti mismo.", a:"Trata al extraño con la dignidad de un rey.", r:"Mt 22:39"},
         {t:"Justicia", h:"Tzedaká (צְדָקָה)", c:"Ay de los Escribas", f:"Justicia social y rectitud. Más importante que el diezmo de la menta.", q:"¡Ay de vosotros... que dejáis lo más importante: la justicia, la misericordia y la fe!", a:"Sé justo en tus tratos comerciales hoy.", r:"Mt 23:23"},
         {t:"Retorno", h:"Shuv (שׁוּב)", c:"Señales del fin", f:"El regreso. La esperanza de la redención final es visible.", q:"Como el relámpago que sale del oriente... así será la venida del Hijo.", a:"Mira al cielo y recuerda Su promesa.", r:"Mt 24:27"},
         {t:"Talentos", h:"Kishronot (כִּשְׁרוֹנוֹת)", c:"Parábola de los talentos", f:"Responsabilidad. Usar lo dado para el Reino.", q:"Bien, buen siervo y fiel; sobre poco has sido fiel.", a:"Haz tu trabajo con excelencia, aunque nadie te vea.", r:"Mt 25:21"},

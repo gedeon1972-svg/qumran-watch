@@ -1,3 +1,37 @@
+/* --- FUENTES LOCALES (OFFLINE) --- */
+
+/* Cinzel (Títulos) */
+@font-face {
+    font-family: 'Cinzel';
+    font-style: normal;
+    font-weight: 400;
+    src: url('fonts/cinzel-v26-latin-regular.woff2') format('woff2');
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Cinzel';
+    font-style: normal;
+    font-weight: 700;
+    src: url('fonts/cinzel-v26-latin-700.woff2') format('woff2');
+    font-display: swap;
+}
+
+/* David Libre (Texto) */
+@font-face {
+    font-family: 'David Libre';
+    font-style: normal;
+    font-weight: 400;
+    src: url('fonts/david-libre-v17-latin-regular.woff2') format('woff2');
+    font-display: swap;
+}
+@font-face {
+    font-family: 'David Libre';
+    font-style: normal;
+    font-weight: 700;
+    src: url('fonts/david-libre-v17-latin-700.woff2') format('woff2');
+    font-display: swap;
+}
+
 /* --- ESTÉTICA DANIEL V6.4 (PÁGINA INDEPENDIENTE LITURGIA) --- */
 
 :root {
@@ -403,73 +437,154 @@ article.card.messiah {
 }
 .ref { font-size: 0.9em; opacity: 0.7; display: block; margin-top: 5px; text-align: right;}
 
-/* --- MODAL --- */
+/* --- MODAL (CARTA REAL MEJORADA) --- */
 #modal-fiesta { 
     display: none; 
     position: fixed; 
     top: 0; left: 0; 
     width: 100%; height: 100%; 
-    background: rgba(0,0,0,0.95); 
+    background: rgba(10, 5, 2, 0.95); /* Fondo más oscuro y profundo */
+    backdrop-filter: blur(5px); /* Efecto de desenfoque moderno */
     z-index: 2000; 
     justify-content: center; 
     align-items: center; 
-    padding: 20px; 
+    padding: 15px; 
+    animation: fadeIn 0.3s ease-out;
 }
+
 .modal-content { 
-    background: #251a12; 
-    border: 2px solid var(--gold); 
-    padding: 25px; 
-    border-radius: 8px; 
+    background: linear-gradient(145deg, #1f1610 0%, #2a2018 100%);
+    border: 1px solid var(--gold); 
+    border-top: 4px solid var(--gold); /* Borde superior sacerdotal */
+    padding: 0; /* Quitamos padding global para manejar secciones */
+    border-radius: 12px; 
     width: 100%; 
-    max-width: 450px; 
+    max-width: 420px; /* Ancho lectura ideal */
     position: relative; 
-    box-shadow: 0 0 30px var(--gold); 
-    max-height: 90vh; 
+    box-shadow: 0 10px 40px rgba(0,0,0,0.8); 
+    max-height: 85vh; 
     overflow-y: auto; 
+    display: flex;
+    flex-direction: column;
 }
+
+/* Cabecera del Modal */
+.modal-header-box {
+    background: rgba(0,0,0,0.2);
+    padding: 20px 20px 15px 20px;
+    border-bottom: 1px solid var(--faint);
+    position: relative;
+    text-align: center;
+}
+
 .close-modal { 
     position: absolute; 
     top: 10px; right: 15px; 
-    font-size: 2rem; 
-    color: var(--red); 
+    font-size: 2.2rem; 
+    color: var(--faint); 
     cursor: pointer; 
-    padding: 10px;
+    line-height: 0.8;
+    transition: color 0.2s;
 }
+.close-modal:hover { color: var(--red); }
+
 .modal-title { 
-    font-family: 'Cinzel'; 
-    font-size: 1.5rem; 
+    font-family: 'Cinzel', serif; 
+    font-size: 1.6rem; 
     color: var(--gold); 
-    border-bottom: 1px solid var(--faint); 
-    padding-bottom: 10px; 
-    margin-bottom: 15px; 
-    text-align: center;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    line-height: 1.2;
 }
-.modal-data-row { margin-bottom: 8px; }
-.modal-instr { font-size: 1.1rem; line-height: 1.5; color: #fff; text-align: justify; margin-bottom: 15px; }
-.modal-ref { font-style: italic; color: var(--gold); text-align: right; display: block; font-size: 0.9rem; }
+
+/* Cuerpo del Modal */
+.modal-body {
+    padding: 20px;
+}
+
+/* Sección de Fechas (Diseño de Ficha) */
+.meta-box {
+    background: rgba(197, 160, 89, 0.08); /* Gold muy tenue */
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(197, 160, 89, 0.2);
+}
+
+.modal-data-row { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: baseline;
+    margin-bottom: 6px;
+    border-bottom: 1px dashed rgba(255,255,255,0.1);
+    padding-bottom: 4px;
+}
+.modal-data-row:last-child { border-bottom: none; margin-bottom: 0; }
+
+.modal-data-row .val { font-size: 1rem; text-align: right; }
+
+/* Texto de Instrucción (Lectura) */
+.lbl-instr {
+    display: block;
+    text-align: center;
+    color: var(--red-text);
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+.modal-instr { 
+    font-family: 'David Libre', serif;
+    font-size: 1.25rem; /* Letra más grande para lectura */
+    line-height: 1.6; 
+    color: #efe5d5; /* Color papel claro */
+    text-align: justify; 
+    margin-bottom: 10px; 
+    border-left: 3px solid var(--gold-dim);
+    padding-left: 15px;
+}
+
+.modal-ref { 
+    font-style: italic; 
+    color: var(--gold); 
+    text-align: right; 
+    display: block; 
+    font-size: 0.95rem; 
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+/* Notas y Advertencias */
+.teological-note { 
+    font-size: 0.9rem; 
+    background: #1a1512; 
+    padding: 12px; 
+    border-radius: 6px;
+    border-left: 3px solid var(--blue); /* Azul para notas de estudio */
+    color: #ccc; 
+    font-style: italic;
+    margin-top: 10px;
+    line-height: 1.4;
+}
+
 .special-warn { 
-    background: rgba(80, 20, 20, 0.4); 
-    border: 1px solid var(--red-text); 
-    color: var(--red-text); 
-    padding: 10px; 
-    border-radius: 4px; 
+    background: rgba(138, 44, 44, 0.2); 
+    border: 1px solid var(--red); 
+    color: #ffadad; 
+    padding: 12px; 
+    border-radius: 6px; 
     font-size: 0.95rem; 
     margin-top: 15px; 
     text-align: center; 
     font-weight: bold; 
-    display: none; 
-    line-height: 1.4; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
-.teological-note { 
-    font-size: 0.85rem; 
-    background: rgba(197, 160, 89, 0.1); 
-    padding: 10px; 
-    border-left: 2px solid var(--gold); 
-    margin-top: 10px; 
-    color: #ccc; 
-    font-style: italic;
-    display: none;
-}
+
+@keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
 
 /* --- CALENDARIO LISTA --- */
 .cal-row { 
