@@ -7,21 +7,9 @@
     
     <meta name="theme-color" content="#1a120b">
     <meta name="description" content="Herramienta litúrgica para los Hijos de Sadoc. Calendario 364 días y enseñanzas del Mesías.">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Qumran Watch | El Calendario Sagrado">
-    <meta property="og:description" content="Herramienta para los Hijos de Sadoc: Calendario Solar de 364 días, Fiestas, Liturgia y Reloj de Sol. Funciona sin conexión.">
-    <meta property="og:image" content="https://gedeon1972-svg.github.io/qumran-watch/icon.png">
-    <meta property="og:url" content="https://gedeon1972-svg.github.io/qumran-watch/">
-    <meta property="og:site_name" content="Qumran Watch">
-
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Qumran Watch | Calendario de Enoc">
-    <meta name="twitter:description" content="Recupera el tiempo divino. Calendario solar, liturgia y fiestas bíblicas en tu bolsillo.">
-    <meta name="twitter:image" content="https://gedeon1972-svg.github.io/qumran-watch/icon.png">
     <link rel="icon" type="image/png" href="icon.png">
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="manifest" href="manifest.json">
-
     <link rel="stylesheet" href="src/css/styles.css">
 </head>
 <body>
@@ -30,25 +18,18 @@
     <h1>Qumran Watch</h1>
 
     <div id="alert-container" class="watcher-alert">
-        <div class="watcher-title">
-            <span style="font-size:1.2rem">👁️</span> MENSAJE DEL VIGÍA
-        </div>
+        <div class="watcher-title"><span style="font-size:1.2rem">👁️</span> MENSAJE DEL VIGÍA</div>
         <div id="alert-msg" class="watcher-msg"></div>
     </div>
 
     <div id="view-hoy" class="view active">
-        
         <div id="install-container">
-            <button id="btn-install-app" class="btn-install">
-               INSTALAR APLICACIÓN
-            </button>
+            <button id="btn-install-app" class="btn-install">INSTALAR APLICACIÓN</button>
         </div>
-
         <article class="card">
             <span class="fecha-greg" id="greg-date">...</span>
             <div class="fecha-hebrea" id="heb-date">Cargando...</div>
             <div id="heb-fiesta" class="fiesta-badge"></div>
-
             <div class="info-block-center">
                 <span class="lbl">DÍA DE LA SEMANA</span>
                 <span class="val" id="heb-dia"></span>
@@ -57,111 +38,70 @@
                     <div class="shabat-text" id="shabat-text"></div>
                 </div>
             </div>
-
             <div class="info-grid">
-                <div class="text-center">
-                    <span class="lbl">TURNO (MISHMAR)</span>
-                    <span class="val" id="heb-turno"></span>
-                </div>
-                <div class="text-center">
-                    <span class="lbl">ESTACIÓN</span>
-                    <span class="val" id="heb-estacion"></span>
-                </div>
+                <div class="text-center"><span class="lbl">TURNO (MISHMAR)</span><span class="val" id="heb-turno"></span></div>
+                <div class="text-center"><span class="lbl">ESTACIÓN</span><span class="val" id="heb-estacion"></span></div>
             </div>
-
             <div class="solar-section">
                 <div class="gate-container" id="gate-visuals">
                     <div class="gate-dot">1</div><div class="gate-dot">2</div><div class="gate-dot">3</div>
                     <div class="gate-dot">4</div><div class="gate-dot">5</div><div class="gate-dot">6</div>
                 </div>
-                
-                <div class="solar-info-text">
-                    El Sol sale por la <span id="heb-puerta-num" class="text-gold">...</span>
-                </div>
-                
+                <div class="solar-info-text">El Sol sale por la <span id="heb-puerta-num" class="text-gold">...</span></div>
                 <div class="sun-times" id="sun-container" style="display:none;">
-                    <div class="sun-item">
-                        <span>☀ Amanecer</span>
-                        <span id="sun-rise" class="sun-val">--:--</span>
-                    </div>
-                    <div class="sun-item">
-                        <span>☾ Atardecer</span>
-                        <span id="sun-set" class="sun-val">--:--</span>
-                    </div>
+                    <div class="sun-item"><span>☀ Amanecer</span><span id="sun-rise" class="sun-val">--:--</span></div>
+                    <div class="sun-item"><span>☾ Atardecer</span><span id="sun-set" class="sun-val">--:--</span></div>
                 </div>
                 <div id="geo-btn">Activar Reloj Solar (GPS)</div>
             </div>
         </article>
-
+        
         <article id="card-omer" class="card omer">
-            <div class="omer-lbl">CUENTA DEL OMER</div>
-            <div id="omer-count" class="omer-count">0</div>
-            <div class="italic-sub">Hacia Shavuot</div>
+            <div class="omer-lbl">CUENTA DEL OMER</div><div id="omer-count" class="omer-count">0</div><div class="italic-sub">Hacia Shavuot</div>
         </article>
-
         <article id="card-teshuva" class="card teshuva">
-            <div class="teshuva-title">⚠️ DÍAS DE TEMOR (Yamim Noraim)</div>
-            <div id="teshuva-cmd" class="teshuva-cmd"></div>
-            <div id="teshuva-ref" class="teshuva-ref"></div>
+            <div class="teshuva-title">⚠️ DÍAS DE TEMOR (Yamim Noraim)</div><div id="teshuva-cmd" class="teshuva-cmd"></div><div id="teshuva-ref" class="teshuva-ref"></div>
         </article>
-
         <article class="card messiah">
             <div class="messiah-title">✝ Instrucción del Mesías</div>
-            
             <div id="messiah-theme" class="messiah-theme"></div>
             <div id="messiah-hebrew" style="color: var(--gold); font-size: 1.1rem; text-align: center; margin-bottom: 5px; font-weight: bold;"></div> 
-            
             <div id="messiah-quote" class="messiah-quote"></div>
             <div id="messiah-context" style="text-align: right; font-size: 0.85rem; color: #aaa; margin-top: -10px; margin-bottom: 15px; font-style: italic;"></div>
-            
             <div id="messiah-philology" style="background: rgba(0,0,0,0.2); padding: 10px; border-left: 2px solid var(--gold); font-size: 0.95rem; margin-bottom: 15px; color: #e0d2bc; line-height: 1.4;"></div>
-
-            <div class="messiah-action">
-                <span class="messiah-label">MISIÓN DE LA SEMANA:</span>
-                <span id="messiah-action"></span>
-            </div>
+            <div class="messiah-action"><span class="messiah-label">MISIÓN DE LA SEMANA:</span><span id="messiah-action"></span></div>
         </article>
     </div>
 
     <div id="view-lit" class="view">
         <h2 id="lit-main-title">Lectura Sagrada</h2>
-        
         <div class="liturgy-paper full-page">
-            <div class="text-center">
-                <span class="liturgy-tag" id="page-lit-type">...</span>
-            </div>
+            <div class="text-center"><span class="liturgy-tag" id="page-lit-type">...</span></div>
             <h3 id="page-lit-title" class="liturgy-heading">...</h3>
             <hr class="separator-gold">
-            <div id="page-lit-text" class="liturgy-body">
-                Cargando liturgia del día...
-            </div>
-            <div class="liturgy-footer">
-                Selah.
-            </div>
+            <div id="page-lit-text" class="liturgy-body">Cargando liturgia del día...</div>
+            <div class="liturgy-footer">Selah.</div>
         </div>
     </div>
 
     <div id="view-con" class="view">
         <h2>Comunidad y Recursos</h2>
-        
         <article id="btn-podcast-con" class="card clickable card-podcast">
             <span class="lbl red-text">🎙️ PODCAST OFICIAL</span>
             <div class="card-main-text">Diseñados para Gobernar</div>
             <div class="card-sub-text">Recupera tu gobierno interior a través del análisis profundo.</div>
             <div class="card-link">Escuchar enseñanza de hoy ➔</div>
         </article>
-
         <article id="btn-institute-con" class="card clickable card-institute">
             <span class="lbl blue-text">🎓 ESTUDIOS BÍBLICOS</span>
             <div class="card-main-text">Instituto Descubre la Biblia</div>
             <div class="card-sub-text">Formación bíblica profunda y cursos online.</div>
             <div class="card-link">Visitar Sitio Web ➔</div>
         </article>
-
         <article id="card-telegram" class="card clickable" style="border-left-color: #229ED9;">
             <span class="lbl" style="color:#229ED9;">📱 CANAL DE TELEGRAM</span>
             <div class="card-main-text">Descubre la Biblia</div>
-            <div class="card-sub-text">Recibe las últimas novedades directamente a tu celular a través de nuestros canales.</div>
+            <div class="card-sub-text">Recibe las últimas novedades directamente a tu celular.</div>
             <div class="card-link"><a href="https://t.me/+VuFNIOUSMERrLLiD" target="_blank" style="color:#fff; text-decoration:none;">Unirme al Canal ➔</a></div>
         </article>
     </div>
@@ -178,41 +118,25 @@
 
     <div id="view-edu" class="view">
         <h2>Verdad Restaurada</h2>
-        <article class="card">
-            <p class="fundamento-txt">El calendario que tienes en tus manos no es una invención moderna, sino la <strong>restauración matemática</strong> del orden entregado a Enoc y Moisés.</p>
-            
-            <h3 class="edu-heading">1. El Año de 364 Días</h3>
-            <p class="fundamento-txt">A diferencia del calendario lunar (354 días) o gregoriano (365), el calendario bíblico perfecto consta de <strong>52 semanas exactas</strong> (52 x 7 = 364). Esto asegura que las fiestas de YHWH caigan siempre en el mismo día de la semana.</p>
-            <div class="versiculo">"Y mandaras a los hijos de Israel que observen los años de acuerdo con este computo: trescientos sesenta y cuatro días, y (esto) constituirá un año completo..."<br><br><span class="ref">Jubileos 6:32</span></div>
-            
-            <h3 class="edu-heading">2. El Ciclo de 6 Años</h3>
-            <p class="fundamento-txt">Seguimos el patrón de los Sacerdotes (Mishmarot): 6 años de 364 días seguidos de una <strong>Semana de Ajuste (Intercalar)</strong>. Esto reinicia el ciclo solar sin romper el orden sabático.</p>
-            <div class="versiculo">"Y el sol y las estrellas traen todos los años exactamente, para que ellos no adelanten ni retrasen su posición ni un solo día..."<br><br><span class="ref">1 Enoc 74:12</span></div>
-            
-            <h3 class="edu-heading">3. La Señal de 2019 (El Ancla)</h3>
-            <p class="fundamento-txt">El Génesis declara que el Sol y la Luna fueron puestos en marcha el <strong>Día Cuarto (Miércoles)</strong>. Por tanto, el reloj divino debió iniciar un Miércoles.</p>
-            <div class="versiculo">"E hizo Dios las dos grandes lumbreras... y fue la tarde y la mañana el día cuarto."<br><br><span class="ref">Génesis 1:16-19</span></div>
-            <p class="fundamento-txt">Elegimos <strong>2019</strong> como año del reinicio porque ocurrió una señal astronómica única en Jerusalén: El <strong>Equinoccio de Primavera</strong> (Tekufah) cayó exactamente en <strong>Miércoles</strong>, y coincidió esa misma noche con una <strong>Superluna Llena</strong>. Esta triple conjunción marcó el "Reinicio de las Luminarias".</p>
-        </article>
+        <p class="fundamento-txt" style="text-align: center; margin-bottom: 25px;">
+            El calendario que tienes en tus manos no es una invención moderna, sino la <strong>restauración matemática</strong> del orden entregado a Enoc y Moisés.
+        </p>
+        
+        <div id="edu-grid" class="edu-grid-container"></div>
     </div>
+
 </main>
 
 <div id="modal-fiesta">
     <div class="modal-content">
         <div class="modal-header-box">
             <span id="btn-close-modal" class="close-modal">&times;</span>
-            <div id="mod-title" class="modal-title">Título de la Fiesta</div>
+            <div id="mod-title" class="modal-title">Título</div>
         </div>
         <div class="modal-body">
             <div class="meta-box">
-                <div class="modal-data-row">
-                    <span class="lbl">GREGORIANO</span>
-                    <div id="mod-fechas" class="val">--</div>
-                </div>
-                <div class="modal-data-row">
-                    <span class="lbl">HEBREO</span>
-                    <div id="mod-fechas-heb" class="val gold-text">--</div>
-                </div>
+                <div class="modal-data-row"><span class="lbl">GREGORIANO</span><div id="mod-fechas" class="val">--</div></div>
+                <div class="modal-data-row"><span class="lbl">HEBREO</span><div id="mod-fechas-heb" class="val gold-text">--</div></div>
             </div>
             <span class="lbl-instr">INSTRUCCIÓN DIVINA</span>
             <div id="mod-instr" class="modal-instr">...</div>
@@ -223,11 +147,19 @@
     </div>
 </div>
 
-<div id="update-toast" class="update-toast">
-    <div class="toast-content">
-        <span class="toast-icon">🚀</span>
-        <span class="toast-msg">Nueva versión disponible</span>
+<div id="modal-lectura" style="display:none;">
+    <div class="modal-content lecture-mode">
+        <span id="btn-close-lectura" class="close-modal">&times;</span>
+        <h2 id="lec-title" class="lecture-title">Título del Estudio</h2>
+        <div class="lecture-meta" id="lec-meta">Subtítulo</div>
+        <hr class="separator-gold">
+        <div id="lec-body" class="lecture-body">
+            </div>
     </div>
+</div>
+
+<div id="update-toast" class="update-toast">
+    <div class="toast-content"><span class="toast-icon">🚀</span><span class="toast-msg">Nueva versión disponible</span></div>
     <button id="btn-refresh" class="toast-btn">ACTUALIZAR</button>
 </div>
 

@@ -9,7 +9,7 @@
  * - En 6 años de 364 días acumulamos un déficit de ~7.5 días.
  * - El calendario de Qumrán/Enoc corrige esto añadiendo una "Semana de Ajuste"
  * al final del 6to año (Año de Intercalación).
- * - Ciclo total: (364 x 5) + 371 = 2191 días.
+ * - Ciclo total: (364 x 5) + 371 = 2191 días (Exactamente 313 semanas).
  * * Dependencias: QumranData (data.js) para Ancla y Nombres.
  */
 
@@ -34,6 +34,7 @@ const QumranCalendar = {
         let diff = Math.floor((dateObj - anchor) / 86400000);
         
         // Si la fecha es anterior al inicio de la restauración (2019), no calculamos.
+        // (Opcional: Se podría habilitar cálculo hacia atrás, pero por seguridad litúrgica lo limitamos)
         if (diff < 0) return null;
 
         // 2. CÁLCULO DEL CICLO SEXENAL (6 AÑOS)
@@ -61,7 +62,6 @@ const QumranCalendar = {
         }
 
         // Año Hebreo Calculado (Aprox 2019 = Año 1 de la Restauración)
-        // Nota: Esto es un conteo relativo desde el Ancla, no el año AM rabínico.
         let anioRestauracion = QumranData.ANCHOR.y + (ciclosCompletos * 6) + (anioDelCiclo - 1);
 
         // 3. DETECCIÓN DE LA SEMANA DE AJUSTE (TEKUFAH FINAL)
@@ -70,6 +70,7 @@ const QumranCalendar = {
             return { 
                 special: true, // Bandera 'true' bloquea la visualización normal de fechas
                 turno: QumranCalendar.getTurno(diff), 
+                signo: QumranCalendar.getTurno(diff - diasAcumulados), // Signo del año
                 idxSem: (diasAcumulados % 7) + 3, // Mantiene el ciclo semanal
                 dCountYear: diasAcumulados, 
                 m: 0, d: 0,
@@ -94,18 +95,24 @@ const QumranCalendar = {
         }
         
         // 5. CÁLCULO DEL DÍA DE LA SEMANA
-        // El ancla (20/03/2019) fue Miércoles (Día 4).
-        // En JS, Domingo=0, Lunes=1... Miércoles=3.
+        // El ancla (20/03/2019) fue Miércoles (Día 4 = índice 3).
         let indiceSemana = (3 + diff) % 7;
 
-        // 6. CONSTRUCCIÓN DEL OBJETO DE FECHA FINAL
+        // 6. CÁLCULO DEL "SIGNO DEL AÑO"
+        // Calculamos qué sacerdote estaba de turno el Día 1 de ESTE año específico.
+        // Restamos los días acumulados hoy al total de días desde el ancla.
+        let diasAlInicioDelAnio = diff - diasAcumulados;
+        let signoDelAnio = QumranCalendar.getTurno(diasAlInicioDelAnio);
+
+        // 7. CONSTRUCCIÓN DEL OBJETO DE FECHA FINAL
         return {
             y: anioRestauracion,   // Año Gregoriano/Qumrán Híbrido
             m: mesQ,               // Índice del mes (0-11)
             d: diaQ,               // Día del mes (1-31)
             idxSem: indiceSemana,  // 0=Domingo ... 6=Shabat
             
-            turno: QumranCalendar.getTurno(diff), // Nombre del Mishmar activo
+            turno: QumranCalendar.getTurno(diff), // Nombre del Mishmar activo HOY
+            signo: signoDelAnio,                  // Nombre del Mishmar que inició el año
             
             // Estación: Se calcula dividiendo los meses en grupos de 3
             est: (mesQ < 3 ? "Primavera" : (mesQ < 6 ? "Verano" : (mesQ < 9 ? "Otoño" : "Invierno"))),
@@ -118,7 +125,9 @@ const QumranCalendar = {
 
     /**
      * Obtiene el Turno Sacerdotal (Mishmar) basado en los días totales.
-     * El ciclo es infinito y continuo, no se reinicia anualmente, solo se ajusta en el ciclo sexenal.
+     * El ciclo es infinito y continuo, no se reinicia anualmente.
+     * Al usar 2191 días (divisible por 7) para el ciclo sexenal, la matemática
+     * se alinea perfectamente con la realidad astronómica y teológica.
      */
     getTurno: (totalDays) => {
         if (!QumranData || !QumranData.TURNOS) return "Desconocido";
@@ -127,8 +136,12 @@ const QumranCalendar = {
         let weeksPassed = Math.floor(totalDays / 7);
         
         // Índice base del ancla + semanas pasadas, módulo 24 turnos
+        // Gamul es el índice 21 en el array.
         let turnoIndex = (QumranData.ANCHOR.turnoIdx + weeksPassed) % 24;
         
+        // Manejo de números negativos si alguna vez calculamos fechas pasadas
+        if (turnoIndex < 0) turnoIndex = 24 + turnoIndex;
+
         return QumranData.TURNOS[turnoIndex];
     }
 };

@@ -1,7 +1,7 @@
 /* * sw.js
  * EL GUARDIÁN DEL UMBRAL (Blindado)
  * Estrategia: Stale-While-Revalidate
- * Versión: 8.0 (Reinicio de Seguridad)
+ * Versión: 8.2 (Mejora y Ampliacion de Informacion de Reconstruccion del Calendario)
  */
 
 const CACHE_NAME = 'qumran-v8.0-secure';

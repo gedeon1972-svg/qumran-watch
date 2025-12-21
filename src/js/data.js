@@ -29,67 +29,146 @@ const QumranData = {
     ],
 
     // PUERTAS POR DONDE SALE EL SOL (ENOC 72)
-    // Mes 1->P4, Mes 2->P5, Mes 3->P6, etc.
     PUERTAS_SOLARES: [4, 5, 6, 6, 5, 4, 3, 2, 1, 1, 2, 3],
 
-    // --- 10 DÍAS DE TEMOR (MANDAMIENTOS PARA EL MES 7) ---
+    // --- 10 DÍAS DE TEMOR ---
     YAMIM_NORAIM: [
-        {t:"El Despertar", r:"Rom 13:11"}, 
-        {t:"La Confesión", r:"1 Juan 1:9"}, 
-        {t:"Reconciliación", r:"Mt 5:24"}, 
-        {t:"Restitución", r:"Lc 19:8"}, 
-        {t:"Humildad", r:"Stg 4:10"}, 
-        {t:"Ayuno de Palabras", r:"Sant 1:26"}, 
-        {t:"Caridad", r:"Prov 21:3"}, 
-        {t:"Santidad del Cuerpo", r:"1 Cor 6:19"}, 
-        {t:"Perdón Absoluto", r:"Mc 11:25"}, 
-        {t:"Aflicción de Alma", r:"Lev 16"}
+        {t:"El Despertar", r:"Rom 13:11"}, {t:"La Confesión", r:"1 Juan 1:9"}, 
+        {t:"Reconciliación", r:"Mt 5:24"}, {t:"Restitución", r:"Lc 19:8"}, 
+        {t:"Humildad", r:"Stg 4:10"}, {t:"Ayuno de Palabras", r:"Sant 1:26"}, 
+        {t:"Caridad", r:"Prov 21:3"}, {t:"Santidad del Cuerpo", r:"1 Cor 6:19"}, 
+        {t:"Perdón Absoluto", r:"Mc 11:25"}, {t:"Aflicción de Alma", r:"Lev 16"}
     ],
 
-    // --- ENLACES Y RECURSOS (COMUNIDAD) ---
+    // --- ENLACES Y RECURSOS ---
     ENLACES: [
-        {
-            id: "telegram",
-            titulo: "Canal de Telegram",
-            desc: "Recibe las últimas novedades directamente a tu celular.",
-            url: "https://t.me/+VuFNIOUSMERrLLiD",
-            label: "Unirme al Canal ➔",
-            color: "#229ED9" // Color Telegram
-        },
-        {
-            id: "podcast",
-            titulo: "Diseñados para Gobernar",
-            desc: "Recupera tu gobierno interior a través del análisis profundo.",
-            url: "https://youtube.com/playlist?list=PLr4MABEXstnDLUVcD7EenO4vN8EglZoSz",
-            label: "Escuchar ahora ➔",
-            color: "#8a2c2c" // Red
-        },
-        {
-            id: "instituto",
-            titulo: "Instituto Descubre la Biblia",
-            desc: "Formación bíblica profunda y cursos online.",
-            url: "https://www.descubrelabiblia.online/",
-            label: "Visitar Sitio Web ➔",
-            color: "#4a90e2" // Blue
-        }
+        { id: "telegram", titulo: "Canal de Telegram", desc: "Recibe las últimas novedades directamente a tu celular.", url: "https://t.me/+VuFNIOUSMERrLLiD", label: "Unirme al Canal ➔", color: "#229ED9" },
+        { id: "podcast", titulo: "Diseñados para Gobernar", desc: "Recupera tu gobierno interior a través del análisis profundo.", url: "https://youtube.com/playlist?list=PLr4MABEXstnDLUVcD7EenO4vN8EglZoSz", label: "Escuchar ahora ➔", color: "#8a2c2c" },
+        { id: "instituto", titulo: "Instituto Descubre la Biblia", desc: "Formación bíblica profunda y cursos online.", url: "https://www.descubrelabiblia.online/", label: "Visitar Sitio Web ➔", color: "#4a90e2" }
     ],
 
     // --- LAS FIESTAS DE YHWH (MOEDIM) ---
     FIESTAS: [
-        {m:0, d:1, n:"Rosh Hashaná", es:"Inicio de Año (Mes 1)", instr:"Tocad trompeta en el inicio del mes (Jodesh), en el día señalado, en el día de nuestra fiesta solemne. Estatuto para Israel es.", ref:"Salmo 81:3-4", nota:"NOTA DE ESTUDIO: La palabra 'Jodesh' implica renovación. En el contexto del calendario de Enoc, esto marca la entrada solar (Tekufah), no la fase de luna nueva rabínica."},
-        {m:0, d:10, n:"Selección Cordero", es:"Separación del Cordero", instr:"En el décimo día de este mes tomarán cada uno un cordero según las familias de los padres, un cordero por familia.", ref:"Éxodo 12:3"},
-        {m:0, d:14, n:"PESAJ", es:"Cena de Pascua", instr:"Y lo guardaréis hasta el día catorce de este mes, y lo inmolará toda la congregación de Israel entre las dos tardes. Es la Pascua de YHWH.", ref:"Éxodo 12:6"},
-        {m:0, d:15, n:"Hag Hamatzot", es:"Panes Sin Levadura", dur:7, instr:"Siete días comeréis panes sin levadura. El primer día será santa convocación; el séptimo día será santa convocación. Ninguna obra se hará en ellos.", ref:"Éxodo 12:15-16"},
-        {m:0, d:26, n:"Bikurim", es:"Primicias (Omer)", instr:"Traeréis la gavilla de las primicias de vuestra siega al sacerdote, el cual mecerá la gavilla delante de YHWH.", ref:"Levítico 23:10-11"},
-        {m:1, d:14, n:"Pesaj Sheni", es:"Segunda Pascua", instr:"Si alguno de vosotros estuviere inmundo o lejos de viaje, celebrará la pascua a YHWH en el mes segundo.", ref:"Números 9:10-11"},
-        {m:2, d:15, n:"SHAVUOT", es:"Fiesta de las Semanas", instr:"Y contaréis siete semanas cumplidas... hasta el día siguiente del séptimo día de reposo. Ofreceréis nuevo grano a YHWH.", ref:"Levítico 23:15-16"}, 
-        {m:3, d:1, n:"Inicio Verano", es:"Estación de Verano", instr:"Tú has establecido todos los términos de la tierra; el verano y el invierno tú los formaste.", ref:"Salmo 74:17"},
-        {m:4, d:3, n:"Tirosh", es:"Fiesta del Vino Nuevo", instr:"Cuando siegues tu mies... traerás vino nuevo. Alegrate delante de YHWH tu Dios.", ref:"Rollo del Templo 11QT"}, 
-        {m:5, d:22, n:"Yitzhar", es:"Fiesta del Aceite", instr:"Ofrenda de las primicias del aceite fresco, para iluminar el santuario.", ref:"Rollo del Templo 11QT"}, 
-        {m:6, d:1, n:"YOM TERUAH", es:"Fiesta de las Trompetas", instr:"En el mes séptimo, al primero del mes, tendréis día de reposo, una conmemoración al son de trompetas, y una santa convocación.", ref:"Levítico 23:24"}, 
-        {m:6, d:10, n:"YOM KIPUR", es:"Día de Expiación", especial:true, instr:"A los diez días de este mes séptimo será día de expiación. El ayuno total inicia al atardecer del día 9 y concluye al atardecer del día 10. Ninguna obra haréis.", ref:"Levítico 23:32"}, 
-        {m:6, d:15, n:"SUCOT", es:"Fiesta de los Tabernáculos", dur:7, instr:"En tabernáculos habitaréis siete días; todo natural de Israel habitará en tabernáculos, para que sepan vuestros descendientes que en tabernáculos hice yo habitar a los hijos de Israel.", ref:"Levítico 23:42"}, 
-        {m:6, d:22, n:"Shemini Atzeret", es:"El Octavo Día", instr:"El octavo día tendréis solemnidad; ninguna obra de siervos haréis.", ref:"Números 29:35"}
+        {m:0, d:1, n:"Rosh Hashaná", es:"Inicio de Año (Mes 1)", instr:"Tocad trompeta en el inicio del mes...", ref:"Salmo 81:3-4", nota:"NOTA DE ESTUDIO: La palabra 'Jodesh' implica renovación solar (Tekufah)."},
+        {m:0, d:10, n:"Selección Cordero", es:"Separación del Cordero", instr:"En el décimo día de este mes tomarán cada uno un cordero...", ref:"Éxodo 12:3"},
+        {m:0, d:14, n:"PESAJ", es:"Cena de Pascua", instr:"Y lo guardaréis hasta el día catorce... entre las dos tardes.", ref:"Éxodo 12:6"},
+        {m:0, d:15, n:"Hag Hamatzot", es:"Panes Sin Levadura", dur:7, instr:"Siete días comeréis panes sin levadura...", ref:"Éxodo 12:15-16"},
+        {m:0, d:26, n:"Bikurim", es:"Primicias (Omer)", instr:"Traeréis la gavilla de las primicias de vuestra siega...", ref:"Levítico 23:10-11"},
+        {m:1, d:14, n:"Pesaj Sheni", es:"Segunda Pascua", instr:"Si alguno de vosotros estuviere inmundo o lejos...", ref:"Números 9:10-11"},
+        {m:2, d:15, n:"SHAVUOT", es:"Fiesta de las Semanas", instr:"Y contaréis siete semanas cumplidas...", ref:"Levítico 23:15-16"}, 
+        {m:3, d:1, n:"Inicio Verano", es:"Estación de Verano", instr:"Tú has establecido todos los términos de la tierra...", ref:"Salmo 74:17"},
+        {m:4, d:3, n:"Tirosh", es:"Fiesta del Vino Nuevo", instr:"Cuando siegues tu mies... traerás vino nuevo.", ref:"Rollo del Templo 11QT"}, 
+        {m:5, d:22, n:"Yitzhar", es:"Fiesta del Aceite", instr:"Ofrenda de las primicias del aceite fresco...", ref:"Rollo del Templo 11QT"}, 
+        {m:6, d:1, n:"YOM TERUAH", es:"Fiesta de las Trompetas", instr:"En el mes séptimo, al primero del mes...", ref:"Levítico 23:24"}, 
+        {m:6, d:10, n:"YOM KIPUR", es:"Día de Expiación", especial:true, instr:"A los diez días de este mes séptimo será día de expiación...", ref:"Levítico 23:32"}, 
+        {m:6, d:15, n:"SUCOT", es:"Fiesta de los Tabernáculos", dur:7, instr:"En tabernáculos habitaréis siete días...", ref:"Levítico 23:42"}, 
+        {m:6, d:22, n:"Shemini Atzeret", es:"El Octavo Día", instr:"El octavo día tendréis solemnidad...", ref:"Números 29:35"}
+    ],
+
+    // --- BIBLIOTECA DE SABER (ESTUDIOS PROFUNDOS) ---
+    ESTUDIOS: [
+        {
+            t: "1. El Ancla: La Señal de 2019", 
+            s: "La Sincronización del Génesis con la Historia.", 
+            c: `
+            <p>Para restaurar el calendario de los Hijos de Sadoc, era necesario identificar un 'Punto Cero' en nuestra era que replicara las condiciones exactas de la Semana de la Creación descrita en Génesis 1:14-19.</p>
+            <p>El Creador estableció las luminarias en el <strong>Día Cuarto (Miércoles)</strong>. Por tanto, el reloj divino original comenzó con una alineación triple:</p>
+            <ul>
+                <li><strong>Día de la Semana:</strong> Miércoles (Día 4).</li>
+                <li><strong>Posición Solar:</strong> Equinoccio de Primavera (Tekufah Nisan, inicio del año solar).</li>
+                <li><strong>Posición Lunar:</strong> Luna Llena (Luminaria Mayor de la noche, creada 'completa').</li>
+            </ul>
+            <p>Investigaciones astronómicas recientes confirmaron que el <strong>20 de Marzo de 2019</strong> ocurrió esta alineación perfecta en Jerusalén: fue Miércoles, fue Equinoccio y hubo Superluna Llena. Además, coincidió con el inicio del turno sacerdotal de <strong>Gamul</strong>, tal como predicen los manuscritos de Qumrán (4Q320).</p>
+            <p>Este evento marcó el inicio de un nuevo ciclo de 6 años, sirviendo como el ancla inamovible desde la cual proyectamos todo el calendario.</p>
+            <div class="verse-box">"E hizo Dios las dos grandes lumbreras... y las puso en la expansión de los cielos... y fue la tarde y la mañana el día cuarto." (Génesis 1:16-19)</div>
+            `
+        },
+        {
+            t: "2. El Inicio del Día", 
+            s: "La Luz vence a las Tinieblas.", 
+            c: `
+            <p>Una de las desviaciones más grandes del judaísmo tradicional (rabínico/babilónico) es comenzar el día al atardecer. Sin embargo, la Escritura y la práctica del Templo dictan que el día comienza con la <strong>Luz</strong>.</p>
+            <p><strong>Evidencia Bíblica:</strong> En Génesis 1, Dios llama a la Luz 'Día' y a las Tinieblas 'Noche'. Son entidades separadas. La frase <em>"y fue la tarde y la mañana un día"</em> señala la conclusión completa de un ciclo de 24 horas, no su comienzo. El orden es: Luz (trabajo) -> Oscuridad (descanso) -> Nuevo Amanecer (cierre del día).</p>
+            <p><strong>Evidencia del Templo:</strong> El sacrificio diario (Tamid) y la limpieza del altar siempre comenzaban con el amanecer. Ningún sacrificio se iniciaba en la oscuridad.</p>
+            <p>Por esta razón, Qumrán Watch utiliza un algoritmo que conecta con tu GPS para cambiar la fecha solo cuando el sol aparece en tu horizonte local (Equilux/Amanecer), restaurando el ritmo biológico y espiritual original.</p>
+            `
+        },
+        {
+            t: "3. El Año Perfecto (364)", 
+            s: "Orden Matemático vs. Caos Lunar.", 
+            c: `
+            <p>El calendario de Enoc y Jubileos consta estrictamente de <strong>364 días</strong>. A diferencia del calendario lunar (354 días) que requiere añadir un mes extra (Adar II) arbitrariamente, o el gregoriano (365) que rompe las semanas, el año de 364 días es matemáticamente perfecto.</p>
+            <ul>
+                <li>Es divisible exactamente por 7 (52 semanas x 7 = 364).</li>
+                <li>Garantiza que las Fiestas de YHWH caigan <strong>siempre en el mismo día de la semana</strong> eternamente.</li>
+                <li>Pesaj siempre es en Miércoles; Shavuot siempre es en Domingo; Yom Kipur siempre es en Viernes.</li>
+            </ul>
+            <p>Esto evita que las fiestas solemnes entren en conflicto con el Shabat semanal, eliminando la confusión rabínica sobre qué hacer cuando un 'Sábado Alto' cae en viernes o domingo.</p>
+            <div class="verse-box">"Y mandaras a los hijos de Israel que observen los años de acuerdo con este computo: trescientos sesenta y cuatro días, y (esto) constituirá un año completo..." (Jubileos 6:32)</div>
+            `
+        },
+        {
+            t: "4. El Ciclo Sacerdotal (6 Años)", 
+            s: "La Sincronización de los Mishmarot.", 
+            c: `
+            <p>Dado que el año solar real dura 365.25 días y el calendario bíblico tiene 364, existe un desfase anual de 1.25 días. ¿Cómo mantenían los Hijos de Sadoc la alineación con las estaciones?</p>
+            <p>Utilizaban un <strong>Ciclo de 6 Años</strong> basado en la rotación de los 24 turnos sacerdotales (1 Crónicas 24). En 6 años, el desfase acumulado es de exactamente 7.5 días (una semana completa). Al final del sexto año, se añadía una semana intercalar para "resetear" el ciclo solar sin romper la cuenta del Shabat.</p>
+            <p><strong>El Orden de los Sacerdotes:</strong> Cada año del ciclo comienza con un turno sacerdotal específico, sirviendo como un reloj infalible:</p>
+            <ul>
+                <li><strong>Año 1:</strong> Comienza con <strong>Gamul</strong> (Como en 2019 y 2025).</li>
+                <li><strong>Año 2:</strong> Comienza con <strong>Jedaías</strong> (Yedaiah).</li>
+                <li><strong>Año 3:</strong> Comienza con <strong>Mijamín</strong> (Miyamin).</li>
+                <li><strong>Año 4:</strong> Comienza con <strong>Secanías</strong> (Shecaniah).</li>
+                <li><strong>Año 5:</strong> Comienza con <strong>Jesebeab</strong> (Yeshebeab).</li>
+                <li><strong>Año 6:</strong> Comienza con <strong>Hapises</strong> (Aphses).</li>
+            </ul>
+            <p>Este ciclo de 294 años (Jubileos) asegura que el tiempo sagrado y el tiempo astronómico caminen juntos.</p>
+            `
+        },
+        {
+            t: "5. Hijos de Sadoc", 
+            s: "Los Guardianes de la Alianza.", 
+            c: `
+            <p>El término 'Zadokita' se refiere a los <strong>Bnei Tzadok</strong>, el linaje legítimo de sumos sacerdotes descendientes de Aarón a través de Sadoc (el primer Sumo Sacerdote del Templo de Salomón).</p>
+            <p>Durante el periodo del Segundo Templo, el sacerdocio fue corrompido por la influencia helenista y política (los Asmoneos/Macabeos), quienes usurparon el cargo e impusieron el calendario lunar griego (seleúcida). Los verdaderos sacerdotes de Sadoc se negaron a profanar los tiempos sagrados y se retiraron al desierto (Qumrán).</p>
+            <p>Ellos preservaron los textos que hoy conocemos como los Rollos del Mar Muerto, manteniendo la pureza del calendario solar y esperando la restauración final. Usar este calendario es un acto de alineación con ese remanente fiel.</p>
+            <div class="verse-box">"Mas los sacerdotes levitas hijos de Sadoc, que guardaron el ordenamiento de mi santuario... ellos se acercarán a mí para ministrarme." (Ezequiel 44:15)</div>
+            `
+        },
+        {
+            t: "6. Fiestas Perdidas", 
+            s: "El Ciclo de las Primicias.", 
+            c: `
+            <p>Levítico 23 es solo el resumen. El <strong>Rollo del Templo (11Q19)</strong> encontrado en Qumrán detalla un ciclo agrícola mucho más completo que el judaísmo moderno ha olvidado.</p>
+            <p>El calendario sigue un patrón de 'cuentas de 50 días' (Pentecostés múltiples) para celebrar cada provisión de la tierra:</p>
+            <ul>
+                <li><strong>Primicias de Cebada:</strong> Durante los Panes sin Levadura (Mes 1).</li>
+                <li><strong>Shavuot (Trigo):</strong> 50 días después (Mes 3).</li>
+                <li><strong>Tirosh (Vino Nuevo):</strong> 50 días después del Trigo (Mes 5).</li>
+                <li><strong>Yitzhar (Aceite):</strong> 50 días después del Vino (Mes 6).</li>
+                <li><strong>Ofrenda de Leña:</strong> 6 días de sacrificios de madera tras el Aceite.</li>
+            </ul>
+            <p>Estas fiestas conectan al creyente con la provisión física y espiritual de YHWH en sus estaciones precisas.</p>
+            `
+        },
+        {
+            t: "7. Tekufot (Estaciones)", 
+            s: "Los Cuatro Días Intercalares.", 
+            c: `
+            <p>Para llegar a la suma de 364 días, el calendario no usa 12 meses idénticos. Sigue un patrón trimestral de <strong>30, 30 y 31 días</strong>.</p>
+            <p>Ese día '31' al final de cada estación (o el día 1 de la nueva estación, según la interpretación) se llama <strong>Tekufah</strong> (Giro). Enoc 72 y 82 describen estos 4 días como 'líderes' que no se cuentan dentro del cómputo regular de los meses, sino que sirven de puentes entre las estaciones (Primavera, Verano, Otoño, Invierno).</p>
+            <p>Son días de transición espiritual y astronómica, donde el sol cambia de 'puerta' en el horizonte. En esta App, están marcados como el día 1 de los meses 1, 4, 7 y 10.</p>
+            `
+        },
+        {
+            t: "8. Guerra de Luz", 
+            s: "El Propósito Final del Calendario.", 
+            c: `
+            <p>¿Por qué es tan importante el calendario? Según el <strong>Rollo de la Guerra (1QM)</strong>, existe un conflicto cósmico entre los Hijos de la Luz (quienes obedecen la Torá y los tiempos divinos) y los Hijos de las Tinieblas.</p>
+            <p>Belial (el adversario) busca 'cambiar los tiempos y la ley' (Daniel 7:25) para desconectar a la humanidad de la fuente de poder divino. Guardar el calendario Zadokita es un acto de <strong>guerra espiritual</strong>. Es declarar lealtad al Rey del Universo y sincronizarse con Su ejército angelical.</p>
+            <p>No se trata solo de fechas, sino de estar en el lugar correcto, en el tiempo correcto, para la batalla final.</p>
+            `
+        }
     ],
 
     // --- SALMOS DIARIOS (SHIR SHEL YOM - TEMPLO) ---
