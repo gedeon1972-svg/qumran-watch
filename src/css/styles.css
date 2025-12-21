@@ -702,3 +702,57 @@ nav.nav-bar {
 .btn-install:active {
     transform: scale(0.98);
 }
+/* --- TOAST DE ACTUALIZACIÓN (Fase 4) --- */
+.update-toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    left: 20px; /* Para móviles */
+    background: rgba(26, 18, 11, 0.95);
+    border: 1px solid var(--gold);
+    border-left: 5px solid var(--gold);
+    border-radius: 8px;
+    padding: 15px;
+    display: none; /* Oculto por defecto */
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.6);
+    z-index: 10000;
+    animation: slideUp 0.4s ease-out;
+    backdrop-filter: blur(5px);
+}
+
+.toast-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.toast-icon { font-size: 1.2rem; }
+.toast-msg { color: #fff; font-family: 'David Libre'; font-weight: bold; font-size: 0.95rem; }
+
+.toast-btn {
+    background: var(--gold);
+    color: #1a120b;
+    border: none;
+    padding: 8px 15px;
+    font-family: 'Cinzel';
+    font-weight: bold;
+    font-size: 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.toast-btn:active { transform: scale(0.95); }
+
+@keyframes slideUp { 
+    from { transform: translateY(50px); opacity: 0; } 
+    to { transform: translateY(0); opacity: 1; } 
+}
+
+/* Ajuste para escritorio (que no ocupe todo el ancho) */
+@media (min-width: 600px) {
+    .update-toast { left: auto; width: 350px; }
+}
