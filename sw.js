@@ -3,7 +3,7 @@
  * Actualizado para incluir fuentes locales.
  */
 
-const CACHE_NAME = 'qumran-v5-offline-complete'; // Versión actualizada
+const CACHE_NAME = 'qumran-v7.3-offline-complete'; // Versión actualizada
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
