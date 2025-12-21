@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Qumran Watch | Centro de Pruebas</title>
+    <style>
+        body { background: #111; color: #eee; font-family: monospace; padding: 20px; }
+        h1 { color: #c5a059; border-bottom: 1px solid #444; }
+        .test-box { background: #222; padding: 15px; margin-bottom: 10px; border-left: 5px solid #555; }
+        .pass { border-left-color: #2ecc71; color: #aaffaa; }
+        .fail { border-left-color: #e74c3c; color: #ffaaaa; }
+        .info { color: #aaa; font-size: 0.9rem; }
+        button { padding: 10px 20px; background: #c5a059; border: none; font-weight: bold; cursor: pointer; font-size: 1rem;}
+        #results { margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <h1>🛡️ Qumran Watch - Suite de Pruebas (Fase 3)</h1>
+    <p>Verificando la integridad matemática del calendario para los próximos ciclos.</p>
+    <button onclick="runTests()">EJECUTAR PRUEBAS</button>
+
+    <div id="results"></div>
+
+    <script src="src/js/data.js"></script>
+    <script src="src/js/calendar.js"></script>
+
+    <script>
+        function log(msg, type = 'neutral') {
+            const div = document.createElement('div');
+            div.className = 'test-box ' + type;
+            div.innerHTML = msg;
+            document.getElementById('results').appendChild(div);
+        }
+
+        function assert(condition, testName) {
+            if (condition) {
+                log(`✅ <strong>PASÓ:</strong> ${testName}`, 'pass');
+                return true;
+            } else {
+                log(`❌ <strong>FALLÓ:</strong> ${testName}`, 'fail');
+                return false;
+            }
+        }
+
+        function runTests() {
+            document.getElementById('results').innerHTML = "";
+            let total = 0, passed = 0;
+
+            log("INICIANDO DIAGNÓSTICO DEL VIGÍA...", 'neutral');
+
+            // --- PRUEBA 1: Integridad del Ancla ---
+            total++;
+            const anchor = QumranCalendar.calculate(new Date(2019, 2, 20)); // 20 Marzo 2019
+            if(assert(anchor !== null && anchor.m === 0 && anchor.d === 1, "El Ancla (20/03/2019) debe ser Mes 1, Día 1")) passed++;
+
+            // --- PRUEBA 2: Día de la Semana Invariable ---
+            // En el calendario 364, cada fecha cae siempre en el mismo día de la semana (excepto en ajuste)
+            // 20 Marzo 2019 fue Miércoles (idx 3). 
+            // Rosh Hashaná (1/1) siempre debe ser Miércoles.
+            total++;
+            let yearsToTest = [2020, 2021, 2022, 2023, 2024]; 
+            let consistent = true;
+            yearsToTest.forEach(y => {
+                // Buscamos aprox donde cae marzo
+                let d = new Date(y, 2, 20); 
+                // Ajustamos para encontrar el 1/1 de ese año
+                for(let i=-10; i<10; i++) {
+                    let check = new Date(d.getTime() + (i*86400000));
+                    let q = QumranCalendar.calculate(check);
+                    if(q && q.m === 0 && q.d === 1) {
+                        if(q.idxSem !== 3) { // 3 = Miércoles
+                            console.error(`Fallo en año ${y}: Cayó en idx ${q.idxSem}`);
+                            consistent = false;
+                        }
+                    }
+                }
+            });
+            if(assert(consistent, "Rosh Hashaná (1/1) siempre cae en Miércoles (Día 4)")) passed++;
+
+            // --- PRUEBA 3: Año de Ajuste (Intercalar) ---
+            // 2019 (año 1) -> 2024 es año 6 (debe tener semana de ajuste)
+            // El ciclo termina aprox en Marzo 2025.
+            total++;
+            let foundSpecial = false;
+            // Buscamos en Marzo 2025 (final del primer ciclo sexenal)
+            let base2025 = new Date(2025, 2, 10);
+            for(let i=0; i<20; i++) {
+                let d = new Date(base2025.getTime() + (i*86400000));
+                let q = QumranCalendar.calculate(d);
+                if(q && q.special) { foundSpecial = true; break; }
+            }
+            if(assert(foundSpecial, "Detectada Semana de Ajuste al final del ciclo (Marzo 2025)")) passed++;
+
+            // --- PRUEBA 4: Fechas Futuras (Profecía) ---
+            // Verificar que el calendario no se rompe en 2050
+            total++;
+            let futureDate = new Date(2050, 0, 1);
+            let qFuture = QumranCalendar.calculate(futureDate);
+            if(assert(qFuture !== null, "El calendario sigue funcionando en el año 2050")) passed++;
+
+            // --- RESULTADO FINAL ---
+            log(`<br><strong>DIAGNÓSTICO COMPLETO:</strong> ${passed}/${total} Pruebas exitosas.`, passed === total ? 'pass' : 'fail');
+        }
+    </script>
+</body>
+</html>

@@ -1,100 +1,134 @@
 /**
  * src/js/calendar.js
  * EL MOTOR MATEMÁTICO: Lógica pura de conversión de fechas.
- * No toca el DOM (HTML). Solo recibe fechas y devuelve datos.
- * Depende de: QumranData (data.js)
+ * ---------------------------------------------------------
+ * FUNDAMENTO ASTRONÓMICO Y TEOLÓGICO:
+ * 1. Año Solar Perfecto: 364 días (52 semanas exactas).
+ * 2. Ciclo Sacerdotal (Mishmarot): 6 años para sincronizar.
+ * 3. Ajuste Solar: El año solar real es ~365.24 días. 
+ * - En 6 años de 364 días acumulamos un déficit de ~7.5 días.
+ * - El calendario de Qumrán/Enoc corrige esto añadiendo una "Semana de Ajuste"
+ * al final del 6to año (Año de Intercalación).
+ * - Ciclo total: (364 x 5) + 371 = 2191 días.
+ * * Dependencias: QumranData (data.js) para Ancla y Nombres.
  */
 
 const QumranCalendar = {
 
     /**
      * Calcula la fecha Qumrán para una fecha Gregoriana dada.
-     * @param {Date} dateObj - Fecha Gregoriana
-     * @returns {Object|null} - Objeto con datos del calendario o null si es anterior al ancla.
+     * @param {Date} dateObj - Fecha Gregoriana de entrada
+     * @returns {Object|null} - Objeto con datos litúrgicos o null si es fecha inválida.
      */
     calculate: (dateObj) => {
-        // 1. Definir el Ancla (20 Marzo 2019)
-        let anchor = new Date(QumranData.ANCHOR.y, QumranData.ANCHOR.m, QumranData.ANCHOR.d);
-        
-        // 2. Calcular diferencia en días
-        let diff = Math.floor((dateObj - anchor) / 86400000);
-        
-        // Si la fecha es anterior al 2019, devolvemos null
-        if (diff < 0) return null;
-
-        // 3. Ciclo de 6 Años (Sexenio)
-        // 5 años de 364 días + 1 año de 371 días = 2191 días
-        let cicloSex = 2191; 
-        let enCiclo = diff % cicloSex;
-        
-        // Determinar en qué año del ciclo (1-6) estamos
-        let yInC = 1, dCount = 0, isInter = false;
-        
-        for (let y = 1; y <= 6; y++) {
-            // El año 6 tiene 371 días (Semana de Ajuste extra), los demás 364
-            let dYear = (y === 6) ? 371 : 364;
-            
-            if (enCiclo < dYear) { 
-                yInC = y; 
-                if(y === 6) isInter = true; // Estamos en año de ajuste
-                dCount = enCiclo; 
-                break; 
-            }
-            enCiclo -= dYear;
+        // 1. VALIDACIÓN DEL ANCLA
+        // El punto de partida es el 20 de Marzo de 2019 (Equinoccio + Luna Llena + Miércoles)
+        if (!QumranData || !QumranData.ANCHOR) {
+            console.error("Error Crítico: No se cargó QumranData.");
+            return null;
         }
 
-        // 4. Detectar Semana de Ajuste (Días 364-370 del año 6)
-        // Si estamos en año 6 y pasamos el día 364, es la semana extra.
-        if (isInter && dCount >= 364) { 
+        let anchor = new Date(QumranData.ANCHOR.y, QumranData.ANCHOR.m, QumranData.ANCHOR.d);
+        
+        // Calcular diferencia en días (milisegundos / ms_por_dia)
+        let diff = Math.floor((dateObj - anchor) / 86400000);
+        
+        // Si la fecha es anterior al inicio de la restauración (2019), no calculamos.
+        if (diff < 0) return null;
+
+        // 2. CÁLCULO DEL CICLO SEXENAL (6 AÑOS)
+        // El ciclo completo dura 2191 días.
+        let cicloSex = 2191; 
+        let diasEnCiclo = diff % cicloSex; // Día dentro del ciclo actual (0 a 2190)
+        let ciclosCompletos = Math.floor(diff / cicloSex);
+        
+        // Determinar en qué año del ciclo (1-6) estamos
+        let anioDelCiclo = 1;
+        let diasAcumulados = 0;
+        let esAnioIntercalar = false;
+        
+        for (let y = 1; y <= 6; y++) {
+            // Los años 1-5 tienen 364 días. El año 6 tiene 371 días (364 + 7 de ajuste).
+            let diasEnEsteAnio = (y === 6) ? 371 : 364;
+            
+            if (diasEnCiclo < diasEnEsteAnio) { 
+                anioDelCiclo = y; 
+                if(y === 6) esAnioIntercalar = true; 
+                diasAcumulados = diasEnCiclo; // Días transcurridos en el año actual
+                break; 
+            }
+            diasEnCiclo -= diasEnEsteAnio;
+        }
+
+        // Año Hebreo Calculado (Aprox 2019 = Año 1 de la Restauración)
+        // Nota: Esto es un conteo relativo desde el Ancla, no el año AM rabínico.
+        let anioRestauracion = QumranData.ANCHOR.y + (ciclosCompletos * 6) + (anioDelCiclo - 1);
+
+        // 3. DETECCIÓN DE LA SEMANA DE AJUSTE (TEKUFAH FINAL)
+        // Si estamos en el año 6 y pasamos el día 364, entramos en la "Zona Muerta" o ajuste.
+        if (esAnioIntercalar && diasAcumulados >= 364) { 
             return { 
-                special: true, // Bandera para indicar que no es un día normal
+                special: true, // Bandera 'true' bloquea la visualización normal de fechas
                 turno: QumranCalendar.getTurno(diff), 
-                idxSem: (dCount % 7) + 3, // Cálculo del día de la semana
-                dCountYear: dCount, 
-                m: 0, 
-                d: 0 
+                idxSem: (diasAcumulados % 7) + 3, // Mantiene el ciclo semanal
+                dCountYear: diasAcumulados, 
+                m: 0, d: 0,
+                mensaje: "SEMANA DE AJUSTE SOLAR (TEKUFAH)"
             }; 
         }
 
-        // 5. Calcular Mes y Día dentro del año normal (Patrón 30-30-31)
-        let ptrn = [30,30,31,30,30,31,30,30,31,30,30,31];
-        let dRest = dCount, mQ = 0, dQ = 0;
+        // 4. CÁLCULO DE MES Y DÍA (ESTRUCTURA 30-30-31)
+        // El año se divide en 4 estaciones de 91 días (30+30+31).
+        let patronMeses = [30,30,31,30,30,31,30,30,31,30,30,31];
+        let diasRestantes = diasAcumulados;
+        let mesQ = 0; 
+        let diaQ = 0;
         
         for (let i = 0; i < 12; i++) {
-            if (dRest < ptrn[i]) { 
-                mQ = i; 
-                dQ = dRest + 1; // +1 porque los días empiezan en 1, no 0
+            if (diasRestantes < patronMeses[i]) { 
+                mesQ = i; 
+                diaQ = diasRestantes + 1; // +1 porque los arrays son base 0 pero los días base 1
                 break; 
             }
-            dRest -= ptrn[i];
+            diasRestantes -= patronMeses[i];
         }
         
-        // 6. Retornar el Objeto de Fecha Qumrán Completo
+        // 5. CÁLCULO DEL DÍA DE LA SEMANA
+        // El ancla (20/03/2019) fue Miércoles (Día 4).
+        // En JS, Domingo=0, Lunes=1... Miércoles=3.
+        let indiceSemana = (3 + diff) % 7;
+
+        // 6. CONSTRUCCIÓN DEL OBJETO DE FECHA FINAL
         return {
-            m: mQ,                 // Índice del mes (0-11)
-            d: dQ,                 // Día del mes (1-31)
-            idxSem: (3 + diff) % 7, // Día de la semana (0-6, donde 6 es Shabat)
-                                    // Se suma 3 porque el ancla (2019) fue Miércoles (Día 4 -> índice 3)
+            y: anioRestauracion,   // Año Gregoriano/Qumrán Híbrido
+            m: mesQ,               // Índice del mes (0-11)
+            d: diaQ,               // Día del mes (1-31)
+            idxSem: indiceSemana,  // 0=Domingo ... 6=Shabat
             
-            turno: QumranCalendar.getTurno(diff), // Nombre del Mishmar
+            turno: QumranCalendar.getTurno(diff), // Nombre del Mishmar activo
             
-            // Estación del año basada en el mes
-            est: (mQ < 3 ? "Primavera" : (mQ < 6 ? "Verano" : (mQ < 9 ? "Otoño" : "Invierno"))),
+            // Estación: Se calcula dividiendo los meses en grupos de 3
+            est: (mesQ < 3 ? "Primavera" : (mesQ < 6 ? "Verano" : (mesQ < 9 ? "Otoño" : "Invierno"))),
             
-            puerta: QumranData.PUERTAS_SOLARES[mQ], // Puerta de Enoc
-            dCountYear: dCount,      // Día número X del año (1-364)
+            puerta: QumranData.PUERTAS_SOLARES ? QumranData.PUERTAS_SOLARES[mesQ] : 0, 
+            dCountYear: diasAcumulados, 
             special: false
         };
     },
 
     /**
-     * Cálculo del Turno Sacerdotal (Ciclo continuo de 24 semanas)
+     * Obtiene el Turno Sacerdotal (Mishmar) basado en los días totales.
+     * El ciclo es infinito y continuo, no se reinicia anualmente, solo se ajusta en el ciclo sexenal.
      */
     getTurno: (totalDays) => {
-        // Semanas transcurridas desde el ancla
+        if (!QumranData || !QumranData.TURNOS) return "Desconocido";
+        
+        // Semanas completas transcurridas desde el ancla
         let weeksPassed = Math.floor(totalDays / 7);
+        
         // Índice base del ancla + semanas pasadas, módulo 24 turnos
         let turnoIndex = (QumranData.ANCHOR.turnoIdx + weeksPassed) % 24;
+        
         return QumranData.TURNOS[turnoIndex];
     }
 };
