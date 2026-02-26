@@ -10,10 +10,14 @@
  * - El calendario de Qumrán/Enoc corrige esto añadiendo una "Semana de Ajuste"
  * al final del 6to año (Año de Intercalación).
  * - Ciclo total: (364 x 5) + 371 = 2191 días (Exactamente 313 semanas).
- * * Dependencias: QumranData (data.js) para Ancla y Nombres.
+ * * MÓDULO ES6: Exporta el motor e importa sus dependencias.
  */
 
-const QumranCalendar = {
+// 1. IMPORTACIÓN SEGURA DE DATOS
+import { QumranData } from './data.js';
+
+// 2. EXPORTACIÓN DEL MOTOR
+export const QumranCalendar = {
 
     /**
      * Calcula la fecha Qumrán para una fecha Gregoriana dada.

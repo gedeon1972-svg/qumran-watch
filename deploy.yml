@@ -1,0 +1,36 @@
+name: Desplegar Qumran Watch a GitHub Pages
+
+# El robot se activará cada vez que subas cambios a la rama principal
+on:
+  push:
+    branches:
+      - main
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  construir-y-publicar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Descargar código
+        uses: actions/checkout@v3
+
+      - name: ⚙️ Preparar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: 📦 Instalar herramientas (Vite)
+        run: npm install
+
+      - name: 🔨 Exprimir y Minificar (Build)
+        run: npm run build
+
+      - name: 🚀 Publicar en internet
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist

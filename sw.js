@@ -1,74 +1,87 @@
-/* * sw.js
- * EL GUARDIÁN DEL UMBRAL (Blindado)
- * Estrategia: Stale-While-Revalidate
- * Versión: 8.2 (Mejora y Ampliacion de Informacion de Reconstruccion del Calendario)
+/**
+ * sw.js
+ * SERVICE WORKER PROFESIONAL (PWA)
+ * Gestiona el caché offline y las actualizaciones de la aplicación.
  */
 
-const CACHE_NAME = 'qumran-v8.0-secure';
-const ASSETS_TO_CACHE = [
+const CACHE_NAME = 'qumran-cache-v9.0';
+
+// Lista de todos los archivos vitales para funcionar 100% offline
+const URLS_TO_CACHE = [
     './',
     './index.html',
     './manifest.json',
     './icon.png',
     './src/css/styles.css',
+    './src/js/app.js',
     './src/js/data.js',
     './src/js/calendar.js',
-    './src/js/app.js',
-    // Fuentes Locales
-    './src/css/fonts/cinzel-v26-latin-regular.woff2',
-    './src/css/fonts/cinzel-v26-latin-700.woff2',
     './src/css/fonts/david-libre-v17-latin-regular.woff2',
-    './src/css/fonts/david-libre-v17-latin-700.woff2'
+    './src/css/fonts/david-libre-v17-latin-700.woff2',
+    './src/css/fonts/cinzel-v26-latin-regular.woff2',
+    './src/css/fonts/cinzel-v26-latin-700.woff2'
 ];
 
-// 1. INSTALACIÓN: Cachear lo crítico inicial
-self.addEventListener('install', (e) => {
-    self.skipWaiting(); // Forzar activación inmediata
-    e.waitUntil(
-        caches.open(CACHE_NAME).then((cache) => {
-            console.log('[SW] Cacheando núcleo...');
-            return cache.addAll(ASSETS_TO_CACHE);
+// 1. EVENTO DE INSTALACIÓN (Descarga y guarda todo)
+self.addEventListener('install', event => {
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+        .then(cache => {
+            console.log('[Service Worker] Guardando archivos en Caché:', CACHE_NAME);
+            return cache.addAll(URLS_TO_CACHE);
+        })
+        .catch(err => console.error('[Service Worker] Error al guardar caché:', err))
+    );
+});
+
+// 2. EVENTO DE ACTIVACIÓN (Limpia la basura de versiones anteriores)
+self.addEventListener('activate', event => {
+    event.waitUntil(
+        caches.keys().then(cacheNames => {
+            return Promise.all(
+                cacheNames.map(cacheName => {
+                    // Si el nombre del caché no coincide con la versión actual, bórralo
+                    if (cacheName !== CACHE_NAME) {
+                        console.log('[Service Worker] Borrando caché antiguo:', cacheName);
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
+        }).then(() => {
+            // Toma el control inmediato de todos los clientes/pestañas abiertas
+            return self.clients.claim();
         })
     );
 });
 
-// 2. ACTIVACIÓN: Limpiar basura vieja
-self.addEventListener('activate', (e) => {
-    e.waitUntil(
-        caches.keys().then((keyList) => {
-            return Promise.all(keyList.map((key) => {
-                if (key !== CACHE_NAME) {
-                    console.log('[SW] Eliminando cache obsoleta:', key);
-                    return caches.delete(key);
-                }
-            }));
-        }).then(() => self.clients.claim()) // Tomar control de clientes abiertos
-    );
-});
+// 3. EVENTO FETCH (Intercepta peticiones de red)
+self.addEventListener('fetch', event => {
+    // Solo intercepta peticiones GET
+    if (event.request.method !== 'GET') return;
 
-// 3. INTERCEPTACIÓN: Estrategia Stale-While-Revalidate
-self.addEventListener('fetch', (e) => {
-    // Solo manejar peticiones http/https (ignorar extensiones, etc.)
-    if (!e.request.url.startsWith('http')) return;
-
-    e.respondWith(
-        caches.open(CACHE_NAME).then((cache) => {
-            return cache.match(e.request).then((cachedResponse) => {
-                // A. ESTRATEGIA DE RED: Buscar actualización en el fondo
-                const fetchPromise = fetch(e.request).then((networkResponse) => {
-                    // Si la respuesta es válida, actualizamos la caché
-                    if (networkResponse && networkResponse.status === 200) {
-                        cache.put(e.request, networkResponse.clone());
-                    }
-                    return networkResponse;
-                }).catch(() => {
-                    // Si falla la red, no pasa nada
-                    console.log('[SW] Modo offline activo');
-                });
-
-                // B. RESPUESTA: Devolver caché si existe, si no, esperar a la red
-                return cachedResponse || fetchPromise;
+    event.respondWith(
+        caches.match(event.request)
+        .then(response => {
+            // Si el archivo está en caché, devuélvelo rápido
+            if (response) {
+                return response;
+            }
+            
+            // Si no está en caché, búscalo en internet (red)
+            return fetch(event.request).then(networkResponse => {
+                return networkResponse;
+            }).catch(() => {
+                // Falla de red silenciosa (El usuario está offline y el archivo no está en caché)
+                console.warn('[Service Worker] Sin conexión para el recurso:', event.request.url);
             });
         })
     );
+});
+
+// 4. EVENTO MESSAGE (Escucha la orden de actualizar desde app.js)
+self.addEventListener('message', event => {
+    if (event.data && event.data.action === 'skipWaiting') {
+        console.log('[Service Worker] Forzando actualización inmediata...');
+        self.skipWaiting();
+    }
 });

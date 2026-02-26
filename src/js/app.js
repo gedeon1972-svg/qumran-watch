@@ -1,9 +1,12 @@
 /* * js/app.js
  * EL ESPÍRITU (CONTROLADOR)
- * V8.2: Integración de Biblioteca "Saber"
+ * V8.4: Integración de Contextos Históricos (Corrección de Contraste)
  */
 
-// Variable global para guardar el evento de instalación
+// --- 0. IMPORTAMOS LOS MÓDULOS DEL MOTOR ---
+import { QumranData } from './data.js';
+import { QumranCalendar } from './calendar.js';
+
 let deferredPrompt;
 let newWorker;
 
@@ -24,11 +27,9 @@ if ('serviceWorker' in navigator) {
     });
 }
 
-// 2. LÓGICA DE INSTALACIÓN PWA
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
-  // Solo mostramos el botón si NO es iOS (para no duplicar mensajes)
   const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
   if (!isIOS) {
       const installContainer = document.getElementById('install-container');
@@ -49,33 +50,28 @@ function showUpdateNotification() {
 }
 
 const QumranApp = {
-    // Estado interno
     currentFiestaIdx: null,
     todayFiesta: null,
     sunriseHour: 6.0,
 
-    // INICIO
     init: () => {
-        console.log("Iniciando Qumran Watch...");
+        console.log("Iniciando Qumran Watch (Módulos ES6)...");
         QumranApp.setupListeners();
         
         const hasMemory = QumranApp.loadStoredLocation();
         if (!hasMemory) QumranApp.getLocationAndSun(); 
 
         QumranApp.renderHoy();
-        QumranApp.renderSaber(); // NUEVO: Carga la biblioteca
+        QumranApp.renderSaber(); 
     },
 
-    // EVENTOS
     setupListeners: () => {
-        // Navegación
         document.getElementById('nav-hoy').addEventListener('click', (e) => QumranApp.nav('hoy', e.currentTarget));
         document.getElementById('nav-lit').addEventListener('click', (e) => QumranApp.nav('lit', e.currentTarget));
         document.getElementById('nav-cal').addEventListener('click', (e) => QumranApp.nav('cal', e.currentTarget));
         document.getElementById('nav-con').addEventListener('click', (e) => QumranApp.nav('con', e.currentTarget));
         document.getElementById('nav-edu').addEventListener('click', (e) => QumranApp.nav('edu', e.currentTarget));
         
-        // --- DETECCIÓN ESPECÍFICA PARA IPHONE (iOS) ---
         const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
         if (isIOS) {
             const installContainer = document.getElementById('install-container');
@@ -94,7 +90,6 @@ const QumranApp = {
             }
         }
 
-        // --- LÓGICA BOTÓN ANDROID ---
         const btnInstall = document.getElementById('btn-install-app');
         if(btnInstall) {
             btnInstall.addEventListener('click', async () => {
@@ -109,24 +104,18 @@ const QumranApp = {
             });
         }
         
-        // Interacciones
         document.getElementById('heb-fiesta').addEventListener('click', QumranApp.openFiestaHoy);
         document.getElementById('geo-btn').addEventListener('click', () => QumranApp.getLocationAndSun(true));
         
-        // Enlaces Externos
         const openPodcast = () => window.open('https://youtube.com/playlist?list=PLr4MABEXstnDLUVcD7EenO4vN8EglZoSz', '_blank');
         const openInstitute = () => window.open('https://www.descubrelabiblia.online/', '_blank');
         document.getElementById('btn-podcast-con').addEventListener('click', openPodcast);
         document.getElementById('btn-institute-con').addEventListener('click', openInstitute);
         
-        // Calendario
         document.getElementById('btn-render-cal').addEventListener('click', QumranApp.renderCalendar);
         document.getElementById('btn-close-modal').addEventListener('click', () => document.getElementById('modal-fiesta').style.display='none');
-        
-        // Modal Lectura (NUEVO)
         document.getElementById('btn-close-lectura').addEventListener('click', () => document.getElementById('modal-lectura').style.display='none');
 
-        // Delegación Calendario
         document.getElementById('cal-lista').addEventListener('click', (e) => {
             const row = e.target.closest('.cal-row.fiesta');
             if (row) {
@@ -136,7 +125,6 @@ const QumranApp = {
             }
         });
         
-        // Delegación Estudios (NUEVO)
         document.getElementById('edu-grid').addEventListener('click', (e) => {
             const card = e.target.closest('.edu-card');
             if (card) {
@@ -154,7 +142,6 @@ const QumranApp = {
         window.scrollTo(0,0);
     },
     
-    // --- LÓGICA DE UBICACIÓN Y MEMORIA ---
     loadStoredLocation: () => {
         const storedLat = localStorage.getItem('qw_lat');
         const storedLng = localStorage.getItem('qw_lng');
@@ -326,6 +313,7 @@ const QumranApp = {
             });
             document.getElementById('heb-puerta-num').innerText = q.puerta + "ª Puerta";
 
+            // --- RENDERIZADO DE LA LECTURA SAGRADA ---
             let percent = ((q.idxSem + 1) / 7) * 100;
             let s = null;
             let litType = ""; let litMain = "";
@@ -336,7 +324,7 @@ const QumranApp = {
                 percent = 100;
                 let weekOfYear = Math.floor((q.dCountYear || 0) / 7);
                 s = QumranData.CANTICOS_SHABAT[weekOfYear % 13];
-                litType = "LITURGIA DE QUMRÁN"; litMain = "CÁNTICO DEL SACRIFICIO DEL SHABAT";
+                litType = "LITURGIA CELESTIAL"; litMain = "CÁNTICO DEL SACRIFICIO DEL SHABAT";
             } else {
                 document.getElementById('shabat-text').innerText = `Faltan ${6 - q.idxSem} días para el Shabat`;
                 s = QumranData.SALMOS[q.idxSem];
@@ -348,7 +336,12 @@ const QumranApp = {
                 document.getElementById('lit-main-title').innerText = litMain;
                 document.getElementById('page-lit-type').innerText = litType;
                 document.getElementById('page-lit-title').innerText = s.t;
-                document.getElementById('page-lit-text').innerText = s.v;
+                
+                // CORRECCIÓN: Usamos #333 para texto oscuro asegurando contraste sobre fondo claro.
+                let contextoHTML = s.c ? `<div style="background: rgba(212, 175, 55, 0.15); padding: 15px; border-left: 4px solid #d4af37; border-radius: 0 8px 8px 0; font-size: 0.95rem; font-style: italic; color: #333; margin-bottom: 25px; line-height: 1.5; text-align: left;"><strong>Contexto Histórico:</strong><br>${s.c}</div>` : '';
+                let poemaHTML = s.v.replace(/\n/g, '<br>');
+                
+                document.getElementById('page-lit-text').innerHTML = contextoHTML + `<div style="line-height: 1.8; font-size: 1.05rem; color: #111;">${poemaHTML}</div>`;
             }
         }
     },
@@ -383,21 +376,17 @@ const QumranApp = {
     
     openFiestaHoy: () => { if(QumranApp.todayFiesta !== null) QumranApp.openFiesta(QumranApp.todayFiesta); },
 
-    // --- NUEVO: RENDERIZADO DE BIBLIOTECA SABER ---
     renderSaber: () => {
         const container = document.getElementById('edu-grid');
         if(!container) return;
         
-        // Limpiamos
         container.innerHTML = "";
         
-        // Iteramos sobre los estudios
         QumranData.ESTUDIOS.forEach((item, idx) => {
             const card = document.createElement('div');
             card.className = "edu-card";
             card.dataset.index = idx;
             
-            // Icono sutil basado en el índice (opcional, por ahora genérico)
             card.innerHTML = `
                 <div class="edu-card-title">${item.t}</div>
                 <div class="edu-card-subtitle">${item.s}</div>
@@ -407,7 +396,6 @@ const QumranApp = {
         });
     },
     
-    // --- NUEVO: ABRIR ESTUDIO ---
     openEstudio: (index) => {
         const estudio = QumranData.ESTUDIOS[index];
         if(!estudio) return;

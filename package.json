@@ -1,0 +1,12 @@
+{
+  "name": "qumran-watch",
+  "private": true,
+  "version": "9.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "vite": "^5.2.0"
+  }
+}
