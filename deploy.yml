@@ -1,6 +1,5 @@
 name: Desplegar Qumran Watch a GitHub Pages
 
-# El robot se activará cada vez que subas cambios a la rama principal
 on:
   push:
     branches:
@@ -23,8 +22,11 @@ jobs:
         with:
           node-version: '18'
 
-      - name: 📦 Instalar herramientas (Vite)
+      - name: 📦 Instalar herramientas
         run: npm install
+
+      - name: 🛡️ EL BLINDAJE: Ejecutar Tests Matemáticos
+        run: npm test
 
       - name: 🔨 Exprimir y Minificar (Build)
         run: npm run build
