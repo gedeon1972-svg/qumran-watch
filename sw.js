@@ -4,7 +4,7 @@
  * Gestiona el caché offline y las actualizaciones de la aplicación.
  */
 
-const CACHE_NAME = 'qumran-cache-v10.0';
+const CACHE_NAME = 'qumran-cache-v10.1';
 
 // Lista de todos los archivos vitales para funcionar 100% offline
 const URLS_TO_CACHE = [
