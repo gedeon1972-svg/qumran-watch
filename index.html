@@ -23,15 +23,9 @@
     </div>
 
     <div id="view-hoy" class="view active">
-        <div id="install-container" style="display:none;">
+        <div id="install-container">
             <button id="btn-install-app" class="btn-install">INSTALAR APLICACIÓN</button>
         </div>
-        <div id="notification-container" style="display:none; margin-top: 10px;">
-            <button id="btn-notifications" class="btn-install" style="background: var(--gold); color: #000; border-color: #000; font-weight: bold;">
-                🔔 ACTIVAR AVISOS DEL VIGÍA
-            </button>
-        </div>
-
         <article class="card">
             <span class="fecha-greg" id="greg-date">...</span>
             <div class="fecha-hebrea" id="heb-date">Cargando...</div>
@@ -118,6 +112,7 @@
             <input type="number" id="cal-year" value="2025" class="cycle-input" placeholder="Año">
             <button id="btn-render-cal" class="btn-action">VER CICLO</button>
         </div>
+        <div class="hint-text">Toca una fiesta para ver la instrucción</div>
         <div id="cal-lista"></div>
     </div>
 
@@ -126,6 +121,7 @@
         <p class="fundamento-txt" style="text-align: center; margin-bottom: 25px;">
             El calendario que tienes en tus manos no es una invención moderna, sino la <strong>restauración matemática</strong> del orden entregado a Enoc y Moisés.
         </p>
+        
         <div id="edu-grid" class="edu-grid-container"></div>
     </div>
 
@@ -157,7 +153,8 @@
         <h2 id="lec-title" class="lecture-title">Título del Estudio</h2>
         <div class="lecture-meta" id="lec-meta">Subtítulo</div>
         <hr class="separator-gold">
-        <div id="lec-body" class="lecture-body"></div>
+        <div id="lec-body" class="lecture-body">
+            </div>
     </div>
 </div>
 
