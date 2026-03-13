@@ -1,6 +1,6 @@
 /* * js/app.js
  * EL ESPÍRITU (CONTROLADOR)
- * V9.1: Fusión Profesional con Notificaciones y Filología V8.4
+ * V9.2: Restauración de Recuadro de Salmos y Notificaciones
  */
 
 import { QumranData } from './data.js';
@@ -35,7 +35,7 @@ const QumranApp = {
         if (!QumranApp.loadStoredLocation()) QumranApp.getLocationAndSun(); 
         QumranApp.renderHoy();
         QumranApp.renderSaber();
-        QumranApp.checkNotificationStatus(); // Activa el chequeo de avisos
+        QumranApp.checkNotificationStatus();
     },
 
     setupListeners: () => {
@@ -67,7 +67,7 @@ const QumranApp = {
         // NOTIFICACIONES
         document.getElementById('btn-notifications')?.addEventListener('click', QumranApp.requestNotificationPermission);
 
-        // Listeners de UI
+        // UI Listeners originales
         document.getElementById('heb-fiesta')?.addEventListener('click', QumranApp.openFiestaHoy);
         document.getElementById('geo-btn')?.addEventListener('click', () => QumranApp.getLocationAndSun(true));
         document.getElementById('btn-render-cal')?.addEventListener('click', QumranApp.renderCalendar);
@@ -79,7 +79,7 @@ const QumranApp = {
         });
     },
 
-    // --- MOTOR DE NOTIFICACIONES ---
+    // --- GESTIÓN DE NOTIFICACIONES ---
     checkNotificationStatus: () => {
         if ('Notification' in window && Notification.permission !== 'granted' && Notification.permission !== 'denied') {
             const notifContainer = document.getElementById('notification-container');
@@ -91,7 +91,7 @@ const QumranApp = {
         const permission = await Notification.requestPermission();
         if (permission === 'granted') {
             document.getElementById('notification-container').style.display = 'none';
-            QumranApp.sendNotification('¡Avisos Activados!', 'El Vigía te notificará el inicio de Shabat y Fiestas.');
+            QumranApp.sendNotification('¡Avisos Activados!', 'El Vigía te notificará los tiempos sagrados.');
         }
     },
 
@@ -106,7 +106,6 @@ const QumranApp = {
         });
     },
 
-    // --- LÓGICA DE NAVEGACIÓN Y GPS ---
     nav: (viewId, btn) => {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         document.getElementById('view-'+viewId).classList.add('active');
@@ -166,7 +165,6 @@ const QumranApp = {
         return { rise: f(rD), set: f(sD), riseDecimal: rD };
     },
 
-    // --- RENDERIZADO PRINCIPAL ---
     renderHoy: () => {
         let hoy = new Date();
         if ((hoy.getHours() + hoy.getMinutes()/60) < QumranApp.sunriseHour) hoy.setDate(hoy.getDate() - 1);
@@ -202,7 +200,7 @@ const QumranApp = {
                 document.getElementById('teshuva-ref').innerText = q.teshuva.ref;
             }
 
-            // Instrucción del Mesías (Filología)
+            // Instrucción del Mesías (V8.4 intacta)
             let h = QumranData.HALAKHA[Math.floor((q.dCountYear || 0) / 7) % QumranData.HALAKHA.length];
             document.getElementById('messiah-theme').innerText = h.t;
             document.getElementById('messiah-hebrew').innerText = h.h || "";
@@ -211,11 +209,16 @@ const QumranApp = {
             document.getElementById('messiah-philology').innerText = h.f || "";
             document.getElementById('messiah-action').innerText = `${h.a} (${h.r})`;
 
-            // Liturgia
-            let s = q.idxSem === 6 ? QumranData.CANTICOS_SHABAT[Math.floor((q.dCountYear || 0) / 7) % 13] : QumranData.SALMOS[q.idxSem];
+            // LITURGIA (CON RECUADRO RESTAURADO)
+            const s = q.idxSem === 6 ? QumranData.CANTICOS_SHABAT[Math.floor((q.dCountYear || 0) / 7) % 13] : QumranData.SALMOS[q.idxSem];
             if (s) {
                 document.getElementById('page-lit-title').innerText = s.t;
-                document.getElementById('page-lit-text').innerHTML = (s.c ? `<div class="context-box">${s.c}</div>` : '') + s.v.replace(/\n/g, '<br>');
+                let litHTML = "";
+                if (s.c) {
+                    litHTML += `<div class="context-box" style="background: rgba(212, 175, 55, 0.1); border: 1px solid var(--gold); padding: 15px; border-radius: 8px; margin-bottom: 20px; font-style: italic; color: #e0d2bc;">${s.c}</div>`;
+                }
+                litHTML += s.v.replace(/\n/g, '<br>');
+                document.getElementById('page-lit-text').innerHTML = litHTML;
             }
 
             // Fiestas
