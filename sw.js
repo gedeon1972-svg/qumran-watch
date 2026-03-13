@@ -1,52 +1,27 @@
-/**
- * sw.js - V9.2
- * SERVICE WORKER PROFESIONAL (PWA)
- */
-
-const CACHE_NAME = 'qumran-cache-v9.2';
-
+const CACHE_NAME = 'qumran-cache-v9.3';
 const URLS_TO_CACHE = [
-    './',
-    './index.html',
-    './manifest.json',
-    './icon.png',
-    './src/css/styles.css',
-    './src/js/app.js',
-    './src/js/data.js',
-    './src/js/calendar.js',
-    './src/css/fonts/david-libre-v17-latin-regular.woff2',
-    './src/css/fonts/david-libre-v17-latin-700.woff2',
-    './src/css/fonts/cinzel-v26-latin-regular.woff2',
-    './src/css/fonts/cinzel-v26-latin-700.woff2'
+    './', './index.html', './manifest.json', './icon.png',
+    './src/css/styles.css', './src/js/app.js', './src/js/data.js', './src/js/calendar.js'
 ];
 
 self.addEventListener('install', event => {
-    event.waitUntil(
-        caches.open(CACHE_NAME).then(cache => cache.addAll(URLS_TO_CACHE))
-    );
+    event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(URLS_TO_CACHE)));
 });
 
 self.addEventListener('activate', event => {
-    event.waitUntil(
-        caches.keys().then(keys => {
-            return Promise.all(keys.map(key => {
-                if (key !== CACHE_NAME) return caches.delete(key);
-            }));
-        }).then(() => self.clients.claim())
-    );
+    event.waitUntil(caches.keys().then(keys => Promise.all(keys.map(k => k !== CACHE_NAME && caches.delete(k)))));
 });
 
 self.addEventListener('fetch', event => {
     if (event.request.method !== 'GET') return;
-    event.respondWith(
-        caches.match(event.request).then(response => response || fetch(event.request))
-    );
+    event.respondWith(caches.match(event.request).then(res => res || fetch(event.request)));
 });
 
 self.addEventListener('message', event => {
     if (event.data && event.data.action === 'skipWaiting') self.skipWaiting();
 });
 
+// Único añadido: Abre la app al tocar aviso
 self.addEventListener('notificationclick', event => {
     event.notification.close();
     event.waitUntil(
