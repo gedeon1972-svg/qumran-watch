@@ -1,12 +1,13 @@
 /* * js/app.js
- * EL ESPÍRITU (CONTROLADOR)
- * V8.4: Integración de Contextos Históricos (Corrección de Contraste)
- * V8.5: Integración de History API (Prevención de cierre al presionar "Atrás")
+ * EL ESPÍRITU (CONTROLADOR PRINCIPAL)
+ * V10.0: Arquitectura Modular Limpia (SunEngine & ICS extraídos)
  */
 
 // --- 0. IMPORTAMOS LOS MÓDULOS DEL MOTOR ---
 import { QumranData } from './data.js';
 import { QumranCalendar } from './calendar.js';
+import { QumranSun } from './sun.js';     // NUEVO MÓDULO ASTRONÓMICO
+import { QumranICS } from './ics.js';     // NUEVO MÓDULO DE ALERTAS PUSH
 
 let deferredPrompt;
 let newWorker;
@@ -56,7 +57,7 @@ const QumranApp = {
     sunriseHour: 6.0,
 
     init: () => {
-        console.log("Iniciando Qumran Watch (Módulos ES6)...");
+        console.log("Iniciando Qumran Watch V10 (Arquitectura Modular)...");
         QumranApp.setupListeners();
         
         const hasMemory = QumranApp.loadStoredLocation();
@@ -66,10 +67,7 @@ const QumranApp = {
         QumranApp.renderSaber(); 
         
         // --- PREVENCIÓN DE CIERRE INESPERADO (HISTORY API) ---
-        // 1. Guardar la pantalla inicial ('hoy')
         window.history.replaceState({ view: 'hoy' }, '', '#hoy');
-
-        // 2. Escuchar cuando el usuario presiona el botón físico/gesto de "Atrás"
         window.addEventListener('popstate', (event) => {
             if (event.state && event.state.view) {
                 QumranApp.nav(event.state.view, null, true);
@@ -130,6 +128,16 @@ const QumranApp = {
         document.getElementById('btn-close-modal').addEventListener('click', () => document.getElementById('modal-fiesta').style.display='none');
         document.getElementById('btn-close-lectura').addEventListener('click', () => document.getElementById('modal-lectura').style.display='none');
 
+        // NUEVO: Conectar el botón de exportar alertas al módulo ICS
+        const btnExportICS = document.getElementById('btn-export-ics');
+        if (btnExportICS) {
+            btnExportICS.addEventListener('click', () => {
+                let calInput = document.getElementById('cal-year');
+                let y = calInput ? parseInt(calInput.value) : new Date().getFullYear();
+                QumranICS.generateAndDownload(y);
+            });
+        }
+
         document.getElementById('cal-lista').addEventListener('click', (e) => {
             const row = e.target.closest('.cal-row.fiesta');
             if (row) {
@@ -148,16 +156,11 @@ const QumranApp = {
         });
     },
 
-    // REEMPLAZO EXACTO DE LA FUNCIÓN NAV CON HISTORY API
     nav: (viewId, btn, isHistoryEvent = false) => {
-        // 1. Ocultar todas las vistas actuales
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        
-        // 2. Mostrar la vista solicitada
         const targetView = document.getElementById('view-' + viewId);
         if (targetView) targetView.classList.add('active');
         
-        // 3. Gestionar la iluminación de los botones del menú inferior
         if (btn) {
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
@@ -167,12 +170,9 @@ const QumranApp = {
             });
         }
         
-        // 4. Registrar el paso en el historial del celular
         if (!isHistoryEvent) {
             window.history.pushState({ view: viewId }, '', '#' + viewId);
         }
-        
-        // 5. Subir la pantalla al tope
         window.scrollTo(0, 0);
     },
     
@@ -204,7 +204,8 @@ const QumranApp = {
 
     updateSunData: (lat, lng) => {
         let now = new Date();
-        let times = QumranApp.calcSunTimes(now, lat, lng);
+        // USANDO EL NUEVO MÓDULO EXTERNO DE SOL
+        let times = QumranSun.calcSunTimes(now, lat, lng); 
         if(times && times.riseDecimal) {
             QumranApp.sunriseHour = times.riseDecimal;
             QumranApp.renderHoy();
@@ -216,49 +217,6 @@ const QumranApp = {
         const btn = document.getElementById('geo-btn');
         btn.innerText = "↻ Actualizar Ubicación (GPS)";
         btn.style.display = 'block'; 
-    },
-
-    calcSunTimes: (date, lat, lng) => {
-        const toRad = Math.PI / 180;
-        const toDeg = 180 / Math.PI;
-        const start = new Date(date.getFullYear(), 0, 0);
-        const diff = date - start;
-        const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const lngHour = lng / 15;
-
-        const calcTime = (isSunrise) => {
-            const t = dayOfYear + ((isSunrise ? 6 : 18) - lngHour) / 24;
-            const M = (0.9856 * t) - 3.289;
-            let L = M + (1.916 * Math.sin(M * toRad)) + (0.020 * Math.sin(2 * M * toRad)) + 282.634;
-            if(L > 360) L -= 360; else if(L < 0) L += 360;
-            let RA = toDeg * Math.atan(0.91764 * Math.tan(L * toRad));
-            if(RA > 360) RA -= 360; else if(RA < 0) RA += 360;
-            const Lquadrant = (Math.floor(L/90)) * 90;
-            const RAquadrant = (Math.floor(RA/90)) * 90;
-            RA = RA + (Lquadrant - RAquadrant);
-            RA = RA / 15;
-            const sinDec = 0.39782 * Math.sin(L * toRad);
-            const cosDec = Math.cos(Math.asin(sinDec));
-            const cosH = (Math.cos(90.833 * toRad) - (sinDec * Math.sin(lat * toRad))) / (cosDec * Math.cos(lat * toRad));
-            if (cosH > 1 || cosH < -1) return null;
-            const H = (isSunrise ? (360 - toDeg * Math.acos(cosH)) : (toDeg * Math.acos(cosH))) / 15;
-            const T = H + RA - (0.06571 * t) - 6.622;
-            let UT = T - lngHour;
-            if(UT > 24) UT -= 24; else if(UT < 0) UT += 24;
-            const offset = -date.getTimezoneOffset() / 60;
-            let localT = UT + offset;
-            if(localT > 24) localT -= 24; else if(localT < 0) localT += 24;
-            return localT;
-        };
-        let riseDecimal = calcTime(true);
-        let setDecimal = calcTime(false);
-        const format = (dec) => {
-            if(dec === null) return "--:--";
-            let h = Math.floor(dec);
-            let m = Math.floor((dec - h) * 60);
-            return `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}`;
-        };
-        return { rise: format(riseDecimal), set: format(setDecimal), riseDecimal: riseDecimal };
     },
 
     checkWatcher: (hoy, qHoy) => {
@@ -322,146 +280,3 @@ const QumranApp = {
             document.getElementById('heb-date').innerText = `${q.d} del ${QumranData.MESES[q.m]}`;
             document.getElementById('heb-dia').innerText = QumranData.DIAS[q.idxSem];
             document.getElementById('heb-turno').innerText = q.turno;
-            document.getElementById('heb-estacion').innerText = q.est;
-            
-            let hIndex = q.dCountYear ? (Math.floor(q.dCountYear / 7) % QumranData.HALAKHA.length) : 0;
-            let h = QumranData.HALAKHA[hIndex];
-            document.getElementById('messiah-theme').innerText = h.t;
-            document.getElementById('messiah-hebrew').innerText = h.h || "";
-            document.getElementById('messiah-context').innerText = h.c ? `Contexto: ${h.c}` : "";
-            document.getElementById('messiah-philology').innerText = h.f || "";
-            document.getElementById('messiah-quote').innerText = `"${h.q}"`;
-            document.getElementById('messiah-action').innerText = `${h.a} (${h.r})`;
-
-            let fIdx = QumranData.FIESTAS.findIndex(x => x.m === q.m && x.d === q.d);
-            if(fIdx !== -1) {
-                QumranApp.todayFiesta = fIdx;
-                document.getElementById('heb-fiesta').innerText = "★ " + QumranData.FIESTAS[fIdx].n;
-            } else {
-                QumranApp.todayFiesta = null;
-                document.getElementById('heb-fiesta').innerText = "";
-            }
-
-            document.querySelectorAll('.gate-dot').forEach((d,i) => {
-                d.classList.toggle('active', (i+1) === q.puerta);
-            });
-            document.getElementById('heb-puerta-num').innerText = q.puerta + "ª Puerta";
-
-            // --- RENDERIZADO DE LA LECTURA SAGRADA ---
-            let percent = ((q.idxSem + 1) / 7) * 100;
-            let s = null;
-            let litType = ""; let litMain = "";
-            
-            if(q.idxSem === 6) { 
-                document.getElementById('shabat-text').innerText = "¡SHABAT SHALOM!";
-                document.getElementById('shabat-progress').style.background = "#fff";
-                percent = 100;
-                let weekOfYear = Math.floor((q.dCountYear || 0) / 7);
-                s = QumranData.CANTICOS_SHABAT[weekOfYear % 13];
-                litType = "LITURGIA CELESTIAL"; litMain = "CÁNTICO DEL SACRIFICIO DEL SHABAT";
-            } else {
-                document.getElementById('shabat-text').innerText = `Faltan ${6 - q.idxSem} días para el Shabat`;
-                s = QumranData.SALMOS[q.idxSem];
-                litType = "LITURGIA DEL TEMPLO"; litMain = "SALMO DEL DÍA (Shir Shel Yom)";
-            }
-            document.getElementById('shabat-progress').style.width = percent + "%";
-            
-            if (s) {
-                document.getElementById('lit-main-title').innerText = litMain;
-                document.getElementById('page-lit-type').innerText = litType;
-                document.getElementById('page-lit-title').innerText = s.t;
-                
-                let contextoHTML = s.c ? `<div style="background: rgba(212, 175, 55, 0.15); padding: 15px; border-left: 4px solid #d4af37; border-radius: 0 8px 8px 0; font-size: 0.95rem; font-style: italic; color: #333; margin-bottom: 25px; line-height: 1.5; text-align: left;"><strong>Contexto Histórico:</strong><br>${s.c}</div>` : '';
-                let poemaHTML = s.v.replace(/\n/g, '<br>');
-                
-                document.getElementById('page-lit-text').innerHTML = contextoHTML + `<div style="line-height: 1.8; font-size: 1.05rem; color: #111;">${poemaHTML}</div>`;
-            }
-        }
-    },
-
-    openFiesta: (index, forceYear) => {
-        let f = QumranData.FIESTAS[index];
-        let year = forceYear || new Date().getFullYear();
-        let anchorGreg = new Date(year, 2, 20); 
-        let foundDate = null;
-        for(let i=-20; i<370; i++){
-            let d = new Date(anchorGreg.getTime() + (i*86400000));
-            let q = QumranCalendar.calculate(d);
-            if(q && !q.special && q.m === f.m && q.d === f.d) { foundDate = d; break; }
-        }
-        let dateStr = foundDate ? foundDate.toLocaleDateString('es-ES', {day:'numeric', month:'long'}) : "Calculando...";
-        if(foundDate && f.dur > 1) { 
-            let end = new Date(foundDate); end.setDate(end.getDate() + f.dur - 1); 
-            dateStr += " al " + end.toLocaleDateString('es-ES', {day:'numeric', month:'long'}); 
-        }
-
-        document.getElementById('mod-title').innerText = f.n;
-        document.getElementById('mod-fechas').innerText = dateStr + ` (${year})`;
-        document.getElementById('mod-fechas-heb').innerText = `${f.d} del ${QumranData.MESES[f.m]}\n${f.es}`;
-        document.getElementById('mod-instr').innerText = f.instr;
-        document.getElementById('mod-ref').innerText = f.ref;
-        let noteDiv = document.getElementById('mod-note');
-        if(f.nota) { noteDiv.innerText = f.nota; noteDiv.style.display = 'block'; } else { noteDiv.style.display = 'none'; }
-        let warn = document.getElementById('mod-warn');
-        if(f.especial) warn.style.display = 'block'; else warn.style.display = 'none';
-        document.getElementById('modal-fiesta').style.display = 'flex';
-    },
-    
-    openFiestaHoy: () => { if(QumranApp.todayFiesta !== null) QumranApp.openFiesta(QumranApp.todayFiesta); },
-
-    renderSaber: () => {
-        const container = document.getElementById('edu-grid');
-        if(!container) return;
-        
-        container.innerHTML = "";
-        
-        QumranData.ESTUDIOS.forEach((item, idx) => {
-            const card = document.createElement('div');
-            card.className = "edu-card";
-            card.dataset.index = idx;
-            
-            card.innerHTML = `
-                <div class="edu-card-title">${item.t}</div>
-                <div class="edu-card-subtitle">${item.s}</div>
-                <div class="edu-card-arrow">➔</div>
-            `;
-            container.appendChild(card);
-        });
-    },
-    
-    openEstudio: (index) => {
-        const estudio = QumranData.ESTUDIOS[index];
-        if(!estudio) return;
-        
-        document.getElementById('lec-title').innerText = estudio.t;
-        document.getElementById('lec-meta').innerText = estudio.s;
-        document.getElementById('lec-body').innerHTML = estudio.c;
-        
-        document.getElementById('modal-lectura').style.display = 'flex';
-    },
-
-    renderCalendar: () => {
-        let y = parseInt(document.getElementById('cal-year').value);
-        let list = document.getElementById('cal-lista');
-        list.innerHTML = "<div class='text-center' style='padding:20px;'>Calculando ciclo sagrado...</div>";
-        setTimeout(() => {
-            let test = new Date(y, 2, 5); 
-            let html = "";
-            for(let i=0; i<380; i++) {
-                let d = new Date(test.getTime() + (i*86400000));
-                let q = QumranCalendar.calculate(d);
-                if(!q || q.special) continue;
-                let fIdx = QumranData.FIESTAS.findIndex(x => x.m === q.m && x.d === q.d);
-                if(fIdx !== -1) {
-                    let f = QumranData.FIESTAS[fIdx];
-                    let dateLabel = d.toLocaleDateString('es-ES', {day:'numeric', month:'short'});
-                    if(f.dur > 1) { let end = new Date(d); end.setDate(end.getDate() + f.dur - 1); dateLabel += " - " + end.toLocaleDateString('es-ES', {day:'numeric', month:'short'}); }
-                    html += `<div class="cal-row fiesta" data-index="${fIdx}" data-year="${y}"><div><span class="cal-fiesta-name">${f.n}</span><span class="cal-fiesta-sub">${f.es}</span></div><div style="text-align:right;"><span style="display:block; font-weight:bold;">${dateLabel}</span><span style="font-size:0.8rem;">${q.d}/${q.m+1}</span></div></div>`;
-                }
-            }
-            list.innerHTML = html || "<div class='card'>No se encontraron fiestas.</div>";
-        }, 50);
-    }
-};
-
-document.addEventListener('DOMContentLoaded', QumranApp.init);
