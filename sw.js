@@ -16,8 +16,6 @@ const URLS_TO_CACHE = [
     './src/js/app.js',
     './src/js/data.js',
     './src/js/calendar.js',
-    './src/js/sun.js',
-    './src/js/ics.js',
     './src/css/fonts/david-libre-v17-latin-regular.woff2',
     './src/css/fonts/david-libre-v17-latin-700.woff2',
     './src/css/fonts/cinzel-v26-latin-regular.woff2',
