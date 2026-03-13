@@ -1,96 +1,139 @@
+/* * js/app.js
+ * EL ESPÍRITU (CONTROLADOR)
+ * V8.4: Integración de Contextos Históricos (Corrección de Contraste)
+ */
+
+// --- 0. IMPORTAMOS LOS MÓDULOS DEL MOTOR ---
 import { QumranData } from './data.js';
 import { QumranCalendar } from './calendar.js';
 
 let deferredPrompt;
 let newWorker;
 
-// 1. SERVICE WORKER
+// 1. SISTEMA DE ACTUALIZACIÓN & SERVICE WORKER
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js').then(reg => {
+            console.log('SW registrado:', reg.scope);
             reg.addEventListener('updatefound', () => {
                 newWorker = reg.installing;
                 newWorker.addEventListener('statechange', () => {
                     if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                        const toast = document.getElementById('update-toast');
-                        if(toast) toast.style.display = 'flex';
+                        showUpdateNotification();
                     }
                 });
             });
-        });
+        }).catch(err => console.error('Error SW:', err));
     });
 }
 
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if (!isIOS) {
+      const installContainer = document.getElementById('install-container');
+      if (installContainer) installContainer.style.display = 'block';
+  }
+});
+
+function showUpdateNotification() {
+    const toast = document.getElementById('update-toast');
+    const btn = document.getElementById('btn-refresh');
+    if(toast && btn) {
+        toast.style.display = 'flex';
+        btn.addEventListener('click', () => {
+            if (newWorker) newWorker.postMessage({ action: 'skipWaiting' });
+            window.location.reload();
+        });
+    }
+}
+
 const QumranApp = {
+    currentFiestaIdx: null,
     todayFiesta: null,
     sunriseHour: 6.0,
 
     init: () => {
+        console.log("Iniciando Qumran Watch (Módulos ES6)...");
         QumranApp.setupListeners();
-        if (!QumranApp.loadStoredLocation()) QumranApp.getLocationAndSun(); 
+        
+        const hasMemory = QumranApp.loadStoredLocation();
+        if (!hasMemory) QumranApp.getLocationAndSun(); 
+
         QumranApp.renderHoy();
-        QumranApp.renderSaber();
-        QumranApp.checkNotificationStatus(); // Único añadido
+        QumranApp.renderSaber(); 
     },
 
     setupListeners: () => {
-        const views = ['hoy', 'lit', 'cal', 'con', 'edu'];
-        views.forEach(v => {
-            document.getElementById(`nav-${v}`)?.addEventListener('click', (e) => QumranApp.nav(v, e.currentTarget));
-        });
+        document.getElementById('nav-hoy').addEventListener('click', (e) => QumranApp.nav('hoy', e.currentTarget));
+        document.getElementById('nav-lit').addEventListener('click', (e) => QumranApp.nav('lit', e.currentTarget));
+        document.getElementById('nav-cal').addEventListener('click', (e) => QumranApp.nav('cal', e.currentTarget));
+        document.getElementById('nav-con').addEventListener('click', (e) => QumranApp.nav('con', e.currentTarget));
+        document.getElementById('nav-edu').addEventListener('click', (e) => QumranApp.nav('edu', e.currentTarget));
+        
+        const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+        if (isIOS) {
+            const installContainer = document.getElementById('install-container');
+            if (installContainer) {
+                installContainer.innerHTML = `
+                    <div style="background: rgba(212, 175, 55, 0.15); padding: 15px; border-radius: 12px; border: 1px solid var(--gold); text-align: center; margin-bottom: 20px;">
+                        <p style="margin:0 0 8px 0; font-weight:bold; color:var(--gold); font-family:'Cinzel',serif;">PARA INSTALAR EN IPHONE:</p>
+                        <p style="margin:0; font-size:0.85rem; line-height:1.5;">
+                            1. Abre esta web en <strong>Safari</strong>.<br>
+                            2. Toca el botón <span style="font-size:1.2rem; display:inline-block; transform:translateY(3px);">⎋</span> (Compartir).<br>
+                            3. Elige <span style="font-weight:bold; color:#fff;">"Agregar a Inicio"</span>.
+                        </p>
+                    </div>
+                `;
+                installContainer.style.display = 'block';
+            }
+        }
 
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            if (!/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-                document.getElementById('install-container').style.display = 'block';
+        const btnInstall = document.getElementById('btn-install-app');
+        if(btnInstall) {
+            btnInstall.addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    deferredPrompt = null;
+                    if(outcome === 'accepted'){
+                        document.getElementById('install-container').style.display = 'none';
+                    }
+                }
+            });
+        }
+        
+        document.getElementById('heb-fiesta').addEventListener('click', QumranApp.openFiestaHoy);
+        document.getElementById('geo-btn').addEventListener('click', () => QumranApp.getLocationAndSun(true));
+        
+        const openPodcast = () => window.open('https://youtube.com/playlist?list=PLr4MABEXstnDLUVcD7EenO4vN8EglZoSz', '_blank');
+        const openInstitute = () => window.open('https://www.descubrelabiblia.online/', '_blank');
+        document.getElementById('btn-podcast-con').addEventListener('click', openPodcast);
+        document.getElementById('btn-institute-con').addEventListener('click', openInstitute);
+        
+        document.getElementById('btn-render-cal').addEventListener('click', QumranApp.renderCalendar);
+        document.getElementById('btn-close-modal').addEventListener('click', () => document.getElementById('modal-fiesta').style.display='none');
+        document.getElementById('btn-close-lectura').addEventListener('click', () => document.getElementById('modal-lectura').style.display='none');
+
+        document.getElementById('cal-lista').addEventListener('click', (e) => {
+            const row = e.target.closest('.cal-row.fiesta');
+            if (row) {
+                const idx = parseInt(row.dataset.index);
+                const year = parseInt(row.dataset.year);
+                QumranApp.openFiesta(idx, year);
             }
         });
-
-        document.getElementById('btn-install-app')?.addEventListener('click', async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if(outcome === 'accepted') document.getElementById('install-container').style.display = 'none';
+        
+        document.getElementById('edu-grid').addEventListener('click', (e) => {
+            const card = e.target.closest('.edu-card');
+            if (card) {
+                const idx = parseInt(card.dataset.index);
+                QumranApp.openEstudio(idx);
             }
         });
-
-        // Único añadido: Listener de Notificaciones
-        document.getElementById('btn-notifications')?.addEventListener('click', QumranApp.requestNotificationPermission);
-
-        document.getElementById('heb-fiesta')?.addEventListener('click', QumranApp.openFiestaHoy);
-        document.getElementById('geo-btn')?.addEventListener('click', () => QumranApp.getLocationAndSun(true));
-        document.getElementById('btn-render-cal')?.addEventListener('click', QumranApp.renderCalendar);
-        document.getElementById('btn-close-modal')?.addEventListener('click', () => document.getElementById('modal-fiesta').style.display='none');
-        document.getElementById('btn-close-lectura')?.addEventListener('click', () => document.getElementById('modal-lectura').style.display='none');
-        document.getElementById('btn-refresh')?.addEventListener('click', () => {
-            if (newWorker) newWorker.postMessage({ action: 'skipWaiting' });
-            window.location.reload();
-        });
     },
 
-    // --- FUNCIONES DE NOTIFICACIÓN ---
-    checkNotificationStatus: () => {
-        if ('Notification' in window && Notification.permission !== 'granted' && Notification.permission !== 'denied') {
-            document.getElementById('notification-container').style.display = 'block';
-        }
-    },
-
-    requestNotificationPermission: async () => {
-        const permission = await Notification.requestPermission();
-        if (permission === 'granted') {
-            document.getElementById('notification-container').style.display = 'none';
-            QumranApp.sendNotification('¡Avisos Activados!', 'El Vigía te notificará los tiempos sagrados.');
-        }
-    },
-
-    sendNotification: (title, body) => {
-        navigator.serviceWorker.ready.then(reg => {
-            reg.showNotification(title, { body: body, icon: 'icon.png', badge: 'icon.png' });
-        });
-    },
-
-    // --- TU LÓGICA ORIGINAL V8.4 INTACTA ---
     nav: (viewId, btn) => {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         document.getElementById('view-'+viewId).classList.add('active');
@@ -98,150 +141,276 @@ const QumranApp = {
         btn.classList.add('active');
         window.scrollTo(0,0);
     },
-
+    
     loadStoredLocation: () => {
-        const lat = localStorage.getItem('qw_lat'), lng = localStorage.getItem('qw_lng');
-        if(lat && lng) { QumranApp.updateSunData(parseFloat(lat), parseFloat(lng)); return true; }
+        const storedLat = localStorage.getItem('qw_lat');
+        const storedLng = localStorage.getItem('qw_lng');
+        if(storedLat && storedLng) {
+            QumranApp.updateSunData(parseFloat(storedLat), parseFloat(storedLng));
+            return true;
+        }
         return false;
     },
 
     getLocationAndSun: (force = false) => {
         if(navigator.geolocation) {
-            if(force) document.getElementById('geo-btn').innerText = "Buscando...";
+            if(force) document.getElementById('geo-btn').innerText = "Buscando satélites...";
             navigator.geolocation.getCurrentPosition((pos) => {
-                localStorage.setItem('qw_lat', pos.coords.latitude);
-                localStorage.setItem('qw_lng', pos.coords.longitude);
-                QumranApp.updateSunData(pos.coords.latitude, pos.coords.longitude);
+                const lat = pos.coords.latitude;
+                const lng = pos.coords.longitude;
+                localStorage.setItem('qw_lat', lat);
+                localStorage.setItem('qw_lng', lng);
+                QumranApp.updateSunData(lat, lng);
+            }, (err) => { 
+                console.warn(err);
+                document.getElementById('geo-btn').innerText = "Error GPS. Reintentar.";
             });
         }
     },
 
     updateSunData: (lat, lng) => {
-        let times = QumranApp.calcSunTimes(new Date(), lat, lng);
-        if(times.riseDecimal) { QumranApp.sunriseHour = times.riseDecimal; QumranApp.renderHoy(); }
+        let now = new Date();
+        let times = QumranApp.calcSunTimes(now, lat, lng);
+        if(times && times.riseDecimal) {
+            QumranApp.sunriseHour = times.riseDecimal;
+            QumranApp.renderHoy();
+        }
+        let div = document.getElementById('sun-container');
         document.getElementById('sun-rise').innerText = times.rise;
         document.getElementById('sun-set').innerText = times.set;
-        document.getElementById('sun-container').style.display = 'flex';
-        document.getElementById('geo-btn').innerText = "↻ Actualizar GPS";
+        div.style.display = 'flex';
+        const btn = document.getElementById('geo-btn');
+        btn.innerText = "↻ Actualizar Ubicación (GPS)";
+        btn.style.display = 'block'; 
     },
 
     calcSunTimes: (date, lat, lng) => {
-        const toRad = Math.PI / 180, toDeg = 180 / Math.PI;
-        const dayOfYear = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 86400000);
+        const toRad = Math.PI / 180;
+        const toDeg = 180 / Math.PI;
+        const start = new Date(date.getFullYear(), 0, 0);
+        const diff = date - start;
+        const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
         const lngHour = lng / 15;
+
         const calcTime = (isSunrise) => {
             const t = dayOfYear + ((isSunrise ? 6 : 18) - lngHour) / 24;
             const M = (0.9856 * t) - 3.289;
             let L = M + (1.916 * Math.sin(M * toRad)) + (0.020 * Math.sin(2 * M * toRad)) + 282.634;
-            L = (L + 360) % 360;
+            if(L > 360) L -= 360; else if(L < 0) L += 360;
             let RA = toDeg * Math.atan(0.91764 * Math.tan(L * toRad));
-            RA = (RA + 360) % 360;
-            RA = (RA + (Math.floor(L/90)*90 - Math.floor(RA/90)*90)) / 15;
-            const sinDec = 0.39782 * Math.sin(L * toRad), cosDec = Math.cos(Math.asin(sinDec));
+            if(RA > 360) RA -= 360; else if(RA < 0) RA += 360;
+            const Lquadrant = (Math.floor(L/90)) * 90;
+            const RAquadrant = (Math.floor(RA/90)) * 90;
+            RA = RA + (Lquadrant - RAquadrant);
+            RA = RA / 15;
+            const sinDec = 0.39782 * Math.sin(L * toRad);
+            const cosDec = Math.cos(Math.asin(sinDec));
             const cosH = (Math.cos(90.833 * toRad) - (sinDec * Math.sin(lat * toRad))) / (cosDec * Math.cos(lat * toRad));
             if (cosH > 1 || cosH < -1) return null;
             const H = (isSunrise ? (360 - toDeg * Math.acos(cosH)) : (toDeg * Math.acos(cosH))) / 15;
-            let UT = H + RA - (0.06571 * t) - 6.622 - lngHour;
-            let localT = (UT + (-date.getTimezoneOffset()/60) + 24) % 24;
+            const T = H + RA - (0.06571 * t) - 6.622;
+            let UT = T - lngHour;
+            if(UT > 24) UT -= 24; else if(UT < 0) UT += 24;
+            const offset = -date.getTimezoneOffset() / 60;
+            let localT = UT + offset;
+            if(localT > 24) localT -= 24; else if(localT < 0) localT += 24;
             return localT;
         };
-        const rD = calcTime(true), sD = calcTime(false);
-        const f = (d) => d ? `${Math.floor(d).toString().padStart(2,'0')}:${Math.floor((d-Math.floor(d))*60).toString().padStart(2,'0')}` : "--:--";
-        return { rise: f(rD), set: f(sD), riseDecimal: rD };
+        let riseDecimal = calcTime(true);
+        let setDecimal = calcTime(false);
+        const format = (dec) => {
+            if(dec === null) return "--:--";
+            let h = Math.floor(dec);
+            let m = Math.floor((dec - h) * 60);
+            return `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}`;
+        };
+        return { rise: format(riseDecimal), set: format(setDecimal), riseDecimal: riseDecimal };
+    },
+
+    checkWatcher: (hoy, qHoy) => {
+        let msg = ""; 
+        let alertBox = document.getElementById('alert-container');
+        let alertMsg = document.getElementById('alert-msg');
+        alertBox.style.display = 'none';
+        
+        if(qHoy.idxSem === 5) { msg += "<strong>¡Día de Preparación!</strong><br>El Shabat entra al próximo amanecer."; }
+        
+        for(let i=1; i<=3; i++) {
+            let fut = new Date(hoy); fut.setDate(fut.getDate() + i); 
+            let qFut = QumranCalendar.calculate(fut);
+            if(qFut && !qFut.special) {
+                let fIdx = QumranData.FIESTAS.findIndex(x => x.m === qFut.m && x.d === qFut.d);
+                if(fIdx !== -1) {
+                    if(msg !== "") msg += "<br><hr style='border-color:var(--gold); opacity:0.3; margin:8px 0;'>";
+                    msg += `<strong>¡Atención!</strong><br>En ${i} día(s) es <strong>${QumranData.FIESTAS[fIdx].n}</strong>.`;
+                }
+            }
+        }
+        
+        if(qHoy.m !== undefined && !qHoy.special) {
+            let isOmer = false, omerDay = 0;
+            if (qHoy.m === 0 && qHoy.d >= 26) { isOmer = true; omerDay = qHoy.d - 25; } 
+            else if (qHoy.m === 1) { isOmer = true; omerDay = 5 + qHoy.d; } 
+            else if (qHoy.m === 2 && qHoy.d <= 15) { isOmer = true; omerDay = 35 + qHoy.d; } 
+            
+            if(isOmer && omerDay < 50) {
+                document.getElementById('card-omer').style.display = 'block';
+                document.getElementById('omer-count').innerText = omerDay;
+            } else { document.getElementById('card-omer').style.display = 'none'; }
+        }
+
+        if(qHoy.m === 6 && qHoy.d >= 1 && qHoy.d <= 10) {
+            let teshuvaIndex = qHoy.d - 1;
+            let tData = QumranData.YAMIM_NORAIM[teshuvaIndex];
+            document.getElementById('card-teshuva').style.display = 'block';
+            document.getElementById('teshuva-cmd').innerText = `DÍA ${qHoy.d}: ${tData.t}`;
+            document.getElementById('teshuva-ref').innerText = `Lectura: ${tData.r}`;
+        } else { document.getElementById('card-teshuva').style.display = 'none'; }
+
+        if(msg !== "") { alertMsg.innerHTML = msg; alertBox.style.display = 'block'; }
     },
 
     renderHoy: () => {
         let hoy = new Date();
-        if ((hoy.getHours() + hoy.getMinutes()/60) < QumranApp.sunriseHour) hoy.setDate(hoy.getDate() - 1);
-        let q = QumranCalendar.calculate(hoy);
-        if (!q) return;
-
-        document.getElementById('greg-date').innerText = hoy.toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long'});
+        let currentHourDecimal = hoy.getHours() + (hoy.getMinutes() / 60);
+        if (currentHourDecimal < QumranApp.sunriseHour) hoy.setDate(hoy.getDate() - 1);
         
+        let q = QumranCalendar.calculate(hoy);
+        document.getElementById('greg-date').innerText = hoy.toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long'});
+
+        if (!q) { document.getElementById('heb-date').innerText = "Esperando..."; return; }
+
         if (q.special) {
             document.getElementById('heb-date').innerText = "SEMANA DE AJUSTE";
+            document.getElementById('heb-dia').innerText = "Reset Solar";
         } else {
+            QumranApp.checkWatcher(hoy, q); 
             document.getElementById('heb-date').innerText = `${q.d} del ${QumranData.MESES[q.m]}`;
             document.getElementById('heb-dia').innerText = QumranData.DIAS[q.idxSem];
             document.getElementById('heb-turno').innerText = q.turno;
             document.getElementById('heb-estacion').innerText = q.est;
-
-            document.getElementById('heb-puerta-num').innerText = `Puerta ${q.puerta}`;
-            const dots = document.querySelectorAll('.gate-dot');
-            dots.forEach((dot, idx) => dot.classList.toggle('active', (idx + 1) === q.puerta));
-
-            const prog = ((q.idxSem + 1) / 7) * 100;
-            document.getElementById('shabat-progress').style.width = prog + "%";
-            document.getElementById('shabat-text').innerText = q.idxSem === 6 ? "¡SHABAT SHALOM!" : `Día ${q.idxSem + 1} de la semana`;
-
-            document.getElementById('card-omer').style.display = q.omer ? 'block' : 'none';
-            if(q.omer) document.getElementById('omer-count').innerText = q.omer;
-            document.getElementById('card-teshuva').style.display = q.teshuva ? 'block' : 'none';
-            if(q.teshuva) {
-                document.getElementById('teshuva-cmd').innerText = q.teshuva.cmd;
-                document.getElementById('teshuva-ref').innerText = q.teshuva.ref;
-            }
-
-            // Filología e Instrucción
-            let h = QumranData.HALAKHA[Math.floor((q.dCountYear || 0) / 7) % QumranData.HALAKHA.length];
+            
+            let hIndex = q.dCountYear ? (Math.floor(q.dCountYear / 7) % QumranData.HALAKHA.length) : 0;
+            let h = QumranData.HALAKHA[hIndex];
             document.getElementById('messiah-theme').innerText = h.t;
             document.getElementById('messiah-hebrew').innerText = h.h || "";
-            document.getElementById('messiah-quote').innerText = `"${h.q}"`;
-            document.getElementById('messiah-context').innerText = h.c || "";
+            document.getElementById('messiah-context').innerText = h.c ? `Contexto: ${h.c}` : "";
             document.getElementById('messiah-philology').innerText = h.f || "";
+            document.getElementById('messiah-quote').innerText = `"${h.q}"`;
             document.getElementById('messiah-action').innerText = `${h.a} (${h.r})`;
 
-            // LITURGIA (RESTAURADO)
-            let s = q.idxSem === 6 ? QumranData.CANTICOS_SHABAT[Math.floor((q.dCountYear || 0) / 7) % 13] : QumranData.SALMOS[q.idxSem];
-            if (s) {
-                document.getElementById('page-lit-title').innerText = s.t;
-                // Restaurado a tu versión original sin estilos inventados
-                document.getElementById('page-lit-text').innerHTML = (s.c ? `<div class="context-box">${s.c}</div>` : '') + s.v.replace(/\n/g, '<br>');
-            }
-
             let fIdx = QumranData.FIESTAS.findIndex(x => x.m === q.m && x.d === q.d);
-            const badge = document.getElementById('heb-fiesta');
             if(fIdx !== -1) {
                 QumranApp.todayFiesta = fIdx;
-                badge.innerText = "⭐ " + QumranData.FIESTAS[fIdx].n;
-                badge.style.display = "inline-block";
-            } else { badge.style.display = "none"; }
+                document.getElementById('heb-fiesta').innerText = "★ " + QumranData.FIESTAS[fIdx].n;
+            } else {
+                QumranApp.todayFiesta = null;
+                document.getElementById('heb-fiesta').innerText = "";
+            }
+
+            document.querySelectorAll('.gate-dot').forEach((d,i) => {
+                d.classList.toggle('active', (i+1) === q.puerta);
+            });
+            document.getElementById('heb-puerta-num').innerText = q.puerta + "ª Puerta";
+
+            // --- RENDERIZADO DE LA LECTURA SAGRADA ---
+            let percent = ((q.idxSem + 1) / 7) * 100;
+            let s = null;
+            let litType = ""; let litMain = "";
+            
+            if(q.idxSem === 6) { 
+                document.getElementById('shabat-text').innerText = "¡SHABAT SHALOM!";
+                document.getElementById('shabat-progress').style.background = "#fff";
+                percent = 100;
+                let weekOfYear = Math.floor((q.dCountYear || 0) / 7);
+                s = QumranData.CANTICOS_SHABAT[weekOfYear % 13];
+                litType = "LITURGIA CELESTIAL"; litMain = "CÁNTICO DEL SACRIFICIO DEL SHABAT";
+            } else {
+                document.getElementById('shabat-text').innerText = `Faltan ${6 - q.idxSem} días para el Shabat`;
+                s = QumranData.SALMOS[q.idxSem];
+                litType = "LITURGIA DEL TEMPLO"; litMain = "SALMO DEL DÍA (Shir Shel Yom)";
+            }
+            document.getElementById('shabat-progress').style.width = percent + "%";
+            
+            if (s) {
+                document.getElementById('lit-main-title').innerText = litMain;
+                document.getElementById('page-lit-type').innerText = litType;
+                document.getElementById('page-lit-title').innerText = s.t;
+                
+                // CORRECCIÓN: Usamos #333 para texto oscuro asegurando contraste sobre fondo claro.
+                let contextoHTML = s.c ? `<div style="background: rgba(212, 175, 55, 0.15); padding: 15px; border-left: 4px solid #d4af37; border-radius: 0 8px 8px 0; font-size: 0.95rem; font-style: italic; color: #333; margin-bottom: 25px; line-height: 1.5; text-align: left;"><strong>Contexto Histórico:</strong><br>${s.c}</div>` : '';
+                let poemaHTML = s.v.replace(/\n/g, '<br>');
+                
+                document.getElementById('page-lit-text').innerHTML = contextoHTML + `<div style="line-height: 1.8; font-size: 1.05rem; color: #111;">${poemaHTML}</div>`;
+            }
         }
     },
+
+    openFiesta: (index, forceYear) => {
+        let f = QumranData.FIESTAS[index];
+        let year = forceYear || new Date().getFullYear();
+        let anchorGreg = new Date(year, 2, 20); 
+        let foundDate = null;
+        for(let i=-20; i<370; i++){
+            let d = new Date(anchorGreg.getTime() + (i*86400000));
+            let q = QumranCalendar.calculate(d);
+            if(q && !q.special && q.m === f.m && q.d === f.d) { foundDate = d; break; }
+        }
+        let dateStr = foundDate ? foundDate.toLocaleDateString('es-ES', {day:'numeric', month:'long'}) : "Calculando...";
+        if(foundDate && f.dur > 1) { 
+            let end = new Date(foundDate); end.setDate(end.getDate() + f.dur - 1); 
+            dateStr += " al " + end.toLocaleDateString('es-ES', {day:'numeric', month:'long'}); 
+        }
+
+        document.getElementById('mod-title').innerText = f.n;
+        document.getElementById('mod-fechas').innerText = dateStr + ` (${year})`;
+        document.getElementById('mod-fechas-heb').innerText = `${f.d} del ${QumranData.MESES[f.m]}\n${f.es}`;
+        document.getElementById('mod-instr').innerText = f.instr;
+        document.getElementById('mod-ref').innerText = f.ref;
+        let noteDiv = document.getElementById('mod-note');
+        if(f.nota) { noteDiv.innerText = f.nota; noteDiv.style.display = 'block'; } else { noteDiv.style.display = 'none'; }
+        let warn = document.getElementById('mod-warn');
+        if(f.especial) warn.style.display = 'block'; else warn.style.display = 'none';
+        document.getElementById('modal-fiesta').style.display = 'flex';
+    },
+    
+    openFiestaHoy: () => { if(QumranApp.todayFiesta !== null) QumranApp.openFiesta(QumranApp.todayFiesta); },
 
     renderSaber: () => {
         const container = document.getElementById('edu-grid');
         if(!container) return;
+        
         container.innerHTML = "";
+        
         QumranData.ESTUDIOS.forEach((item, idx) => {
             const card = document.createElement('div');
             card.className = "edu-card";
-            card.innerHTML = `<div class="edu-card-title">${item.t}</div><div class="edu-card-subtitle">${item.s}</div><div class="edu-card-arrow">➔</div>`;
-            card.onclick = () => QumranApp.openEstudio(idx);
+            card.dataset.index = idx;
+            
+            card.innerHTML = `
+                <div class="edu-card-title">${item.t}</div>
+                <div class="edu-card-subtitle">${item.s}</div>
+                <div class="edu-card-arrow">➔</div>
+            `;
             container.appendChild(card);
         });
     },
-
-    openEstudio: (idx) => {
-        const e = QumranData.ESTUDIOS[idx];
-        document.getElementById('lec-title').innerText = e.t;
-        document.getElementById('lec-body').innerHTML = e.c;
+    
+    openEstudio: (index) => {
+        const estudio = QumranData.ESTUDIOS[index];
+        if(!estudio) return;
+        
+        document.getElementById('lec-title').innerText = estudio.t;
+        document.getElementById('lec-meta').innerText = estudio.s;
+        document.getElementById('lec-body').innerHTML = estudio.c;
+        
         document.getElementById('modal-lectura').style.display = 'flex';
-    },
-
-    openFiestaHoy: () => {
-        if(QumranApp.todayFiesta === null) return;
-        const f = QumranData.FIESTAS[QumranApp.todayFiesta];
-        document.getElementById('mod-title').innerText = f.n;
-        document.getElementById('mod-instr').innerText = f.i;
-        document.getElementById('mod-ref').innerText = f.r;
-        document.getElementById('modal-fiesta').style.display = 'flex';
     },
 
     renderCalendar: () => {
         let y = parseInt(document.getElementById('cal-year').value);
         let list = document.getElementById('cal-lista');
-        list.innerHTML = "Calculando...";
+        list.innerHTML = "<div class='text-center' style='padding:20px;'>Calculando ciclo sagrado...</div>";
         setTimeout(() => {
             let test = new Date(y, 2, 5); 
             let html = "";
@@ -253,10 +422,11 @@ const QumranApp = {
                 if(fIdx !== -1) {
                     let f = QumranData.FIESTAS[fIdx];
                     let dateLabel = d.toLocaleDateString('es-ES', {day:'numeric', month:'short'});
-                    html += `<div class="cal-row fiesta"><div><span class="cal-fiesta-name">${f.n}</span></div><div style="text-align:right;"><span style="font-weight:bold;">${dateLabel}</span></div></div>`;
+                    if(f.dur > 1) { let end = new Date(d); end.setDate(end.getDate() + f.dur - 1); dateLabel += " - " + end.toLocaleDateString('es-ES', {day:'numeric', month:'short'}); }
+                    html += `<div class="cal-row fiesta" data-index="${fIdx}" data-year="${y}"><div><span class="cal-fiesta-name">${f.n}</span><span class="cal-fiesta-sub">${f.es}</span></div><div style="text-align:right;"><span style="display:block; font-weight:bold;">${dateLabel}</span><span style="font-size:0.8rem;">${q.d}/${q.m+1}</span></div></div>`;
                 }
             }
-            list.innerHTML = html;
+            list.innerHTML = html || "<div class='card'>No se encontraron fiestas.</div>";
         }, 50);
     }
 };
