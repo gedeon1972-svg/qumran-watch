@@ -1,15 +1,10 @@
-/* * js/app.js
- * EL ESPÍRITU (CONTROLADOR)
- * V9.2: Restauración de Recuadro de Salmos y Notificaciones
- */
-
 import { QumranData } from './data.js';
 import { QumranCalendar } from './calendar.js';
 
 let deferredPrompt;
 let newWorker;
 
-// 1. SISTEMA DE ACTUALIZACIÓN & SERVICE WORKER
+// 1. SERVICE WORKER
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js').then(reg => {
@@ -35,24 +30,20 @@ const QumranApp = {
         if (!QumranApp.loadStoredLocation()) QumranApp.getLocationAndSun(); 
         QumranApp.renderHoy();
         QumranApp.renderSaber();
-        QumranApp.checkNotificationStatus();
+        QumranApp.checkNotificationStatus(); // Único añadido
     },
 
     setupListeners: () => {
-        // Navegación
         const views = ['hoy', 'lit', 'cal', 'con', 'edu'];
         views.forEach(v => {
             document.getElementById(`nav-${v}`)?.addEventListener('click', (e) => QumranApp.nav(v, e.currentTarget));
         });
 
-        // Instalación PWA
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-            if (!isIOS) {
-                const installContainer = document.getElementById('install-container');
-                if (installContainer) installContainer.style.display = 'block';
+            if (!/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                document.getElementById('install-container').style.display = 'block';
             }
         });
 
@@ -64,10 +55,9 @@ const QumranApp = {
             }
         });
 
-        // NOTIFICACIONES
+        // Único añadido: Listener de Notificaciones
         document.getElementById('btn-notifications')?.addEventListener('click', QumranApp.requestNotificationPermission);
 
-        // UI Listeners originales
         document.getElementById('heb-fiesta')?.addEventListener('click', QumranApp.openFiestaHoy);
         document.getElementById('geo-btn')?.addEventListener('click', () => QumranApp.getLocationAndSun(true));
         document.getElementById('btn-render-cal')?.addEventListener('click', QumranApp.renderCalendar);
@@ -79,11 +69,10 @@ const QumranApp = {
         });
     },
 
-    // --- GESTIÓN DE NOTIFICACIONES ---
+    // --- FUNCIONES DE NOTIFICACIÓN ---
     checkNotificationStatus: () => {
         if ('Notification' in window && Notification.permission !== 'granted' && Notification.permission !== 'denied') {
-            const notifContainer = document.getElementById('notification-container');
-            if (notifContainer) notifContainer.style.display = 'block';
+            document.getElementById('notification-container').style.display = 'block';
         }
     },
 
@@ -97,15 +86,11 @@ const QumranApp = {
 
     sendNotification: (title, body) => {
         navigator.serviceWorker.ready.then(reg => {
-            reg.showNotification(title, {
-                body: body,
-                icon: 'icon.png',
-                badge: 'icon.png',
-                vibrate: [200, 100, 200]
-            });
+            reg.showNotification(title, { body: body, icon: 'icon.png', badge: 'icon.png' });
         });
     },
 
+    // --- TU LÓGICA ORIGINAL V8.4 INTACTA ---
     nav: (viewId, btn) => {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         document.getElementById('view-'+viewId).classList.add('active');
@@ -181,17 +166,14 @@ const QumranApp = {
             document.getElementById('heb-turno').innerText = q.turno;
             document.getElementById('heb-estacion').innerText = q.est;
 
-            // Puerta Solar
             document.getElementById('heb-puerta-num').innerText = `Puerta ${q.puerta}`;
             const dots = document.querySelectorAll('.gate-dot');
             dots.forEach((dot, idx) => dot.classList.toggle('active', (idx + 1) === q.puerta));
 
-            // Shabat Progress
             const prog = ((q.idxSem + 1) / 7) * 100;
             document.getElementById('shabat-progress').style.width = prog + "%";
             document.getElementById('shabat-text').innerText = q.idxSem === 6 ? "¡SHABAT SHALOM!" : `Día ${q.idxSem + 1} de la semana`;
 
-            // Omer y Teshuva
             document.getElementById('card-omer').style.display = q.omer ? 'block' : 'none';
             if(q.omer) document.getElementById('omer-count').innerText = q.omer;
             document.getElementById('card-teshuva').style.display = q.teshuva ? 'block' : 'none';
@@ -200,7 +182,7 @@ const QumranApp = {
                 document.getElementById('teshuva-ref').innerText = q.teshuva.ref;
             }
 
-            // Instrucción del Mesías (V8.4 intacta)
+            // Filología e Instrucción
             let h = QumranData.HALAKHA[Math.floor((q.dCountYear || 0) / 7) % QumranData.HALAKHA.length];
             document.getElementById('messiah-theme').innerText = h.t;
             document.getElementById('messiah-hebrew').innerText = h.h || "";
@@ -209,28 +191,21 @@ const QumranApp = {
             document.getElementById('messiah-philology').innerText = h.f || "";
             document.getElementById('messiah-action').innerText = `${h.a} (${h.r})`;
 
-            // LITURGIA (CON RECUADRO RESTAURADO)
-            const s = q.idxSem === 6 ? QumranData.CANTICOS_SHABAT[Math.floor((q.dCountYear || 0) / 7) % 13] : QumranData.SALMOS[q.idxSem];
+            // LITURGIA (RESTAURADO)
+            let s = q.idxSem === 6 ? QumranData.CANTICOS_SHABAT[Math.floor((q.dCountYear || 0) / 7) % 13] : QumranData.SALMOS[q.idxSem];
             if (s) {
                 document.getElementById('page-lit-title').innerText = s.t;
-                let litHTML = "";
-                if (s.c) {
-                    litHTML += `<div class="context-box" style="background: rgba(212, 175, 55, 0.1); border: 1px solid var(--gold); padding: 15px; border-radius: 8px; margin-bottom: 20px; font-style: italic; color: #e0d2bc;">${s.c}</div>`;
-                }
-                litHTML += s.v.replace(/\n/g, '<br>');
-                document.getElementById('page-lit-text').innerHTML = litHTML;
+                // Restaurado a tu versión original sin estilos inventados
+                document.getElementById('page-lit-text').innerHTML = (s.c ? `<div class="context-box">${s.c}</div>` : '') + s.v.replace(/\n/g, '<br>');
             }
 
-            // Fiestas
             let fIdx = QumranData.FIESTAS.findIndex(x => x.m === q.m && x.d === q.d);
             const badge = document.getElementById('heb-fiesta');
             if(fIdx !== -1) {
                 QumranApp.todayFiesta = fIdx;
                 badge.innerText = "⭐ " + QumranData.FIESTAS[fIdx].n;
                 badge.style.display = "inline-block";
-            } else {
-                badge.style.display = "none";
-            }
+            } else { badge.style.display = "none"; }
         }
     },
 
@@ -266,7 +241,7 @@ const QumranApp = {
     renderCalendar: () => {
         let y = parseInt(document.getElementById('cal-year').value);
         let list = document.getElementById('cal-lista');
-        list.innerHTML = "<div class='text-center' style='padding:20px;'>Calculando ciclo sagrado...</div>";
+        list.innerHTML = "Calculando...";
         setTimeout(() => {
             let test = new Date(y, 2, 5); 
             let html = "";
