@@ -1,6 +1,7 @@
 /* * js/app.js
  * EL ESPÍRITU (CONTROLADOR)
  * V8.4: Integración de Contextos Históricos (Corrección de Contraste)
+ * V8.5: Integración de History API (Prevención de cierre al presionar "Atrás")
  */
 
 // --- 0. IMPORTAMOS LOS MÓDULOS DEL MOTOR ---
@@ -63,6 +64,19 @@ const QumranApp = {
 
         QumranApp.renderHoy();
         QumranApp.renderSaber(); 
+        
+        // --- PREVENCIÓN DE CIERRE INESPERADO (HISTORY API) ---
+        // 1. Guardar la pantalla inicial ('hoy')
+        window.history.replaceState({ view: 'hoy' }, '', '#hoy');
+
+        // 2. Escuchar cuando el usuario presiona el botón físico/gesto de "Atrás"
+        window.addEventListener('popstate', (event) => {
+            if (event.state && event.state.view) {
+                QumranApp.nav(event.state.view, null, true);
+            } else {
+                QumranApp.nav('hoy', null, true); 
+            }
+        });
     },
 
     setupListeners: () => {
@@ -134,12 +148,32 @@ const QumranApp = {
         });
     },
 
-    nav: (viewId, btn) => {
+    // REEMPLAZO EXACTO DE LA FUNCIÓN NAV CON HISTORY API
+    nav: (viewId, btn, isHistoryEvent = false) => {
+        // 1. Ocultar todas las vistas actuales
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        document.getElementById('view-'+viewId).classList.add('active');
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        window.scrollTo(0,0);
+        
+        // 2. Mostrar la vista solicitada
+        const targetView = document.getElementById('view-' + viewId);
+        if (targetView) targetView.classList.add('active');
+        
+        // 3. Gestionar la iluminación de los botones del menú inferior
+        if (btn) {
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        } else {
+            document.querySelectorAll('.nav-btn').forEach(b => {
+                b.classList.toggle('active', b.id === 'nav-' + viewId);
+            });
+        }
+        
+        // 4. Registrar el paso en el historial del celular
+        if (!isHistoryEvent) {
+            window.history.pushState({ view: viewId }, '', '#' + viewId);
+        }
+        
+        // 5. Subir la pantalla al tope
+        window.scrollTo(0, 0);
     },
     
     loadStoredLocation: () => {
@@ -337,7 +371,6 @@ const QumranApp = {
                 document.getElementById('page-lit-type').innerText = litType;
                 document.getElementById('page-lit-title').innerText = s.t;
                 
-                // CORRECCIÓN: Usamos #333 para texto oscuro asegurando contraste sobre fondo claro.
                 let contextoHTML = s.c ? `<div style="background: rgba(212, 175, 55, 0.15); padding: 15px; border-left: 4px solid #d4af37; border-radius: 0 8px 8px 0; font-size: 0.95rem; font-style: italic; color: #333; margin-bottom: 25px; line-height: 1.5; text-align: left;"><strong>Contexto Histórico:</strong><br>${s.c}</div>` : '';
                 let poemaHTML = s.v.replace(/\n/g, '<br>');
                 
