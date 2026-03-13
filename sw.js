@@ -1,9 +1,9 @@
 /**
- * sw.js - V9.1
+ * sw.js - V9.2
  * SERVICE WORKER PROFESIONAL (PWA)
  */
 
-const CACHE_NAME = 'qumran-cache-v9.1';
+const CACHE_NAME = 'qumran-cache-v9.2';
 
 const URLS_TO_CACHE = [
     './',
@@ -47,7 +47,6 @@ self.addEventListener('message', event => {
     if (event.data && event.data.action === 'skipWaiting') self.skipWaiting();
 });
 
-// NUEVO: Abre la app al tocar la notificación
 self.addEventListener('notificationclick', event => {
     event.notification.close();
     event.waitUntil(
