@@ -871,3 +871,45 @@ nav.nav-bar {
     font-style: italic;
     border-radius: 0 5px 5px 0;
 }
+/* =========================================================
+   PANEL DE CONTROL DEL CALENDARIO (Estilos Nativos)
+   ========================================================= */
+.calendar-controls-panel {
+    background: rgba(26, 18, 11, 0.8);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.cal-button-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.btn-outline-gold {
+    background: transparent !important;
+    border: 2px solid var(--gold) !important;
+    color: var(--gold) !important;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-gold:active {
+    background: var(--gold) !important;
+    color: var(--bg-dark) !important;
+    transform: scale(0.98);
+}
+
+.cal-helper-text {
+    font-size: 0.75rem;
+    color: var(--faint);
+    text-align: center;
+    margin-top: 12px;
+    font-family: 'David Libre', serif;
+    font-style: italic;
+    line-height: 1.4;
+}
