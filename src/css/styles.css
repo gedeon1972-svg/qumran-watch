@@ -167,14 +167,60 @@ h2 { font-size: 1.3rem; margin-bottom: 15px; border-bottom: 1px solid var(--fain
 
 /* --- SECCIONES ESPECÍFICAS --- */
 
-/* Instrucción del Mesías */
-.messiah-theme { font-family: 'Cinzel', serif; color: var(--gold); font-size: 1.2rem; text-align: center; margin: 10px 0; font-weight: bold; }
-.messiah-hebrew { text-align: center; font-size: 1.5rem; color: var(--paper); margin-bottom: 15px; letter-spacing: 2px; }
-.messiah-context { font-size: 0.85rem; color: var(--faint); text-align: center; font-style: italic; margin-bottom: 15px; }
-.messiah-philology { background: rgba(0,0,0,0.3); padding: 15px; border-left: 3px solid var(--gold); font-size: 0.95rem; line-height: 1.5; margin-bottom: 15px; }
-.messiah-quote { font-family: 'Cinzel', serif; font-size: 1.1rem; text-align: center; color: var(--gold); margin-bottom: 15px; line-height: 1.4; }
-.messiah-action { text-align: center; font-weight: bold; color: var(--paper); font-size: 1rem; border: 1px dashed var(--faint); padding: 10px; border-radius: 4px; }
+/* --- Instrucción del Mesías (Modificado con Celeste Telegram) --- */
 
+.messiah-theme { 
+    font-family: 'Cinzel', serif; 
+    color: #3498db; /* Cambiado de var(--gold) a Celeste */
+    font-size: 1.2rem; 
+    text-align: center; 
+    margin: 10px 0; 
+    font-weight: bold; 
+}
+
+.messiah-hebrew { 
+    text-align: center; 
+    font-size: 1.5rem; 
+    color: var(--paper); 
+    margin-bottom: 15px; 
+    letter-spacing: 2px; 
+}
+
+.messiah-context { 
+    font-size: 0.85rem; 
+    color: var(--faint); 
+    text-align: center; 
+    font-style: italic; 
+    margin-bottom: 15px; 
+}
+
+.messiah-philology { 
+    background: rgba(0,0,0,0.3); 
+    padding: 15px; 
+    border-left: 3px solid #3498db; /* Cambiado el borde a Celeste */
+    font-size: 0.95rem; 
+    line-height: 1.5; 
+    margin-bottom: 15px; 
+}
+
+.messiah-quote { 
+    font-family: 'Cinzel', serif; 
+    font-size: 1.1rem; 
+    text-align: center; 
+    color: #3498db; /* Cambiado el texto de la cita a Celeste */
+    margin-bottom: 15px; 
+    line-height: 1.4; 
+}
+
+.messiah-action { 
+    text-align: center; 
+    font-weight: bold; 
+    color: var(--paper); 
+    font-size: 1rem; 
+    border: 1px dashed #3498db; /* Cambiado el borde punteado a Celeste */
+    padding: 10px; 
+    border-radius: 4px; 
+}
 /* Liturgia */
 .liturgy-page { padding: 10px; }
 .liturgy-heading { font-size: 1.5rem; margin-bottom: 5px; }
