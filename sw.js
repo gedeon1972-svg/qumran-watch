@@ -1,11 +1,11 @@
 /**
  * sw.js
- * EL GUARDIÁN DEL UMBRAL (V12.2)
+ * EL GUARDIÁN DEL UMBRAL (V12.3)
  * Estrategia: Cache-First con actualización en segundo plano.
  * Gestiona el funcionamiento 100% Offline y la instalación PWA.
  */
 
-const CACHE_NAME = 'qumran-cache-v12.2';
+const CACHE_NAME = 'qumran-cache-v12.3';
 
 // Lista de archivos vitales para funcionamiento offline
 const URLS_TO_CACHE = [
