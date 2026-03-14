@@ -871,3 +871,30 @@ nav.nav-bar {
     font-style: italic;
     border-radius: 0 5px 5px 0;
 }
+
+/* =========================================================
+   REPARACIÓN DE EMERGENCIA: PUERTAS DEL SOL (Horizontales)
+   ========================================================= */
+.gates-container {
+    display: flex !important;
+    flex-direction: row !important; /* Fuerza la línea horizontal */
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 12px !important; /* Espacio entre cada puerta */
+    margin: 15px 0 !important;
+    width: 100% !important;
+}
+
+.gate-dot {
+    width: 14px !important;
+    height: 14px !important;
+    border-radius: 50% !important;
+    border: 2px solid var(--gold) !important;
+    background: transparent !important;
+    flex-shrink: 0 !important; /* Evita que se aplasten */
+}
+
+.gate-dot.active {
+    background: var(--gold) !important;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.8) !important;
+}
