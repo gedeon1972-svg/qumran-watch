@@ -1,7 +1,7 @@
 {
   "name": "Qumran Watch",
   "short_name": "Qumran",
-  "description": "Herramienta litúrgica para los Hijos de Sadoc. Calendario 364 días y ciclo solar.",
+  "description": "Calendario Sagrado 364 días, turnos sacerdotales, sincronización solar GPS y alertas ICS.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
