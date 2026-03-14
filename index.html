@@ -30,6 +30,7 @@
             <span class="fecha-greg" id="greg-date">...</span>
             <div class="fecha-hebrea" id="heb-date">Cargando...</div>
             <div id="heb-fiesta" class="fiesta-badge"></div>
+            
             <div class="info-block-center">
                 <span class="lbl">DÍA DE LA SEMANA</span>
                 <span class="val" id="heb-dia"></span>
@@ -38,9 +39,16 @@
                     <div class="shabat-text" id="shabat-text"></div>
                 </div>
             </div>
+
             <div class="info-grid">
-                <div class="text-center"><span class="lbl">TURNO (MISHMAR)</span><span class="val" id="heb-turno"></span></div>
-                <div class="text-center"><span class="lbl">ESTACIÓN</span><span class="val" id="heb-estacion"></span></div>
+                <div class="text-center">
+                    <span class="lbl">TURNO (MISHMAR)</span>
+                    <span class="val" id="heb-turno"></span>
+                </div>
+                <div class="text-center">
+                    <span class="lbl">ESTACIÓN</span>
+                    <span class="val" id="heb-estacion"></span>
+                </div>
             </div>
             
             <div class="gates-container">
@@ -97,8 +105,7 @@
             <label for="cal-year">Año Gregoriano:</label>
             <input type="number" id="cal-year" value="2024" min="2019" max="2100">
             <button id="btn-render-cal" class="btn-action">Generar</button>
-            
-            <button id="btn-export-ics" class="btn-action" style="margin-top: 15px; background: transparent; border: 1px solid var(--gold); color: var(--gold);">
+            <button id="btn-export-ics" class="btn-action" style="margin-top: 15px; background: transparent; border: 1px dashed var(--gold); color: var(--gold);">
                 🔔 Sincronizar Alertas al Celular
             </button>
         </div>
@@ -126,7 +133,6 @@
             <div class="card-link"><a href="https://t.me/+VuFNIOUSMERrLLiD" target="_blank" style="color:#fff; text-decoration:none;">Unirme al Canal ➔</a></div>
         </article>
     </div>
-
 
     <div id="view-edu" class="view">
         <h2>Biblioteca</h2>
@@ -158,8 +164,7 @@
         <h2 id="lec-title" class="lecture-title">Título del Estudio</h2>
         <div class="lecture-meta" id="lec-meta">Subtítulo</div>
         <hr class="separator-gold">
-        <div id="lec-body" class="lecture-body">
-            </div>
+        <div id="lec-body" class="lecture-body"></div>
     </div>
 </div>
 
