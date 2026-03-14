@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - master
 
 permissions:
   contents: write
@@ -12,26 +11,25 @@ permissions:
 jobs:
   construir-y-publicar:
     runs-on: ubuntu-latest
-
     steps:
       - name: 📥 Descargar código
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: ⚙️ Preparar Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
 
-      - name: 📦 Instalar herramientas
+      - name: 📦 Instalar dependencias
         run: npm install
 
-      - name: 🛡️ EL BLINDAJE: Ejecutar Tests Matemáticos
+      - name: 🛡️ Ejecutar Tests
         run: npm test
 
-      - name: 🔨 Exprimir y Minificar (Build)
+      - name: 🔨 Compilar Versión 12.0 (Build)
         run: npm run build
 
-      - name: 🚀 Publicar en internet
+      - name: 🚀 Publicar en GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
