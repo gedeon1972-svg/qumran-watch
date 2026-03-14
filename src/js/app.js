@@ -104,7 +104,7 @@ const QumranApp = {
 
         // Delegación de eventos para listas dinámicas
         document.getElementById('cal-lista').addEventListener('click', (e) => {
-            const row = e.target.closest('.cal-row.fiesta');
+            const row = e.target.closest('.edu-card.fiesta');
             if (row) QumranApp.openFiesta(parseInt(row.dataset.index), parseInt(row.dataset.year));
         });
         
