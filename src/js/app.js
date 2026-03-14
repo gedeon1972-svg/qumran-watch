@@ -1,10 +1,12 @@
 /* * js/app.js
  * EL ESPÍRITU (CONTROLADOR PRINCIPAL)
- * V9.5: Monolito Blindado (Botón Atrás + Alertas Push Nativas)
+ * V11.0: Arquitectura Modular de Alto Rendimiento + UI Mejorada
  */
 
 import { QumranData } from './data.js';
 import { QumranCalendar } from './calendar.js';
+import { QumranSun } from './sun.js';
+import { QumranICS } from './ics.js';
 
 let deferredPrompt;
 let newWorker;
@@ -46,7 +48,6 @@ const QumranApp = {
         QumranApp.renderHoy();
         QumranApp.renderSaber(); 
         
-        // --- HISTORY API (Botón Atrás Anti-Cierre) ---
         window.history.replaceState({ view: 'hoy' }, '', '#hoy');
         window.addEventListener('popstate', (event) => {
             if (event.state && event.state.view) {
@@ -76,9 +77,14 @@ const QumranApp = {
         document.getElementById('btn-close-modal').addEventListener('click', () => document.getElementById('modal-fiesta').style.display='none');
         document.getElementById('btn-close-lectura').addEventListener('click', () => document.getElementById('modal-lectura').style.display='none');
 
-        // --- LISTENER: BOTÓN DE EXPORTAR ALERTAS ---
+        // BOTÓN ICS CONECTADO AL MÓDULO EXTERNO
         const btnExportICS = document.getElementById('btn-export-ics');
-        if (btnExportICS) btnExportICS.addEventListener('click', QumranApp.exportCalendarToICS);
+        if (btnExportICS) {
+            btnExportICS.addEventListener('click', () => {
+                let y = document.getElementById('cal-year') ? parseInt(document.getElementById('cal-year').value) : new Date().getFullYear();
+                QumranICS.generateAndDownload(y);
+            });
+        }
 
         document.getElementById('cal-lista').addEventListener('click', (e) => {
             const row = e.target.closest('.cal-row.fiesta');
@@ -129,7 +135,8 @@ const QumranApp = {
 
     updateSunData: (lat, lng) => {
         let now = new Date();
-        let times = QumranApp.calcSunTimes(now, lat, lng);
+        // CÁLCULO SOLAR DELEGADO AL MÓDULO EXTERNO (sun.js)
+        let times = QumranSun.calcSunTimes(now, lat, lng);
         if(times && times.riseDecimal) {
             QumranApp.sunriseHour = times.riseDecimal;
             QumranApp.renderHoy();
@@ -140,42 +147,6 @@ const QumranApp = {
         const btn = document.getElementById('geo-btn');
         btn.innerText = "↻ Actualizar Ubicación (GPS)";
         btn.style.display = 'block'; 
-    },
-
-    calcSunTimes: (date, lat, lng) => {
-        const toRad = Math.PI / 180; const toDeg = 180 / Math.PI;
-        const start = new Date(date.getFullYear(), 0, 0);
-        const dayOfYear = Math.floor((date - start) / (1000 * 60 * 60 * 24));
-        const lngHour = lng / 15;
-
-        const calcTime = (isSunrise) => {
-            const t = dayOfYear + ((isSunrise ? 6 : 18) - lngHour) / 24;
-            const M = (0.9856 * t) - 3.289;
-            let L = M + (1.916 * Math.sin(M * toRad)) + (0.020 * Math.sin(2 * M * toRad)) + 282.634;
-            if(L > 360) L -= 360; else if(L < 0) L += 360;
-            let RA = toDeg * Math.atan(0.91764 * Math.tan(L * toRad));
-            if(RA > 360) RA -= 360; else if(RA < 0) RA += 360;
-            RA = RA + ((Math.floor(L/90)*90) - (Math.floor(RA/90)*90));
-            RA = RA / 15;
-            const sinDec = 0.39782 * Math.sin(L * toRad);
-            const cosDec = Math.cos(Math.asin(sinDec));
-            const cosH = (Math.cos(90.833 * toRad) - (sinDec * Math.sin(lat * toRad))) / (cosDec * Math.cos(lat * toRad));
-            if (cosH > 1 || cosH < -1) return null;
-            const H = (isSunrise ? (360 - toDeg * Math.acos(cosH)) : (toDeg * Math.acos(cosH))) / 15;
-            const T = H + RA - (0.06571 * t) - 6.622;
-            let UT = T - lngHour;
-            if(UT > 24) UT -= 24; else if(UT < 0) UT += 24;
-            let localT = UT + (-date.getTimezoneOffset() / 60);
-            if(localT > 24) localT -= 24; else if(localT < 0) localT += 24;
-            return localT;
-        };
-        let riseDecimal = calcTime(true); let setDecimal = calcTime(false);
-        const format = (dec) => {
-            if(dec === null) return "--:--";
-            let h = Math.floor(dec); let m = Math.floor((dec - h) * 60);
-            return `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}`;
-        };
-        return { rise: format(riseDecimal), set: format(setDecimal), riseDecimal: riseDecimal };
     },
 
     checkWatcher: (hoy, qHoy) => {
@@ -310,9 +281,12 @@ const QumranApp = {
     renderSaber: () => {
         const container = document.getElementById('edu-grid');
         if(!container) return; container.innerHTML = "";
+        // Optimizado para inyectar al DOM una sola vez
+        let htmlCards = "";
         QumranData.ESTUDIOS.forEach((item, idx) => {
-            container.innerHTML += `<div class="edu-card" data-index="${idx}"><div class="edu-card-title">${item.t}</div><div class="edu-card-subtitle">${item.s}</div><div class="edu-card-arrow">➔</div></div>`;
+            htmlCards += `<div class="edu-card" data-index="${idx}"><div class="edu-card-title">${item.t}</div><div class="edu-card-subtitle">${item.s}</div><div class="edu-card-arrow">➔</div></div>`;
         });
+        container.innerHTML = htmlCards;
     },
     
     openEstudio: (index) => {
@@ -328,7 +302,7 @@ const QumranApp = {
         let y = document.getElementById('cal-year') ? parseInt(document.getElementById('cal-year').value) : new Date().getFullYear();
         let list = document.getElementById('cal-lista');
         if(!list) return;
-        list.innerHTML = "<div class='text-center' style='padding:20px;'>Calculando ciclo...</div>";
+        list.innerHTML = "<div class='text-center' style='padding:20px;'>Calculando ciclo sagrado...</div>";
         setTimeout(() => {
             let test = new Date(y, 2, 5); let html = "";
             for(let i=0; i<380; i++) {
@@ -345,46 +319,6 @@ const QumranApp = {
             }
             list.innerHTML = html || "<div class='card'>No se encontraron fiestas.</div>";
         }, 50);
-    },
-
-    // --- FUNCIÓN DE NOTIFICACIONES: GENERADOR ICS NATIVO ---
-    exportCalendarToICS: () => {
-        let y = document.getElementById('cal-year') ? parseInt(document.getElementById('cal-year').value) : new Date().getFullYear();
-        let test = new Date(y, 2, 5); 
-        let icsContent = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Qumran Watch//ES\nCALSCALE:GREGORIAN\n";
-        
-        for(let i=0; i<380; i++) {
-            let d = new Date(test.getTime() + (i*86400000));
-            let q = QumranCalendar.calculate(d);
-            if(!q || q.special) continue;
-            
-            let fIdx = QumranData.FIESTAS.findIndex(x => x.m === q.m && x.d === q.d);
-            if(fIdx !== -1) {
-                let f = QumranData.FIESTAS[fIdx];
-                let dateStr = d.toISOString().replace(/-|:|\.\d+/g, '').substring(0, 8);
-                icsContent += "BEGIN:VEVENT\nSUMMARY:Fiesta de YHWH: " + f.n + "\n";
-                icsContent += `DESCRIPTION:${f.es} - ${f.instr || ''}\n`;
-                icsContent += `DTSTART;VALUE=DATE:${dateStr}\nDTEND;VALUE=DATE:${dateStr}\n`;
-                icsContent += "BEGIN:VALARM\nTRIGGER:-P1D\nACTION:DISPLAY\n";
-                icsContent += `DESCRIPTION:Recordatorio: ${f.n}\nEND:VALARM\nEND:VEVENT\n`;
-            }
-            if (q.idxSem === 6) { 
-                let dateStr = d.toISOString().replace(/-|:|\.\d+/g, '').substring(0, 8);
-                icsContent += "BEGIN:VEVENT\nSUMMARY:Shabat (Qumrán)\n";
-                icsContent += `DTSTART;VALUE=DATE:${dateStr}\nDTEND;VALUE=DATE:${dateStr}\n`;
-                icsContent += "BEGIN:VALARM\nTRIGGER:-PT12H\nACTION:DISPLAY\n";
-                icsContent += "DESCRIPTION:Preparación para el Shabat\nEND:VALARM\nEND:VEVENT\n";
-            }
-        }
-        icsContent += "END:VCALENDAR";
-        
-        let blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-        let url = window.URL.createObjectURL(blob);
-        let a = document.createElement('a');
-        a.href = url; a.download = `Qumran_Moedim_${y}.ics`;
-        document.body.appendChild(a); a.click(); document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-        alert("¡Archivo exportado! Ábrelo en tu teléfono para programar las notificaciones nativas.");
     }
 };
 
