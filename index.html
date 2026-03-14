@@ -92,23 +92,24 @@
     </div>
 
     <div id="view-cal" class="view">
+        <div id="view-cal" class="view">
         <h2>Ciclo de Fiestas</h2>
         
-        <div class="calendar-controls-panel">
-            <div class="cal-input-group">
-                <label for="cal-year">Año (Gregoriano):</label>
-                <input type="number" id="cal-year" value="2024" min="2019" max="2100">
+        <div class="cal-input-group" style="margin-bottom: 25px;">
+            <label for="cal-year">Año Gregoriano:</label>
+            <div style="display:flex; gap:10px; margin-top:5px;">
+                <input type="number" id="cal-year" value="2024" min="2019" max="2100" style="width:80px; text-align:center;">
+                <button id="btn-render-cal" class="btn-action">Generar</button>
             </div>
             
-            <div class="cal-button-stack">
-                <button id="btn-render-cal" class="btn-action">
-                    📅 Generar Calendario Sagrado
-                </button>
-                
-                <button id="btn-export-ics" class="btn-action btn-outline-gold">
-                    🔔 Sincronizar Alertas al Celular
-                </button>
-            </div>
+            <button id="btn-export-ics" class="btn-action" style="margin-top: 15px; background: transparent; border: 1px solid var(--gold); color: var(--gold); width: 100%; transition: 0.3s;">
+                🔔 Sincronizar Alertas al Celular
+            </button>
+            <p style="font-size: 0.75rem; color: var(--faint); margin-top: 8px; text-align:center; font-style: italic;">* Programa avisos automáticos en tu calendario nativo.</p>
+        </div>
+        
+        <div id="cal-lista" class="cal-list"></div>
+    </div>
             <p class="cal-helper-text">* Esto programa alarmas automáticas (sin internet) en tu teléfono para las Fiestas y Shabatot.</p>
         </div>
         <div id="cal-lista" class="cal-list"></div>
