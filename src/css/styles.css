@@ -38,770 +38,201 @@
     /* Base */
     --bg-dark: #1a120b;
     --paper: #e0d2bc;
-    --gold: #c5a059;
-    --gold-dim: #8a703d;
-    --red: #8a2c2c;
-    --red-text: #ff8e8e;
-    --blue: #4a90e2; 
+    --gold: #d4af37;
+    --faint: rgba(212, 175, 55, 0.4);
     
-    /* Paleta Sacerdotal */
-    --tekhelet: #1c2e36; /* Azul Oscuro (Mesías) */
-    --argaman: #3c1414;  /* Púrpura/Rojo Oscuro (Salmos) */
-    --shani: #4a1515;    /* Escarlata (Días de Temor) */
-    --omer: #4a3b15;     /* Trigo/Omer */
-    
-    --faint: #5a4d3f;
-    --brown-text: #bfa588;
-    --alert-bg: #3d2b1f;
+    /* Degradados para el tema "Pergamino en la oscuridad" */
+    --gold-glow: radial-gradient(circle, rgba(212,175,55,0.15) 0%, rgba(26,18,11,0) 70%);
 }
 
-/* --- RESET & BASE --- */
-* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-body { 
-    font-family: 'David Libre', serif; 
-    background-color: var(--bg-dark); 
-    color: var(--paper); 
-    margin: 0; padding: 0; 
-    min-height: 100vh; 
-    display: flex; 
-    justify-content: center; 
-}
-
-.app-frame { 
-    width: 100%; 
-    max-width: 500px; 
-    min-height: 100vh; 
-    padding: 20px; 
-    padding-bottom: 90px; 
-    background: radial-gradient(circle at top, #251a12, #1a120b); 
-    box-shadow: 0 0 50px rgba(0,0,0,0.5); 
-}
-
-/* --- TIPOGRAFÍA --- */
-h1, h2, h3 { font-family: 'Cinzel', serif; margin: 0; text-align: center; color: var(--gold); }
-
-h1 { 
-    font-size: 1.8rem; 
-    border-bottom: 2px solid var(--gold); 
-    padding-bottom: 15px; 
-    margin-bottom: 20px; 
-    text-transform: uppercase; 
-    letter-spacing: 2px; 
-}
-
-h2 { 
-    font-size: 1.3rem; 
-    margin-bottom: 15px; 
-    border-bottom: 1px solid var(--faint); 
-    display: inline-block; 
-    padding-bottom: 5px; 
-}
-
-h3.edu-heading {
-    font-size: 1.2rem;
-    color: var(--red-text);
-    margin-top: 25px;
-    text-align: left;
-    border-bottom: 1px solid var(--faint);
-    padding-bottom: 5px;
-}
-.liturgy-heading {
-    font-size: 1.4rem;
-    margin: 15px 0;
-    color: #1a0b0b; /* Color oscuro sobre papel claro */
-}
-
-/* --- UTILIDADES --- */
-.text-center { text-align: center; }
-.text-gold { color: var(--gold) !important; font-weight: bold; }
-.red-text { color: var(--red-text) !important; }
-.blue-text { color: var(--blue) !important; }
-.gold-text { color: var(--gold); font-size: 1rem; }
-.italic-sub { font-style: italic; font-size: 0.9rem; }
-
-.lbl { 
-    font-size: 0.75rem; 
-    color: var(--gold); 
-    text-transform: uppercase; 
-    display: block; 
-    margin-bottom: 4px; 
-    font-weight: bold; 
-    letter-spacing: 1px;
-}
-
-.val { font-size: 1.2rem; font-weight: bold; color: #fff; }
-
-/* --- ALERTAS --- */
-.watcher-alert { 
-    background: var(--alert-bg); 
-    border: 1px solid var(--gold); 
-    border-left: 5px solid var(--gold); 
-    color: #fff; 
-    padding: 1rem; 
-    margin-bottom: 1.5rem; 
-    border-radius: 4px; 
-    display: none; 
-    animation: slideIn 0.5s ease-out; 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5); 
-}
-.watcher-title { 
-    font-family: 'Cinzel'; 
-    color: var(--gold); 
-    font-size: 0.9rem; 
-    font-weight: bold; 
-    display: flex; 
-    align-items: center; 
-    gap: 8px; 
-    margin-bottom: 5px; 
-}
-.watcher-msg { font-size: 1rem; line-height: 1.4; }
-
-@keyframes slideIn { from {opacity:0; transform:translateY(-10px);} to {opacity:1; transform:translateY(0);} }
-
-/* --- TARJETAS GENERALES --- */
-article.card { 
-    background: rgba(30, 20, 15, 0.6); 
-    border: 1px solid var(--faint); 
-    border-left: 4px solid var(--gold); 
-    padding: 20px; 
-    border-radius: 6px; 
-    margin-bottom: 20px; 
-    backdrop-filter: blur(5px); 
-    transition: transform 0.2s, box-shadow 0.2s; 
-}
-article.card.clickable:active { transform: scale(0.98); background: rgba(30, 20, 15, 0.8); }
-
-/* --- TARJETA PRINCIPAL (HOY) --- */
-.fecha-hebrea { 
-    font-size: 2.2rem; 
-    color: var(--paper); 
-    text-align: center; 
-    font-weight: bold; 
-    margin: 5px 0; 
-    font-family: 'Cinzel'; 
-    line-height: 1.1; 
-    text-shadow: 0 2px 10px rgba(0,0,0,0.5); 
-}
-.fecha-greg { 
-    font-size: 1rem; 
-    color: var(--brown-text); 
-    text-align: center; 
-    font-style: italic; 
-    display: block; 
-    font-weight: bold;
-}
-.fiesta-badge {
-    text-align: center; 
-    font-size: 1.1rem; 
-    color: var(--red-text); 
-    font-weight: bold; 
-    text-transform: uppercase; 
-    letter-spacing: 1px; 
-    margin-bottom: 10px; 
-    cursor: pointer;
-}
-.info-block-center { text-align: center; margin-bottom: 15px; }
-.info-grid { 
-    display: grid; 
-    grid-template-columns: 1fr 1fr; 
-    gap: 10px; 
-    border-top: 1px solid var(--faint); 
-    padding-top: 10px; 
-}
-
-/* SHABAT BAR */
-.shabat-container { margin-top: 5px; }
-.shabat-bar-bg { 
-    width: 100%; 
-    height: 6px; 
-    background: var(--faint); 
-    border-radius: 3px; 
-    margin-top: 5px; 
-    overflow: hidden; 
-}
-.shabat-bar-fill { height: 100%; background: var(--gold); width: 0%; transition: width 1s ease; }
-.shabat-text { font-size: 0.8rem; font-style: italic; margin-top: 5px; color: #ccc; }
-
-/* SOL Y PUERTAS */
-.solar-section { margin-top: 20px; }
-.gate-container { 
-    display: flex; 
-    justify-content: center; 
-    gap: 10px; 
-    margin-top: 15px; 
-    padding-top: 15px; 
-    border-top: 1px solid var(--faint); 
-}
-.gate-dot { 
-    width: 28px; height: 28px; 
-    border-radius: 50%; 
-    border: 2px solid var(--faint); 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    font-size: 0.75rem; 
-    color: var(--faint); 
-    font-weight: bold; 
-}
-.gate-dot.active { 
-    border-color: var(--gold); 
-    background-color: var(--gold); 
-    color: var(--bg-dark); 
-    box-shadow: 0 0 10px var(--gold); 
-    transform: scale(1.1); 
-}
-.solar-info-text { 
-    text-align: center; 
-    font-size: 1.05rem; 
-    color: var(--brown-text); 
-    margin-top: 12px; 
-    margin-bottom: 12px; 
-}
-.sun-times { 
-    display: flex; 
-    justify-content: space-around; 
-    background: rgba(0,0,0,0.2); 
-    padding: 12px; 
-    border-radius: 6px; 
-    border: 1px solid var(--faint); 
-    margin-top: 5px; 
-}
-.sun-item { 
-    font-size: 0.9rem; 
-    color: var(--paper); 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    gap: 2px;
-}
-.sun-val { color: var(--gold); font-weight: bold; font-size: 1.1rem; }
-#geo-btn { 
-    text-align: center; 
-    margin-top: 10px; 
-    font-size: 0.85rem; 
-    text-decoration: underline; 
-    cursor: pointer; 
-    color: var(--brown-text); 
-    transition: 0.3s; 
-    padding: 5px; 
-}
-#geo-btn:hover { color: var(--gold); }
-
-/* --- TARJETAS ESPECÍFICAS --- */
-
-/* OMER */
-article.card.omer { 
-    background: linear-gradient(135deg, var(--omer), #1a120b); 
-    border: 1px solid var(--gold); 
-    border-left: 4px solid #fff; 
-    display: none; 
-    text-align: center; 
-}
-.omer-count { 
-    font-size: 2.5rem; 
-    font-family: 'Cinzel'; 
-    color: #fff; 
-    font-weight: bold; 
-    line-height: 1; 
-    margin: 10px 0; 
-    text-shadow: 0 0 10px var(--gold); 
-}
-.omer-lbl { color: var(--gold); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; }
-
-/* TESHUVA */
-article.card.teshuva { 
-    background: linear-gradient(135deg, var(--shani), #1a0b0b); 
-    border: 1px solid #ff4d4d; 
-    border-left: 4px solid #ff4d4d; 
-    animation: pulse 2s infinite; 
-    display: none; 
-}
-.teshuva-title { 
-    color: #ff4d4d; 
-    font-family: 'Cinzel'; 
-    font-weight: bold; 
-    text-transform: uppercase; 
-    border-bottom: 1px solid rgba(255,77,77,0.3); 
-    padding-bottom: 8px; 
-    margin-bottom: 10px; 
-}
-.teshuva-cmd { font-size: 1.1rem; color: #fff; text-align: center; font-weight: bold; margin-bottom: 5px; }
-.teshuva-ref { font-size: 0.9rem; color: #ff8e8e; text-align: center; font-style: italic; }
-@keyframes pulse { 0% {box-shadow: 0 0 0 rgba(255,77,77,0);} 50% {box-shadow: 0 0 15px rgba(255,77,77,0.2);} 100% {box-shadow: 0 0 0 rgba(255,77,77,0);} }
-
-/* MESÍAS (Tekhelet) */
-article.card.messiah { 
-    background: linear-gradient(135deg, var(--tekhelet), #12181b); 
-    border: 1px solid var(--gold-dim); 
-    border-left: 4px solid #6dd5fa; 
-    box-shadow: 0 4px 20px rgba(0,0,0,0.4); 
-}
-.messiah-title { 
-    color: #6dd5fa; 
-    font-family: 'Cinzel'; 
-    font-size: 1.1rem; 
-    border-bottom: 1px solid rgba(255,255,255,0.1); 
-    padding-bottom: 8px; 
-    margin-bottom: 12px; 
-    text-transform: uppercase; 
-    letter-spacing: 1px; 
-    font-weight: bold; 
-}
-.messiah-theme { 
-    color: #fff; 
-    font-size: 1.05rem; 
-    font-weight: bold; 
-    margin-bottom: 8px; 
-    text-transform: uppercase; 
-    color: var(--gold); 
-}
-.messiah-quote { 
-    font-style: italic; 
-    color: #e0e6ed; 
-    font-size: 1.1rem; 
-    margin-bottom: 15px; 
-    border-left: 2px solid #6dd5fa; 
-    padding-left: 12px; 
-    line-height: 1.5; 
-}
-.messiah-action { 
-    background: rgba(0,0,0,0.3); 
-    padding: 12px; 
-    border-radius: 4px; 
-    color: #ccc; 
-    font-size: 0.95rem; 
-    border-top: 1px solid rgba(255,255,255,0.1); 
-}
-.messiah-label { color: var(--gold); font-weight: bold; font-size: 0.8rem; display: block; margin-bottom: 3px; }
-
-/* LITURGIA (PÁGINA DEDICADA) */
-.liturgy-tag { 
-    font-size: 0.8rem; 
-    color: var(--red); 
-    text-transform: uppercase; 
-    letter-spacing: 1px; 
-    font-weight: bold; 
-    border: 1px solid var(--red); 
-    padding: 4px 8px; 
-    border-radius: 4px; 
-}
-.liturgy-paper {
-    background: #e0d2bc; /* Papel claro */
-    color: #1a0b0b;      /* Tinta oscura */
-    padding: 25px;
-    border-radius: 6px;
-    box-shadow: inset 0 0 40px rgba(0,0,0,0.15);
-    border: 4px double #bfa588;
-    margin-bottom: 20px;
-}
-.liturgy-paper.full-page {
-    min-height: 60vh;
-}
-.separator-gold {
-    border: 0;
-    height: 1px;
-    background-image: linear-gradient(to right, rgba(197, 160, 89, 0), rgba(197, 160, 89, 0.75), rgba(197, 160, 89, 0));
-    margin: 20px 0;
-}
-.liturgy-body {
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    background-color: var(--bg-dark);
+    color: var(--paper);
     font-family: 'David Libre', serif;
-    font-size: 1.3rem;
-    line-height: 1.6;
-    white-space: pre-wrap; 
-    text-align: justify;
-}
-.liturgy-footer {
-    text-align: center;
-    font-style: italic;
-    color: #8a703d;
-    margin-top: 30px;
-    font-weight: bold;
+    padding-bottom: 70px;
+    background-image: var(--gold-glow);
+    background-attachment: fixed;
 }
 
-/* ENLACES EXTERNOS */
-.card-podcast { border-color: var(--red); border-left-width: 4px; cursor: pointer; }
-.card-institute { border-color: var(--blue); border-left-width: 4px; cursor: pointer; }
-.card-main-text { text-align: center; font-weight: bold; font-size: 1.1rem; margin-top: 5px; color: #fff; }
-.card-link { text-align: center; font-size: 0.8rem; color: #aaa; margin-top: 8px; }
-
-/* EDUCACIÓN TEXTOS */
-.fundamento-txt { margin-bottom: 10px; line-height: 1.5; font-size: 1.05rem; }
-.versiculo { 
-    background: rgba(0,0,0,0.3); 
-    padding: 15px; 
-    border-left: 2px solid var(--gold); 
-    font-style: italic; 
-    color: #d0c0a8; 
-    margin: 10px 0; 
-}
-.ref { font-size: 0.9em; opacity: 0.7; display: block; margin-top: 5px; text-align: right;}
-
-/* --- MODAL (CARTA REAL MEJORADA) --- */
-#modal-fiesta { 
-    display: none; 
-    position: fixed; 
-    top: 0; left: 0; 
-    width: 100%; height: 100%; 
-    background: rgba(10, 5, 2, 0.95); /* Fondo más oscuro y profundo */
-    backdrop-filter: blur(5px); /* Efecto de desenfoque moderno */
-    z-index: 2000; 
-    justify-content: center; 
-    align-items: center; 
-    padding: 15px; 
-    animation: fadeIn 0.3s ease-out;
-}
-
-.modal-content { 
-    background: linear-gradient(145deg, #1f1610 0%, #2a2018 100%);
-    border: 1px solid var(--gold); 
-    border-top: 4px solid var(--gold); /* Borde superior sacerdotal */
-    padding: 0; /* Quitamos padding global para manejar secciones */
-    border-radius: 12px; 
-    width: 100%; 
-    max-width: 420px; /* Ancho lectura ideal */
-    position: relative; 
-    box-shadow: 0 10px 40px rgba(0,0,0,0.8); 
-    max-height: 85vh; 
-    overflow-y: auto; 
-    display: flex;
-    flex-direction: column;
-}
-
-/* Cabecera del Modal */
-.modal-header-box {
-    background: rgba(0,0,0,0.2);
-    padding: 20px 20px 15px 20px;
-    border-bottom: 1px solid var(--faint);
-    position: relative;
-    text-align: center;
-}
-
-.close-modal { 
-    position: absolute; 
-    top: 10px; right: 15px; 
-    font-size: 2.2rem; 
-    color: var(--faint); 
-    cursor: pointer; 
-    line-height: 0.8;
-    transition: color 0.2s;
-}
-.close-modal:hover { color: var(--red); }
-
-.modal-title { 
-    font-family: 'Cinzel', serif; 
-    font-size: 1.6rem; 
-    color: var(--gold); 
-    margin: 0;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-    line-height: 1.2;
-}
-
-/* Cuerpo del Modal */
-.modal-body {
-    padding: 20px;
-}
-
-/* Sección de Fechas (Diseño de Ficha) */
-.meta-box {
-    background: rgba(197, 160, 89, 0.08); /* Gold muy tenue */
-    border-radius: 8px;
-    padding: 12px;
-    margin-bottom: 20px;
-    border: 1px solid rgba(197, 160, 89, 0.2);
-}
-
-.modal-data-row { 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: baseline;
-    margin-bottom: 6px;
-    border-bottom: 1px dashed rgba(255,255,255,0.1);
-    padding-bottom: 4px;
-}
-.modal-data-row:last-child { border-bottom: none; margin-bottom: 0; }
-
-.modal-data-row .val { font-size: 1rem; text-align: right; }
-
-/* Texto de Instrucción (Lectura) */
-.lbl-instr {
-    display: block;
-    text-align: center;
-    color: var(--red-text);
+h1, h2, h3, .gold-text {
     font-family: 'Cinzel', serif;
-    font-size: 0.9rem;
-    margin-bottom: 10px;
-    letter-spacing: 2px;
-}
-
-.modal-instr { 
-    font-family: 'David Libre', serif;
-    font-size: 1.25rem; /* Letra más grande para lectura */
-    line-height: 1.6; 
-    color: #efe5d5; /* Color papel claro */
-    text-align: justify; 
-    margin-bottom: 10px; 
-    border-left: 3px solid var(--gold-dim);
-    padding-left: 15px;
-}
-
-.modal-ref { 
-    font-style: italic; 
-    color: var(--gold); 
-    text-align: right; 
-    display: block; 
-    font-size: 0.95rem; 
-    margin-top: 5px;
-    margin-bottom: 20px;
-}
-
-/* Notas y Advertencias */
-.teological-note { 
-    font-size: 0.9rem; 
-    background: #1a1512; 
-    padding: 12px; 
-    border-radius: 6px;
-    border-left: 3px solid var(--blue); /* Azul para notas de estudio */
-    color: #ccc; 
-    font-style: italic;
-    margin-top: 10px;
-    line-height: 1.4;
-}
-
-.special-warn { 
-    background: rgba(138, 44, 44, 0.2); 
-    border: 1px solid var(--red); 
-    color: #ffadad; 
-    padding: 12px; 
-    border-radius: 6px; 
-    font-size: 0.95rem; 
-    margin-top: 15px; 
-    text-align: center; 
-    font-weight: bold; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-@keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
-
-/* --- CALENDARIO LISTA --- */
-.cal-row { 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    padding: 15px; 
-    background: rgba(40, 30, 25, 0.6); 
-    border: 1px solid var(--faint); 
-    border-left: 4px solid var(--faint); 
-    margin-bottom: 10px; 
-    border-radius: 6px; 
-    cursor: pointer; 
-    transition: all 0.2s; 
-}
-.cal-row.fiesta { 
-    border-left: 4px solid var(--gold); 
-    background: linear-gradient(to right, rgba(197, 160, 89, 0.1), rgba(40, 30, 25, 0.6)); 
-}
-.cal-fiesta-name { display: block; font-weight: bold; font-size: 1.1rem; color: var(--gold); font-family: 'Cinzel'; }
-.cal-fiesta-sub { font-size: 0.85rem; color: #aaa; display: block; margin-top: 2px;}
-
-.cycle-form { display: flex; gap: 10px; margin-bottom: 15px; }
-.cycle-input { 
-    background: #2a2018; 
-    border: 1px solid var(--faint); 
-    color: var(--paper); 
-    padding: 15px; 
-    text-align: center; 
-    font-family: 'Cinzel'; 
-    font-size: 1.2rem; 
-    border-radius: 4px; 
-    width: 100%; 
-}
-.btn-action { 
-    width: 100%; 
-    padding: 15px; 
-    background: var(--gold); 
-    color: #1a120b; 
-    font-family: 'Cinzel'; 
-    font-weight: bold; 
-    border: none; 
-    border-radius: 4px; 
-    cursor: pointer; 
-    text-transform: uppercase; 
-}
-.hint-text { text-align: center; font-size: 0.8rem; color: var(--faint); margin-bottom: 10px; }
-
-/* --- NAVEGACIÓN (4 ITEMS) --- */
-nav.nav-bar { 
-    position: fixed; 
-    bottom: 0; left: 0; 
-    width: 100%; 
-    background: #140e08; 
-    border-top: 3px solid var(--gold); 
-    display: flex; 
-    justify-content: space-around; 
-    padding: 12px 0 20px 0; 
-    z-index: 100; 
-    box-shadow: 0 -5px 20px rgba(0,0,0,0.7); 
-}
-.nav-btn { 
-    background: none; 
-    border: none; 
-    color: var(--faint); 
-    font-family: 'Cinzel'; 
-    font-size: 0.7rem; 
-    font-weight: bold; 
-    cursor: pointer; 
-    text-transform: uppercase; 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    gap: 5px; 
-}
-.nav-btn.active { 
-    color: var(--gold); 
-    transform: scale(1.1); 
-    text-shadow: 0 0 10px rgba(197, 160, 89, 0.6); 
-}
-.nav-icon { font-size: 1.4rem; }
-
-/* --- VISTAS --- */
-.view { display: none; animation: fade 0.4s; }
-.view.active { display: block; }
-@keyframes fade { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:translateY(0);} }
-
-/* --- BOTÓN DE INSTALACIÓN (PWA) --- */
-#install-container {
-    display: none; /* Oculto por defecto */
-    margin: 15px 0;
-    text-align: center;
-    animation: fadeIn 1s ease-in;
-}
-
-.btn-install {
-    background: linear-gradient(135deg, #d4af37 0%, #a8862d 100%);
-    color: #000;
-    border: none;
-    padding: 12px 25px;
-    font-family: 'Cinzel', serif;
-    font-weight: bold;
-    font-size: 1rem;
-    border-radius: 30px;
-    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-    cursor: pointer;
-    width: 100%;
-    max-width: 300px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.btn-install:active {
-    transform: scale(0.98);
-}
-/* --- TOAST DE ACTUALIZACIÓN (Fase 4) --- */
-.update-toast {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    left: 20px; /* Para móviles */
-    background: rgba(26, 18, 11, 0.95);
-    border: 1px solid var(--gold);
-    border-left: 5px solid var(--gold);
-    border-radius: 8px;
-    padding: 15px;
-    display: none; /* Oculto por defecto */
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.6);
-    z-index: 10000;
-    animation: slideUp 0.4s ease-out;
-    backdrop-filter: blur(5px);
-}
-
-.toast-content {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.toast-icon { font-size: 1.2rem; }
-.toast-msg { color: #fff; font-family: 'David Libre'; font-weight: bold; font-size: 0.95rem; }
-
-.toast-btn {
-    background: var(--gold);
-    color: #1a120b;
-    border: none;
-    padding: 8px 15px;
-    font-family: 'Cinzel';
-    font-weight: bold;
-    font-size: 0.8rem;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-left: 10px;
-}
-
-.toast-btn:active { transform: scale(0.95); }
-
-@keyframes slideUp { 
-    from { transform: translateY(50px); opacity: 0; } 
-    to { transform: translateY(0); opacity: 1; } 
-}
-
-/* Ajuste para escritorio (que no ocupe todo el ancho) */
-@media (min-width: 600px) {
-    .update-toast { left: auto; width: 350px; }
-}
-/* --- BIBLIOTECA SABER (CORRECCIÓN FINAL) --- */
-
-/* 1. El Contenedor del Modal (Igual a #modal-fiesta) */
-#modal-lectura {
-    display: none; 
-    position: fixed; 
-    top: 0; left: 0; 
-    width: 100%; height: 100%; 
-    /* Fondo oscuro y borroso idéntico al original */
-    background: rgba(10, 5, 2, 0.95);
-    backdrop-filter: blur(5px);
-    z-index: 2000; 
-    /* Centrado Flex */
-    justify-content: center; 
-    align-items: center; 
-    padding: 15px; 
-    animation: fadeIn 0.3s ease-out;
-}
-
-/* 2. Ajustes internos para el modo lectura */
-/* .modal-content ya tiene estilo en tu CSS, aquí solo ajustamos el padding */
-.lecture-mode {
-    padding: 20px 25px !important; /* Más espacio para leer */
-    background: linear-gradient(145deg, #1f1610 0%, #2a2018 100%); /* Asegurar fondo oscuro */
-}
-
-/* 3. Títulos y Texto dentro del Modal */
-.lecture-title {
-    font-family: 'Cinzel', serif;
-    font-size: 1.5rem;
     color: var(--gold);
     text-align: center;
-    margin-top: 10px;
-    margin-bottom: 5px;
-    border-bottom: 1px solid var(--faint);
-    padding-bottom: 10px;
     text-transform: uppercase;
 }
+h1 { font-size: 1.8rem; margin: 20px 0 10px; letter-spacing: 2px; }
+h2 { font-size: 1.3rem; margin-bottom: 15px; border-bottom: 1px solid var(--faint); padding-bottom: 5px; }
 
-.lecture-meta {
-    text-align: center;
-    font-style: italic;
-    color: var(--red-text);
+.app-frame { max-width: 500px; margin: 0 auto; padding: 15px; }
+
+/* 1. Tarjetas (Cards) */
+.card {
+    background: rgba(30, 20, 15, 0.6);
+    border: 1px solid var(--faint);
+    border-radius: 8px;
+    padding: 20px;
     margin-bottom: 20px;
-    font-size: 0.95rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    backdrop-filter: blur(5px);
 }
+
+.text-center { text-align: center; }
+.text-gold { color: var(--gold) !important; font-weight: bold; }
+.red-text { color: #c0392b !important; }
+
+/* Datos principales (Día, Mes, Año) */
+.fecha-greg { font-size: 0.9rem; color: var(--faint); display: block; text-align: center; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;}
+.fecha-hebrea { font-family: 'Cinzel', serif; font-size: 1.8rem; color: var(--gold); text-align: center; font-weight: bold; margin-bottom: 5px; }
+.fiesta-badge { color: #ffeb3b; text-align: center; font-weight: bold; font-size: 1.1rem; text-shadow: 0 0 10px rgba(255, 235, 59, 0.4); margin-bottom: 15px;}
+
+/* Bloques de Información (Turnos, Estaciones) */
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--faint);
+}
+.info-block-center {
+    background: rgba(0,0,0,0.3);
+    border-radius: 6px;
+    padding: 15px;
+    text-align: center;
+    border: 1px solid rgba(212,175,55,0.2);
+}
+
+.lbl { font-size: 0.7rem; color: var(--faint); display: block; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; font-family: 'Cinzel', serif;}
+.val { font-size: 1.1rem; font-weight: bold; color: var(--paper); }
+
+/* Progreso del Shabat */
+.shabat-container { margin-top: 15px; }
+.shabat-bar-bg { background: rgba(0,0,0,0.5); height: 6px; border-radius: 3px; overflow: hidden; border: 1px solid var(--faint); }
+.shabat-bar-fill { background: var(--gold); height: 100%; width: 0%; transition: width 0.5s ease-out; }
+.shabat-text { font-size: 0.8rem; text-align: center; margin-top: 5px; font-style: italic; color: var(--gold); }
+
+/* Puertas del Sol */
+.gates-container {
+    display: flex; justify-content: center; gap: 8px; margin: 15px 0;
+}
+.gate-dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    border: 1px solid var(--faint); background: transparent;
+}
+.gate-dot.active { background: var(--gold); box-shadow: 0 0 8px var(--gold); border-color: var(--gold); }
+
+/* Botones y Controles */
+.btn-action {
+    background: rgba(212, 175, 55, 0.1);
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 12px;
+    width: 100%;
+    border-radius: 6px;
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s;
+}
+.btn-action:active { background: var(--gold); color: var(--bg-dark); }
+.btn-secondary { background: transparent; border-color: var(--faint); color: var(--paper); }
+
+/* Navegación Inferior (Tabs) */
+.nav-bar {
+    position: fixed; bottom: 0; width: 100%; max-width: 500px;
+    background: #0f0a06; border-top: 1px solid var(--gold);
+    display: flex; justify-content: space-around; padding: 10px 0;
+    left: 50%; transform: translateX(-50%); z-index: 100;
+}
+.nav-btn {
+    background: none; border: none; color: var(--faint);
+    font-family: 'Cinzel', serif; font-size: 0.7rem; text-transform: uppercase;
+    display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer;
+}
+.nav-btn.active { color: var(--gold); text-shadow: 0 0 5px rgba(212,175,55,0.5); }
+.nav-icon { font-size: 1.2rem; }
+.view { display: none; animation: fadeIn 0.3s; }
+.view.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Sistema de Alertas (Vigía) */
+.watcher-alert { background: rgba(192, 57, 43, 0.15); border: 1px solid #c0392b; border-radius: 6px; padding: 15px; margin-bottom: 20px; display: none; }
+.watcher-title { color: #e74c3c; font-family: 'Cinzel', serif; font-weight: bold; text-align: center; font-size: 1.1rem; margin-bottom: 10px; }
+.watcher-msg { text-align: center; font-size: 0.95rem; line-height: 1.4; }
+
+/* 2. Código Mesiánico */
+.messiah-theme { font-family: 'Cinzel', serif; color: var(--gold); font-size: 1.2rem; text-align: center; margin: 10px 0; font-weight: bold;}
+.messiah-hebrew { text-align: center; font-size: 1.5rem; color: var(--paper); margin-bottom: 15px; letter-spacing: 2px;}
+.messiah-context { font-size: 0.85rem; color: var(--faint); text-align: center; font-style: italic; margin-bottom: 15px;}
+.messiah-philology { background: rgba(0,0,0,0.3); padding: 15px; border-left: 3px solid var(--gold); font-size: 0.95rem; line-height: 1.5; margin-bottom: 15px;}
+.messiah-quote { font-family: 'Cinzel', serif; font-size: 1.1rem; text-align: center; color: var(--gold); margin-bottom: 15px; line-height: 1.4;}
+.messiah-action { text-align: center; font-weight: bold; color: var(--paper); font-size: 1rem; border: 1px dashed var(--faint); padding: 10px; border-radius: 4px;}
+
+/* 3. Vistas Nuevas: Liturgia y Calendario */
+.liturgy-page { padding: 10px; }
+.liturgy-heading { font-size: 1.5rem; margin-bottom: 5px; }
+.liturgy-title { font-size: 1.1rem; color: var(--paper); font-style: italic; }
+.separator-gold { height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); width: 80%; margin: 15px auto; }
+.liturgy-text { font-size: 1.1rem; line-height: 1.8; text-align: justify; color: #fff; text-shadow: 1px 1px 2px #000; }
+
+.cal-input-group { background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid var(--faint); margin-bottom: 20px; text-align: center; }
+.cal-input-group label { display: block; color: var(--gold); font-family: 'Cinzel', serif; margin-bottom: 10px; }
+.cal-input-group input { background: transparent; border: 1px solid var(--gold); color: var(--paper); padding: 8px; width: 80px; text-align: center; font-family: 'David Libre', serif; font-size: 1.1rem; border-radius: 4px; margin-bottom: 10px; }
+.cal-row { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid rgba(212,175,55,0.1); }
+.cal-row:last-child { border-bottom: none; }
+.cal-row.fiesta { background: rgba(212, 175, 55, 0.05); cursor: pointer; border-left: 3px solid transparent; transition: border-left 0.2s;}
+.cal-row.fiesta:hover { border-left: 3px solid var(--gold); }
+.cal-fiesta-name { color: var(--gold); font-family: 'Cinzel', serif; font-weight: bold; display: block; font-size:1.1rem;}
+.cal-fiesta-sub { font-size: 0.8rem; color: var(--faint); }
+
+/* Modal Fiestas */
+.modal-content {
+    background: #1a120b; border: 2px solid var(--gold);
+    margin: 15% auto; padding: 25px; width: 90%; max-width: 400px;
+    border-radius: 8px; box-shadow: 0 0 30px rgba(0,0,0,0.8);
+    position: relative; animation: fadeIn 0.3s;
+}
+.close-modal { position: absolute; top: 10px; right: 15px; color: var(--gold); font-size: 28px; font-weight: bold; cursor: pointer; }
+.modal-instr { margin: 20px 0; line-height: 1.6; font-size: 1rem; color: #fff;}
+.modal-ref { font-style: italic; color: var(--faint); display: block; text-align: right; margin-bottom: 15px; font-size: 0.9rem;}
+.teological-note { background: rgba(212,175,55,0.1); border-left: 3px solid var(--gold); padding: 12px; font-size: 0.9rem; line-height: 1.5; margin-bottom: 15px; }
+.special-warn { background: rgba(192, 57, 43, 0.2); color: #e74c3c; border: 1px solid #c0392b; padding: 10px; text-align: center; font-weight: bold; font-size: 0.9rem; border-radius: 4px; }
+
+/* Botón de Instalación PWA */
+.btn-install {
+    background: linear-gradient(135deg, var(--gold), #b8860b);
+    color: #000; font-family: 'Cinzel', serif; font-weight: bold; font-size: 1rem;
+    border: none; border-radius: 8px; padding: 12px; width: 100%;
+    margin-bottom: 20px; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+    cursor: pointer; animation: pulse 2s infinite; display: none;
+}
+@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+
+/* Toast Actualización */
+.update-toast {
+    position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+    background: var(--gold); color: #000; padding: 12px 20px; border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5); display: none; align-items: center; gap: 15px;
+    z-index: 1000; font-family: 'Cinzel', serif; width: 90%; max-width: 400px; justify-content: space-between;
+}
+.toast-msg { font-weight: bold; font-size: 0.9rem; }
+.toast-btn { background: #000; color: var(--gold); border: none; padding: 6px 12px; border-radius: 15px; cursor: pointer; font-weight: bold; font-size: 0.8rem; }
+
+/* --- NUEVO: PANTALLA DE ESTUDIOS (SABER) --- */
+
+.lecture-mode {
+    max-width: 600px;
+    margin: 5% auto;
+    height: 85vh;
+    overflow-y: auto;
+    background: #140d08; /* Un poco más oscuro para lectura */
+    border-radius: 12px;
+}
+
+.lecture-title { font-size: 1.6rem; color: var(--gold); margin-bottom: 5px; margin-top: 15px;}
+.lecture-meta { font-size: 0.9rem; color: var(--faint); text-align: center; font-style: italic; margin-bottom: 15px;}
 
 .lecture-body {
     font-family: 'David Libre', serif;
@@ -847,7 +278,6 @@ nav.nav-bar {
 }
 
 .edu-card-subtitle {
-    font-family: 'David Libre', serif;
     font-size: 0.9rem;
     color: #ccc;
     line-height: 1.3;
