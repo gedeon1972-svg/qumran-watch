@@ -290,3 +290,29 @@ h2 { font-size: 1.3rem; margin-bottom: 15px; border-bottom: 1px solid var(--fain
     z-index: 1000; font-family: 'Cinzel', serif; width: 90%; max-width: 400px; justify-content: space-between;
 }
 .toast-btn { background: #000; color: var(--gold); border: none; padding: 6px 12px; border-radius: 15px; cursor: pointer; font-weight: bold; font-size: 0.8rem; }
+
+/* --- ESTILOS DEL INPUT DEL CALENDARIO --- */
+.cal-input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; /* Separación entre el texto, el recuadro y el botón */
+    margin-bottom: 25px;
+}
+
+#cal-year {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--gold);
+    color: var(--paper);
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 1.2rem;
+    text-align: center;
+    font-family: 'Cinzel', serif;
+    width: 150px;
+}
+
+/* Clases de apoyo para las tarjetas del calendario limpias */
+.edu-card.fiesta { margin-bottom: 15px; }
+.card-meta-info { margin-top: 10px; font-weight: bold; color: var(--gold); font-size: 0.9rem; display: flex; justify-content: space-between; }
+.q-date { color: var(--faint); font-weight: normal; }
