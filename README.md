@@ -1,45 +1,43 @@
 # 📜 Qumran Watch | El Reloj de los Hijos de Sadoc
 
-![Version](https://img.shields.io/badge/Versi%C3%B3n-9.0-gold?style=for-the-badge)
+![Version](https://img.shields.io/badge/Versi%C3%B3n-12.0-gold?style=for-the-badge)
 ![PWA](https://img.shields.io/badge/PWA-100%25_Offline-blue?style=for-the-badge)
 ![JavaScript](https://img.shields.io/badge/ES6-M%C3%B3dulos-yellow?style=for-the-badge)
-![License](https://img.shields.io/badge/Licencia-Open_Source-green?style=for-the-badge)
+![GPS](https://img.shields.io/badge/GPS-Solar_Sync-orange?style=for-the-badge)
 
-**Qumran Watch** es una Aplicación Web Progresiva (PWA) de nivel profesional diseñada para calcular, visualizar y enseñar el **Calendario Solar de 364 Días**, restaurado a partir de los textos de Enoc, Jubileos y los Rollos del Mar Muerto (Qumrán).
-
-Esta herramienta está diseñada para alinear a los creyentes con el reloj litúrgico y astronómico original, libre de las alteraciones introducidas por los calendarios lunares babilónicos o solares gregorianos.
+**Qumran Watch** es una Aplicación Web Progresiva (PWA) de alto rendimiento diseñada para restaurar el **Calendario Solar de 364 Días**, alineado con los Manuscritos del Mar Muerto y los textos de Enoc y Jubileos. Esta herramienta técnica permite a la comunidad de los Hijos de Sadoc sincronizar su vida litúrgica con el orden astronómico original.
 
 ---
 
-## ✨ Características Principales
+## ✨ Características de la Versión 12.0
 
-* ☀️ **Motor Astronómico Exacto:** Calcula el año bíblico perfecto de 364 días (52 semanas exactas) basado en el ancla histórica del 20 de Marzo de 2019 (Equinoccio + Superluna + Miércoles + Turno de Gamul).
-* 🏛️ **Ciclo Sacerdotal (Mishmarot):** Seguimiento en tiempo real de los 24 turnos sacerdotales (1 Crónicas 24) dentro de un ciclo intercalar de 6 años para la sincronización solar.
-* 📍 **Inicio del Día por GPS:** Utiliza la geolocalización del dispositivo para calcular el amanecer astronómico local, respetando el principio de que el día comienza con la Luz (Génesis 1) y no en el ocaso.
-* 📖 **Liturgia Auténtica de Qumrán:** Incluye los Salmos Diarios del Templo (Shir Shel Yom) y los místicos *Cánticos del Sacrificio del Shabat* extraídos directamente de los manuscritos 4Q400-4Q407.
-* 🕎 **Moedim Completos:** Calculadora interactiva de las Fiestas de YHWH, incluyendo los festivales agrícolas detallados en el Rollo del Templo (Vino Nuevo, Aceite, Ofrenda de Leña).
-* 📱 **100% Offline (PWA):** Construida con tecnología de Service Workers, la aplicación se instala en iOS, Android y Escritorio, funcionando a la perfección en modo avión o en lugares sin cobertura de red.
+* ☀️ **Motor Astronómico GPS:** Sincronización en tiempo real de la salida y puesta del sol basada en la ubicación geográfica del usuario, ajustando el inicio del día bíblico de forma exacta.
+* 🔔 **Sincronización ICS Nativa:** Capacidad de exportar y sincronizar las Fiestas Sagradas directamente con el calendario nativo del celular (iOS/Android) mediante avisos programados.
+* 🏛️ **Ciclo de Mishmarot:** Seguimiento perpetuo de los 24 turnos sacerdotales, vinculados al ancla histórica del 20 de Marzo de 2019 (Turno de Gamul).
+* 📖 **Biblioteca "Saber":** Acceso a estudios profundos y lecturas litúrgicas (Salmos y Cánticos de Shabat) optimizados para la reflexión diaria.
+* 📱 **PWA Ultra-Resiliente:** Funcionamiento 100% offline garantizado mediante una arquitectura de Service Workers avanzada.
 
 ---
 
-## 📐 Arquitectura Técnica
+## 📐 Especificaciones Técnicas
 
-El proyecto ha sido refactorizado recientemente (v9.0) para cumplir con los estándares de la industria del desarrollo de software:
+El proyecto ha sido completamente refactorizado bajo estándares modernos de ingeniería de software:
 
-* **Vanilla JavaScript ES6:** Uso estricto de Arquitectura Modular (`import`/`export`) para la separación de responsabilidades (Modelo de Datos, Motor Matemático, Interfaz de Usuario).
-* **Ausencia de Dependencias Externas:** El núcleo matemático no depende de librerías de terceros (como Moment.js), lo que garantiza una ejecución ultrarrápida y a prueba de obsolescencia.
-* **Service Worker con Cache-First:** Estrategia agresiva de caché para recursos estáticos y fuentes tipográficas personalizadas (`Cinzel`, `David Libre`).
+* **Arquitectura Modular (ES6):** Separación estricta de responsabilidades en módulos independientes (`data`, `calendar`, `sun`, `ics`) para garantizar la mantenibilidad y escalabilidad.
+* **Zero Dependencies:** Código puro (Vanilla JS) sin librerías externas, eliminando vulnerabilidades y garantizando una carga instantánea.
+* **UI/UX Inmersiva:** Interfaz diseñada con tipografía local (`Cinzel` y `David Libre`) y un sistema de modales centrados para una experiencia de lectura sagrada óptima.
 
-### Estructura del Proyecto
+### Estructura del Ecosistema
 ```text
 qumran-watch/
-├── index.html          # Interfaz principal de la aplicación (UI)
-├── manifest.json       # Manifiesto PWA para instalación móvil
-├── sw.js               # Service Worker para funcionamiento Offline
-├── README.md           # Documentación del proyecto
+├── index.html          # Interfaz de Usuario (HTML5)
+├── manifest.json       # Configuración PWA
+├── sw.js               # Service Worker (Caché V12.0)
 └── src/
-    ├── css/            # Estilos (styles.css) y tipografías locales
+    ├── css/            # Estilos y Tipografías
     └── js/
-        ├── app.js      # Controlador principal y gestión del DOM
-        ├── calendar.js # Motor matemático del calendario de 364 días
-        └── data.js     # Base de datos local (Textos, Fiestas, Liturgia)
+        ├── app.js      # Controlador Principal
+        ├── data.js     # Base de Datos Litúrgica
+        ├── calendar.js # Motor del Calendario 364
+        ├── sun.js      # Algoritmo de Posición Solar (GPS)
+        └── ics.js      # Generador de Eventos de Calendario
