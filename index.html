@@ -43,9 +43,13 @@
                 <div class="text-center"><span class="lbl">ESTACIÓN</span><span class="val" id="heb-estacion"></span></div>
             </div>
             
-            <div class="gates-container">
-                <div class="gate-dot"></div><div class="gate-dot"></div><div class="gate-dot"></div>
-                <div class="gate-dot"></div><div class="gate-dot"></div><div class="gate-dot"></div>
+            <div class="gates-container" style="display: flex; flex-direction: row; justify-content: center; gap: 12px; margin: 15px 0;">
+                <div class="gate-dot" style="width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--gold);"></div>
+                <div class="gate-dot" style="width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--gold);"></div>
+                <div class="gate-dot" style="width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--gold);"></div>
+                <div class="gate-dot" style="width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--gold);"></div>
+                <div class="gate-dot" style="width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--gold);"></div>
+                <div class="gate-dot" style="width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--gold);"></div>
             </div>
             <div class="text-center" style="margin-top:5px;"><span class="lbl" id="heb-puerta-num"></span></div>
         </article>
@@ -92,26 +96,21 @@
     </div>
 
     <div id="view-cal" class="view">
-        <div id="view-cal" class="view">
         <h2>Ciclo de Fiestas</h2>
         
-        <div class="cal-input-group" style="margin-bottom: 25px;">
-            <label for="cal-year">Año Gregoriano:</label>
-            <div style="display:flex; gap:10px; margin-top:5px;">
-                <input type="number" id="cal-year" value="2024" min="2019" max="2100" style="width:80px; text-align:center;">
-                <button id="btn-render-cal" class="btn-action">Generar</button>
+        <div class="cal-input-group" style="margin-bottom: 25px; display: flex; flex-direction: column; align-items: center; gap: 15px;">
+            <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 10px;">
+                <label for="cal-year" style="color: var(--gold); font-family: 'Cinzel', serif; font-weight: bold;">Año:</label>
+                <input type="number" id="cal-year" value="2024" min="2019" max="2100" style="width: 80px; text-align: center; padding: 5px; border: 1px solid var(--gold); background: rgba(0,0,0,0.5); color: white; border-radius: 5px; font-weight:bold;">
+                <button id="btn-render-cal" class="btn-action" style="padding: 5px 15px; font-size: 0.9rem;">Generar</button>
             </div>
             
-            <button id="btn-export-ics" class="btn-action" style="margin-top: 15px; background: transparent; border: 1px solid var(--gold); color: var(--gold); width: 100%; transition: 0.3s;">
-                🔔 Sincronizar Alertas al Celular
+            <button id="btn-export-ics" class="btn-action" style="background: transparent; border: 1px dashed var(--gold); color: var(--gold); width: 80%; max-width: 300px; padding: 8px; font-size: 0.9rem;">
+                🔔 Sincronizar Alertas
             </button>
-            <p style="font-size: 0.75rem; color: var(--faint); margin-top: 8px; text-align:center; font-style: italic;">* Programa avisos automáticos en tu calendario nativo.</p>
+            <p style="font-size: 0.75rem; color: var(--faint); text-align:center; font-style: italic; margin-top: -5px;">* Programa avisos en tu calendario nativo.</p>
         </div>
         
-        <div id="cal-lista" class="cal-list"></div>
-    </div>
-            <p class="cal-helper-text">* Esto programa alarmas automáticas (sin internet) en tu teléfono para las Fiestas y Shabatot.</p>
-        </div>
         <div id="cal-lista" class="cal-list"></div>
     </div>
 
@@ -165,7 +164,7 @@
 </div>
 
 <div id="update-toast" class="update-toast">
-    <div class="toast-content"><span class="toast-icon">🚀</span><span class="toast-msg">Nueva versión disponible</span></div>
+    <div class="toast-content"><span class="toast-icon">🚀</span><span class=\"toast-msg\">Nueva versión disponible</span></div>
     <button id="btn-refresh" class="toast-btn">ACTUALIZAR</button>
 </div>
 
