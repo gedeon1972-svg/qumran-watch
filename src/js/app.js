@@ -77,7 +77,6 @@ const QumranApp = {
         document.getElementById('btn-close-modal').addEventListener('click', () => document.getElementById('modal-fiesta').style.display='none');
         document.getElementById('btn-close-lectura').addEventListener('click', () => document.getElementById('modal-lectura').style.display='none');
 
-        // BOTÓN ICS CONECTADO AL MÓDULO EXTERNO
         const btnExportICS = document.getElementById('btn-export-ics');
         if (btnExportICS) {
             btnExportICS.addEventListener('click', () => {
@@ -135,7 +134,6 @@ const QumranApp = {
 
     updateSunData: (lat, lng) => {
         let now = new Date();
-        // CÁLCULO SOLAR DELEGADO AL MÓDULO EXTERNO (sun.js)
         let times = QumranSun.calcSunTimes(now, lat, lng);
         if(times && times.riseDecimal) {
             QumranApp.sunriseHour = times.riseDecimal;
@@ -260,7 +258,6 @@ const QumranApp = {
             if(q && !q.special && q.m === f.m && q.d === f.d) { foundDate = d; break; }
         }
         
-        // ¡CORREGIDO! Vuelve a mostrar el día de la semana (Lunes, Martes...)
         let dateStr = foundDate ? foundDate.toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long'}) : "Calculando...";
         if(foundDate && f.dur > 1) { 
             let end = new Date(foundDate); end.setDate(end.getDate() + f.dur - 1); 
@@ -283,7 +280,6 @@ const QumranApp = {
     renderSaber: () => {
         const container = document.getElementById('edu-grid');
         if(!container) return; container.innerHTML = "";
-        // Optimizado para inyectar al DOM una sola vez
         let htmlCards = "";
         QumranData.ESTUDIOS.forEach((item, idx) => {
             htmlCards += `<div class="edu-card" data-index="${idx}"><div class="edu-card-title">${item.t}</div><div class="edu-card-subtitle">${item.s}</div><div class="edu-card-arrow">➔</div></div>`;
