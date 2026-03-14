@@ -871,30 +871,3 @@ nav.nav-bar {
     font-style: italic;
     border-radius: 0 5px 5px 0;
 }
-
-/* =========================================================
-   RESTAURACIÓN: PUERTAS DEL SOL (Horizontales)
-   ========================================================= */
-.gates-container {
-    display: flex !important;
-    flex-direction: row !important;
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 10px !important;
-    margin: 15px 0 !important;
-    width: 100% !important;
-}
-
-.gate-dot {
-    width: 12px !important;
-    height: 12px !important;
-    border-radius: 50% !important;
-    border: 2px solid var(--gold) !important;
-    background: transparent !important;
-    flex-shrink: 0 !important;
-}
-
-.gate-dot.active {
-    background: var(--gold) !important;
-    box-shadow: 0 0 10px rgba(212, 175, 55, 0.8) !important;
-}
