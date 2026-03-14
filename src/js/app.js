@@ -1,6 +1,6 @@
 /* * js/app.js
  * EL ESPÍRITU (CONTROLADOR PRINCIPAL)
- * V11.0: Arquitectura Modular de Alto Rendimiento + UI Mejorada
+ * V11.0: Arquitectura Modular + Lógica Exacta Original
  */
 
 import { QumranData } from './data.js';
@@ -11,10 +11,10 @@ import { QumranICS } from './ics.js';
 let deferredPrompt;
 let newWorker;
 
-// --- 1. SERVICE WORKER ---
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js').then(reg => {
+            console.log('SW registrado:', reg.scope);
             reg.addEventListener('updatefound', () => {
                 newWorker = reg.installing;
                 newWorker.addEventListener('statechange', () => {
@@ -31,11 +31,20 @@ if ('serviceWorker' in navigator) {
                     }
                 });
             });
-        });
+        }).catch(err => console.error('Error SW:', err));
     });
 }
 
-// --- 2. CONTROLADOR PRINCIPAL ---
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if (!isIOS) {
+      const installContainer = document.getElementById('install-container');
+      if (installContainer) installContainer.style.display = 'block';
+  }
+});
+
 const QumranApp = {
     currentFiestaIdx: null,
     todayFiesta: null,
@@ -77,6 +86,7 @@ const QumranApp = {
         document.getElementById('btn-close-modal').addEventListener('click', () => document.getElementById('modal-fiesta').style.display='none');
         document.getElementById('btn-close-lectura').addEventListener('click', () => document.getElementById('modal-lectura').style.display='none');
 
+        // BOTÓN ICS CONECTADO AL MÓDULO EXTERNO
         const btnExportICS = document.getElementById('btn-export-ics');
         if (btnExportICS) {
             btnExportICS.addEventListener('click', () => {
@@ -134,6 +144,7 @@ const QumranApp = {
 
     updateSunData: (lat, lng) => {
         let now = new Date();
+        // CÁLCULO SOLAR DELEGADO AL MÓDULO EXTERNO
         let times = QumranSun.calcSunTimes(now, lat, lng);
         if(times && times.riseDecimal) {
             QumranApp.sunriseHour = times.riseDecimal;
@@ -258,6 +269,7 @@ const QumranApp = {
             if(q && !q.special && q.m === f.m && q.d === f.d) { foundDate = d; break; }
         }
         
+        // RECUPERADO DE TU VERSIÓN ANTIGUA EXACTA:
         let dateStr = foundDate ? foundDate.toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long'}) : "Calculando...";
         if(foundDate && f.dur > 1) { 
             let end = new Date(foundDate); end.setDate(end.getDate() + f.dur - 1); 
@@ -300,6 +312,7 @@ const QumranApp = {
         let y = document.getElementById('cal-year') ? parseInt(document.getElementById('cal-year').value) : new Date().getFullYear();
         let list = document.getElementById('cal-lista');
         if(!list) return;
+        // TEXTO RECUPERADO EXACTO DE TU VERSIÓN ANTIGUA:
         list.innerHTML = "<div class='text-center' style='padding:20px;'>Calculando ciclo sagrado...</div>";
         setTimeout(() => {
             let test = new Date(y, 2, 5); let html = "";
