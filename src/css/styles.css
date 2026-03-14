@@ -121,10 +121,36 @@ h2 { font-size: 1.3rem; margin-bottom: 15px; border-bottom: 1px solid var(--fain
 .shabat-bar-fill { background: var(--gold); height: 100%; width: 0%; transition: width 0.5s ease-out; }
 .shabat-text { font-size: 0.8rem; text-align: center; margin-top: 5px; font-style: italic; color: var(--gold); }
 
-/* Puertas del Sol */
-.gates-container { display: flex; justify-content: center; gap: 8px; margin: 15px 0; }
-.gate-dot { width: 12px; height: 12px; border-radius: 50%; border: 1px solid var(--faint); background: transparent; }
-.gate-dot.active { background: var(--gold); box-shadow: 0 0 8px var(--gold); border-color: var(--gold); }
+/* --- PUERTAS DEL SOL (RESTAURADAS) --- */
+.gates-container { 
+    display: flex; 
+    justify-content: center; 
+    gap: 12px; 
+    margin: 20px 0; 
+}
+
+.gate-dot { 
+    width: 32px; 
+    height: 32px; 
+    border-radius: 50%; 
+    border: 1px solid var(--faint); 
+    background: transparent; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    color: var(--faint);
+    transition: all 0.3s ease;
+}
+
+.gate-dot.active { 
+    background: var(--gold); 
+    color: var(--bg-dark); /* El número se verá oscuro sobre el dorado */
+    box-shadow: 0 0 12px var(--gold); 
+    border-color: var(--gold); 
+    font-weight: bold;
+}
 
 /* --- BOTONES --- */
 
