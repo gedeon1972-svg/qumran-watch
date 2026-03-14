@@ -365,15 +365,15 @@ const QumranApp = {
                         dateLabel += " - " + end.toLocaleDateString('es-ES', {day:'numeric', month:'short'}); 
                     }
                     html += `
-                    <div class="edu-card fiesta" data-index="${fIdx}" data-year="${y}">
-                        <div class="edu-card-title">${f.n}</div>
-                        <div class="edu-card-subtitle">${f.es}</div>
-                        <div class="card-meta-info">
-                            <span>${dateLabel}</span>
-                            <span class="q-date">Qumrán: ${q.d}/${q.m+1}</span>
-                        </div>
-                        <div class="edu-card-arrow">➔</div>
-                    </div>`;
+<div class="edu-card fiesta" data-index="${fIdx}" data-year="${y}">
+    <div class="edu-card-title">${f.n}</div>
+    <div class="edu-card-subtitle">${f.es}</div>
+    <div class="card-meta-info">
+        <span>${dateLabel}</span>
+        <span class="q-date">Qumrán: ${q.d}/${q.m+1}</span>
+    </div>
+    <div class="edu-card-arrow">➔</div>
+</div>`;
                 }
             }
             list.innerHTML = html || "<div class='card'>No se encontraron fiestas.</div>";
