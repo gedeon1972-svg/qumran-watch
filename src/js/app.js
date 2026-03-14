@@ -259,10 +259,12 @@ const QumranApp = {
             let q = QumranCalendar.calculate(d);
             if(q && !q.special && q.m === f.m && q.d === f.d) { foundDate = d; break; }
         }
-        let dateStr = foundDate ? foundDate.toLocaleDateString('es-ES', {day:'numeric', month:'long'}) : "Calculando...";
+        
+        // ¡CORREGIDO! Vuelve a mostrar el día de la semana (Lunes, Martes...)
+        let dateStr = foundDate ? foundDate.toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long'}) : "Calculando...";
         if(foundDate && f.dur > 1) { 
             let end = new Date(foundDate); end.setDate(end.getDate() + f.dur - 1); 
-            dateStr += " al " + end.toLocaleDateString('es-ES', {day:'numeric', month:'long'}); 
+            dateStr += " al " + end.toLocaleDateString('es-ES', {weekday:'long', day:'numeric', month:'long'}); 
         }
 
         document.getElementById('mod-title').innerText = f.n;
