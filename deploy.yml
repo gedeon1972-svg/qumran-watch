@@ -1,0 +1,36 @@
+name: Desplegar Qumran Watch a GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  construir-y-publicar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Descargar código
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Preparar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 📦 Instalar dependencias
+        run: npm install
+
+      - name: 🛡️ Ejecutar Tests
+        run: npm test
+
+      - name: 🔨 Compilar Versión 12.0 (Build)
+        run: npm run build
+
+      - name: 🚀 Publicar en GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist

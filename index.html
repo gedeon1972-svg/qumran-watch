@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Qumran Watch | Maskil</title>
+    
+    <meta name="theme-color" content="#1a120b">
+    <meta name="description" content="Herramienta litúrgica para los Hijos de Sadoc. Calendario 364 días y enseñanzas del Mesías.">
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="src/css/styles.css">
+</head>
+<body>
+
+<main class="app-frame">
+    <h1>Qumran Watch</h1>
+
+    <div id="alert-container" class="watcher-alert">
+        <div class="watcher-title"><span style="font-size:1.2rem">👁️</span> MENSAJE DEL VIGÍA</div>
+        <div id="alert-msg" class="watcher-msg"></div>
+    </div>
+
+    <div id="view-hoy" class="view active">
+        <div id="install-container">
+            <button id="btn-install-app" class="btn-install">INSTALAR APLICACIÓN</button>
+        </div>
+        <article class="card">
+            <span class="fecha-greg" id="greg-date">...</span>
+            <div class="fecha-hebrea" id="heb-date">Cargando...</div>
+            <div id="heb-fiesta" class="fiesta-badge"></div>
+            
+            <div class="info-block-center">
+                <span class="lbl">DÍA DE LA SEMANA</span>
+                <span class="val" id="heb-dia"></span>
+                <div class="shabat-container">
+                    <div class="shabat-bar-bg"><div class="shabat-bar-fill" id="shabat-progress"></div></div>
+                    <div class="shabat-text" id="shabat-text"></div>
+                </div>
+            </div>
+
+            <div class="info-grid">
+                <div class="text-center">
+                    <span class="lbl">TURNO (MISHMAR)</span>
+                    <span class="val" id="heb-turno"></span>
+                </div>
+                <div class="text-center">
+                    <span class="lbl">ESTACIÓN</span>
+                    <span class="val" id="heb-estacion"></span>
+                </div>
+            </div>
+            
+            <div class="gates-container">
+                <div class="gate-dot">1</div>
+                <div class="gate-dot">2</div>
+                <div class="gate-dot">3</div>
+                <div class="gate-dot">4</div>
+                <div class="gate-dot">5</div>
+                <div class="gate-dot">6</div>
+            </div>
+            <div class="text-center" style="margin-top:5px;"><span class="lbl" id="heb-puerta-num"></span></div>
+        </article>
+
+        <article class="card" id="sun-container" style="display:none; justify-content:space-around; align-items:center;">
+            <div class="text-center"><span class="lbl">SALIDA DEL SOL</span><span class="val text-gold" id="sun-rise"></span></div>
+            <div style="font-size:1.5rem; color:var(--gold);">☀</div>
+            <div class="text-center"><span class="lbl">PUESTA DEL SOL</span><span class="val text-gold" id="sun-set"></span></div>
+        </article>
+        <button id="geo-btn" class="btn-action" style="display:none; margin-bottom:20px;">↻ Actualizar Ubicación (GPS)</button>
+
+        <article class="card" id="card-omer" style="display:none;">
+            <h2 class="red-text">CUENTA DEL OMER</h2>
+            <div class="text-center"><span class="lbl">DÍA</span><span class="val" style="font-size:2rem;" id="omer-count"></span></div>
+        </article>
+        
+        <article class="card" id="card-teshuva" style="display:none;">
+            <h2 class="red-text">YAMIM NORAIM</h2>
+            <div class="text-center"><span class="lbl">DÍAS DE TEMOR (TESHUVÁ)</span><span class="val" id="teshuva-cmd"></span></div>
+            <div class="text-center" style="margin-top:10px;"><span class="lbl">LECTURA SUGERIDA</span><span class="val text-gold" id="teshuva-ref"></span></div>
+        </article>
+
+        <article class="card">
+            <h2>INSTRUCCIÓN DEL MESÍAS</h2>
+            <div class="messiah-theme" id="messiah-theme"></div>
+            <div class="messiah-hebrew" id="messiah-hebrew"></div>
+            <div class="messiah-context" id="messiah-context"></div>
+            <div class="messiah-philology" id="messiah-philology"></div>
+            <div class="messiah-quote" id="messiah-quote"></div>
+            <div class="messiah-action" id="messiah-action"></div>
+        </article>
+    </div>
+
+    <div id="view-lit" class="view">
+        <div class="liturgy-page">
+            <h3 class="red-text text-center" style="margin-top:0;" id="page-lit-type"></h3>
+            <h2 class="liturgy-heading text-center" id="lit-main-title"></h2>
+            <div class="liturgy-title text-center" id="page-lit-title"></div>
+            <div class="separator-gold" style="margin:20px auto;"></div>
+            <div class="liturgy-text" id="page-lit-text"></div>
+            <div class="separator-gold" style="margin:30px auto;"></div>
+            <p class="text-center italic-sub" style="color:var(--faint); margin-top:20px;">Textos restaurados de los rollos del Mar Muerto.</p>
+        </div>
+    </div>
+
+    <div id="view-cal" class="view">
+        <h2>Ciclo de Fiestas</h2>
+        <div class="cal-input-group">
+            <label for="cal-year">Año Gregoriano:</label>
+            <input type="number" id="cal-year" value="2024" min="2019" max="2100">
+            <button id="btn-render-cal" class="btn-action">Generar</button>
+            <button id="btn-export-ics" class="btn-action" style="margin-top: 15px; background: transparent; border: 1px dashed var(--gold); color: var(--gold);">
+                🔔 Sincronizar Alertas al Celular
+            </button>
+        </div>
+        <div id="cal-lista" class="cal-list"></div>
+    </div>
+
+    <div id="view-con" class="view">
+        <h2>Comunidad y Recursos</h2>
+        <article id="btn-podcast-con" class="card clickable card-podcast">
+            <span class="lbl red-text">🎙️ PODCAST OFICIAL</span>
+            <div class="card-main-text">Diseñados para Gobernar</div>
+            <div class="card-sub-text">Recupera tu gobierno interior a través del análisis profundo.</div>
+            <div class="card-link">Escuchar enseñanza de hoy ➔</div>
+        </article>
+        <article id="btn-institute-con" class="card clickable card-institute">
+            <span class="lbl blue-text">🎓 ESTUDIOS BÍBLICOS</span>
+            <div class="card-main-text">Instituto Descubre la Biblia</div>
+            <div class="card-sub-text">Formación bíblica profunda y cursos online.</div>
+            <div class="card-link">Visitar Sitio Web ➔</div>
+        </article>
+        <article id="card-telegram" class="card clickable" style="border-left-color: #229ED9;">
+            <span class="lbl" style="color:#3498db;">📱 CANAL DE TELEGRAM</span>
+            <div class="card-main-text">Descubre la Biblia</div>
+            <div class="card-sub-text">Recibe las últimas novedades directamente a tu celular.</div>
+            <div class="card-link"><a href="https://t.me/+VuFNIOUSMERrLLiD" target="_blank" style="color:#fff; text-decoration:none;">Unirme al Canal ➔</a></div>
+        </article>
+    </div>
+
+    <div id="view-edu" class="view">
+        <h2>Biblioteca la Verdad Restaurada</h2>
+        <p class="fundamento-txt" style="text-align: center; margin-bottom: 25px;">
+            El calendario que tienes en tus manos no es una invención moderna, sino la <strong>restauración matemática</strong> del orden entregado a Enoc y Moisés.
+        </p>   
+    <div id="edu-grid" class="edu-grid-container"></div>
+        
+    </div>
+
+</main>
+
+<div id="modal-fiesta" style="display:none;">
+    <div class="modal-content">
+        <span id="btn-close-modal" class="close-modal">&times;</span>
+        <h2 id="mod-title"></h2>
+        <div class="text-center" style="margin-bottom:15px;">
+            <div id="mod-fechas" class="fecha-greg" style="font-size:1.1rem; color:var(--paper);"></div>
+            <div id="mod-fechas-heb" class="gold-text" style="margin-top:5px; font-weight:bold;"></div>
+        </div>
+        <div style="text-align:left;">
+            <div id="mod-instr" class="modal-instr">...</div>
+            <span id="mod-ref" class="modal-ref">...</span>
+            <div id="mod-note" class="teological-note"></div>
+            <div id="mod-warn" class="special-warn">⚠️ AYUNO: DE TARDE A TARDE (Lev 23:32)</div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-lectura" style="display:none;">
+    <div class="modal-content lecture-mode">
+        <span id="btn-close-lectura" class="close-modal">&times;</span>
+        <h2 id="lec-title" class="lecture-title">Título del Estudio</h2>
+        <div class="lecture-meta" id="lec-meta">Subtítulo</div>
+        <hr class="separator-gold">
+        <div id="lec-body" class="lecture-body"></div>
+    </div>
+</div>
+
+<div id="update-toast" class="update-toast">
+    <div class="toast-content"><span class="toast-icon">🚀</span><span class="toast-msg">Nueva versión disponible</span></div>
+    <button id="btn-refresh" class="toast-btn">ACTUALIZAR</button>
+</div>
+
+<nav class="nav-bar">
+    <button id="nav-hoy" class="nav-btn active"><span class="nav-icon">☀</span>Hoy</button>
+    <button id="nav-lit" class="nav-btn"><span class="nav-icon">📖</span>Lectura</button>
+    <button id="nav-cal" class="nav-btn"><span class="nav-icon">📅</span>Ciclo</button>
+    <button id="nav-edu" class="nav-btn"><span class="nav-icon">📚</span>Saber</button>
+    <button id="nav-con" class="nav-btn"><span class="nav-icon">🌐</span>Red</button>
+</nav>
+
+<script type="module" src="src/js/app.js"></script>
+</body>
+</html>

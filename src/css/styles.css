@@ -1,0 +1,344 @@
+/* --- FUENTES LOCALES (OFFLINE) --- */
+
+/* Cinzel (Títulos) */
+@font-face {
+    font-family: 'Cinzel';
+    font-style: normal;
+    font-weight: 400;
+    src: url('fonts/cinzel-v26-latin-regular.woff2') format('woff2');
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Cinzel';
+    font-style: normal;
+    font-weight: 700;
+    src: url('fonts/cinzel-v26-latin-700.woff2') format('woff2');
+    font-display: swap;
+}
+
+/* David Libre (Texto) */
+@font-face {
+    font-family: 'David Libre';
+    font-style: normal;
+    font-weight: 400;
+    src: url('fonts/david-libre-v17-latin-regular.woff2') format('woff2');
+    font-display: swap;
+}
+@font-face {
+    font-family: 'David Libre';
+    font-style: normal;
+    font-weight: 700;
+    src: url('fonts/david-libre-v17-latin-700.woff2') format('woff2');
+    font-display: swap;
+}
+
+/* --- VARIABLES Y CONFIGURACIÓN BASE --- */
+
+:root {
+    --bg-dark: #1a120b;
+    --paper: #e0d2bc;
+    --gold: #d4af37;
+    --faint: rgba(212, 175, 55, 0.4);
+    --gold-glow: radial-gradient(circle, rgba(212,175,55,0.15) 0%, rgba(26,18,11,0) 70%);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--paper);
+    font-family: 'David Libre', serif;
+    padding-bottom: 70px;
+    background-image: var(--gold-glow);
+    background-attachment: fixed;
+    line-height: 1.5;
+}
+
+h1, h2, h3, .gold-text {
+    font-family: 'Cinzel', serif;
+    color: var(--gold);
+    text-align: center;
+    text-transform: uppercase;
+}
+
+h1 { font-size: 1.8rem; margin: 20px 0 10px; letter-spacing: 2px; }
+h2 { font-size: 1.3rem; margin-bottom: 15px; border-bottom: 1px solid var(--faint); padding-bottom: 5px; }
+
+.app-frame { max-width: 500px; margin: 0 auto; padding: 15px; }
+
+/* --- COMPONENTES: TARJETAS (CARDS) --- */
+
+.card {
+    background: rgba(30, 20, 15, 0.6);
+    border: 1px solid var(--faint);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    backdrop-filter: blur(5px);
+}
+
+.text-center { text-align: center; }
+.text-gold { color: var(--gold) !important; font-weight: bold; }
+.red-text { color: #c0392b !important; }
+.blue-text { color: #2980b9 !important; }
+
+/* Variantes de Comunidad (Bordes específicos de tu diseño) */
+.card-podcast { border-left: 4px solid #c0392b; }
+.card-institute { border-left: 4px solid #2980b9; }
+.clickable { cursor: pointer; transition: transform 0.2s; }
+.clickable:active { transform: scale(0.98); }
+
+/* --- ELEMENTOS DE DATOS --- */
+
+.fecha-greg { font-size: 0.9rem; color: var(--faint); display: block; text-align: center; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
+.fecha-hebrea { font-family: 'Cinzel', serif; font-size: 1.8rem; color: var(--gold); text-align: center; font-weight: bold; margin-bottom: 5px; }
+.fiesta-badge { color: #ffeb3b; text-align: center; font-weight: bold; font-size: 1.1rem; text-shadow: 0 0 10px rgba(255, 235, 59, 0.4); margin-bottom: 15px; }
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--faint);
+}
+
+.info-block-center {
+    background: rgba(0,0,0,0.3);
+    border-radius: 6px;
+    padding: 15px;
+    text-align: center;
+    border: 1px solid rgba(212,175,55,0.2);
+}
+
+.lbl { font-size: 0.7rem; color: var(--faint); display: block; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; font-family: 'Cinzel', serif; }
+.val { font-size: 1.1rem; font-weight: bold; color: var(--paper); }
+
+/* Shabat */
+.shabat-container { margin-top: 15px; }
+.shabat-bar-bg { background: rgba(0,0,0,0.5); height: 6px; border-radius: 3px; overflow: hidden; border: 1px solid var(--faint); }
+.shabat-bar-fill { background: var(--gold); height: 100%; width: 0%; transition: width 0.5s ease-out; }
+.shabat-text { font-size: 0.8rem; text-align: center; margin-top: 5px; font-style: italic; color: var(--gold); }
+
+/* --- PUERTAS DEL SOL (RESTAURADAS) --- */
+.gates-container { 
+    display: flex; 
+    justify-content: center; 
+    gap: 12px; 
+    margin: 20px 0; 
+}
+
+.gate-dot { 
+    width: 32px; 
+    height: 32px; 
+    border-radius: 50%; 
+    border: 1px solid var(--faint); 
+    background: transparent; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    color: var(--faint);
+    transition: all 0.3s ease;
+}
+
+.gate-dot.active { 
+    background: var(--gold); 
+    color: var(--bg-dark); /* El número se verá oscuro sobre el dorado */
+    box-shadow: 0 0 12px var(--gold); 
+    border-color: var(--gold); 
+    font-weight: bold;
+}
+
+/* --- BOTONES --- */
+
+.btn-action {
+    background: rgba(212, 175, 55, 0.1);
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 12px;
+    width: 100%;
+    border-radius: 6px;
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s;
+}
+.btn-action:active { background: var(--gold); color: var(--bg-dark); }
+.btn-secondary { background: transparent; border-color: var(--faint); color: var(--paper); }
+
+/* --- NAVEGACIÓN INFERIOR --- */
+
+.nav-bar {
+    position: fixed; bottom: 0; width: 100%; max-width: 500px;
+    background: #0f0a06; border-top: 1px solid var(--gold);
+    display: flex; justify-content: space-around; padding: 10px 0;
+    left: 50%; transform: translateX(-50%); z-index: 100;
+}
+
+.nav-btn {
+    background: none; border: none; color: var(--faint);
+    font-family: 'Cinzel', serif; font-size: 0.7rem; text-transform: uppercase;
+    display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer;
+}
+.nav-btn.active { color: var(--gold); text-shadow: 0 0 5px rgba(212,175,55,0.5); }
+.nav-icon { font-size: 1.2rem; }
+
+.view { display: none; }
+.view.active { display: block; animation: fadeIn 0.3s; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* --- SECCIONES ESPECÍFICAS --- */
+
+/* --- Instrucción del Mesías (Modificado con Celeste Telegram) --- */
+
+.messiah-theme { 
+    font-family: 'Cinzel', serif; 
+    color: #3498db; /* Cambiado de var(--gold) a Celeste */
+    font-size: 1.2rem; 
+    text-align: center; 
+    margin: 10px 0; 
+    font-weight: bold; 
+}
+
+.messiah-hebrew { 
+    text-align: center; 
+    font-size: 1.5rem; 
+    color: var(--paper); 
+    margin-bottom: 15px; 
+    letter-spacing: 2px; 
+}
+
+.messiah-context { 
+    font-size: 0.85rem; 
+    color: var(--faint); 
+    text-align: center; 
+    font-style: italic; 
+    margin-bottom: 15px; 
+}
+
+.messiah-philology { 
+    background: rgba(0,0,0,0.3); 
+    padding: 15px; 
+    border-left: 3px solid #3498db; /* Cambiado el borde a Celeste */
+    font-size: 0.95rem; 
+    line-height: 1.5; 
+    margin-bottom: 15px; 
+}
+
+.messiah-quote { 
+    font-family: 'Cinzel', serif; 
+    font-size: 1.1rem; 
+    text-align: center; 
+    color: #3498db; /* Cambiado el texto de la cita a Celeste */
+    margin-bottom: 15px; 
+    line-height: 1.4; 
+}
+
+.messiah-action { 
+    text-align: center; 
+    font-weight: bold; 
+    color: var(--paper); 
+    font-size: 1rem; 
+    border: 1px dashed #3498db; /* Cambiado el borde punteado a Celeste */
+    padding: 10px; 
+    border-radius: 4px; 
+}
+/* Liturgia */
+.liturgy-page { padding: 10px; }
+.liturgy-heading { font-size: 1.5rem; margin-bottom: 5px; }
+.liturgy-title { font-size: 1.1rem; color: var(--paper); font-style: italic; }
+.separator-gold { height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); width: 80%; margin: 15px auto; }
+.liturgy-text { font-size: 1.1rem; line-height: 1.8; text-align: justify; color: #fff; text-shadow: 1px 1px 2px #000; }
+
+/* Biblioteca Saber */
+.lecture-mode { max-width: 600px; margin: 0 auto; background: #140d08; border-radius: 12px; }
+.lecture-title { font-size: 1.6rem; color: var(--gold); margin-bottom: 5px; margin-top: 15px; }
+.lecture-meta { font-size: 0.9rem; color: var(--faint); text-align: center; font-style: italic; margin-bottom: 15px; }
+.lecture-body { font-size: 1.1rem; line-height: 1.6; text-align: justify; padding: 0 10px; }
+.lecture-body p { margin-bottom: 15px; }
+
+.edu-grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; margin-top: 20px; padding-bottom: 40px; }
+.edu-card { background: rgba(30, 20, 15, 0.6); border: 1px solid var(--faint); border-left: 4px solid var(--gold); border-radius: 6px; padding: 20px; cursor: pointer; position: relative; backdrop-filter: blur(5px); }
+.edu-card-title { font-family: 'Cinzel', serif; font-weight: bold; font-size: 1.1rem; color: var(--gold); margin-bottom: 5px; }
+.edu-card-subtitle { font-size: 0.9rem; color: #ccc; }
+.edu-card-arrow { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--faint); font-size: 1.2rem; }
+
+.verse-box { background: rgba(0,0,0,0.3); border-left: 3px solid var(--gold); padding: 15px; margin: 15px 0; color: var(--gold); font-style: italic; border-radius: 0 5px 5px 0; }
+
+/* Vigía e Instalación */
+.watcher-alert { background: rgba(192, 57, 43, 0.15); border: 1px solid #c0392b; border-radius: 6px; padding: 15px; margin-bottom: 20px; display: none; }
+.watcher-title { color: #e74c3c; font-weight: bold; text-align: center; font-size: 1.1rem; margin-bottom: 10px; }
+.watcher-msg { text-align: center; font-size: 0.95rem; line-height: 1.4; }
+
+.btn-install { background: linear-gradient(135deg, var(--gold), #b8860b); color: #000; font-family: 'Cinzel', serif; font-weight: bold; border: none; border-radius: 8px; padding: 12px; width: 100%; margin-bottom: 20px; cursor: pointer; animation: pulse 2s infinite; display: none; }
+@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+
+/* --- MODALES FIJOS Y CENTRADOS --- */
+
+#modal-fiesta, #modal-lectura {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background-color: rgba(0, 0, 0, 0.85) !important;
+    z-index: 9999 !important;
+    display: none;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.modal-content {
+    background: #1a120b;
+    border: 2px solid var(--gold);
+    padding: 25px;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 8px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.8);
+    position: relative;
+    max-height: 85vh !important;
+    overflow-y: auto !important;
+}
+
+.close-modal { position: absolute; top: 10px; right: 15px; color: var(--gold); font-size: 28px; font-weight: bold; cursor: pointer; }
+
+/* --- ACTUALIZACIÓN (TOAST) --- */
+
+.update-toast {
+    position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+    background: var(--gold); color: #000; padding: 12px 20px; border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5); display: none; align-items: center; gap: 15px;
+    z-index: 1000; font-family: 'Cinzel', serif; width: 90%; max-width: 400px; justify-content: space-between;
+}
+.toast-btn { background: #000; color: var(--gold); border: none; padding: 6px 12px; border-radius: 15px; cursor: pointer; font-weight: bold; font-size: 0.8rem; }
+
+/* --- ESTILOS DEL INPUT DEL CALENDARIO --- */
+.cal-input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; /* Separación entre el texto, el recuadro y el botón */
+    margin-bottom: 25px;
+}
+
+#cal-year {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--gold);
+    color: var(--paper);
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 1.2rem;
+    text-align: center;
+    font-family: 'Cinzel', serif;
+    width: 150px;
+}
+
+/* Clases de apoyo para las tarjetas del calendario limpias */
+.edu-card.fiesta { margin-bottom: 15px; }
+.card-meta-info { margin-top: 10px; font-weight: bold; color: var(--gold); font-size: 0.9rem; display: flex; justify-content: space-between; }
+.q-date { color: var(--faint); font-weight: normal; }

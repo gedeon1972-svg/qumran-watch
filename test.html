@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Qumran Watch | Centro de Pruebas V12</title>
+    <style>
+        body { background: #111; color: #eee; font-family: monospace; padding: 20px; }
+        h1 { color: #c5a059; border-bottom: 1px solid #444; }
+        .test-box { background: #222; padding: 15px; margin-bottom: 10px; border-left: 5px solid #555; }
+        .pass { border-left-color: #2ecc71; color: #aaffaa; }
+        .fail { border-left-color: #e74c3c; color: #ffaaaa; }
+        button { padding: 10px 20px; background: #c5a059; border: none; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>🛡️ Qumran Watch - Suite de Pruebas (Arquitectura Modular)</h1>
+    <p>Verificando integridad matemática del calendario 364 y ciclos sacerdotales.</p>
+    <button id="run-btn">EJECUTAR PRUEBAS</button>
+    <div id="results"></div>
+
+    <script type="module">
+        // Importamos directamente de los nuevos módulos
+        import { QumranCalendar } from './src/js/calendar.js';
+        import { QumranData } from './src/js/data.js';
+
+        window.runTests = function() {
+            const res = document.getElementById("results");
+            res.innerHTML = "";
+            let passed = 0, total = 0;
+
+            function assert(cond, msg) {
+                total++;
+                const div = document.createElement("div");
+                div.className = "test-box " + (cond ? "pass" : "fail");
+                div.innerHTML = (cond ? "✅ PASS: " : "❌ FAIL: ") + msg;
+                res.appendChild(div);
+                return cond;
+            }
+
+            // TEST 1: El año empieza en Miércoles (Día 4)
+            const q = QumranCalendar.calculate(new Date(2024, 2, 20)); // Aviv 1
+            if(assert(q.idxSem === 3, "El inicio del año (Aviv 1) siempre es Miércoles")) passed++;
+
+            // TEST 2: Ciclo Sacerdotal Gamul
+            const qGamul = QumranCalendar.calculate(new Date(2019, 2, 20));
+            if(assert(qGamul.turno === "Gamul", "Ancla histórica: 20/03/2019 es Turno de Gamul")) passed++;
+
+            const summary = document.createElement("h2");
+            summary.innerText = `Resultado: ${passed}/${total} pruebas superadas.`;
+            res.prepend(summary);
+        }
+
+        document.getElementById('run-btn').addEventListener('click', window.runTests);
+    </script>
+</body>
+</html>
