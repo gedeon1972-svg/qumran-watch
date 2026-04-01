@@ -7,22 +7,20 @@ const CACHE_NAME = 'qumran-cache-v12.5.1';
 
 // Lista de archivos para funcionamiento 100% Offline
 const URLS_TO_CACHE = [
-    '/',
-    '/index.html',
-    '/manifest.json',
-    '/icon.png',
-    // Rutas de Estilos y Scripts (Verifica que el nombre del CSS sea este)
-    '/src/css/styles modular.css',
-    '/src/js/app.js',
-    '/src/js/data.js',
-    '/src/js/calendar.js',
-    '/src/js/sun.js',
-    '/src/js/ics.js',
-    // Fuentes Locales
-    '/src/css/fonts/david-libre-v17-latin-regular.woff2',
-    '/src/css/fonts/david-libre-v17-latin-700.woff2',
-    '/src/css/fonts/cinzel-v26-latin-regular.woff2',
-    '/src/css/fonts/cinzel-v26-latin-700.woff2'
+    '/qumran-watch/',
+    '/qumran-watch/index.html',
+    '/qumran-watch/manifest.json',
+    '/qumran-watch/icon.png',
+    '/qumran-watch/src/css/styles.css',   // nombre real sin espacios
+    '/qumran-watch/src/js/app.js',
+    '/qumran-watch/src/js/data.js',
+    '/qumran-watch/src/js/calendar.js',
+    '/qumran-watch/src/js/sun.js',
+    '/qumran-watch/src/js/ics.js',
+    '/qumran-watch/src/css/fonts/david-libre-v17-latin-regular.woff2',
+    '/qumran-watch/src/css/fonts/david-libre-v17-latin-700.woff2',
+    '/qumran-watch/src/css/fonts/cinzel-v26-latin-regular.woff2',
+    '/qumran-watch/src/css/fonts/cinzel-v26-latin-700.woff2'
 ];
 
 // 1. INSTALACIÓN: Descarga y guarda los recursos
