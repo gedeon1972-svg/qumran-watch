@@ -1,9 +1,9 @@
 /**
- * sw.js - EL GUARDIÁN DEL UMBRAL (V12.5.1)
+ * sw.js - EL GUARDIÁN DEL UMBRAL (V12.5.2)
  * Optimizado para Arquitectura Modular y Estética Mishkan.
  */
 
-const CACHE_NAME = 'qumran-cache-v12.5.1';
+const CACHE_NAME = 'qumran-cache-v12.5.2';
 
 // Lista de archivos para funcionamiento 100% Offline
 const URLS_TO_CACHE = [
