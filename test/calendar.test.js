@@ -23,9 +23,18 @@ test('2. El Shabat nunca debe romperse (Debe caer en índice 6)', () => {
 });
 
 test('3. Cambio de Turno Sacerdotal correcto', () => {
-    const proximoDomingo = new Date(2019, 2, 24); // Inicio de la nueva semana
-    const qDate = QumranCalendar.calculate(proximoDomingo);
+    // El turno Gamul dura 7 días completos (del día 1 al día 7)
+    // El cambio ocurre después del 7mo día, comenzando el día 8
+    const ultimoDiaGamul = new Date(2019, 2, 26); // Día 7 (martes)
+    const qDateUltimo = QumranCalendar.calculate(ultimoDiaGamul);
     
-    expect(qDate.idxSem).toBe(0); // Domingo (Día 1)
-    expect(qDate.turno).toBe('Delaía'); // El turno que le sigue a Gamul
+    expect(qDateUltimo.turno).toBe('Gamul'); 
+    expect(qDateUltimo.d).toBe(7); // Último día del turno
+    
+    // El nuevo turno (Delaía) comienza en el día 8
+    const primerDiaDelaia = new Date(2019, 2, 27); // Día 8 (miércoles)
+    const qDateNuevo = QumranCalendar.calculate(primerDiaDelaia);
+    
+    expect(qDateNuevo.turno).toBe('Delaía'); // El turno que le sigue a Gamul
+    expect(qDateNuevo.d).toBe(8); // Día 8 dentro del ciclo anual continuo
 });
