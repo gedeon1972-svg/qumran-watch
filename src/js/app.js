@@ -1,6 +1,6 @@
 /* * src/js/app.js
  * EL ESPÍRITU (CONTROLADOR PRINCIPAL)
- * V12.0: Reconstrucción Modular Blindada
+ * V13.0.0: Reconstrucción Modular Blindada
  */
 
 // --- 1. IMPORTACIÓN DE MÓDULOS ---
@@ -49,7 +49,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
 
 // --- 4. OBJETO PRINCIPAL DE LA APLICACIÓN ---
 const QumranApp = {
-    currentFiestaIdx: null,
     todayFiesta: null,
     sunriseHour: 6.0,
 
@@ -84,8 +83,7 @@ const QumranApp = {
             installBtn.addEventListener('click', async () => {
                 if (deferredPrompt) {
                     deferredPrompt.prompt();
-                    const { outcome } = await deferredPrompt.userChoice;
-                    console.log(`Instalación: ${outcome}`);
+                    await deferredPrompt.userChoice;
                     deferredPrompt = null;
                     installBtn.style.display = 'none';
                 }

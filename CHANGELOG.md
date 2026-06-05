@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.0.0] — 2026-06-05 — Refactorización de Arquitectura Base
+## [13.0.0] — 2026-06-05 — Refactorización de Arquitectura Base
 
 ### Añadido
 - Migración completa a **ES Modules** con `import`/`export`.

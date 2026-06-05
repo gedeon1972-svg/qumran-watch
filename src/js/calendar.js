@@ -7,7 +7,7 @@
  * con semana de ajuste intercalar en el año 6.
  *
  * @author Qumran Watch
- * @version 12.0.0
+ * @version 13.0.0
  *
  * @example
  * import { QumranCalendar } from './calendar.js';
