@@ -87,9 +87,10 @@ export const QumranICS = {
     },
 
     findLiturgicalStart: (year) => {
-        // Buscar 1 de Aviv (Mes 0, Día 1) escaneando alrededor del 20 de Marzo
-        let base = new Date(year, 2, 15);
-        for (let i = 0; i < 30; i++) {
+        // Buscar 1 de Aviv (Mes 0, Día 1) escaneando desde el 1 de Marzo
+        // Se necesitan ~45 días por la deriva del año de 364 días
+        let base = new Date(year, 2, 1);
+        for (let i = 0; i < 50; i++) {
             let d = new Date(base.getTime() + i * 86400000);
             let q = QumranCalendar.calculate(d);
             if (q && !q.special && q.m === 0 && q.d === 1) {
