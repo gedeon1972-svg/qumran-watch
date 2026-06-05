@@ -38,7 +38,7 @@
     --bg-dark: #1a120b;
     --paper: #e0d2bc;
     --gold: #d4af37;
-    --faint: rgba(212, 175, 55, 0.4);
+    --faint: #b8952e;
     --gold-glow: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, rgba(26, 18, 11, 0) 70%);
 }
 
@@ -515,8 +515,12 @@ h2 {
     width: 100%;
     margin-bottom: 20px;
     cursor: pointer;
-    animation: pulse 2s infinite;
+    animation: pulse 2s;
+    animation-iteration-count: 3;
     display: none;
+}
+.btn-install:hover {
+    animation: pulse 2s infinite;
 }
 @keyframes pulse {
     0% {

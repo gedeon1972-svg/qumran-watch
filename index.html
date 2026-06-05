@@ -4,9 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Qumran Watch | Maskil</title>
-    
+
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self';
+        style-src 'self' 'unsafe-inline';
+        img-src 'self' data:;
+        font-src 'self';
+        connect-src 'self';
+        worker-src 'self';
+        frame-ancestors 'none';
+        base-uri 'self';
+        form-action 'none';
+    ">
+
     <meta name="theme-color" content="#1a120b">
     <meta name="description" content="Herramienta litúrgica para los Hijos de Sadoc. Calendario 364 días y enseñanzas del Mesías.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Qumran Watch | Maskil">
+    <meta property="og:description" content="Herramienta litúrgica para los Hijos de Sadoc. Calendario 364 días y enseñanzas del Mesías.">
+    <meta property="og:image" content="icon.png">
+    <meta property="og:url" content="https://descubrelabiblia.github.io/qumran-watch/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_ES">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Qumran Watch | Maskil">
+    <meta name="twitter:description" content="Herramienta litúrgica para los Hijos de Sadoc. Calendario 364 días y enseñanzas del Mesías.">
+    <meta name="twitter:image" content="icon.png">
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Qumran Watch | Maskil",
+        "description": "Herramienta litúrgica para los Hijos de Sadoc. Calendario 364 días y enseñanzas del Mesías.",
+        "applicationCategory": "ReligiousApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requiere navegador moderno con JavaScript",
+        "offers": {
+            "@type": "Offer",
+            "price": 0,
+            "priceCurrency": "USD"
+        },
+        "author": {
+            "@type": "Organization",
+            "name": "Descubre la Biblia"
+        }
+    }
+    </script>
+
     <link rel="icon" type="image/png" href="icon.png">
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="manifest" href="manifest.json">
@@ -24,7 +74,7 @@
 
     <div id="view-hoy" class="view active">
         <div id="install-container">
-            <button id="btn-install-app" class="btn-install">INSTALAR APLICACIÓN</button>
+            <button id="btn-install-app" class="btn-install" aria-label="Instalar aplicación en el dispositivo">INSTALAR APLICACIÓN</button>
         </div>
         <article class="card">
             <span class="fecha-greg" id="greg-date">...</span>
@@ -134,7 +184,7 @@
             <span class="lbl" style="color:#3498db;">📱 CANAL DE TELEGRAM</span>
             <div class="card-main-text">Descubre la Biblia</div>
             <div class="card-sub-text">Recibe las últimas novedades directamente a tu celular.</div>
-            <div class="card-link"><a href="https://t.me/+VuFNIOUSMERrLLiD" target="_blank" style="color:#fff; text-decoration:none;">Unirme al Canal ➔</a></div>
+            <div class="card-link"><a href="https://t.me/+VuFNIOUSMERrLLiD" target="_blank" rel="noopener noreferrer" style="color:#fff; text-decoration:none;">Unirme al Canal ➔</a></div>
         </article>
     </div>
 
@@ -149,9 +199,9 @@
 
 </main>
 
-<div id="modal-fiesta" style="display:none;">
+<div id="modal-fiesta" role="dialog" aria-modal="true" aria-labelledby="mod-title" style="display:none;">
     <div class="modal-content">
-        <span id="btn-close-modal" class="close-modal">&times;</span>
+        <span id="btn-close-modal" class="close-modal" aria-label="Cerrar">&times;</span>
         <h2 id="mod-title"></h2>
         <div class="text-center" style="margin-bottom:15px;">
             <div id="mod-fechas" class="fecha-greg" style="font-size:1.1rem; color:var(--paper);"></div>
@@ -166,9 +216,9 @@
     </div>
 </div>
 
-<div id="modal-lectura" style="display:none;">
+<div id="modal-lectura" role="dialog" aria-modal="true" aria-labelledby="lec-title" style="display:none;">
     <div class="modal-content lecture-mode">
-        <span id="btn-close-lectura" class="close-modal">&times;</span>
+        <span id="btn-close-lectura" class="close-modal" aria-label="Cerrar">&times;</span>
         <h2 id="lec-title" class="lecture-title">Título del Estudio</h2>
         <div class="lecture-meta" id="lec-meta">Subtítulo</div>
         <hr class="separator-gold">
@@ -181,12 +231,12 @@
     <button id="btn-refresh" class="toast-btn">ACTUALIZAR</button>
 </div>
 
-<nav class="nav-bar">
-    <button id="nav-hoy" class="nav-btn active"><span class="nav-icon">☀</span>Hoy</button>
-    <button id="nav-lit" class="nav-btn"><span class="nav-icon">📖</span>Lectura</button>
-    <button id="nav-cal" class="nav-btn"><span class="nav-icon">📅</span>Ciclo</button>
-    <button id="nav-edu" class="nav-btn"><span class="nav-icon">📚</span>Saber</button>
-    <button id="nav-con" class="nav-btn"><span class="nav-icon">🌐</span>Red</button>
+<nav class="nav-bar" aria-label="Navegación principal">
+    <button id="nav-hoy" class="nav-btn active" aria-label="Vista Hoy"><span class="nav-icon">☀</span>Hoy</button>
+    <button id="nav-lit" class="nav-btn" aria-label="Vista Lectura"><span class="nav-icon">📖</span>Lectura</button>
+    <button id="nav-cal" class="nav-btn" aria-label="Vista Ciclo de Fiestas"><span class="nav-icon">📅</span>Ciclo</button>
+    <button id="nav-edu" class="nav-btn" aria-label="Vista Biblioteca"><span class="nav-icon">📚</span>Saber</button>
+    <button id="nav-con" class="nav-btn" aria-label="Vista Comunidad"><span class="nav-icon">🌐</span>Red</button>
 </nav>
 
 <script type="module" src="src/js/app.js"></script>

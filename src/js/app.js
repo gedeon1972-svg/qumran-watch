@@ -112,7 +112,16 @@ const QumranApp = {
                 let y = document.getElementById('cal-year')
                     ? parseInt(document.getElementById('cal-year').value)
                     : new Date().getFullYear();
-                QumranICS.generateAndDownload(y);
+                try {
+                    QumranICS.generateAndDownload(y);
+                } catch (err) {
+                    const alertBox = document.getElementById('alert-container');
+                    const alertMsg = document.getElementById('alert-msg');
+                    if (alertBox && alertMsg) {
+                        alertMsg.innerHTML = `<strong>Error al generar calendario:</strong> ${err.message}`;
+                        alertBox.style.display = 'block';
+                    }
+                }
             });
         }
 
