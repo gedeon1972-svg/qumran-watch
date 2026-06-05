@@ -3,6 +3,7 @@
   "private": true,
   "version": "12.0.0",
   "description": "Herramienta litúrgica profesional con calendario 364 días, sincronización GPS y alertas ICS.",
+  "author": "Cristian Salinas <gedeon1972@gmail.com>",
   "type": "module",
   "scripts": {
     "dev": "vite",
