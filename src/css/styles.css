@@ -642,3 +642,116 @@ h2 {
     color: var(--faint);
     font-weight: normal;
 }
+
+/* --- FOOTER ESTANDARIZADO --- */
+.site-footer {
+    text-align: center;
+    padding: 20px 15px;
+    margin-top: 30px;
+    border-top: 1px solid var(--faint);
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    color: var(--faint);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+}
+.footer-links a {
+    color: var(--gold);
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+.footer-links a:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+}
+.footer-sep {
+    margin: 0 8px;
+    color: var(--faint);
+}
+@media (min-width: 480px) {
+    .footer-content {
+        flex-direction: row;
+        justify-content: center;
+        gap: 15px;
+    }
+}
+
+/* --- CLASES PARA REEMPLAZAR ESTILOS INLINE (accesibilidad y CSP) --- */
+
+.icon-watcher {
+    font-size: 1.2rem;
+}
+.mt-5 {
+    margin-top: 5px;
+}
+.mt-10 {
+    margin-top: 10px;
+}
+.sun-container {
+    display: none;
+    justify-content: space-around;
+    align-items: center;
+}
+.sun-icon {
+    font-size: 1.5rem;
+    color: var(--gold);
+}
+.geo-btn {
+    margin-bottom: 20px;
+}
+.omer-count-val {
+    font-size: 2rem;
+}
+.lit-mt-0 {
+    margin-top: 0;
+}
+.sep-lit-sm {
+    margin: 20px auto;
+}
+.sep-lit-lg {
+    margin: 30px auto;
+}
+.lit-footer-text {
+    color: var(--faint);
+    margin-top: 20px;
+}
+.btn-ics-export {
+    margin-top: 15px;
+    background: transparent;
+    border: 1px dashed var(--gold);
+    color: var(--gold);
+}
+.card-telegram {
+    border-left-color: #229ed9;
+}
+.lbl-telegram {
+    color: #3498db;
+}
+.telegram-link {
+    color: #fff;
+    text-decoration: none;
+}
+.fundamento-txt {
+    text-align: center;
+    margin-bottom: 25px;
+}
+.modal-fecha-wrapper {
+    margin-bottom: 15px;
+}
+.mod-fecha-greg {
+    font-size: 1.1rem;
+    color: var(--paper);
+}
+.mod-fecha-heb {
+    margin-top: 5px;
+    font-weight: bold;
+}
+.modal-body-text {
+    text-align: left;
+}

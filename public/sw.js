@@ -1,16 +1,17 @@
-/**
- * sw.js - EL GUARDIÁN DEL UMBRAL (V13.0.0)
+﻿/**
+ * sw.js - EL GUARDIÁN DEL UMBRAL (V13.0.1)
  * Optimizado para Arquitectura Modular y Estética Mishkan.
  */
 
-const CACHE_NAME = 'qumran-cache-v13.0.0';
+const CACHE_NAME = 'qumran-cache-v13.0.1';
 
-// Lista de archivos para funcionamiento 100% Offline (rutas relativas)
 const URLS_TO_CACHE = [
     './',
     './index.html',
     './manifest.json',
     './icon.png',
+    './privacy.html',
+    './license.html',
     './src/js/index.js',
     './src/css/index.css',
     './src/css/fonts/david-libre-v17-latin-regular.woff2',
@@ -19,17 +20,14 @@ const URLS_TO_CACHE = [
     './src/css/fonts/cinzel-v26-latin-700.woff2',
 ];
 
-// 1. INSTALACIÓN: Descarga y guarda los recursos
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches
             .open(CACHE_NAME)
             .then((cache) => {
-                console.log('[SW] Instalando nuevo caché:', CACHE_NAME);
-                // Agregamos los archivos uno a uno para evitar que un error 404 detenga todo
                 return Promise.allSettled(
                     URLS_TO_CACHE.map((url) => {
-                        return cache.add(url).catch((err) => console.warn(`[SW] No se pudo cachear: ${url}`, err));
+                        return cache.add(url).catch(() => {});
                     }),
                 );
             })
@@ -37,7 +35,6 @@ self.addEventListener('install', (event) => {
     );
 });
 
-// 2. ACTIVACIÓN: Elimina cachés antiguos
 self.addEventListener('activate', (event) => {
     event.waitUntil(
         caches
@@ -46,7 +43,6 @@ self.addEventListener('activate', (event) => {
                 return Promise.all(
                     cacheNames.map((cacheName) => {
                         if (cacheName !== CACHE_NAME) {
-                            console.log('[SW] Borrando caché antiguo:', cacheName);
                             return caches.delete(cacheName);
                         }
                     }),
@@ -56,28 +52,32 @@ self.addEventListener('activate', (event) => {
     );
 });
 
-// 3. ESTRATEGIA: Cache First (Rápido) -> Network (Actualiza)
 self.addEventListener('fetch', (event) => {
     if (event.request.method !== 'GET') return;
 
     event.respondWith(
         caches
             .match(event.request)
-            .then((response) => {
-                return (
-                    response ||
-                    fetch(event.request).then((networkResponse) => {
+            .then((cached) => {
+                const fetchPromise = fetch(event.request)
+                    .then((networkResponse) => {
+                        if (networkResponse && networkResponse.ok) {
+                            caches.open(CACHE_NAME).then((cache) => {
+                                cache.put(event.request, networkResponse);
+                            });
+                        }
                         return networkResponse;
                     })
-                );
+                    .catch(() => {});
+
+                return cached || fetchPromise;
             })
             .catch(() => {
-                console.log('[SW] Error de red y sin copia en caché');
+                return new Response('Not Found', { status: 404 });
             }),
     );
 });
 
-// 4. ESCUCHA DE ACTUALIZACIÓN
 self.addEventListener('message', (event) => {
     if (event.data && event.data.action === 'skipWaiting') {
         self.skipWaiting();

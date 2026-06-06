@@ -15,7 +15,7 @@ let newWorker;
 // --- 2. GESTIÓN DE SERVICE WORKER & ACTUALIZACIONES ---
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/qumran-watch/sw.js').then((reg) => {
+        navigator.serviceWorker.register('./sw.js', { scope: './' }).then((reg) => {
             reg.addEventListener('updatefound', () => {
                 newWorker = reg.installing;
                 newWorker.addEventListener('statechange', () => {
@@ -40,11 +40,8 @@ if ('serviceWorker' in navigator) {
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-    if (!isIOS) {
-        const installContainer = document.getElementById('install-container');
-        if (installContainer) installContainer.style.display = 'block';
-    }
+    const installBtn = document.getElementById('btn-install');
+    if (installBtn) installBtn.style.display = 'block';
 });
 
 // --- 4. OBJETO PRINCIPAL DE LA APLICACIÓN ---
@@ -78,7 +75,7 @@ const QumranApp = {
         document.getElementById('nav-con').addEventListener('click', (e) => QumranApp.nav('con', e.currentTarget));
         document.getElementById('nav-edu').addEventListener('click', (e) => QumranApp.nav('edu', e.currentTarget));
         // Instalación PWA
-        const installBtn = document.getElementById('btn-install-app');
+        const installBtn = document.getElementById('btn-install');
         if (installBtn) {
             installBtn.addEventListener('click', async () => {
                 if (deferredPrompt) {

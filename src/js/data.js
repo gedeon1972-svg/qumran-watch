@@ -2,6 +2,13 @@
  * src/js/data.js
  * EL TESORO SAGRADO: Textos, fechas y liturgia estática.
  * MÓDULO ES6: Exporta la constante QumranData de forma segura.
+ *
+ * ESTRUCTURA DEL OBJETO:
+ * @section renderizable - Datos consumidos activamente por la UI en runtime
+ *   (ANCHOR, MESES, DIAS, TURNOS, PUERTAS_SOLARES, YAMIM_NORAIM,
+ *    FIESTAS, ESTUDIOS, SALMOS, CANTICOS_SHABAT, HALAKHA)
+ * @section referencia  - Datos de referencia para futuras integraciones de UI
+ *   (ENLACES)
  */
 
 export const QumranData = {
@@ -72,33 +79,6 @@ export const QumranData = {
         { t: 'Santidad del Cuerpo', r: '1 Cor 6:19' },
         { t: 'Perdón Absoluto', r: 'Mc 11:25' },
         { t: 'Aflicción de Alma', r: 'Lev 16' },
-    ],
-
-    ENLACES: [
-        {
-            id: 'telegram',
-            titulo: 'Canal de Telegram',
-            desc: 'Recibe las últimas novedades directamente a tu celular.',
-            url: 'https://t.me/+VuFNIOUSMERrLLiD',
-            label: 'Unirme al Canal ➔',
-            color: '#229ED9',
-        },
-        {
-            id: 'podcast',
-            titulo: 'Diseñados para Gobernar',
-            desc: 'Recupera tu gobierno interior a través del análisis profundo.',
-            url: 'https://youtube.com/playlist?list=PLr4MABEXstnDLUVcD7EenO4vN8EglZoSz',
-            label: 'Escuchar ahora ➔',
-            color: '#8a2c2c',
-        },
-        {
-            id: 'instituto',
-            titulo: 'Instituto Descubre la Biblia',
-            desc: 'Formación bíblica profunda y cursos online.',
-            url: 'https://www.descubrelabiblia.online/',
-            label: 'Visitar Sitio Web ➔',
-            color: '#4a90e2',
-        },
     ],
 
     FIESTAS: [
@@ -840,6 +820,45 @@ export const QumranData = {
             q: 'Orar siempre, y no desmayar.',
             a: 'Mantén una conversación continua con Dios.',
             r: 'Lc 18:1',
+        },
+    ],
+
+    // ========================================================================
+    // @section referencia
+    // ENLACES — Datos de referencia para futuras integraciones de UI
+    // ----------------------------------------------------------------
+    // Propósito: Estos enlaces (Telegram, Podcast, Instituto) están
+    // definidos como datos estructurados para su uso futuro en la
+    // interfaz de comunidad/red. Actualmente los botones equivalentes
+    // están hardcodeados en index.html, pero estos datos permitirán
+    // renderizarlos dinámicamente desde QumranData.ENLACES.
+    //
+    // Seguridad: Todas las URLs verificadas como HTTPS.
+    // ========================================================================
+    ENLACES: [
+        {
+            id: 'telegram',
+            titulo: 'Canal de Telegram',
+            desc: 'Recibe las últimas novedades directamente a tu celular.',
+            url: 'https://t.me/+VuFNIOUSMERrLLiD',
+            label: 'Unirme al Canal ➔',
+            color: '#229ED9',
+        },
+        {
+            id: 'podcast',
+            titulo: 'Diseñados para Gobernar',
+            desc: 'Recupera tu gobierno interior a través del análisis profundo.',
+            url: 'https://youtube.com/playlist?list=PLr4MABEXstnDLUVcD7EenO4vN8EglZoSz',
+            label: 'Escuchar ahora ➔',
+            color: '#8a2c2c',
+        },
+        {
+            id: 'instituto',
+            titulo: 'Instituto Descubre la Biblia',
+            desc: 'Formación bíblica profunda y cursos online.',
+            url: 'https://www.descubrelabiblia.online/',
+            label: 'Visitar Sitio Web ➔',
+            color: '#4a90e2',
         },
     ],
 };
