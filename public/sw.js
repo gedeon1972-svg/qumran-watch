@@ -1,4 +1,4 @@
-﻿/**
+/**
  * sw.js - EL GUARDIÁN DEL UMBRAL (V13.0.1)
  * Optimizado para Arquitectura Modular y Estética Mishkan.
  */
@@ -13,6 +13,7 @@ const URLS_TO_CACHE = [
     './privacy.html',
     './license.html',
     './src/js/index.js',
+    './src/js/theme-init.js',
     './src/css/index.css',
     './src/css/fonts/david-libre-v17-latin-regular.woff2',
     './src/css/fonts/david-libre-v17-latin-700.woff2',
@@ -62,8 +63,9 @@ self.addEventListener('fetch', (event) => {
                 const fetchPromise = fetch(event.request)
                     .then((networkResponse) => {
                         if (networkResponse && networkResponse.ok) {
+                            const responseToCache = networkResponse.clone();
                             caches.open(CACHE_NAME).then((cache) => {
-                                cache.put(event.request, networkResponse);
+                                cache.put(event.request, responseToCache);
                             });
                         }
                         return networkResponse;

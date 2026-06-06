@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -61,11 +61,16 @@
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="src/css/styles.css">
+
+    <script src="src/js/theme-init.js"></script>
 </head>
 <body>
 
 <main class="app-frame">
-    <h1>Qumran Watch</h1>
+    <div class="app-header">
+        <h1>Qumran Watch</h1>
+        <button id="theme-toggle" aria-label="Cambiar tema claro/oscuro">☀</button>
+    </div>
 
     <div id="alert-container" class="watcher-alert">
         <div class="watcher-title"><span class="icon-watcher">👁️</span> MENSAJE DEL VIGÍA</div>
@@ -73,12 +78,12 @@
     </div>
 
     <div id="view-hoy" class="view active">
-        <button id="btn-install" class="btn-install" aria-label="Instalar aplicación en el dispositivo">INSTALAR APLICACIÓN</button>
+        <button id="btn-install" class="btn-install" style="display:none" aria-label="Instalar aplicación en el dispositivo">INSTALAR APLICACIÓN</button>
         <article class="card">
             <span class="fecha-greg" id="greg-date">...</span>
             <div class="fecha-hebrea" id="heb-date">Cargando...</div>
             <div id="heb-fiesta" class="fiesta-badge"></div>
-            
+
             <div class="info-block-center">
                 <span class="lbl">DÍA DE LA SEMANA</span>
                 <span class="val" id="heb-dia"></span>
@@ -98,7 +103,7 @@
                     <span class="val" id="heb-estacion"></span>
                 </div>
             </div>
-            
+
             <div class="gates-container">
                 <div class="gate-dot">1</div>
                 <div class="gate-dot">2</div>
@@ -121,7 +126,7 @@
             <h2 class="red-text">CUENTA DEL OMER</h2>
             <div class="text-center"><span class="lbl">DÍA</span><span class="val omer-count-val" id="omer-count"></span></div>
         </article>
-        
+
         <article class="card" id="card-teshuva">
             <h2 class="red-text">YAMIM NORAIM</h2>
             <div class="text-center"><span class="lbl">DÍAS DE TEMOR (TESHUVÁ)</span><span class="val" id="teshuva-cmd"></span></div>
@@ -190,9 +195,9 @@
         <h2>Biblioteca la Verdad Restaurada</h2>
         <p class="fundamento-txt">
             El calendario que tienes en tus manos no es una invención moderna, sino la <strong>restauración matemática</strong> del orden entregado a Enoc y Moisés.
-        </p>   
+        </p>
     <div id="edu-grid" class="edu-grid-container"></div>
-        
+
     </div>
 
     <footer class="site-footer">

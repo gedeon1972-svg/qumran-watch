@@ -1,4 +1,4 @@
-/* * src/js/app.js
+﻿/* * src/js/app.js
  * EL ESPÍRITU (CONTROLADOR PRINCIPAL)
  * V13.0.0: Reconstrucción Modular Blindada
  */
@@ -8,6 +8,7 @@ import { QumranData } from './data.js';
 import { QumranCalendar } from './calendar.js';
 import { QumranSun } from './sun.js';
 import { QumranICS } from './ics.js';
+import { initTheme } from './theme.js';
 
 let deferredPrompt;
 let newWorker;
@@ -50,6 +51,7 @@ const QumranApp = {
     sunriseHour: 6.0,
 
     init: () => {
+        initTheme();
         QumranApp.setupListeners();
         const hasMemory = QumranApp.loadStoredLocation();
         if (!hasMemory) QumranApp.getLocationAndSun();

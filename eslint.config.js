@@ -1,4 +1,4 @@
-import js from '@eslint/js';
+﻿import js from '@eslint/js';
 
 export default [
     js.configs.recommended,
@@ -19,6 +19,8 @@ export default [
                 Blob: 'readonly',
                 URL: 'readonly',
                 Promise: 'readonly',
+                Response: 'readonly',
+                Request: 'readonly',
             },
         },
         rules: {
