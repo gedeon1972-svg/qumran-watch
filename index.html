@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -204,9 +204,9 @@
         <div class="footer-content">
             <span>© 2026 Cristian Salinas (Mash Jáyt)</span>
             <span class="footer-links">
-                <a href="privacy.html" target="_blank" rel="noopener noreferrer">Política de Privacidad</a>
+                <button id="btn-privacy" style="background:none; border:none; color:inherit; text-decoration:underline; font:inherit; cursor:pointer; padding:0;">Política de Privacidad</button>
                 <span class="footer-sep">|</span>
-                <a href="license.html" target="_blank" rel="noopener noreferrer">Licencia MIT</a>
+                <button id="btn-license" style="background:none; border:none; color:inherit; text-decoration:underline; font:inherit; cursor:pointer; padding:0;">Licencia MIT</button>
             </span>
         </div>
     </footer>
@@ -237,6 +237,41 @@
         <div class="lecture-meta" id="lec-meta">Subtítulo</div>
         <hr class="separator-gold">
         <div id="lec-body" class="lecture-body"></div>
+    </div>
+</div>
+
+<div id="modal-license" role="dialog" aria-modal="true" aria-labelledby="lic-title" style="display: none;">
+    <div class="modal-content">
+        <button id="btn-close-license" class="close-modal" aria-label="Cerrar">&times;</button>
+        <h2 id="lic-title">Licencia MIT</h2>
+        <div class="modal-body-text text-left" style="font-size: 0.9em; line-height: 1.5; text-align: left; max-height: 50vh; overflow-y: auto; padding-right: 10px;">
+            <p>Copyright (c) 2026 Cristian Salinas</p>
+            <p>Se concede permiso, de forma gratuita, a cualquier persona que obtenga una copia de este software y de los archivos de documentación asociados (el "Software"), para utilizar el Software sin restricción, incluyendo sin limitación los derechos a usar, copiar, modificar, fusionar, publicar, distribuir, sublicenciar, y/o vender copias del Software, y a permitir a las personas a las que se les proporcione el Software a hacer lo mismo, sujeto a las siguientes condiciones:</p>
+            <p>El aviso de copyright anterior y este aviso de permiso se incluirán en todas las copias o partes sustanciales del Software.</p>
+            <p>EL SOFTWARE SE PROPORCIONA "TAL CUAL", SIN GARANTÍA DE NINGÚN TIPO, EXPRESA O IMPLÍCITA, INCLUYENDO PERO NO LIMITADO A GARANTÍAS DE COMERCIALIZACIÓN, IDONEIDAD PARA UN PROPÓSITO PARTICULAR Y NO INFRACCIÓN. EN NINGÚN CASO LOS AUTORES O TITULARES DEL COPYRIGHT SERÁN RESPONSABLES DE NINGUNA RECLAMACIÓN, DAÑOS U OTRAS RESPONSABILIDADES, YA SEA EN UNA ACCIÓN DE CONTRATO, AGRAVIO O CUALQUIER OTRO MOTIVO, QUE SURJA DE O EN CONEXIÓN CON EL SOFTWARE O EL USO U OTRO TIPO DE ACCIONES EN EL SOFTWARE.</p>
+        </div>
+    </div>
+</div>
+<div id="modal-privacy" role="dialog" aria-modal="true" aria-labelledby="priv-title" style="display: none;">
+    <div class="modal-content">
+        <button id="btn-close-privacy" class="close-modal" aria-label="Cerrar">&times;</button>
+        <h2 id="priv-title">Política de Privacidad</h2>
+        <div class="modal-body-text text-left" style="font-size: 0.9em; line-height: 1.5; text-align: left; max-height: 50vh; overflow-y: auto; padding-right: 10px;">
+            <p><strong>Qumran Watch</strong> es una Aplicación Web Progresiva (PWA) 100% frontend.</p>
+            <h3 style="color:var(--gold); font-size:1.1rem; margin-top:20px;">Recopilación de Datos</h3>
+            <p>Esta aplicación NO recopila, almacena, ni transmite datos personales a ningún servidor externo.</p>
+            <p>Toda la información procesada (coordenadas GPS, preferencias de visualización) se almacena exclusivamente en el almacenamiento local del navegador (localStorage) y nunca abandona el dispositivo del usuario.</p>
+            <h3 style="color:var(--gold); font-size:1.1rem; margin-top:20px;">Geolocalización</h3>
+            <p>El acceso a la ubicación GPS se utiliza únicamente para calcular la salida y puesta del sol. Esta información se almacena localmente y no se comparte con terceros. El usuario puede denegar el permiso de geolocalización; en ese caso, se usará Jerusalén (31.7683, 35.2137) como valor por defecto.</p>
+            <h3 style="color:var(--gold); font-size:1.1rem; margin-top:20px;">Servicios de Terceros</h3>
+            <p>Esta aplicación no integra scripts de terceros, analytics, trackers ni publicidad.</p>
+            <h3 style="color:var(--gold); font-size:1.1rem; margin-top:20px;">Cookies</h3>
+            <p>No se utilizan cookies de ningún tipo.</p>
+            <h3 style="color:var(--gold); font-size:1.1rem; margin-top:20px;">Contacto</h3>
+            <p>Para consultas sobre privacidad: gedeon1972@gmail.com</p>
+            <hr style="border:none; border-top:1px solid var(--faint); margin:20px 0; opacity:0.5;">
+            <p><em>Última actualización: 5 de junio de 2026</em></p>
+        </div>
     </div>
 </div>
 

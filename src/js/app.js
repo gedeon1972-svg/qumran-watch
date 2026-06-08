@@ -133,6 +133,27 @@ const QumranApp = {
             if (card) QumranApp.openEstudio(parseInt(card.dataset.index));
         });
 
+        // Privacy modal
+        const btnPrivacy = document.getElementById('btn-privacy');
+        const modalPrivacy = document.getElementById('modal-privacy');
+        const btnClosePrivacy = document.getElementById('btn-close-privacy');
+        if (btnPrivacy && modalPrivacy) {
+            btnPrivacy.addEventListener('click', () => (modalPrivacy.style.display = 'flex'));
+        }
+        if (btnClosePrivacy && modalPrivacy) {
+            btnClosePrivacy.addEventListener('click', () => (modalPrivacy.style.display = 'none'));
+        }
+
+        // License modal
+        const btnLicense = document.getElementById('btn-license');
+        const modalLicense = document.getElementById('modal-license');
+        const btnCloseLicense = document.getElementById('btn-close-license');
+        if (btnLicense && modalLicense) {
+            btnLicense.addEventListener('click', () => (modalLicense.style.display = 'flex'));
+        }
+        if (btnCloseLicense && modalLicense) {
+            btnCloseLicense.addEventListener('click', () => (modalLicense.style.display = 'none'));
+        }
         // Cierre de Modales
         document
             .getElementById('btn-close-modal')
