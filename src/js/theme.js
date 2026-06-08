@@ -1,9 +1,10 @@
-﻿/* src/js/theme.js - SISTEMA DE TEMAS CLARO/OSCURO */
+﻿import { storage } from './storage.js';
+/* src/js/theme.js - SISTEMA DE TEMAS CLARO/OSCURO */
 
 const STORAGE_KEY = 'qw_theme';
 
 function getStoredTheme() {
-    return localStorage.getItem(STORAGE_KEY);
+    return storage.getItem(STORAGE_KEY);
 }
 
 function getSystemTheme() {
@@ -23,10 +24,10 @@ function applyTheme(theme) {
 
     if (theme === 'dark') {
         root.classList.add('dark-theme');
-        if (toggle) toggle.textContent = '\u2600';
+        if (toggle) toggle.textContent = '\u263D'; // ðŸŒ™ estado actual: oscuro
     } else {
         root.classList.remove('dark-theme');
-        if (toggle) toggle.textContent = '\u263D';
+        if (toggle) toggle.textContent = '\u2600'; // â˜€ï¸ estado actual: claro
     }
 }
 
@@ -34,7 +35,7 @@ function toggleTheme() {
     const root = document.documentElement;
     const isDark = root.classList.contains('dark-theme');
     const newTheme = isDark ? 'light' : 'dark';
-    localStorage.setItem(STORAGE_KEY, newTheme);
+    storage.setItem(STORAGE_KEY, newTheme);
     applyTheme(newTheme);
 }
 
@@ -49,7 +50,7 @@ function initTheme() {
 
     if (window.matchMedia) {
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-            if (!localStorage.getItem(STORAGE_KEY)) {
+            if (!storage.getItem(STORAGE_KEY)) {
                 applyTheme(e.matches ? 'dark' : 'light');
             }
         });

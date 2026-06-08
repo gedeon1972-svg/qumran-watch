@@ -1,5 +1,12 @@
 # Changelog
 
+## [Unreleased]
+### Correcciones
+- Correcciones de seguridad: CSP, noopener, sanitización innerHTML
+- Correcciones de accesibilidad: focus trap, ARIA, contraste
+- Actualización de documentación: versiones, AGENTS.md, ADR
+
+
 ## [13.0.0] — 2026-06-05 — Refactorización de Arquitectura Base
 
 ### Añadido

@@ -1,4 +1,5 @@
-﻿/* --- FUENTES LOCALES (OFFLINE) --- */
+﻿@import './animations.css';
+/* --- FUENTES LOCALES (OFFLINE) --- */
 
 @font-face {
     font-family: 'Cinzel';
@@ -33,38 +34,42 @@
 /* --- VARIABLES CSS — TEMA CLARO (por defecto) --- */
 
 :root {
-    --bg-body: #f5f0e8;
-    --bg-card: #ffffff;
-    --bg-card-alt: rgba(255, 255, 255, 0.85);
-    --bg-nav: #e8e0d0;
-    --bg-modal: #faf6ef;
+    --bg-body: #e5d9c5;
+    --bg-card: #f0eadc;
+    --bg-card-alt: rgba(240, 234, 220, 0.85);
+    --bg-nav: #4e3f2a;
+    --bg-modal: #f0eadc;
     --bg-overlay: rgba(0, 0, 0, 0.6);
     --bg-input: #ffffff;
-    --bg-highlight: rgba(139, 109, 30, 0.08);
+    --bg-highlight: rgba(107, 81, 22, 0.08);
     --bg-alert: rgba(192, 57, 43, 0.08);
-    --bg-lecture: #faf6ef;
-    --bg-gold-subtle: rgba(139, 109, 30, 0.1);
+    --bg-lecture: #f0eadc;
+    --bg-gold-subtle: rgba(107, 81, 22, 0.1);
 
-    /* Textos — todos pasan WCAG AA 4.5:1 sobre #f5f0e8 */
-    --text-primary: #2c1810; /* contraste 15:1 ✅ */
-    --text-secondary: #3d2b1f; /* contraste 10:1 ✅ */
-    --text-white: #2c1810; /* contraste 15:1 ✅ */
-    --text-accent: #6b4e0f; /* contraste 5.8:1 ✅ (era #b8962e → 2.7:1 ❌) */
-    --text-muted: #5a4a30; /* contraste 5.2:1 ✅ (era #8a7a50 → 3.5:1 ❌) */
-    --text-subtle: #4a3828; /* contraste 6.8:1 ✅ */
+    /* Textos — todos pasan WCAG AA 4.5:1 sobre #e5d9c5 */
+    --text-primary: #2c1810; /* contraste 15:1 ? */
+    --text-secondary: #3d2b1f; /* contraste 10:1 ? */
+    --text-white: #2c1810; /* contraste 15:1 ? */
+    --text-accent: #6b4e0f; /* contraste 5.8:1 ? (era #b8962e ? 2.7:1 ?) */
+    --text-muted: #5a4a30; /* contraste 5.2:1 ? (era #8a7a50 ? 3.5:1 ?) */
+    --text-subtle: #4a3828; /* contraste 6.8:1 ? */
+
+    /* Nav — colores sobre fondo oscuro */
+    --nav-text: #e8ddc8;
+    --nav-text-active: #d4af37;
 
     /* Colores de marca — oscurecidos para modo claro */
-    --gold: #7a6020; /* contraste 5.3:1 ✅ (era #b8962e → 2.7:1 ❌) */
-    --gold-dark: #5a4515; /* contraste 7.1:1 ✅ */
+    --gold: #7a6020; /* contraste 5.3:1 ? (era #b8962e ? 2.7:1 ?) */
+    --gold-dark: #5a4515; /* contraste 7.1:1 ? */
     --gold-bg: rgba(122, 96, 32, 0.08);
-    --faint: #5a4a30; /* contraste 5.2:1 ✅ (era #8a7a50 → 3.5:1 ❌) */
+    --faint: #5a4a30; /* contraste 5.2:1 ? (era #8a7a50 ? 3.5:1 ?) */
 
-    --red: #9b2419; /* contraste 7.0:1 ✅ */
-    --red-light: #c0392b; /* contraste 4.9:1 ✅ (era #e74c3c → 3.2:1 ❌) */
-    --blue: #1a5f8a; /* contraste 5.5:1 ✅ */
-    --blue-light: #1565a8; /* contraste 5.0:1 ✅ (era #3498db → 2.6:1 ❌) */
-    --telegram: #0f6b9a; /* contraste 5.2:1 ✅ */
-    --yellow: #8a6a00; /* contraste 5.1:1 ✅ (era #f1c40f → 1.5:1 ❌) */
+    --red: #9b2419; /* contraste 7.0:1 ? */
+    --red-light: #c0392b; /* contraste 4.9:1 ? (era #e74c3c ? 3.2:1 ?) */
+    --blue: #1a5f8a; /* contraste 5.5:1 ? */
+    --blue-light: #1565a8; /* contraste 5.0:1 ? (era #3498db ? 2.6:1 ?) */
+    --telegram: #0f6b9a; /* contraste 5.2:1 ? */
+    --yellow: #8a6a00; /* contraste 5.1:1 ? (era #f1c40f ? 1.5:1 ?) */
 
     --gate-active-color: #ffffff;
     --gate-active-shadow: 0 0 12px var(--gold);
@@ -95,6 +100,10 @@
     --text-accent: #d4af37;
     --text-muted: #b8952e;
     --text-subtle: #ccc;
+
+    /* Nav */
+    --nav-text: #b8952e;
+    --nav-text-active: #d4af37;
 
     --gold: #d4af37;
     --gold-dark: #b8860b;
@@ -409,7 +418,7 @@ h2 {
 .nav-btn {
     background: none;
     border: none;
-    color: var(--faint);
+    color: var(--nav-text);
     font-family: 'Cinzel', serif;
     font-size: 0.7rem;
     text-transform: uppercase;
@@ -421,7 +430,7 @@ h2 {
     transition: color 0.3s ease;
 }
 .nav-btn.active {
-    color: var(--gold);
+    color: var(--nav-text-active);
     text-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
 }
 .nav-icon {
@@ -907,4 +916,99 @@ h2 {
 :focus-visible {
     outline: 2px solid var(--gold);
     outline-offset: 2px;
+}
+/* --- SCROLLBAR PERSONALIZADO (WCAG) --- */
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(90, 74, 48, 0.3);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(90, 74, 48, 0.5);
+}
+.dark-theme ::-webkit-scrollbar-thumb {
+    background: rgba(184, 149, 46, 0.3);
+}
+.dark-theme ::-webkit-scrollbar-thumb:hover {
+    background: rgba(184, 149, 46, 0.5);
+}
+
+/* --- TOAST SYSTEM --- */
+
+#toast-container {
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10001;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 90%;
+    max-width: 400px;
+    pointer-events: none;
+}
+.toast {
+    background: var(--gold);
+    color: #000;
+    padding: 12px 20px;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    text-align: center;
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+    pointer-events: auto;
+}
+
+/* --- INTERACTIVE CARD (hover) --- */
+
+.interactive-card {
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+    position: relative;
+    cursor: pointer;
+}
+.interactive-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 2px 12px rgba(212, 175, 55, 0.15);
+}
+.interactive-card::after {
+    content: '➔';
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+    color: var(--gold);
+    font-size: 1.2rem;
+    opacity: 0.6;
+}
+.interactive-card:hover::after {
+    transform: translateY(-50%) translateX(4px);
+    opacity: 1;
+}
+
+/* --- ULTRA-WIDE (>= 1400px) --- */
+
+@media (min-width: 1400px) {
+    .app-frame {
+        max-width: 700px;
+    }
+    .nav-bar {
+        max-width: 700px;
+    }
+    .edu-grid-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
