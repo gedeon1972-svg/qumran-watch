@@ -1,8 +1,12 @@
-﻿node_modules/
+node_modules/
 dist/
+build/
+.vite/
 coverage/
 .env
 .env.local
+*.env.*
 *.log
+.vscode/
 .DS_Store
 Thumbs.db
