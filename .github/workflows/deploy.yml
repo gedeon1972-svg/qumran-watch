@@ -1,5 +1,8 @@
 name: Desplegar Qumran Watch a GitHub Pages
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 on:
   push:
     branches:
@@ -12,24 +15,22 @@ jobs:
   construir-y-publicar:
     runs-on: ubuntu-latest
     steps:
-      - name: 📥 Descargar código
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: ⚙️ Preparar Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "24"
 
-      - name: 📦 Instalar dependencias
+      - name: Instalar dependencias
         run: npm install
 
-      - name: 🛡️ Ejecutar Tests
+      - name: Ejecutar Tests
         run: npm test
 
-      - name: 🔨 Compilar Versión 13.0 (Build)
+      - name: Compilar
         run: npm run build
 
-      - name: 🚀 Publicar en GitHub Pages
+      - name: Publicar en GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
