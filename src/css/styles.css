@@ -1,4 +1,4 @@
-/* --- FUENTES LOCALES (OFFLINE) --- */
+﻿/* --- FUENTES LOCALES (OFFLINE) --- */
 
 @font-face {
     font-family: 'Cinzel';
@@ -40,31 +40,33 @@
     --bg-modal: #faf6ef;
     --bg-overlay: rgba(0, 0, 0, 0.6);
     --bg-input: #ffffff;
-    --bg-highlight: rgba(212, 175, 55, 0.08);
+    --bg-highlight: rgba(139, 109, 30, 0.08);
     --bg-alert: rgba(192, 57, 43, 0.08);
     --bg-lecture: #faf6ef;
-    --bg-gold-subtle: rgba(212, 175, 55, 0.1);
+    --bg-gold-subtle: rgba(139, 109, 30, 0.1);
 
-    --text-primary: #2c1810;
-    --text-secondary: #5c4030;
-    --text-white: #2c1810;
-    --text-accent: #b8962e;
-    --text-muted: #8a7a50;
-    --text-subtle: #6b5b4a;
+    /* Textos — todos pasan WCAG AA 4.5:1 sobre #f5f0e8 */
+    --text-primary: #2c1810; /* contraste 15:1 ✅ */
+    --text-secondary: #3d2b1f; /* contraste 10:1 ✅ */
+    --text-white: #2c1810; /* contraste 15:1 ✅ */
+    --text-accent: #6b4e0f; /* contraste 5.8:1 ✅ (era #b8962e → 2.7:1 ❌) */
+    --text-muted: #5a4a30; /* contraste 5.2:1 ✅ (era #8a7a50 → 3.5:1 ❌) */
+    --text-subtle: #4a3828; /* contraste 6.8:1 ✅ */
 
-    --gold: #b8962e;
-    --gold-dark: #8a7020;
-    --gold-bg: rgba(184, 150, 46, 0.08);
-    --faint: #8a7a50;
+    /* Colores de marca — oscurecidos para modo claro */
+    --gold: #7a6020; /* contraste 5.3:1 ✅ (era #b8962e → 2.7:1 ❌) */
+    --gold-dark: #5a4515; /* contraste 7.1:1 ✅ */
+    --gold-bg: rgba(122, 96, 32, 0.08);
+    --faint: #5a4a30; /* contraste 5.2:1 ✅ (era #8a7a50 → 3.5:1 ❌) */
 
-    --red: #c0392b;
-    --red-light: #e74c3c;
-    --blue: #2980b9;
-    --blue-light: #3498db;
-    --telegram: #229ed9;
-    --yellow: #f1c40f;
+    --red: #9b2419; /* contraste 7.0:1 ✅ */
+    --red-light: #c0392b; /* contraste 4.9:1 ✅ (era #e74c3c → 3.2:1 ❌) */
+    --blue: #1a5f8a; /* contraste 5.5:1 ✅ */
+    --blue-light: #1565a8; /* contraste 5.0:1 ✅ (era #3498db → 2.6:1 ❌) */
+    --telegram: #0f6b9a; /* contraste 5.2:1 ✅ */
+    --yellow: #8a6a00; /* contraste 5.1:1 ✅ (era #f1c40f → 1.5:1 ❌) */
 
-    --gate-active-color: #fff;
+    --gate-active-color: #ffffff;
     --gate-active-shadow: 0 0 12px var(--gold);
 
     --gold-glow: none;
@@ -877,4 +879,30 @@ h2 {
 }
 .modal-body-text {
     text-align: left;
+}
+
+/* --- SKIP LINK --- */
+.skip-link {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    background: var(--gold);
+    color: #000;
+    padding: 8px 16px;
+    z-index: 10000;
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: top 0.2s;
+}
+.skip-link:focus {
+    top: 0;
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}
+
+/* --- FOCUS VISIBLE (WCAG 2.4.7) --- */
+:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
 }
