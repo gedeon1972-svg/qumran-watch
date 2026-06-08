@@ -8,10 +8,14 @@ import { QumranData } from './data.js';
 import { QumranCalendar } from './calendar.js';
 import { QumranSun } from './sun.js';
 import { QumranICS } from './ics.js';
+import { initTheme } from './theme.js';
+import { storage } from './storage.js';
+import { findFestivalDate, getFestivalsForYear, getWatcherAlerts, calcOmerDay } from './utils/calculations.js';
 
 let deferredPrompt;
 let newWorker;
 
+const isStandalone = () => window.matchMedia('(display-mode: standalone)').matches;
 // --- 2. GESTIÓN DE SERVICE WORKER & ACTUALIZACIONES ---
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -50,6 +54,7 @@ const QumranApp = {
     sunriseHour: 6.0,
 
     init: () => {
+        initTheme();
         QumranApp.setupListeners();
         const hasMemory = QumranApp.loadStoredLocation();
         if (!hasMemory) QumranApp.getLocationAndSun();
@@ -104,7 +109,7 @@ const QumranApp = {
         const btnExportICS = document.getElementById('btn-export-ics');
         if (btnExportICS) {
             btnExportICS.addEventListener('click', () => {
-                let y = document.getElementById('cal-year')
+                const y = document.getElementById('cal-year')
                     ? parseInt(document.getElementById('cal-year').value)
                     : new Date().getFullYear();
                 try {
@@ -131,6 +136,27 @@ const QumranApp = {
             if (card) QumranApp.openEstudio(parseInt(card.dataset.index));
         });
 
+        // Privacy modal
+        const btnPrivacy = document.getElementById('btn-privacy');
+        const modalPrivacy = document.getElementById('modal-privacy');
+        const btnClosePrivacy = document.getElementById('btn-close-privacy');
+        if (btnPrivacy && modalPrivacy) {
+            btnPrivacy.addEventListener('click', () => (modalPrivacy.style.display = 'flex'));
+        }
+        if (btnClosePrivacy && modalPrivacy) {
+            btnClosePrivacy.addEventListener('click', () => (modalPrivacy.style.display = 'none'));
+        }
+
+        // License modal
+        const btnLicense = document.getElementById('btn-license');
+        const modalLicense = document.getElementById('modal-license');
+        const btnCloseLicense = document.getElementById('btn-close-license');
+        if (btnLicense && modalLicense) {
+            btnLicense.addEventListener('click', () => (modalLicense.style.display = 'flex'));
+        }
+        if (btnCloseLicense && modalLicense) {
+            btnCloseLicense.addEventListener('click', () => (modalLicense.style.display = 'none'));
+        }
         // Cierre de Modales
         document
             .getElementById('btn-close-modal')
@@ -159,8 +185,8 @@ const QumranApp = {
     },
 
     loadStoredLocation: () => {
-        const lat = localStorage.getItem('qw_lat');
-        const lng = localStorage.getItem('qw_lng');
+        const lat = storage.getItem('qw_lat');
+        const lng = storage.getItem('qw_lng');
         if (lat && lng) {
             QumranApp.updateSunData(parseFloat(lat), parseFloat(lng));
             return true;
@@ -175,8 +201,8 @@ const QumranApp = {
                 (pos) => {
                     const lat = pos.coords.latitude;
                     const lng = pos.coords.longitude;
-                    localStorage.setItem('qw_lat', lat);
-                    localStorage.setItem('qw_lng', lng);
+                    storage.setItem('qw_lat', lat);
+                    storage.setItem('qw_lng', lng);
                     if (force) document.getElementById('geo-btn').innerText = 'Actualizar Ubicación (GPS)';
                     QumranApp.updateSunData(lat, lng);
                 },
@@ -198,8 +224,14 @@ const QumranApp = {
     },
 
     updateSunData: (lat, lng) => {
-        let now = new Date();
-        let times = QumranSun.calcSunTimes(now, lat, lng);
+        const now = new Date();
+        const times = QumranSun.calcSunTimes(now, lat, lng);
+
+        const _newData = { rise: times.rise, set: times.set, riseDecimal: times.riseDecimal, lat, lng };
+        if (QumranApp._lastSunData && JSON.stringify(_newData) === JSON.stringify(QumranApp._lastSunData)) {
+            return;
+        }
+        QumranApp._lastSunData = _newData;
         if (times && times.riseDecimal) {
             QumranApp.sunriseHour = times.riseDecimal;
             QumranApp.renderHoy();
@@ -213,39 +245,15 @@ const QumranApp = {
     },
 
     checkWatcher: (hoy, qHoy) => {
-        let msg = '';
-        let alertBox = document.getElementById('alert-container');
+        const alerts = getWatcherAlerts(hoy, qHoy);
+        const msg = alerts.msg;
+        const alertBox = document.getElementById('alert-container');
         alertBox.style.display = 'none';
 
-        if (qHoy.idxSem === 5) msg += '<strong>¡Día de Preparación!</strong><br>El Shabat entra al próximo amanecer.';
-
-        for (let i = 1; i <= 3; i++) {
-            let fut = new Date(hoy.getTime() + i * 86400000);
-            let qFut = QumranCalendar.calculate(fut);
-            if (qFut && !qFut.special) {
-                let fIdx = QumranData.FIESTAS.findIndex((x) => x.m === qFut.m && x.d === qFut.d);
-                if (fIdx !== -1) {
-                    if (msg !== '') msg += "<br><hr style='border-color:var(--gold); opacity:0.3; margin:8px 0;'>";
-                    msg += `<strong>¡Atención!</strong><br>En ${i} día(s) es <strong>${QumranData.FIESTAS[fIdx].n}</strong>.`;
-                }
-            }
-        }
+        const omerDay = calcOmerDay(qHoy);
 
         if (qHoy.m !== undefined && !qHoy.special) {
-            let isOmer = false,
-                omerDay = 0;
-            if (qHoy.m === 0 && qHoy.d >= 26) {
-                isOmer = true;
-                omerDay = qHoy.d - 25;
-            } else if (qHoy.m === 1) {
-                isOmer = true;
-                omerDay = 5 + qHoy.d;
-            } else if (qHoy.m === 2 && qHoy.d <= 15) {
-                isOmer = true;
-                omerDay = 35 + qHoy.d;
-            }
-
-            if (isOmer && omerDay < 50) {
+            if (omerDay !== null && omerDay < 50) {
                 document.getElementById('card-omer').style.display = 'block';
                 document.getElementById('omer-count').innerText = omerDay;
             } else {
@@ -254,7 +262,7 @@ const QumranApp = {
         }
 
         if (qHoy.m === 6 && qHoy.d >= 1 && qHoy.d <= 10) {
-            let tData = QumranData.YAMIM_NORAIM[qHoy.d - 1];
+            const tData = QumranData.YAMIM_NORAIM[qHoy.d - 1];
             document.getElementById('card-teshuva').style.display = 'block';
             document.getElementById('teshuva-cmd').innerText = `DÍA ${qHoy.d}: ${tData.t}`;
             document.getElementById('teshuva-ref').innerText = `Lectura: ${tData.r}`;
@@ -275,7 +283,7 @@ const QumranApp = {
             hoy = new Date(hoy.getTime() - 86400000);
         }
 
-        let q = QumranCalendar.calculate(hoy);
+        const q = QumranCalendar.calculate(hoy);
         document.getElementById('greg-date').innerText = hoy.toLocaleDateString('es-ES', {
             weekday: 'long',
             day: 'numeric',
@@ -286,7 +294,7 @@ const QumranApp = {
 
         if (q.special) {
             // Calculamos en qué día de la semana de ajuste estamos (del 1 al 7)
-            let diaEspecial = q.dCountYear - 2184;
+            const diaEspecial = q.dCountYear - 2184;
 
             document.getElementById('heb-date').innerText = 'SEMANA DE AJUSTE SOLAR';
             document.getElementById('heb-dia').innerText = `Día ${diaEspecial} de 7 • Sincronizando Equinoccio`;
@@ -302,8 +310,8 @@ const QumranApp = {
             document.getElementById('heb-estacion').innerText = q.est;
 
             // Lógica de Instrucción del Mesías
-            let hIndex = q.dCountYear ? Math.floor(q.dCountYear / 7) % QumranData.HALAKHA.length : 0;
-            let h = QumranData.HALAKHA[hIndex];
+            const hIndex = q.dCountYear ? Math.floor(q.dCountYear / 7) % QumranData.HALAKHA.length : 0;
+            const h = QumranData.HALAKHA[hIndex];
             document.getElementById('messiah-theme').innerText = h.t;
             document.getElementById('messiah-hebrew').innerText = h.h || '';
             document.getElementById('messiah-context').innerText = h.c ? `Contexto: ${h.c}` : '';
@@ -312,7 +320,7 @@ const QumranApp = {
             document.getElementById('messiah-action').innerText = `${h.a} (${h.r})`;
 
             // Distintivo de Fiesta
-            let fIdx = QumranData.FIESTAS.findIndex((x) => x.m === q.m && x.d === q.d);
+            const fIdx = QumranData.FIESTAS.findIndex((x) => x.m === q.m && x.d === q.d);
             if (fIdx !== -1) {
                 QumranApp.todayFiesta = fIdx;
                 document.getElementById('heb-fiesta').innerText = '★ ' + QumranData.FIESTAS[fIdx].n;
@@ -350,7 +358,7 @@ const QumranApp = {
                 document.getElementById('lit-main-title').innerText = litMain;
                 document.getElementById('page-lit-type').innerText = litType;
                 document.getElementById('page-lit-title').innerText = s.t;
-                let cHTML = s.c
+                const cHTML = s.c
                     ? `<div style="background:rgba(212,175,55,0.15); padding:15px; border-left:4px solid #d4af37; margin-bottom:25px; font-style:italic;"><strong>Contexto:</strong><br>${s.c}</div>`
                     : '';
                 document.getElementById('page-lit-text').innerHTML =
@@ -360,25 +368,16 @@ const QumranApp = {
     },
 
     openFiesta: (index, forceYear) => {
-        let f = QumranData.FIESTAS[index];
-        let year = forceYear || new Date().getFullYear();
-        let anchorGreg = new Date(year, 2, 20);
-        let foundDate = null;
-        for (let i = -20; i < 370; i++) {
-            let d = new Date(anchorGreg.getTime() + i * 86400000);
-            let q = QumranCalendar.calculate(d);
-            if (q && !q.special && q.m === f.m && q.d === f.d) {
-                foundDate = d;
-                break;
-            }
-        }
+        const f = QumranData.FIESTAS[index];
+        const year = forceYear || new Date().getFullYear();
+        const foundDate = findFestivalDate(index, year);
 
         // RESTAURACIÓN: Día de la semana completo
         let dateStr = foundDate
             ? foundDate.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' })
             : 'Calculando...';
         if (foundDate && f.dur > 1) {
-            let end = new Date(foundDate.getTime() + (f.dur - 1) * 86400000);
+            const end = new Date(foundDate.getTime() + (f.dur - 1) * 86400000);
             dateStr += ' al ' + end.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
         }
 
@@ -418,46 +417,49 @@ const QumranApp = {
     },
 
     renderCalendar: () => {
-        let y = document.getElementById('cal-year')
+        const y = document.getElementById('cal-year')
             ? parseInt(document.getElementById('cal-year').value)
             : new Date().getFullYear();
-        let list = document.getElementById('cal-lista');
+        const list = document.getElementById('cal-lista');
         if (!list) return;
         list.innerHTML = "<div class='text-center' style='padding:20px;'>Calculando ciclo sagrado...</div>";
         setTimeout(() => {
-            let test = new Date(y, 2, 5);
+            const festivals = getFestivalsForYear(y);
             let html = '';
-            for (let i = 0; i < 380; i++) {
-                let d = new Date(test.getTime() + i * 86400000);
-                let q = QumranCalendar.calculate(d);
-                if (!q || q.special) continue;
-                let fIdx = QumranData.FIESTAS.findIndex((x) => x.m === q.m && x.d === q.d);
-                if (fIdx !== -1) {
-                    let f = QumranData.FIESTAS[fIdx];
-                    let dateLabel = d.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
-                    if (f.dur > 1) {
-                        let end = new Date(d.getTime() + (f.dur - 1) * 86400000);
-                        dateLabel += ' - ' + end.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
-                    }
-                    // Obtenemos el nombre exacto del mes desde tus datos
-                    let nombreMes = QumranData.MESES[q.m];
-
-                    html += `
+            festivals.forEach(({ date: d, q, index: fIdx }) => {
+                const f = QumranData.FIESTAS[fIdx];
+                let dateLabel = d.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
+                if (f.dur > 1) {
+                    const end = new Date(d.getTime() + (f.dur - 1) * 86400000);
+                    dateLabel += ' - ' + end.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
+                }
+                const nombreMes = QumranData.MESES[q.m];
+                html += `
                     <div class="edu-card fiesta" data-index="${fIdx}" data-year="${y}">
                         <div class="edu-card-title">${f.n}</div>
                         <div class="edu-card-subtitle">${f.es}</div>
                         <div class="card-meta-info">
                             <span>${dateLabel}</span>
-                            <span class="q-date">Día ${q.d} • ${nombreMes}</span>
+                            <span class="q-date">Día ${q.d} &bull; ${nombreMes}</span>
                         </div>
-                        <div class="edu-card-arrow">➔</div>
+                        <div class="edu-card-arrow">&#10132;</div>
                     </div>`;
-                }
-            }
+            });
             list.innerHTML = html || "<div class='card'>No se encontraron fiestas.</div>";
         }, 50);
+    },
+    showToast: (msg) => {
+        const container = document.getElementById('toast-container');
+        if (!container) return;
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.textContent = msg;
+        container.appendChild(toast);
+        toast.addEventListener('animationend', () => toast.remove());
+        setTimeout(() => toast.remove(), 3000);
     },
 };
 
 document.addEventListener('DOMContentLoaded', QumranApp.init);
+
 window.QumranApp = QumranApp;

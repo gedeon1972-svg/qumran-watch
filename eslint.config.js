@@ -1,7 +1,9 @@
-import js from '@eslint/js';
+﻿import js from '@eslint/js';
+import security from 'eslint-plugin-security';
 
 export default [
     js.configs.recommended,
+    security.configs.recommended,
     {
         languageOptions: {
             ecmaVersion: 'latest',
@@ -19,12 +21,17 @@ export default [
                 Blob: 'readonly',
                 URL: 'readonly',
                 Promise: 'readonly',
+                Response: 'readonly',
+                Request: 'readonly',
             },
         },
         rules: {
             'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
             'no-console': 'off',
             'no-undef': 'error',
+            'prefer-const': 'warn',
+            eqeqeq: ['warn', 'smart'],
+            'no-var': 'error',
         },
     },
     {

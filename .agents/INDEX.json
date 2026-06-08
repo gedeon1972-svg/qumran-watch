@@ -1,0 +1,59 @@
+{
+  "version": "1.0.0",
+  "name": "Qumran Watch Multi-Agent System",
+  "description": "Sistema multi-agente para el desarrollo y mantenimiento de Qumran Watch, PWA liturgica con calendario 364 dias, sincronizacion GPS y alertas ICS.",
+  "total_agents": 11,
+  "categories": {
+    "frontend": {
+      "path": "frontend/",
+      "agents": [
+        {"id": "frontend-architect", "file": "frontend-architect.json"}
+      ]
+    },
+    "backend": {
+      "path": "backend/",
+      "agents": [
+        {"id": "calendar-engineer", "file": "calendar-engineer.json"},
+        {"id": "gps-solar-specialist", "file": "gps-solar-specialist.json"},
+        {"id": "pwa-specialist", "file": "pwa-specialist.json"}
+      ]
+    },
+    "content": {
+      "path": "content/",
+      "agents": [
+        {"id": "content-specialist", "file": "content-specialist.json"}
+      ]
+    },
+    "design": {
+      "path": "design/",
+      "agents": [
+        {"id": "ui-designer", "file": "ui-designer.json"}
+      ]
+    },
+    "quality": {
+      "path": "quality/",
+      "agents": [
+        {"id": "qa-tester", "file": "qa-tester.json"},
+        {"id": "security-qa-agent", "file": "security-qa-agent.json"}
+      ]
+    },
+    "docs": {
+      "path": "docs/",
+      "agents": [
+        {"id": "docs-specialist", "file": "docs-specialist.json"}
+      ]
+    },
+    "accessibility": {
+      "path": "accessibility/",
+      "agents": [
+        {"id": "a11y-specialist", "file": "a11y-specialist.json"}
+      ]
+    },
+    "devops": {
+      "path": "devops/",
+      "agents": [
+        {"id": "devops-specialist", "file": "devops-specialist.json"}
+      ]
+    }
+  }
+}

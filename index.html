@@ -61,11 +61,17 @@
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="src/css/styles.css">
+    <link rel="stylesheet" href="src/css/animations.css">
+
+    <script src="src/js/theme-init.js"></script>
 </head>
 <body>
 
 <main class="app-frame">
-    <h1>Qumran Watch</h1>
+    <div class="app-header">
+        <h1>Qumran Watch</h1>
+        <button id="theme-toggle" aria-label="Cambiar tema claro/oscuro">☀</button>
+    </div>
 
     <div id="alert-container" class="watcher-alert">
         <div class="watcher-title"><span class="icon-watcher">👁️</span> MENSAJE DEL VIGÍA</div>
@@ -73,12 +79,12 @@
     </div>
 
     <div id="view-hoy" class="view active">
-        <button id="btn-install" class="btn-install" aria-label="Instalar aplicación en el dispositivo">INSTALAR APLICACIÓN</button>
+        <button id="btn-install" class="btn-install" style="display:none" aria-label="Instalar aplicación en el dispositivo">INSTALAR APLICACIÓN</button>
         <article class="card">
             <span class="fecha-greg" id="greg-date">...</span>
             <div class="fecha-hebrea" id="heb-date">Cargando...</div>
             <div id="heb-fiesta" class="fiesta-badge"></div>
-            
+
             <div class="info-block-center">
                 <span class="lbl">DÍA DE LA SEMANA</span>
                 <span class="val" id="heb-dia"></span>
@@ -98,7 +104,7 @@
                     <span class="val" id="heb-estacion"></span>
                 </div>
             </div>
-            
+
             <div class="gates-container">
                 <div class="gate-dot">1</div>
                 <div class="gate-dot">2</div>
@@ -121,7 +127,7 @@
             <h2 class="red-text">CUENTA DEL OMER</h2>
             <div class="text-center"><span class="lbl">DÍA</span><span class="val omer-count-val" id="omer-count"></span></div>
         </article>
-        
+
         <article class="card" id="card-teshuva">
             <h2 class="red-text">YAMIM NORAIM</h2>
             <div class="text-center"><span class="lbl">DÍAS DE TEMOR (TESHUVÁ)</span><span class="val" id="teshuva-cmd"></span></div>
@@ -141,11 +147,13 @@
 
     <div id="view-lit" class="view">
         <div class="liturgy-page">
-            <h3 class="red-text text-center lit-mt-0" id="page-lit-type"></h3>
-            <h2 class="liturgy-heading text-center" id="lit-main-title"></h2>
-            <div class="liturgy-title text-center" id="page-lit-title"></div>
-            <div class="separator-gold sep-lit-sm" id="sep-lit"></div>
-            <div class="liturgy-text" id="page-lit-text"></div>
+            <article class="card">
+                <h3 class="red-text text-center lit-mt-0" id="page-lit-type"></h3>
+                <h2 class="liturgy-heading text-center" id="lit-main-title"></h2>
+                <div class="liturgy-title text-center" id="page-lit-title"></div>
+                <div class="separator-gold sep-lit-sm" id="sep-lit"></div>
+                <div class="liturgy-text" id="page-lit-text"></div>
+            </article>
             <div class="separator-gold sep-lit-lg"></div>
             <p class="text-center italic-sub lit-footer-text">Textos restaurados de los rollos del Mar Muerto.</p>
         </div>
@@ -166,19 +174,19 @@
 
     <div id="view-con" class="view">
         <h2>Comunidad y Recursos</h2>
-        <article id="btn-podcast-con" class="card clickable card-podcast">
+        <article id="btn-podcast-con" class="card interactive-card card-podcast">
             <span class="lbl red-text">🎙️ PODCAST OFICIAL</span>
             <div class="card-main-text">Diseñados para Gobernar</div>
             <div class="card-sub-text">Recupera tu gobierno interior a través del análisis profundo.</div>
             <div class="card-link">Escuchar enseñanza de hoy ➔</div>
         </article>
-        <article id="btn-institute-con" class="card clickable card-institute">
+        <article id="btn-institute-con" class="card interactive-card card-institute">
             <span class="lbl blue-text">🎓 ESTUDIOS BÍBLICOS</span>
             <div class="card-main-text">Instituto Descubre la Biblia</div>
             <div class="card-sub-text">Formación bíblica profunda y cursos online.</div>
             <div class="card-link">Visitar Sitio Web ➔</div>
         </article>
-        <article id="card-telegram" class="card clickable card-telegram">
+        <article id="card-telegram" class="card interactive-card card-telegram">
             <span class="lbl lbl-telegram">📱 CANAL DE TELEGRAM</span>
             <div class="card-main-text">Descubre la Biblia</div>
             <div class="card-sub-text">Recibe las últimas novedades directamente a tu celular.</div>
@@ -190,22 +198,23 @@
         <h2>Biblioteca la Verdad Restaurada</h2>
         <p class="fundamento-txt">
             El calendario que tienes en tus manos no es una invención moderna, sino la <strong>restauración matemática</strong> del orden entregado a Enoc y Moisés.
-        </p>   
+        </p>
     <div id="edu-grid" class="edu-grid-container"></div>
-        
+
     </div>
 
     <footer class="site-footer">
         <div class="footer-content">
             <span>© 2026 Cristian Salinas (Mash Jáyt)</span>
             <span class="footer-links">
-                <a href="privacy.html" target="_blank" rel="noopener noreferrer">Política de Privacidad</a>
+                <button id="btn-privacy" style="background:none; border:none; color:inherit; text-decoration:underline; font:inherit; cursor:pointer; padding:0;">Política de Privacidad</button>
                 <span class="footer-sep">|</span>
-                <a href="license.html" target="_blank" rel="noopener noreferrer">Licencia MIT</a>
+                <button id="btn-license" style="background:none; border:none; color:inherit; text-decoration:underline; font:inherit; cursor:pointer; padding:0;">Licencia MIT</button>
             </span>
         </div>
     </footer>
 
+<div id="toast-container"></div>
 </main>
 
 <div id="modal-fiesta" role="dialog" aria-modal="true" aria-labelledby="mod-title">
@@ -235,6 +244,41 @@
     </div>
 </div>
 
+<div id="modal-license" role="dialog" aria-modal="true" aria-labelledby="lic-title" style="display: none;">
+    <div class="modal-content">
+        <button id="btn-close-license" class="close-modal" aria-label="Cerrar">&times;</button>
+        <h2 id="lic-title">Licencia MIT</h2>
+        <div class="modal-body-text text-left" style="font-size: 0.9em; line-height: 1.5; text-align: left; max-height: 50vh; overflow-y: auto; padding-right: 10px;">
+            <p>Copyright (c) 2026 Cristian Salinas</p>
+            <p>Se concede permiso, de forma gratuita, a cualquier persona que obtenga una copia de este software y de los archivos de documentación asociados (el "Software"), para utilizar el Software sin restricción, incluyendo sin limitación los derechos a usar, copiar, modificar, fusionar, publicar, distribuir, sublicenciar, y/o vender copias del Software, y a permitir a las personas a las que se les proporcione el Software a hacer lo mismo, sujeto a las siguientes condiciones:</p>
+            <p>El aviso de copyright anterior y este aviso de permiso se incluirán en todas las copias o partes sustanciales del Software.</p>
+            <p>EL SOFTWARE SE PROPORCIONA "TAL CUAL", SIN GARANTÍA DE NINGÚN TIPO, EXPRESA O IMPLÍCITA, INCLUYENDO PERO NO LIMITADO A GARANTÍAS DE COMERCIALIZACIÓN, IDONEIDAD PARA UN PROPÓSITO PARTICULAR Y NO INFRACCIÓN. EN NINGÚN CASO LOS AUTORES O TITULARES DEL COPYRIGHT SERÁN RESPONSABLES DE NINGUNA RECLAMACIÓN, DAÑOS U OTRAS RESPONSABILIDADES, YA SEA EN UNA ACCIÓN DE CONTRATO, AGRAVIO O CUALQUIER OTRO MOTIVO, QUE SURJA DE O EN CONEXIÓN CON EL SOFTWARE O EL USO U OTRO TIPO DE ACCIONES EN EL SOFTWARE.</p>
+        </div>
+    </div>
+</div>
+<div id="modal-privacy" role="dialog" aria-modal="true" aria-labelledby="priv-title" style="display: none;">
+    <div class="modal-content">
+        <button id="btn-close-privacy" class="close-modal" aria-label="Cerrar">&times;</button>
+        <h2 id="priv-title">Política de Privacidad</h2>
+        <div class="modal-body-text text-left" style="font-size: 0.9em; line-height: 1.5; text-align: left; max-height: 50vh; overflow-y: auto; padding-right: 10px;">
+            <p><strong>Qumran Watch</strong> es una Aplicación Web Progresiva (PWA) 100% frontend.</p>
+            <p class="red-text" style="font-weight:bold; margin-top:20px;">Recopilación de Datos</p>
+            <p>Esta aplicación NO recopila, almacena, ni transmite datos personales a ningún servidor externo.</p>
+            <p>Toda la información procesada (coordenadas GPS, preferencias de visualización) se almacena exclusivamente en el almacenamiento local del navegador (localStorage) y nunca abandona el dispositivo del usuario.</p>
+            <p class="red-text" style="font-weight:bold; margin-top:20px;">Geolocalización</p>
+            <p>El acceso a la ubicación GPS se utiliza únicamente para calcular la salida y puesta del sol. Esta información se almacena localmente y no se comparte con terceros. El usuario puede denegar el permiso de geolocalización; en ese caso, se usará Jerusalén (31.7683, 35.2137) como valor por defecto.</p>
+            <p class="red-text" style="font-weight:bold; margin-top:20px;">Servicios de Terceros</p>
+            <p>Esta aplicación no integra scripts de terceros, analytics, trackers ni publicidad.</p>
+            <p class="red-text" style="font-weight:bold; margin-top:20px;">Cookies</p>
+            <p>No se utilizan cookies de ningún tipo.</p>
+            <p class="red-text" style="font-weight:bold; margin-top:20px;">Contacto</p>
+            <p>Para consultas sobre privacidad: gedeon1972@gmail.com</p>
+            <hr style="border:none; border-top:1px solid var(--faint); margin:20px 0; opacity:0.5;">
+            <p><em>Última actualización: 5 de junio de 2026</em></p>
+        </div>
+    </div>
+</div>
+
 <div id="update-toast" class="update-toast">
     <div class="toast-content"><span class="toast-icon">🚀</span><span class="toast-msg">Nueva versión disponible</span></div>
     <button id="btn-refresh" class="toast-btn">ACTUALIZAR</button>
@@ -251,3 +295,5 @@
 <script type="module" src="src/js/app.js"></script>
 </body>
 </html>
+
+

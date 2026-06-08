@@ -108,6 +108,8 @@ function buildDoc() {
         'modal-lectura',
         'btn-close-modal',
         'btn-close-lectura',
+        'modal-privacy',
+        'btn-privacy',
         'mod-title',
         'mod-fechas',
         'mod-fechas-heb',

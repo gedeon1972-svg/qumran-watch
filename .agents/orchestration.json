@@ -1,0 +1,62 @@
+{
+  "version": "1.0.0",
+  "name": "Qumran Watch Development Pipeline",
+  "description": "Pipeline de desarrollo para Qumran Watch PWA liturgica.",
+  "stack": ["Vanilla JS (ES6 Modules)", "Vite", "Vitest", "GitHub Pages", "PWA"],
+  "hierarchy": {
+    "tier_1_core": ["calendar-engineer", "gps-solar-specialist"],
+    "tier_2_ux": ["ui-designer", "frontend-architect", "content-specialist", "a11y-specialist"],
+    "tier_3_infra": ["pwa-specialist", "qa-tester", "devops-specialist", "security-qa-agent", "docs-specialist"]
+  },
+  "development_pipeline": {
+    "phase_1_fundacion": {
+      "name": "Fundacion Matematica",
+      "agents": ["calendar-engineer", "gps-solar-specialist"],
+      "duration": "continua",
+      "deliverables": ["calendario-364", "algoritmo-solar", "data-liturgica"],
+      "approval_gate": "orquestador"
+    },
+    "phase_2_arquitectura": {
+      "name": "Arquitectura Frontend",
+      "agents": ["frontend-architect", "ui-designer"],
+      "duration": "continua",
+      "deliverables": ["controlador-principal", "sistema-estilos", "componentes-ui"],
+      "approval_gate": "orquestador"
+    },
+    "phase_3_contenido": {
+      "name": "Contenido Liturgico",
+      "agents": ["content-specialist"],
+      "duration": "continua",
+      "deliverables": ["datos-fiestas", "textos-estudio", "liturgia-diaria"],
+      "approval_gate": "orquestador"
+    },
+    "phase_4_pwa": {
+      "name": "Infraestructura PWA",
+      "agents": ["pwa-specialist", "devops-specialist"],
+      "duration": "continua",
+      "deliverables": ["service-worker", "manifest", "generador-ics", "ci-cd", "build"],
+      "approval_gate": "orquestador"
+    },
+    "phase_5_calidad": {
+      "name": "Aseguramiento de Calidad",
+      "agents": ["qa-tester", "security-qa-agent"],
+      "duration": "continua",
+      "deliverables": ["tests-unitarios", "coverage-report", "pruebas-regresion", "auditoria-seguridad"],
+      "approval_gate": "orquestador"
+    },
+    "phase_6_accesibilidad": {
+      "name": "Accesibilidad y Cumplimiento",
+      "agents": ["a11y-specialist", "security-qa-agent"],
+      "duration": "continua",
+      "deliverables": ["auditoria-wcag", "parches-aria", "csp-seguro"],
+      "approval_gate": "orquestador"
+    },
+    "phase_7_documentacion": {
+      "name": "Documentacion y Calidad",
+      "agents": ["docs-specialist"],
+      "duration": "continua",
+      "deliverables": ["readme", "changelog", "adr", "guias"],
+      "approval_gate": "orquestador"
+    }
+  }
+}

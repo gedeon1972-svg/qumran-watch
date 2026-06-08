@@ -26,7 +26,7 @@ jobs:
       - name: 🛡️ Ejecutar Tests
         run: npm test
 
-      - name: 🔨 Compilar Versión 12.0 (Build)
+      - name: 🔨 Compilar Versión 13.0 (Build)
         run: npm run build
 
       - name: 🚀 Publicar en GitHub Pages
