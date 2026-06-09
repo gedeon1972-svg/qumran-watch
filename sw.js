@@ -1,10 +1,10 @@
-﻿/**
- * sw.js - EL GUARDIÁN DEL UMBRAL (V13.1.1)
+/**
+ * sw.js - EL GUARDIÁN DEL UMBRAL (v13.1.2)
  * Estrategia híbrida: cache-first para assets estáticos,
  * network-first para navegaciones, fallback offline.
  */
 
-const CACHE_NAME = 'qumran-cache-v13.1.1';
+const CACHE_NAME = 'qumran-cache-v13.1.2';
 
 const URLS_TO_CACHE = [
     './',
@@ -116,3 +116,4 @@ self.addEventListener('message', (event) => {
         self.skipWaiting();
     }
 });
+
