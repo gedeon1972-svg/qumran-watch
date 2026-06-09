@@ -4,7 +4,7 @@
  * network-first para navegaciones, fallback offline.
  */
 
-const CACHE_NAME = 'qumran-cache-v13.1.3';
+const CACHE_NAME = 'qumran-cache-v13.1.4';
 
 const URLS_TO_CACHE = [
     './',
