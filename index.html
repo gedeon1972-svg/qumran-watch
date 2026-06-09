@@ -80,7 +80,7 @@
 
     <div id="view-hoy" class="view active">
         <button id="btn-install" class="btn-install" style="display:none" aria-label="Instalar aplicación en el dispositivo">INSTALAR APLICACIÓN</button>
-        <article class="card">
+        <article class="card interactive-card">
             <span class="fecha-greg" id="greg-date">...</span>
             <div class="fecha-hebrea" id="heb-date">Cargando...</div>
             <div id="heb-fiesta" class="fiesta-badge"></div>
@@ -116,25 +116,25 @@
             <div class="text-center mt-5"><span class="lbl" id="heb-puerta-num"></span></div>
         </article>
 
-        <article class="card sun-container" id="sun-container">
+        <article class="card sun-container interactive-card" id="sun-container">
             <div class="text-center"><span class="lbl">SALIDA DEL SOL</span><span class="val text-gold" id="sun-rise"></span></div>
             <div class="sun-icon">☀</div>
             <div class="text-center"><span class="lbl">PUESTA DEL SOL</span><span class="val text-gold" id="sun-set"></span></div>
         </article>
         <button id="geo-btn" class="btn-action geo-btn" aria-label="Actualizar ubicación GPS">↻ Actualizar Ubicación (GPS)</button>
 
-        <article class="card" id="card-omer">
+        <article class="card interactive-card" id="card-omer">
             <h2 class="red-text">CUENTA DEL OMER</h2>
             <div class="text-center"><span class="lbl">DÍA</span><span class="val omer-count-val" id="omer-count"></span></div>
         </article>
 
-        <article class="card" id="card-teshuva">
+        <article class="card interactive-card" id="card-teshuva">
             <h2 class="red-text">YAMIM NORAIM</h2>
             <div class="text-center"><span class="lbl">DÍAS DE TEMOR (TESHUVÁ)</span><span class="val" id="teshuva-cmd"></span></div>
             <div class="text-center mt-10"><span class="lbl">LECTURA SUGERIDA</span><span class="val text-gold" id="teshuva-ref"></span></div>
         </article>
 
-        <article class="card">
+        <article class="card interactive-card">
             <h2>INSTRUCCIÓN DEL MESÍAS</h2>
             <div class="messiah-theme" id="messiah-theme"></div>
             <div class="messiah-hebrew" id="messiah-hebrew"></div>
@@ -147,7 +147,7 @@
 
     <div id="view-lit" class="view">
         <div class="liturgy-page">
-            <article class="card">
+            <article class="card interactive-card">
                 <h3 class="red-text text-center lit-mt-0" id="page-lit-type"></h3>
                 <h2 class="liturgy-heading text-center" id="lit-main-title"></h2>
                 <div class="liturgy-title text-center" id="page-lit-title"></div>
@@ -294,5 +294,7 @@
 
 </body>
 </html>
+
+
 
 
