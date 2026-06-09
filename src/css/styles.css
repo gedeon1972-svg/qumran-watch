@@ -1,4 +1,4 @@
-﻿@import './animations.css';
+@import './animations.css';
 /* --- FUENTES LOCALES (OFFLINE) --- */
 
 @font-face {
@@ -167,6 +167,10 @@ h1 {
     font-size: 1.8rem;
     margin: 20px 0 10px;
     letter-spacing: 2px;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 h2 {
     font-size: 1.3rem;
@@ -186,15 +190,12 @@ h2 {
 .app-header {
     display: flex;
     align-items: center;
-    justify-content: center;
-    position: relative;
+    justify-content: space-between;
+    gap: 10px;
 }
 
 #theme-toggle {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
+    flex-shrink: 0;
     background: none;
     border: 1px solid var(--faint);
     border-radius: 50%;

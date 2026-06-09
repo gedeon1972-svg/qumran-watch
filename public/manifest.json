@@ -1,7 +1,7 @@
 {
   "name": "Qumran Watch",
   "short_name": "Qumran",
-  "description": "Calendario Sagrado 364 dÃ­as, turnos sacerdotales, sincronizaciÃ³n solar GPS y alertas ICS.",
+  "description": "Calendario Sagrado 364 dÃƒÂ­as, turnos sacerdotales, sincronizaciÃƒÂ³n solar GPS y alertas ICS.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -24,7 +24,7 @@
       "sizes": "512x512",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "Vista principal con calendario 364 dÃ­as"
+      "label": "Vista principal con calendario 364 dÃƒÂ­as"
     }
   ],
   "icons": [
@@ -41,5 +41,5 @@
       "purpose": "any maskable"
     }
   ],
-  "version": "13.1.1"
+  "version": "13.1.2"
 }
