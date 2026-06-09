@@ -3,7 +3,7 @@
  * V13.0.0: Reconstrucción Modular Blindada
  */
 
-// --- 1. IMPORTACIÃ“N DE MÃ“DULOS ---
+// --- 1. IMPORTACIÓN DE MÓDULOS ---
 import { QumranData } from './data.js';
 import { QumranCalendar } from './calendar.js';
 import { QumranSun } from './sun.js';
@@ -16,7 +16,7 @@ let deferredPrompt;
 let newWorker;
 
 const isStandalone = () => window.matchMedia('(display-mode: standalone)').matches;
-// --- 2. GESTIÃ“N DE SERVICE WORKER & ACTUALIZACIONES ---
+// --- 2. GESTIÓN DE SERVICE WORKER & ACTUALIZACIONES ---
 const BASE_PATH = '/qumran-watch/';
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -42,7 +42,7 @@ if ('serviceWorker' in navigator) {
     });
 }
 
-// --- 3. LÃ“GICA DE INSTALACIÃ“N PWA ---
+// --- 3. LÓGICA DE INSTALACIÓN PWA ---
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
@@ -50,7 +50,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
     if (installBtn) installBtn.style.display = 'block';
 });
 
-// --- 4. OBJETO PRINCIPAL DE LA APLICACIÃ“N ---
+// --- 4. OBJETO PRINCIPAL DE LA APLICACIÓN ---
 const QumranApp = {
     todayFiesta: null,
     sunriseHour: 6.0,
@@ -209,7 +209,7 @@ const QumranApp = {
                     QumranApp.updateSunData(lat, lng);
                 },
                 () => {
-                    // --- INICIO DEL RESPALDO BÍBLICO (JERUSALÃ‰N) ---
+                    // --- INICIO DEL RESPALDO BÍBLICO (JERUSALÉN) ---
                     console.warn('GPS falló o denegado. Usando Jerusalén.');
                     if (force) document.getElementById('geo-btn').innerText = 'Jerusalén (GPS Inactivo)';
 
@@ -242,7 +242,7 @@ const QumranApp = {
         document.getElementById('sun-set').innerText = times.set;
         document.getElementById('sun-container').style.display = 'flex';
         const btn = document.getElementById('geo-btn');
-        btn.innerText = 'â†» Actualizar Ubicación (GPS)';
+        btn.innerText = '↻ Actualizar Ubicación (GPS)';
         btn.style.display = 'block';
     },
 
@@ -299,7 +299,7 @@ const QumranApp = {
             const diaEspecial = q.dCountYear - 2184;
 
             document.getElementById('heb-date').innerText = 'SEMANA DE AJUSTE SOLAR';
-            document.getElementById('heb-dia').innerText = `Día ${diaEspecial} de 7 â€¢ Sincronizando Equinoccio`;
+            document.getElementById('heb-dia').innerText = `Día ${diaEspecial} de 7 • Sincronizando Equinoccio`;
 
             // Si tienes el elemento de la puerta del sol, lo fijamos en la Puerta 4
             const gateEl = document.getElementById('gate-active');
@@ -325,7 +325,7 @@ const QumranApp = {
             const fIdx = QumranData.FIESTAS.findIndex((x) => x.m === q.m && x.d === q.d);
             if (fIdx !== -1) {
                 QumranApp.todayFiesta = fIdx;
-                document.getElementById('heb-fiesta').innerText = 'â˜… ' + QumranData.FIESTAS[fIdx].n;
+                document.getElementById('heb-fiesta').innerText = '★ ' + QumranData.FIESTAS[fIdx].n;
             } else {
                 QumranApp.todayFiesta = null;
                 document.getElementById('heb-fiesta').innerText = '';
@@ -333,7 +333,7 @@ const QumranApp = {
 
             // Puertas del Sol
             document.querySelectorAll('.gate-dot').forEach((d, i) => d.classList.toggle('active', i + 1 === q.puerta));
-            document.getElementById('heb-puerta-num').innerText = q.puerta + 'Âª Puerta';
+            document.getElementById('heb-puerta-num').innerText = q.puerta + 'ª Puerta';
 
             // Progreso del Shabat y Liturgia
             let percent = ((q.idxSem + 1) / 7) * 100;
@@ -342,7 +342,7 @@ const QumranApp = {
             let litMain = '';
 
             if (q.idxSem === 6) {
-                document.getElementById('shabat-text').innerText = 'Â¡SHABAT SHALOM!';
+                document.getElementById('shabat-text').innerText = '¡SHABAT SHALOM!';
                 document.getElementById('shabat-progress').style.background = '#fff';
                 percent = 100;
                 s = QumranData.CANTICOS_SHABAT[Math.floor((q.dCountYear || 0) / 7) % 13];
@@ -374,7 +374,7 @@ const QumranApp = {
         const year = forceYear || new Date().getFullYear();
         const foundDate = findFestivalDate(index, year);
 
-        // RESTAURACIÃ“N: Día de la semana completo
+        // RESTAURACIÓN: Día de la semana completo
         let dateStr = foundDate
             ? foundDate.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' })
             : 'Calculando...';
