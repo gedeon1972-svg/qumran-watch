@@ -803,6 +803,15 @@ h2 {
     opacity: 0.8;
     text-decoration: underline;
 }
+.app-version {
+    opacity: 0.5;
+    font-size: 0.6rem;
+    margin-left: 6px;
+    letter-spacing: 0;
+    text-transform: none;
+    font-family: monospace;
+}
+
 .footer-sep {
     margin: 0 8px;
     color: var(--faint);
