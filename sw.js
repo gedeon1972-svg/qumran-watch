@@ -1,10 +1,10 @@
 /**
- * sw.js - EL GUARDIÁN DEL UMBRAL (v13.1.2)
+ * sw.js - EL GUARDIÁN DEL UMBRAL (v13.1.3)
  * Estrategia híbrida: cache-first para assets estáticos,
  * network-first para navegaciones, fallback offline.
  */
 
-const CACHE_NAME = 'qumran-cache-v13.1.2';
+const CACHE_NAME = 'qumran-cache-v13.1.3';
 
 const URLS_TO_CACHE = [
     './',
@@ -40,6 +40,7 @@ function isAsset(url) {
 }
 
 self.addEventListener('install', (event) => {
+    console.log('[SW] Instalando v13.1.3...');
     event.waitUntil(
         caches
             .open(CACHE_NAME)
@@ -50,11 +51,16 @@ self.addEventListener('install', (event) => {
                     }),
                 );
             })
-            .then(() => self.skipWaiting()),
+            .then((results) => {
+                const succeeded = results.filter((r) => r.status === 'fulfilled').length;
+                console.log('[SW] Cache completado: ' + succeeded + ' archivos');
+                self.skipWaiting();
+            }),
     );
 });
 
 self.addEventListener('activate', (event) => {
+    console.log('[SW] Activado v13.1.3');
     event.waitUntil(
         caches
             .keys()
@@ -62,6 +68,7 @@ self.addEventListener('activate', (event) => {
                 return Promise.all(
                     cacheNames.map((cacheName) => {
                         if (cacheName !== CACHE_NAME) {
+                            console.log('[SW] Eliminando cache antiguo: ' + cacheName);
                             return caches.delete(cacheName);
                         }
                     }),
@@ -116,4 +123,3 @@ self.addEventListener('message', (event) => {
         self.skipWaiting();
     }
 });
-
