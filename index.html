@@ -1,11 +1,13 @@
-<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <title>Qumran Watch | Maskil</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+        <title>Qumran Watch | Maskil</title>
 
-    <meta http-equiv="Content-Security-Policy" content="
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="
         default-src 'self';
         script-src 'self';
         style-src 'self' 'unsafe-inline';
@@ -16,288 +18,407 @@
         base-uri 'self';
         form-action 'none';
         upgrade-insecure-requests;
-    ">
+    "
+        />
 
-    <meta name="theme-color" content="#1a120b">
-    <meta name="description" content="Herramienta litúrgica para los Hijos de Sadoc. Calendario 364 días y enseñanzas del Mesías.">
+        <meta name="theme-color" content="#1a120b" />
+        <meta
+            name="description"
+            content="Herramienta litÃºrgica para los Hijos de Sadoc. Calendario 364 dÃ­as y enseÃ±anzas del MesÃ­as."
+        />
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="Qumran Watch | Maskil">
-    <meta property="og:description" content="Herramienta litúrgica para los Hijos de Sadoc. Calendario 364 días y enseñanzas del Mesías.">
-    <meta property="og:image" content="icon.png">
-    <meta property="og:url" content="https://descubrelabiblia.github.io/qumran-watch/">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="es_ES">
+        <!-- Open Graph -->
+        <meta property="og:title" content="Qumran Watch | Maskil" />
+        <meta
+            property="og:description"
+            content="Herramienta litÃºrgica para los Hijos de Sadoc. Calendario 364 dÃ­as y enseÃ±anzas del MesÃ­as."
+        />
+        <meta property="og:image" content="icon.png" />
+        <meta property="og:url" content="https://descubrelabiblia.github.io/qumran-watch/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="es_ES" />
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Qumran Watch | Maskil">
-    <meta name="twitter:description" content="Herramienta litúrgica para los Hijos de Sadoc. Calendario 364 días y enseñanzas del Mesías.">
-    <meta name="twitter:image" content="icon.png">
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Qumran Watch | Maskil" />
+        <meta
+            name="twitter:description"
+            content="Herramienta litÃºrgica para los Hijos de Sadoc. Calendario 364 dÃ­as y enseÃ±anzas del MesÃ­as."
+        />
+        <meta name="twitter:image" content="icon.png" />
 
-    <!-- JSON-LD -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Qumran Watch | Maskil",
-        "description": "Herramienta litúrgica para los Hijos de Sadoc. Calendario 364 días y enseñanzas del Mesías.",
-        "applicationCategory": "ReligiousApplication",
-        "operatingSystem": "Any",
-        "browserRequirements": "Requiere navegador moderno con JavaScript",
-        "offers": {
-            "@type": "Offer",
-            "price": 0,
-            "priceCurrency": "USD"
-        },
-        "author": {
-            "@type": "Organization",
-            "name": "Descubre la Biblia"
-        }
-    }
-    </script>
+        <!-- JSON-LD -->
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "WebApplication",
+                "name": "Qumran Watch | Maskil",
+                "description": "Herramienta litÃºrgica para los Hijos de Sadoc. Calendario 364 dÃ­as y enseÃ±anzas del MesÃ­as.",
+                "applicationCategory": "ReligiousApplication",
+                "operatingSystem": "Any",
+                "browserRequirements": "Requiere navegador moderno con JavaScript",
+                "offers": {
+                    "@type": "Offer",
+                    "price": 0,
+                    "priceCurrency": "USD"
+                },
+                "author": {
+                    "@type": "Organization",
+                    "name": "Descubre la Biblia"
+                }
+            }
+        </script>
 
-    <link rel="icon" type="image/png" href="./icon.png">
-    <link rel="apple-touch-icon" href="./icon.png">
-    <link rel="manifest" href="./manifest.json">
-    <link rel="stylesheet" href="./src/css/styles.css">
-    <link rel="stylesheet" href="./src/css/animations.css">
+        <link rel="icon" type="image/png" href="./icon.png" />
+        <link rel="apple-touch-icon" href="./icon.png" />
+        <link rel="manifest" href="./manifest.json" />
+        <link rel="stylesheet" href="./src/css/styles.css" />
+        <link rel="stylesheet" href="./src/css/animations.css" />
 
-    <script src="./src/js/theme-init.js"></script>
-</head>
-<body>
+        <script src="./src/js/theme-init.js"></script>
+    </head>
+    <body>
+        <main class="app-frame">
+            <div class="app-header">
+                <h1>Qumran Watch</h1>
+                <button id="theme-toggle" aria-label="Cambiar tema claro/oscuro">â˜€</button>
+            </div>
 
-<main class="app-frame">
-    <div class="app-header">
-        <h1>Qumran Watch</h1>
-        <button id="theme-toggle" aria-label="Cambiar tema claro/oscuro">☀</button>
-    </div>
+            <div id="alert-container" class="watcher-alert">
+                <div class="watcher-title"><span class="icon-watcher">ðŸ‘ï¸</span> MENSAJE DEL VIGÃA</div>
+                <div id="alert-msg" class="watcher-msg"></div>
+            </div>
 
-    <div id="alert-container" class="watcher-alert">
-        <div class="watcher-title"><span class="icon-watcher">👁️</span> MENSAJE DEL VIGÍA</div>
-        <div id="alert-msg" class="watcher-msg"></div>
-    </div>
+            <div id="view-hoy" class="view active">
+                <button
+                    id="btn-install"
+                    class="btn-install"
+                    style="display: none"
+                    aria-label="Instalar aplicaciÃ³n en el dispositivo"
+                >
+                    INSTALAR APLICACIÃ“N
+                </button>
+                <article class="card interactive-card no-arrow">
+                    <span class="fecha-greg" id="greg-date">...</span>
+                    <div class="fecha-hebrea" id="heb-date">Cargando...</div>
+                    <div id="heb-fiesta" class="fiesta-badge"></div>
 
-    <div id="view-hoy" class="view active">
-        <button id="btn-install" class="btn-install" style="display:none" aria-label="Instalar aplicación en el dispositivo">INSTALAR APLICACIÓN</button>
-        <article class="card interactive-card">
-            <span class="fecha-greg" id="greg-date">...</span>
-            <div class="fecha-hebrea" id="heb-date">Cargando...</div>
-            <div id="heb-fiesta" class="fiesta-badge"></div>
+                    <div class="info-block-center">
+                        <span class="lbl">DÃA DE LA SEMANA</span>
+                        <span class="val" id="heb-dia"></span>
+                        <div class="shabat-container">
+                            <div class="shabat-bar-bg"><div class="shabat-bar-fill" id="shabat-progress"></div></div>
+                            <div class="shabat-text" id="shabat-text"></div>
+                        </div>
+                    </div>
 
-            <div class="info-block-center">
-                <span class="lbl">DÍA DE LA SEMANA</span>
-                <span class="val" id="heb-dia"></span>
-                <div class="shabat-container">
-                    <div class="shabat-bar-bg"><div class="shabat-bar-fill" id="shabat-progress"></div></div>
-                    <div class="shabat-text" id="shabat-text"></div>
+                    <div class="info-grid">
+                        <div class="text-center">
+                            <span class="lbl">TURNO (MISHMAR)</span>
+                            <span class="val" id="heb-turno"></span>
+                        </div>
+                        <div class="text-center">
+                            <span class="lbl">ESTACIÃ“N</span>
+                            <span class="val" id="heb-estacion"></span>
+                        </div>
+                    </div>
+
+                    <div class="gates-container">
+                        <div class="gate-dot">1</div>
+                        <div class="gate-dot">2</div>
+                        <div class="gate-dot">3</div>
+                        <div class="gate-dot">4</div>
+                        <div class="gate-dot">5</div>
+                        <div class="gate-dot">6</div>
+                    </div>
+                    <div class="text-center mt-5"><span class="lbl" id="heb-puerta-num"></span></div>
+                </article>
+
+                <article class="card sun-container interactive-card no-arrow" id="sun-container">
+                    <div class="text-center">
+                        <span class="lbl">SALIDA DEL SOL</span><span class="val text-gold" id="sun-rise"></span>
+                    </div>
+                    <div class="sun-icon">â˜€</div>
+                    <div class="text-center">
+                        <span class="lbl">PUESTA DEL SOL</span><span class="val text-gold" id="sun-set"></span>
+                    </div>
+                </article>
+                <button id="geo-btn" class="btn-action geo-btn" aria-label="Actualizar ubicaciÃ³n GPS">
+                    â†» Actualizar UbicaciÃ³n (GPS)
+                </button>
+
+                <article class="card interactive-card no-arrow" id="card-omer">
+                    <h2 class="red-text">CUENTA DEL OMER</h2>
+                    <div class="text-center">
+                        <span class="lbl">DÃA</span><span class="val omer-count-val" id="omer-count"></span>
+                    </div>
+                </article>
+
+                <article class="card interactive-card no-arrow" id="card-teshuva">
+                    <h2 class="red-text">YAMIM NORAIM</h2>
+                    <div class="text-center">
+                        <span class="lbl">DÃAS DE TEMOR (TESHUVÃ)</span><span class="val" id="teshuva-cmd"></span>
+                    </div>
+                    <div class="text-center mt-10">
+                        <span class="lbl">LECTURA SUGERIDA</span><span class="val text-gold" id="teshuva-ref"></span>
+                    </div>
+                </article>
+
+                <article class="card interactive-card no-arrow">
+                    <h2>INSTRUCCIÃ“N DEL MESÃAS</h2>
+                    <div class="messiah-theme" id="messiah-theme"></div>
+                    <div class="messiah-hebrew" id="messiah-hebrew"></div>
+                    <div class="messiah-context" id="messiah-context"></div>
+                    <div class="messiah-philology" id="messiah-philology"></div>
+                    <div class="messiah-quote" id="messiah-quote"></div>
+                    <div class="messiah-action" id="messiah-action"></div>
+                </article>
+            </div>
+
+            <div id="view-lit" class="view">
+                <div class="liturgy-page">
+                    <article class="card interactive-card no-arrow">
+                        <h3 class="red-text text-center lit-mt-0" id="page-lit-type"></h3>
+                        <h2 class="liturgy-heading text-center" id="lit-main-title"></h2>
+                        <div class="liturgy-title text-center" id="page-lit-title"></div>
+                        <div class="separator-gold sep-lit-sm" id="sep-lit"></div>
+                        <div class="liturgy-text" id="page-lit-text"></div>
+                    </article>
+                    <div class="separator-gold sep-lit-lg"></div>
+                    <p class="text-center italic-sub lit-footer-text">
+                        Textos restaurados de los rollos del Mar Muerto.
+                    </p>
                 </div>
             </div>
 
-            <div class="info-grid">
-                <div class="text-center">
-                    <span class="lbl">TURNO (MISHMAR)</span>
-                    <span class="val" id="heb-turno"></span>
+            <div id="view-cal" class="view">
+                <h2>Ciclo de Fiestas</h2>
+                <div class="cal-input-group">
+                    <label for="cal-year">AÃ±o Gregoriano:</label>
+                    <input type="number" id="cal-year" value="2024" min="2019" max="2100" />
+                    <button id="btn-render-cal" class="btn-action">Generar</button>
+                    <button id="btn-export-ics" class="btn-action btn-ics-export">
+                        ðŸ”” Sincronizar Alertas al Celular
+                    </button>
                 </div>
-                <div class="text-center">
-                    <span class="lbl">ESTACIÓN</span>
-                    <span class="val" id="heb-estacion"></span>
-                </div>
+                <div id="cal-lista" class="cal-list"></div>
             </div>
 
-            <div class="gates-container">
-                <div class="gate-dot">1</div>
-                <div class="gate-dot">2</div>
-                <div class="gate-dot">3</div>
-                <div class="gate-dot">4</div>
-                <div class="gate-dot">5</div>
-                <div class="gate-dot">6</div>
+            <div id="view-con" class="view">
+                <h2>Comunidad y Recursos</h2>
+                <article id="btn-podcast-con" class="card interactive-card card-podcast">
+                    <span class="lbl red-text">ðŸŽ™ï¸ PODCAST OFICIAL</span>
+                    <div class="card-main-text">DiseÃ±ados para Gobernar</div>
+                    <div class="card-sub-text">Recupera tu gobierno interior a travÃ©s del anÃ¡lisis profundo.</div>
+                    <div class="card-link">Escuchar enseÃ±anza de hoy âž”</div>
+                </article>
+                <article id="btn-institute-con" class="card interactive-card card-institute">
+                    <span class="lbl blue-text">ðŸŽ“ ESTUDIOS BÃBLICOS</span>
+                    <div class="card-main-text">Instituto Descubre la Biblia</div>
+                    <div class="card-sub-text">FormaciÃ³n bÃ­blica profunda y cursos online.</div>
+                    <div class="card-link">Visitar Sitio Web âž”</div>
+                </article>
+                <article id="card-telegram" class="card interactive-card card-telegram">
+                    <span class="lbl lbl-telegram">ðŸ“± CANAL DE TELEGRAM</span>
+                    <div class="card-main-text">Descubre la Biblia</div>
+                    <div class="card-sub-text">Recibe las Ãºltimas novedades directamente a tu celular.</div>
+                    <div class="card-link">
+                        <a
+                            href="https://t.me/+VuFNIOUSMERrLLiD"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="telegram-link"
+                            >Unirme al Canal âž”</a
+                        >
+                    </div>
+                </article>
             </div>
-            <div class="text-center mt-5"><span class="lbl" id="heb-puerta-num"></span></div>
-        </article>
 
-        <article class="card sun-container interactive-card" id="sun-container">
-            <div class="text-center"><span class="lbl">SALIDA DEL SOL</span><span class="val text-gold" id="sun-rise"></span></div>
-            <div class="sun-icon">☀</div>
-            <div class="text-center"><span class="lbl">PUESTA DEL SOL</span><span class="val text-gold" id="sun-set"></span></div>
-        </article>
-        <button id="geo-btn" class="btn-action geo-btn" aria-label="Actualizar ubicación GPS">↻ Actualizar Ubicación (GPS)</button>
+            <div id="view-edu" class="view">
+                <h2>Biblioteca la Verdad Restaurada</h2>
+                <p class="fundamento-txt">
+                    El calendario que tienes en tus manos no es una invenciÃ³n moderna, sino la
+                    <strong>restauraciÃ³n matemÃ¡tica</strong> del orden entregado a Enoc y MoisÃ©s.
+                </p>
+                <div id="edu-grid" class="edu-grid-container"></div>
+            </div>
 
-        <article class="card interactive-card" id="card-omer">
-            <h2 class="red-text">CUENTA DEL OMER</h2>
-            <div class="text-center"><span class="lbl">DÍA</span><span class="val omer-count-val" id="omer-count"></span></div>
-        </article>
+            <footer class="site-footer">
+                <div class="footer-content">
+                    <span>Â© 2026 Cristian Salinas (Mash JÃ¡yt) <span class="app-version">v13.1.3</span></span>
+                    <span class="footer-links">
+                        <button
+                            id="btn-privacy"
+                            style="
+                                background: none;
+                                border: none;
+                                color: inherit;
+                                text-decoration: underline;
+                                font: inherit;
+                                cursor: pointer;
+                                padding: 0;
+                            "
+                        >
+                            PolÃ­tica de Privacidad
+                        </button>
+                        <span class="footer-sep">|</span>
+                        <button
+                            id="btn-license"
+                            style="
+                                background: none;
+                                border: none;
+                                color: inherit;
+                                text-decoration: underline;
+                                font: inherit;
+                                cursor: pointer;
+                                padding: 0;
+                            "
+                        >
+                            Licencia MIT
+                        </button>
+                    </span>
+                </div>
+            </footer>
 
-        <article class="card interactive-card" id="card-teshuva">
-            <h2 class="red-text">YAMIM NORAIM</h2>
-            <div class="text-center"><span class="lbl">DÍAS DE TEMOR (TESHUVÁ)</span><span class="val" id="teshuva-cmd"></span></div>
-            <div class="text-center mt-10"><span class="lbl">LECTURA SUGERIDA</span><span class="val text-gold" id="teshuva-ref"></span></div>
-        </article>
+            <div id="toast-container"></div>
+        </main>
 
-        <article class="card interactive-card">
-            <h2>INSTRUCCIÓN DEL MESÍAS</h2>
-            <div class="messiah-theme" id="messiah-theme"></div>
-            <div class="messiah-hebrew" id="messiah-hebrew"></div>
-            <div class="messiah-context" id="messiah-context"></div>
-            <div class="messiah-philology" id="messiah-philology"></div>
-            <div class="messiah-quote" id="messiah-quote"></div>
-            <div class="messiah-action" id="messiah-action"></div>
-        </article>
-    </div>
-
-    <div id="view-lit" class="view">
-        <div class="liturgy-page">
-            <article class="card interactive-card">
-                <h3 class="red-text text-center lit-mt-0" id="page-lit-type"></h3>
-                <h2 class="liturgy-heading text-center" id="lit-main-title"></h2>
-                <div class="liturgy-title text-center" id="page-lit-title"></div>
-                <div class="separator-gold sep-lit-sm" id="sep-lit"></div>
-                <div class="liturgy-text" id="page-lit-text"></div>
-            </article>
-            <div class="separator-gold sep-lit-lg"></div>
-            <p class="text-center italic-sub lit-footer-text">Textos restaurados de los rollos del Mar Muerto.</p>
+        <div id="modal-fiesta" role="dialog" aria-modal="true" aria-labelledby="mod-title">
+            <div class="modal-content">
+                <span id="btn-close-modal" class="close-modal" aria-label="Cerrar">&times;</span>
+                <h2 id="mod-title"></h2>
+                <div class="text-center modal-fecha-wrapper">
+                    <div id="mod-fechas" class="fecha-greg mod-fecha-greg"></div>
+                    <div id="mod-fechas-heb" class="gold-text mod-fecha-heb"></div>
+                </div>
+                <div class="modal-body-text">
+                    <div id="mod-instr" class="modal-instr">...</div>
+                    <span id="mod-ref" class="modal-ref">...</span>
+                    <div id="mod-note" class="teological-note"></div>
+                    <div id="mod-warn" class="special-warn">âš ï¸ AYUNO: DE TARDE A TARDE (Lev 23:32)</div>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div id="view-cal" class="view">
-        <h2>Ciclo de Fiestas</h2>
-        <div class="cal-input-group">
-            <label for="cal-year">Año Gregoriano:</label>
-            <input type="number" id="cal-year" value="2024" min="2019" max="2100">
-            <button id="btn-render-cal" class="btn-action">Generar</button>
-            <button id="btn-export-ics" class="btn-action btn-ics-export">
-                🔔 Sincronizar Alertas al Celular
+        <div id="modal-lectura" role="dialog" aria-modal="true" aria-labelledby="lec-title">
+            <div class="modal-content lecture-mode">
+                <span id="btn-close-lectura" class="close-modal" aria-label="Cerrar">&times;</span>
+                <h2 id="lec-title" class="lecture-title">TÃ­tulo del Estudio</h2>
+                <div class="lecture-meta" id="lec-meta">SubtÃ­tulo</div>
+                <hr class="separator-gold" />
+                <div id="lec-body" class="lecture-body"></div>
+            </div>
+        </div>
+
+        <div id="modal-license" role="dialog" aria-modal="true" aria-labelledby="lic-title" style="display: none">
+            <div class="modal-content">
+                <button id="btn-close-license" class="close-modal" aria-label="Cerrar">&times;</button>
+                <h2 id="lic-title">Licencia MIT</h2>
+                <div
+                    class="modal-body-text text-left"
+                    style="
+                        font-size: 0.9em;
+                        line-height: 1.5;
+                        text-align: left;
+                        max-height: 50vh;
+                        overflow-y: auto;
+                        padding-right: 10px;
+                    "
+                >
+                    <p>Copyright (c) 2026 Cristian Salinas</p>
+                    <p>
+                        Se concede permiso, de forma gratuita, a cualquier persona que obtenga una copia de este
+                        software y de los archivos de documentaciÃ³n asociados (el "Software"), para utilizar el
+                        Software sin restricciÃ³n, incluyendo sin limitaciÃ³n los derechos a usar, copiar, modificar,
+                        fusionar, publicar, distribuir, sublicenciar, y/o vender copias del Software, y a permitir a las
+                        personas a las que se les proporcione el Software a hacer lo mismo, sujeto a las siguientes
+                        condiciones:
+                    </p>
+                    <p>
+                        El aviso de copyright anterior y este aviso de permiso se incluirÃ¡n en todas las copias o
+                        partes sustanciales del Software.
+                    </p>
+                    <p>
+                        EL SOFTWARE SE PROPORCIONA "TAL CUAL", SIN GARANTÃA DE NINGÃšN TIPO, EXPRESA O IMPLÃCITA,
+                        INCLUYENDO PERO NO LIMITADO A GARANTÃAS DE COMERCIALIZACIÃ“N, IDONEIDAD PARA UN PROPÃ“SITO
+                        PARTICULAR Y NO INFRACCIÃ“N. EN NINGÃšN CASO LOS AUTORES O TITULARES DEL COPYRIGHT SERÃN
+                        RESPONSABLES DE NINGUNA RECLAMACIÃ“N, DAÃ‘OS U OTRAS RESPONSABILIDADES, YA SEA EN UNA ACCIÃ“N DE
+                        CONTRATO, AGRAVIO O CUALQUIER OTRO MOTIVO, QUE SURJA DE O EN CONEXIÃ“N CON EL SOFTWARE O EL USO
+                        U OTRO TIPO DE ACCIONES EN EL SOFTWARE.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div id="modal-privacy" role="dialog" aria-modal="true" aria-labelledby="priv-title" style="display: none">
+            <div class="modal-content">
+                <button id="btn-close-privacy" class="close-modal" aria-label="Cerrar">&times;</button>
+                <h2 id="priv-title">PolÃ­tica de Privacidad</h2>
+                <div
+                    class="modal-body-text text-left"
+                    style="
+                        font-size: 0.9em;
+                        line-height: 1.5;
+                        text-align: left;
+                        max-height: 50vh;
+                        overflow-y: auto;
+                        padding-right: 10px;
+                    "
+                >
+                    <p><strong>Qumran Watch</strong> es una AplicaciÃ³n Web Progresiva (PWA) 100% frontend.</p>
+                    <p class="red-text" style="font-weight: bold; margin-top: 20px">RecopilaciÃ³n de Datos</p>
+                    <p>
+                        Esta aplicaciÃ³n NO recopila, almacena, ni transmite datos personales a ningÃºn servidor
+                        externo.
+                    </p>
+                    <p>
+                        Toda la informaciÃ³n procesada (coordenadas GPS, preferencias de visualizaciÃ³n) se almacena
+                        exclusivamente en el almacenamiento local del navegador (localStorage) y nunca abandona el
+                        dispositivo del usuario.
+                    </p>
+                    <p class="red-text" style="font-weight: bold; margin-top: 20px">GeolocalizaciÃ³n</p>
+                    <p>
+                        El acceso a la ubicaciÃ³n GPS se utiliza Ãºnicamente para calcular la salida y puesta del sol.
+                        Esta informaciÃ³n se almacena localmente y no se comparte con terceros. El usuario puede denegar
+                        el permiso de geolocalizaciÃ³n; en ese caso, se usarÃ¡ JerusalÃ©n (31.7683, 35.2137) como valor
+                        por defecto.
+                    </p>
+                    <p class="red-text" style="font-weight: bold; margin-top: 20px">Servicios de Terceros</p>
+                    <p>Esta aplicaciÃ³n no integra scripts de terceros, analytics, trackers ni publicidad.</p>
+                    <p class="red-text" style="font-weight: bold; margin-top: 20px">Cookies</p>
+                    <p>No se utilizan cookies de ningÃºn tipo.</p>
+                    <p class="red-text" style="font-weight: bold; margin-top: 20px">Contacto</p>
+                    <p>Para consultas sobre privacidad: gedeon1972@gmail.com</p>
+                    <hr style="border: none; border-top: 1px solid var(--faint); margin: 20px 0; opacity: 0.5" />
+                    <p><em>Ãšltima actualizaciÃ³n: 5 de junio de 2026</em></p>
+                </div>
+            </div>
+        </div>
+
+        <div id="update-toast" class="update-toast">
+            <div class="toast-content">
+                <span class="toast-icon">ðŸš€</span><span class="toast-msg">Nueva versiÃ³n disponible</span>
+            </div>
+            <button id="btn-refresh" class="toast-btn">ACTUALIZAR</button>
+        </div>
+
+        <nav class="nav-bar" aria-label="NavegaciÃ³n principal">
+            <button id="nav-hoy" class="nav-btn active" aria-label="Vista Hoy">
+                <span class="nav-icon">â˜€</span>Hoy
             </button>
-        </div>
-        <div id="cal-lista" class="cal-list"></div>
-    </div>
+            <button id="nav-lit" class="nav-btn" aria-label="Vista Lectura">
+                <span class="nav-icon">ðŸ“–</span>Lectura
+            </button>
+            <button id="nav-cal" class="nav-btn" aria-label="Vista Ciclo de Fiestas">
+                <span class="nav-icon">ðŸ“…</span>Ciclo
+            </button>
+            <button id="nav-edu" class="nav-btn" aria-label="Vista Biblioteca">
+                <span class="nav-icon">ðŸ“š</span>Saber
+            </button>
+            <button id="nav-con" class="nav-btn" aria-label="Vista Comunidad">
+                <span class="nav-icon">ðŸŒ</span>Red
+            </button>
+        </nav>
 
-    <div id="view-con" class="view">
-        <h2>Comunidad y Recursos</h2>
-        <article id="btn-podcast-con" class="card interactive-card card-podcast">
-            <span class="lbl red-text">🎙️ PODCAST OFICIAL</span>
-            <div class="card-main-text">Diseñados para Gobernar</div>
-            <div class="card-sub-text">Recupera tu gobierno interior a través del análisis profundo.</div>
-            <div class="card-link">Escuchar enseñanza de hoy ➔</div>
-        </article>
-        <article id="btn-institute-con" class="card interactive-card card-institute">
-            <span class="lbl blue-text">🎓 ESTUDIOS BÍBLICOS</span>
-            <div class="card-main-text">Instituto Descubre la Biblia</div>
-            <div class="card-sub-text">Formación bíblica profunda y cursos online.</div>
-            <div class="card-link">Visitar Sitio Web ➔</div>
-        </article>
-        <article id="card-telegram" class="card interactive-card card-telegram">
-            <span class="lbl lbl-telegram">📱 CANAL DE TELEGRAM</span>
-            <div class="card-main-text">Descubre la Biblia</div>
-            <div class="card-sub-text">Recibe las últimas novedades directamente a tu celular.</div>
-            <div class="card-link"><a href="https://t.me/+VuFNIOUSMERrLLiD" target="_blank" rel="noopener noreferrer" class="telegram-link">Unirme al Canal ➔</a></div>
-        </article>
-    </div>
-
-    <div id="view-edu" class="view">
-        <h2>Biblioteca la Verdad Restaurada</h2>
-        <p class="fundamento-txt">
-            El calendario que tienes en tus manos no es una invención moderna, sino la <strong>restauración matemática</strong> del orden entregado a Enoc y Moisés.
-        </p>
-    <div id="edu-grid" class="edu-grid-container"></div>
-
-    </div>
-
-    <footer class="site-footer">
-        <div class="footer-content">
-            <span>© 2026 Cristian Salinas (Mash Jáyt) <span class="app-version">v13.1.3</span></span>
-            <span class="footer-links">
-                <button id="btn-privacy" style="background:none; border:none; color:inherit; text-decoration:underline; font:inherit; cursor:pointer; padding:0;">Política de Privacidad</button>
-                <span class="footer-sep">|</span>
-                <button id="btn-license" style="background:none; border:none; color:inherit; text-decoration:underline; font:inherit; cursor:pointer; padding:0;">Licencia MIT</button>
-            </span>
-        </div>
-    </footer>
-
-<div id="toast-container"></div>
-</main>
-
-<div id="modal-fiesta" role="dialog" aria-modal="true" aria-labelledby="mod-title">
-    <div class="modal-content">
-        <span id="btn-close-modal" class="close-modal" aria-label="Cerrar">&times;</span>
-        <h2 id="mod-title"></h2>
-        <div class="text-center modal-fecha-wrapper">
-            <div id="mod-fechas" class="fecha-greg mod-fecha-greg"></div>
-            <div id="mod-fechas-heb" class="gold-text mod-fecha-heb"></div>
-        </div>
-        <div class="modal-body-text">
-            <div id="mod-instr" class="modal-instr">...</div>
-            <span id="mod-ref" class="modal-ref">...</span>
-            <div id="mod-note" class="teological-note"></div>
-            <div id="mod-warn" class="special-warn">⚠️ AYUNO: DE TARDE A TARDE (Lev 23:32)</div>
-        </div>
-    </div>
-</div>
-
-<div id="modal-lectura" role="dialog" aria-modal="true" aria-labelledby="lec-title">
-    <div class="modal-content lecture-mode">
-        <span id="btn-close-lectura" class="close-modal" aria-label="Cerrar">&times;</span>
-        <h2 id="lec-title" class="lecture-title">Título del Estudio</h2>
-        <div class="lecture-meta" id="lec-meta">Subtítulo</div>
-        <hr class="separator-gold">
-        <div id="lec-body" class="lecture-body"></div>
-    </div>
-</div>
-
-<div id="modal-license" role="dialog" aria-modal="true" aria-labelledby="lic-title" style="display: none;">
-    <div class="modal-content">
-        <button id="btn-close-license" class="close-modal" aria-label="Cerrar">&times;</button>
-        <h2 id="lic-title">Licencia MIT</h2>
-        <div class="modal-body-text text-left" style="font-size: 0.9em; line-height: 1.5; text-align: left; max-height: 50vh; overflow-y: auto; padding-right: 10px;">
-            <p>Copyright (c) 2026 Cristian Salinas</p>
-            <p>Se concede permiso, de forma gratuita, a cualquier persona que obtenga una copia de este software y de los archivos de documentación asociados (el "Software"), para utilizar el Software sin restricción, incluyendo sin limitación los derechos a usar, copiar, modificar, fusionar, publicar, distribuir, sublicenciar, y/o vender copias del Software, y a permitir a las personas a las que se les proporcione el Software a hacer lo mismo, sujeto a las siguientes condiciones:</p>
-            <p>El aviso de copyright anterior y este aviso de permiso se incluirán en todas las copias o partes sustanciales del Software.</p>
-            <p>EL SOFTWARE SE PROPORCIONA "TAL CUAL", SIN GARANTÍA DE NINGÚN TIPO, EXPRESA O IMPLÍCITA, INCLUYENDO PERO NO LIMITADO A GARANTÍAS DE COMERCIALIZACIÓN, IDONEIDAD PARA UN PROPÓSITO PARTICULAR Y NO INFRACCIÓN. EN NINGÚN CASO LOS AUTORES O TITULARES DEL COPYRIGHT SERÁN RESPONSABLES DE NINGUNA RECLAMACIÓN, DAÑOS U OTRAS RESPONSABILIDADES, YA SEA EN UNA ACCIÓN DE CONTRATO, AGRAVIO O CUALQUIER OTRO MOTIVO, QUE SURJA DE O EN CONEXIÓN CON EL SOFTWARE O EL USO U OTRO TIPO DE ACCIONES EN EL SOFTWARE.</p>
-        </div>
-    </div>
-</div>
-<div id="modal-privacy" role="dialog" aria-modal="true" aria-labelledby="priv-title" style="display: none;">
-    <div class="modal-content">
-        <button id="btn-close-privacy" class="close-modal" aria-label="Cerrar">&times;</button>
-        <h2 id="priv-title">Política de Privacidad</h2>
-        <div class="modal-body-text text-left" style="font-size: 0.9em; line-height: 1.5; text-align: left; max-height: 50vh; overflow-y: auto; padding-right: 10px;">
-            <p><strong>Qumran Watch</strong> es una Aplicación Web Progresiva (PWA) 100% frontend.</p>
-            <p class="red-text" style="font-weight:bold; margin-top:20px;">Recopilación de Datos</p>
-            <p>Esta aplicación NO recopila, almacena, ni transmite datos personales a ningún servidor externo.</p>
-            <p>Toda la información procesada (coordenadas GPS, preferencias de visualización) se almacena exclusivamente en el almacenamiento local del navegador (localStorage) y nunca abandona el dispositivo del usuario.</p>
-            <p class="red-text" style="font-weight:bold; margin-top:20px;">Geolocalización</p>
-            <p>El acceso a la ubicación GPS se utiliza únicamente para calcular la salida y puesta del sol. Esta información se almacena localmente y no se comparte con terceros. El usuario puede denegar el permiso de geolocalización; en ese caso, se usará Jerusalén (31.7683, 35.2137) como valor por defecto.</p>
-            <p class="red-text" style="font-weight:bold; margin-top:20px;">Servicios de Terceros</p>
-            <p>Esta aplicación no integra scripts de terceros, analytics, trackers ni publicidad.</p>
-            <p class="red-text" style="font-weight:bold; margin-top:20px;">Cookies</p>
-            <p>No se utilizan cookies de ningún tipo.</p>
-            <p class="red-text" style="font-weight:bold; margin-top:20px;">Contacto</p>
-            <p>Para consultas sobre privacidad: gedeon1972@gmail.com</p>
-            <hr style="border:none; border-top:1px solid var(--faint); margin:20px 0; opacity:0.5;">
-            <p><em>Última actualización: 5 de junio de 2026</em></p>
-        </div>
-    </div>
-</div>
-
-<div id="update-toast" class="update-toast">
-    <div class="toast-content"><span class="toast-icon">🚀</span><span class="toast-msg">Nueva versión disponible</span></div>
-    <button id="btn-refresh" class="toast-btn">ACTUALIZAR</button>
-</div>
-
-<nav class="nav-bar" aria-label="Navegación principal">
-    <button id="nav-hoy" class="nav-btn active" aria-label="Vista Hoy"><span class="nav-icon">☀</span>Hoy</button>
-    <button id="nav-lit" class="nav-btn" aria-label="Vista Lectura"><span class="nav-icon">📖</span>Lectura</button>
-    <button id="nav-cal" class="nav-btn" aria-label="Vista Ciclo de Fiestas"><span class="nav-icon">📅</span>Ciclo</button>
-    <button id="nav-edu" class="nav-btn" aria-label="Vista Biblioteca"><span class="nav-icon">📚</span>Saber</button>
-    <button id="nav-con" class="nav-btn" aria-label="Vista Comunidad"><span class="nav-icon">🌐</span>Red</button>
-</nav>
-
-<script type="module" src="src/js/app.js"></script>
-</body>
+        <script type="module" src="src/js/app.js"></script>
+    </body>
 </html>
-
-
-
-
-
-

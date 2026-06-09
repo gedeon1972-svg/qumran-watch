@@ -31,7 +31,7 @@
     font-display: swap;
 }
 
-/* --- VARIABLES CSS â€” TEMA CLARO (por defecto) --- */
+/* --- VARIABLES CSS Ã¢â‚¬â€ TEMA CLARO (por defecto) --- */
 
 :root {
     --bg-body: #e5d9c5;
@@ -46,7 +46,7 @@
     --bg-lecture: #f0eadc;
     --bg-gold-subtle: rgba(107, 81, 22, 0.1);
 
-    /* Textos â€” todos pasan WCAG AA 4.5:1 sobre #e5d9c5 */
+    /* Textos Ã¢â‚¬â€ todos pasan WCAG AA 4.5:1 sobre #e5d9c5 */
     --text-primary: #2c1810; /* contraste 15:1 ? */
     --text-secondary: #3d2b1f; /* contraste 10:1 ? */
     --text-white: #2c1810; /* contraste 15:1 ? */
@@ -54,11 +54,11 @@
     --text-muted: #5a4a30; /* contraste 5.2:1 ? (era #8a7a50 ? 3.5:1 ?) */
     --text-subtle: #4a3828; /* contraste 6.8:1 ? */
 
-    /* Nav â€” colores sobre fondo oscuro */
+    /* Nav Ã¢â‚¬â€ colores sobre fondo oscuro */
     --nav-text: #e8ddc8;
     --nav-text-active: #d4af37;
 
-    /* Colores de marca â€” oscurecidos para modo claro */
+    /* Colores de marca Ã¢â‚¬â€ oscurecidos para modo claro */
     --gold: #7a6020; /* contraste 5.3:1 ? (era #b8962e ? 2.7:1 ?) */
     --gold-dark: #5a4515; /* contraste 7.1:1 ? */
     --gold-bg: rgba(122, 96, 32, 0.08);
@@ -79,7 +79,7 @@
     --transition-theme: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
 }
 
-/* --- VARIABLES â€” TEMA OSCURO --- */
+/* --- VARIABLES Ã¢â‚¬â€ TEMA OSCURO --- */
 
 .dark-theme {
     --bg-body: #1a120b;
@@ -399,7 +399,7 @@ h2 {
     color: var(--text-primary);
 }
 
-/* --- NAVEGACIÃ“N INFERIOR --- */
+/* --- NAVEGACIÃƒâ€œN INFERIOR --- */
 
 .nav-bar {
     position: fixed;
@@ -454,7 +454,7 @@ h2 {
     }
 }
 
-/* --- INSTRUCCIÃ“N DEL MESÃAS --- */
+/* --- INSTRUCCIÃƒâ€œN DEL MESÃƒÂAS --- */
 
 .messiah-theme {
     font-family: 'Cinzel', serif;
@@ -613,7 +613,7 @@ h2 {
     border-radius: 0 5px 5px 0;
 }
 
-/* VigÃ­a e InstalaciÃ³n */
+/* VigÃƒÂ­a e InstalaciÃƒÂ³n */
 .watcher-alert {
     background: var(--bg-alert);
     border: 1px solid var(--red);
@@ -706,7 +706,7 @@ h2 {
     cursor: pointer;
 }
 
-/* --- ACTUALIZACIÃ“N (TOAST) --- */
+/* --- ACTUALIZACIÃƒâ€œN (TOAST) --- */
 
 .update-toast {
     position: fixed;
@@ -994,7 +994,7 @@ h2 {
     box-shadow: 0 2px 12px rgba(212, 175, 55, 0.15);
 }
 .interactive-card::after {
-    content: 'âž”';
+    content: '➔';
     position: absolute;
     right: 15px;
     top: 50%;
@@ -1004,15 +1004,13 @@ h2 {
     font-size: 1.2rem;
     opacity: 0.6;
 }
-#view-hoy .interactive-card::after,
-#view-lit .interactive-card::after {
-    display: none;
+.interactive-card.no-arrow::after {
+    display: none !important;
 }
 .interactive-card:hover::after {
     transform: translateY(-50%) translateX(4px);
     opacity: 1;
 }
-
 /* --- ULTRA-WIDE (>= 1400px) --- */
 
 @media (min-width: 1400px) {
