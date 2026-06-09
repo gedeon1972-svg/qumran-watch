@@ -128,6 +128,20 @@ qumran-watch/
 
 ---
 
+---
+
+## Changelog
+
+### 13.1.4 (2026-06-09)
+Finalización de configuración de despliegue, corrección de rutas 404, implementación de navegación selectiva mediante clase .no-arrow y actualización de versión PWA.
+
+---
+
+## Changelog
+
+### 13.1.4 (2026-06-09)
+Finalización de configuración de despliegue, corrección de rutas 404, implementación de navegación selectiva mediante clase .no-arrow y actualización de versión PWA.
+
 ## Licencia
 
 [MIT](LICENSE) &mdash; libre para usar, modificar y distribuir.
