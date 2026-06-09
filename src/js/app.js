@@ -19,24 +19,27 @@ const isStandalone = () => window.matchMedia('(display-mode: standalone)').match
 // --- 2. GESTIÃ“N DE SERVICE WORKER & ACTUALIZACIONES ---
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js', { scope: './' }).then((reg) => {
-            reg.addEventListener('updatefound', () => {
-                newWorker = reg.installing;
-                newWorker.addEventListener('statechange', () => {
-                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                        const toast = document.getElementById('update-toast');
-                        const btn = document.getElementById('btn-refresh');
-                        if (toast && btn) {
-                            toast.style.display = 'flex';
-                            btn.addEventListener('click', () => {
-                                if (newWorker) newWorker.postMessage({ action: 'skipWaiting' });
-                                window.location.reload();
-                            });
+        navigator.serviceWorker
+            .register('/sw.js')
+            .catch(() => navigator.serviceWorker.register('./sw.js', { scope: './' }))
+            .then((reg) => {
+                reg.addEventListener('updatefound', () => {
+                    newWorker = reg.installing;
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            const toast = document.getElementById('update-toast');
+                            const btn = document.getElementById('btn-refresh');
+                            if (toast && btn) {
+                                toast.style.display = 'flex';
+                                btn.addEventListener('click', () => {
+                                    if (newWorker) newWorker.postMessage({ action: 'skipWaiting' });
+                                    window.location.reload();
+                                });
+                            }
                         }
-                    }
+                    });
                 });
             });
-        });
     });
 }
 

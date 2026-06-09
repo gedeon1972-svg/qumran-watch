@@ -4,6 +4,7 @@ export default defineConfig({
     base: './',
     publicDir: 'public',
     build: {
+        outDir: 'dist',
         rollupOptions: {
             output: {
                 entryFileNames: 'src/js/[name].js',
