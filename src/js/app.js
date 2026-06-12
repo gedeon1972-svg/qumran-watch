@@ -17,11 +17,12 @@ let newWorker;
 
 const isStandalone = () => window.matchMedia('(display-mode: standalone)').matches;
 // --- 2. GESTIÓN DE SERVICE WORKER & ACTUALIZACIONES ---
-const BASE_PATH = '/qumran-watch/';
+
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/qumran-watch/sw.js').then((reg) => {
-            console.log('Qumran Watch v13.1.6 - System Online');
+        const swUrl = import.meta.env.BASE_URL + 'sw.js';
+        navigator.serviceWorker.register(swUrl).then((reg) => {
+            console.log('Qumran Watch v13.1.8 - System Online');
             reg.addEventListener('updatefound', () => {
                 newWorker = reg.installing;
                 newWorker.addEventListener('statechange', () => {
