@@ -3,6 +3,19 @@ import { QumranData } from '../core/data.js';
 export function renderCalendarView(festivals, year) {
     const list = document.getElementById('cal-lista');
     if (!list) return;
+
+    const inputGroup = document.getElementById('cal-input-group');
+    if (inputGroup && !document.getElementById('btn-print-cal')) {
+        const btn = document.createElement('button');
+        btn.id = 'btn-print-cal';
+        btn.className = 'btn-action btn-secondary';
+        btn.textContent = '🖨️ Imprimir Calendario';
+        btn.addEventListener('click', function () {
+            window.print();
+        });
+        inputGroup.appendChild(btn);
+    }
+
     let html = '';
     festivals.forEach(({ date: d, q, index: fIdx }) => {
         const f = QumranData.FIESTAS[fIdx];

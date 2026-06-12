@@ -18,7 +18,7 @@ import { renderSaberGrid, renderEstudioModal } from './ui/estudio-view.js';
 import { renderFiestaModal } from './ui/fiesta-view.js';
 import './theme-init.js';
 
-const APP_VERSION = '13.1.16';
+const APP_VERSION = '13.1.17';
 
 let deferredPrompt;
 let newWorker;

@@ -1026,3 +1026,75 @@ h2 {
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
+/* --- PRINT STYLES --- */
+
+@media print {
+    @page {
+        margin: 1.5cm;
+    }
+    body {
+        background: #fff !important;
+        color: #000 !important;
+    }
+    .nav-bar,
+    .nav-btn,
+    #modal-fiesta,
+    #modal-lectura,
+    #modal-license,
+    #modal-privacy,
+    .close-modal,
+    #btn-print-cal,
+    #btn-render-cal,
+    #btn-export-ics,
+    #cal-year,
+    .btn-action,
+    .btn-install,
+    #theme-toggle,
+    #geo-btn,
+    .geo-btn,
+    #alert-container,
+    #toast-container,
+    .update-toast,
+    .skip-link,
+    .site-footer,
+    .interactive-card::after {
+        display: none !important;
+    }
+    .app-container,
+    .view,
+    .view.active,
+    .app-frame {
+        background: #fff !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        display: block !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    .card,
+    .edu-card,
+    .edu-card.fiesta {
+        background: #fff !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        border: 1px solid #999 !important;
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+    .edu-card-title,
+    .edu-card-subtitle,
+    .card-meta-info,
+    .q-date,
+    .gold-text,
+    h1,
+    h2,
+    h3 {
+        color: #000 !important;
+    }
+    .cal-input-group label {
+        display: block !important;
+        color: #000 !important;
+    }
+}

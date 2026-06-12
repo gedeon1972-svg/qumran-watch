@@ -1,4 +1,4 @@
-import { expect, test, describe, vi, beforeEach, afterEach } from 'vitest';
+﻿import { expect, test, describe, vi, beforeEach, afterEach } from 'vitest';
 import { renderHoyView } from '../src/js/ui/hoy-view.js';
 
 let mockDoc, mockElements, appRef;
@@ -54,6 +54,7 @@ function buildDoc() {
             addEventListener: vi.fn(),
             closest: vi.fn(() => null),
             click: vi.fn(),
+            appendChild: vi.fn(),
         };
         els[id] = el;
         return el;
@@ -101,6 +102,7 @@ function buildDoc() {
         'btn-render-cal',
         'cal-year',
         'cal-lista',
+        'cal-input-group',
         'btn-export-ics',
         'edu-grid',
         'btn-podcast-con',
@@ -149,6 +151,7 @@ function buildDoc() {
                 href: '',
                 download: '',
                 click: vi.fn(),
+                appendChild: vi.fn(),
                 style: {},
                 classList: { add: vi.fn(), remove: vi.fn(), toggle: vi.fn() },
                 addEventListener: vi.fn(),

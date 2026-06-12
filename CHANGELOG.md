@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [13.1.17] — 2026-06-12 — Feature: Calendar Print Support
+
+### Added
+- @media print styles for clean, ink-saving calendar printing
+- Print action button in calendar view
+
 ## [13.1.6] — 2026-06-12 — Fix PWA 404
 ### Añadido
 - .nojekyll bypass para GitHub Pages
