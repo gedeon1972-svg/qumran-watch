@@ -862,3 +862,13 @@ export const QumranData = {
         },
     ],
 };
+
+export const SOLAR_DATA_CONFIG = {
+    DEFAULT_LAT: 31.7683,
+    DEFAULT_LNG: 35.2137,
+    ZENITH_CIVIL: 96,
+    ZENITH_NAUTICAL: 102,
+    ZENITH_ASTRONOMICAL: 108,
+    SUNRISE_ANGLE: 90.833,
+    FIRST_LIGHT_OFFSET: -0.5,
+};

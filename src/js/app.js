@@ -1,9 +1,9 @@
 /* * src/js/app.js
- * EL ESP�RITU (CONTROLADOR PRINCIPAL)
- * V13.0.0: Reconstrucci�n Modular Blindada
+ * EL ESPï¿½RITU (CONTROLADOR PRINCIPAL)
+ * V13.0.0: Reconstrucciï¿½n Modular Blindada
  */
 
-// --- 1. IMPORTACIÓN DE MÓDULOS ---
+// --- 1. IMPORTACIÃ“N DE MÃ“DULOS ---
 import { QumranData } from './core/data.js';
 import { QumranCalendar } from './core/calendar.js';
 import { QumranSun } from './core/sun.js';
@@ -19,12 +19,12 @@ import { renderFiestaModal } from './ui/fiesta-view.js';
 import { initPwaPrompt } from './ui/pwa-install.js';
 import './theme-init.js';
 
-const APP_VERSION = '13.1.18';
+const APP_VERSION = '13.1.19';
 
 let newWorker;
 
 const isStandalone = () => window.matchMedia('(display-mode: standalone)').matches;
-// --- 2. GESTIÓN DE SERVICE WORKER & ACTUALIZACIONES ---
+// --- 2. GESTIÃ“N DE SERVICE WORKER & ACTUALIZACIONES ---
 
 console.log('Qumran Watch v' + APP_VERSION + ' - System Online');
 if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) {
@@ -40,7 +40,7 @@ if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) {
     });
 }
 
-// --- 4. OBJETO PRINCIPAL DE LA APLICACIÓN ---
+// --- 4. OBJETO PRINCIPAL DE LA APLICACIÃ“N ---
 const QumranApp = {
     todayFiesta: null,
     sunriseHour: 6.0,
@@ -56,7 +56,7 @@ const QumranApp = {
         QumranApp.renderHoy();
         QumranApp.renderSaber();
 
-        // Manejo del historial y bot�n "atrás"
+        // Manejo del historial y botï¿½n "atrÃ¡s"
         window.history.replaceState({ view: 'hoy' }, '', '#hoy');
         window.addEventListener('popstate', (event) => {
             if (event.state && event.state.view) {
@@ -68,13 +68,13 @@ const QumranApp = {
     },
 
     setupListeners: () => {
-        // Navegaci�n
+        // Navegaciï¿½n
         document.getElementById('nav-hoy').addEventListener('click', (e) => QumranApp.nav('hoy', e.currentTarget));
         document.getElementById('nav-lit').addEventListener('click', (e) => QumranApp.nav('lit', e.currentTarget));
         document.getElementById('nav-cal').addEventListener('click', (e) => QumranApp.nav('cal', e.currentTarget));
         document.getElementById('nav-con').addEventListener('click', (e) => QumranApp.nav('con', e.currentTarget));
         document.getElementById('nav-edu').addEventListener('click', (e) => QumranApp.nav('edu', e.currentTarget));
-        // Interacci�n Hoy
+        // Interacciï¿½n Hoy
         document.getElementById('heb-fiesta').addEventListener('click', QumranApp.openFiestaHoy);
         document.getElementById('geo-btn').addEventListener('click', () => QumranApp.getLocationAndSun(true));
 
@@ -85,7 +85,7 @@ const QumranApp = {
         document.getElementById('btn-institute-con').addEventListener('click', () => {
             window.open('https://www.descubrelabiblia.online/', '_blank');
         });
-        // El bot�n de Telegram se maneja con onclick directo en el HTML según tu original.
+        // El botï¿½n de Telegram se maneja con onclick directo en el HTML segÃºn tu original.
 
         // Calendario y Alertas
         document.getElementById('btn-render-cal').addEventListener('click', QumranApp.renderCalendar);
@@ -108,7 +108,7 @@ const QumranApp = {
             });
         }
 
-        // Delegaci�n de eventos para listas dinámicas
+        // Delegaciï¿½n de eventos para listas dinÃ¡micas
         document.getElementById('cal-lista').addEventListener('click', (e) => {
             const row = e.target.closest('.edu-card.fiesta');
             if (row) QumranApp.openFiesta(parseInt(row.dataset.index), parseInt(row.dataset.year));
@@ -186,14 +186,14 @@ const QumranApp = {
                     const lng = pos.coords.longitude;
                     storage.setItem('qw_lat', lat);
                     storage.setItem('qw_lng', lng);
-                    QumranApp.updateSunData(lat, lng, force ? 'Actualizar Ubicación (GPS)' : undefined);
+                    QumranApp.updateSunData(lat, lng, force ? 'Actualizar UbicaciÃ³n (GPS)' : undefined);
                 },
                 () => {
-                    // --- INICIO DEL RESPALDO B�BLICO (JERUSALÉN) ---
-                    console.warn('GPS fall� o denegado. Usando Jerusalén.');
+                    // --- INICIO DEL RESPALDO Bï¿½BLICO (JERUSALÃ‰N) ---
+                    console.warn('GPS fallï¿½ o denegado. Usando JerusalÃ©n.');
                     const latJerusalen = 31.7683;
                     const lngJerusalen = 35.2137;
-                    QumranApp.updateSunData(latJerusalen, lngJerusalen, 'Jerusalén (GPS Inactivo)');
+                    QumranApp.updateSunData(latJerusalen, lngJerusalen, 'JerusalÃ©n (GPS Inactivo)');
                     // --- FIN DEL RESPALDO ---
                 },
             );
@@ -233,7 +233,7 @@ const QumranApp = {
         const year = forceYear || new Date().getFullYear();
         const foundDate = findFestivalDate(index, year);
 
-        // RESTAURACIÓN: Día de la semana completo
+        // RESTAURACIÃ“N: DÃ­a de la semana completo
         let dateStr = foundDate
             ? foundDate.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' })
             : 'Calculando...';
