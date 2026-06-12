@@ -4,7 +4,7 @@
  * network-first para navegaciones, fallback offline.
  */
 
-const CACHE_NAME = 'qumran-cache-v13.1.16';
+const CACHE_NAME = 'qumran-cache-v13.1.17';
 
 const URLS_TO_CACHE = [
     '/qumran-watch/',
@@ -33,7 +33,7 @@ function isAsset(url) {
 }
 
 self.addEventListener('install', (event) => {
-    console.log('[SW] Instalando v13.1.16...');
+    console.log('[SW] Instalando v13.1.17...');
     event.waitUntil(
         caches
             .open(CACHE_NAME)
@@ -55,7 +55,7 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('activate', (event) => {
-    console.log('[SW] Activado v13.1.16');
+    console.log('[SW] Activado v13.1.17');
     event.waitUntil(
         caches
             .keys()
