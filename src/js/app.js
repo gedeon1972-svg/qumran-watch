@@ -4,13 +4,13 @@
  */
 
 // --- 1. IMPORTACIÃ“N DE MÃ“DULOS ---
-import { QumranData } from './data.js';
-import { QumranCalendar } from './calendar.js';
-import { QumranSun } from './sun.js';
+import { QumranData } from './core/data.js';
+import { QumranCalendar } from './core/calendar.js';
+import { QumranSun } from './core/sun.js';
 import { QumranICS } from './ics.js';
 import { initTheme } from './theme.js';
-import { storage } from './storage.js';
-import { findFestivalDate, getFestivalsForYear, getWatcherAlerts, calcOmerDay } from './utils/calculations.js';
+import { storage } from './core/storage.js';
+import { findFestivalDate, getFestivalsForYear, getWatcherAlerts, calcOmerDay } from './core/calculations.js';
 import './theme-init.js';
 
 let deferredPrompt;
@@ -19,7 +19,7 @@ let newWorker;
 const isStandalone = () => window.matchMedia('(display-mode: standalone)').matches;
 // --- 2. GESTIÃ“N DE SERVICE WORKER & ACTUALIZACIONES ---
 
-console.log('Qumran Watch v13.1.11 - System Online');
+console.log('Qumran Watch v13.1.13 - System Online');
 if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) {
     window.addEventListener('load', function () {
         navigator.serviceWorker

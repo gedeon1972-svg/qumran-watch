@@ -50,13 +50,13 @@ export const QumranSun = {
             return localT;
         };
 
-        let riseDecimal = calcTime(true);
-        let setDecimal = calcTime(false);
+        const riseDecimal = calcTime(true);
+        const setDecimal = calcTime(false);
 
         const format = (dec) => {
             if (dec === null) return '--:--';
-            let h = Math.floor(dec);
-            let m = Math.floor((dec - h) * 60);
+            const h = Math.floor(dec);
+            const m = Math.floor((dec - h) * 60);
             return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
         };
 

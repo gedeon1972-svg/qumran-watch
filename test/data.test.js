@@ -1,5 +1,5 @@
 import { expect, test, describe } from 'vitest';
-import { QumranData } from '../src/js/data.js';
+import { QumranData } from '../src/js/core/data.js';
 
 describe('QumranData — ANCHOR', () => {
     test('ANCHOR debe tener coordenadas vÃ¡lidas', () => {

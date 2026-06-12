@@ -1,5 +1,5 @@
 import { expect, test, describe } from 'vitest';
-import { QumranSun } from '../src/js/sun.js';
+import { QumranSun } from '../src/js/core/sun.js';
 
 const JERUSALEM = { lat: 31.7683, lng: 35.2137 };
 const EQUATOR = { lat: 0, lng: 0 };

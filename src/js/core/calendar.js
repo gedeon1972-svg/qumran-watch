@@ -14,7 +14,7 @@
  * @author Qumran Watch
  * @version 13.0.0
  */
- 
+
 import { QumranData } from './data.js';
 
 export const QumranCalendar = {
@@ -24,20 +24,20 @@ export const QumranCalendar = {
             return null;
         }
 
-        let anchor = new Date(QumranData.ANCHOR.y, QumranData.ANCHOR.m, QumranData.ANCHOR.d);
-        let diff = Math.floor((dateObj - anchor) / 86400000);
+        const anchor = new Date(QumranData.ANCHOR.y, QumranData.ANCHOR.m, QumranData.ANCHOR.d);
+        const diff = Math.floor((dateObj - anchor) / 86400000);
         if (diff < 0) return null;
 
         const CICLO_SEX = 2191;
         let diasEnCiclo = diff % CICLO_SEX;
-        let ciclosCompletos = Math.floor(diff / CICLO_SEX);
+        const ciclosCompletos = Math.floor(diff / CICLO_SEX);
 
         let anioDelCiclo = 1;
         let diasAcumulados = 0;
         let esAnioIntercalar = false;
 
         for (let y = 1; y <= 6; y++) {
-            let diasEnEsteAnio = y === 6 ? 371 : 364;
+            const diasEnEsteAnio = y === 6 ? 371 : 364;
             if (diasEnCiclo < diasEnEsteAnio) {
                 anioDelCiclo = y;
                 if (y === 6) esAnioIntercalar = true;
@@ -47,7 +47,7 @@ export const QumranCalendar = {
             diasEnCiclo -= diasEnEsteAnio;
         }
 
-        let anioRestauracion = QumranData.ANCHOR.y + ciclosCompletos * 6 + (anioDelCiclo - 1);
+        const anioRestauracion = QumranData.ANCHOR.y + ciclosCompletos * 6 + (anioDelCiclo - 1);
 
         if (esAnioIntercalar && diasAcumulados >= 364) {
             return {
@@ -62,7 +62,7 @@ export const QumranCalendar = {
             };
         }
 
-        let patronMeses = [30, 30, 31, 30, 30, 31, 30, 30, 31, 30, 30, 31];
+        const patronMeses = [30, 30, 31, 30, 30, 31, 30, 30, 31, 30, 30, 31];
         let diasRestantes = diasAcumulados;
         let mesQ = 0;
         let diaQ = 0;
@@ -76,9 +76,9 @@ export const QumranCalendar = {
             diasRestantes -= patronMeses[i];
         }
 
-        let indiceSemana = (3 + diff) % 7;
-        let diasAlInicioDelAnio = diff - diasAcumulados;
-        let signoDelAnio = QumranCalendar.getTurno(diasAlInicioDelAnio);
+        const indiceSemana = (3 + diff) % 7;
+        const diasAlInicioDelAnio = diff - diasAcumulados;
+        const signoDelAnio = QumranCalendar.getTurno(diasAlInicioDelAnio);
 
         return {
             y: anioRestauracion,
@@ -111,7 +111,7 @@ export const QumranCalendar = {
         }
 
         const weekOfYear = Math.floor(rem / 7);
-        const absoluteWeek = (yearInCycle * 52) + weekOfYear;
+        const absoluteWeek = yearInCycle * 52 + weekOfYear;
         const courseIndex = (21 + absoluteWeek) % 24;
 
         return QumranData.TURNOS[courseIndex];

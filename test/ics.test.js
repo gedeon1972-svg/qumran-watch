@@ -1,5 +1,5 @@
 import { expect, test, describe, vi, beforeAll } from 'vitest';
-import { QumranCalendar } from '../src/js/calendar.js';
+import { QumranCalendar } from '../src/js/core/calendar.js';
 import { QumranICS } from '../src/js/ics.js';
 
 describe('QumranICS.findLiturgicalStart', () => {

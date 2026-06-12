@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { QumranCalendar } from '../src/js/calendar.js';
+import { QumranCalendar } from '../src/js/core/calendar.js';
 
 function addDays(date, days) {
     const d = new Date(date);

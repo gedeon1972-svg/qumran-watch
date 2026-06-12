@@ -1,4 +1,4 @@
-﻿import { storage } from './storage.js';
+import { storage } from './core/storage.js';
 /* src/js/theme.js - SISTEMA DE TEMAS CLARO/OSCURO */
 
 const STORAGE_KEY = 'qw_theme';
@@ -24,10 +24,10 @@ function applyTheme(theme) {
 
     if (theme === 'dark') {
         root.classList.add('dark-theme');
-        if (toggle) toggle.textContent = '\u263D'; // ðŸŒ™ estado actual: oscuro
+        if (toggle) toggle.textContent = '\u263D'; // 🌙 estado actual: oscuro
     } else {
         root.classList.remove('dark-theme');
-        if (toggle) toggle.textContent = '\u2600'; // â˜€ï¸ estado actual: claro
+        if (toggle) toggle.textContent = '\u2600'; // ☀️ estado actual: claro
     }
 }
 
