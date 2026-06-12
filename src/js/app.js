@@ -20,9 +20,9 @@ const isStandalone = () => window.matchMedia('(display-mode: standalone)').match
 
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        const swUrl = import.meta.env.BASE_URL + 'sw.js';
-        navigator.serviceWorker.register(swUrl).then((reg) => {
-            console.log('Qumran Watch v13.1.8 - System Online');
+        const BASE_PATH = '/qumran-watch/';
+        navigator.serviceWorker.register(BASE_PATH + 'sw.js', { scope: BASE_PATH }).then((reg) => {
+            console.log('Qumran Watch v13.1.10 - System Online');
             reg.addEventListener('updatefound', () => {
                 newWorker = reg.installing;
                 newWorker.addEventListener('statechange', () => {
@@ -38,7 +38,7 @@ if ('serviceWorker' in navigator) {
                         }
                     }
                 });
-            });
+            }).catch((err) => console.error('SW Error:', err));
         });
     });
 }
