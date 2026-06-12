@@ -132,6 +132,9 @@ qumran-watch/
 
 ## Changelog
 
+### 13.1.6 (2026-06-12)
+Fix definitivo PWA 404: .nojekyll bypass y rutas absolutas.
+
 ### 13.1.5 (2026-06-09)
 Limpieza de mojibake UTF-8 heredado en manifests, package.json y app.js. Bump de versión a 13.1.5.
 

@@ -20,8 +20,8 @@ const isStandalone = () => window.matchMedia('(display-mode: standalone)').match
 const BASE_PATH = '/qumran-watch/';
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register(BASE_PATH + 'sw.js').then((reg) => {
-            console.log('Qumran Watch v13.1.5 - System Online');
+        navigator.serviceWorker.register('/qumran-watch/sw.js').then((reg) => {
+            console.log('Qumran Watch v13.1.6 - System Online');
             reg.addEventListener('updatefound', () => {
                 newWorker = reg.installing;
                 newWorker.addEventListener('statechange', () => {
@@ -370,6 +370,7 @@ const QumranApp = {
     },
 
     openFiesta: (index, forceYear) => {
+        // eslint-disable-next-line security/detect-object-injection
         const f = QumranData.FIESTAS[index];
         const year = forceYear || new Date().getFullYear();
         const foundDate = findFestivalDate(index, year);

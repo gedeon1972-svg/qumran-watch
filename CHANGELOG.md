@@ -1,6 +1,12 @@
 # Changelog
 
 ## [Unreleased]
+
+## [13.1.6] — 2026-06-12 — Fix PWA 404
+### Añadido
+- .nojekyll bypass para GitHub Pages
+- Rutas absolutas /qumran-watch/ en HTML y SW
+
 ### Correcciones
 - Correcciones de seguridad: CSP, noopener, sanitización innerHTML
 - Correcciones de accesibilidad: focus trap, ARIA, contraste
