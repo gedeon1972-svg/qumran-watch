@@ -12,7 +12,10 @@ import { initTheme } from './theme.js';
 import { storage } from './core/storage.js';
 import { findFestivalDate, getFestivalsForYear, buildHoyViewModel } from './core/calculations.js';
 import { renderHoyView } from './ui/hoy-view.js';
+import { renderCalendarView } from './ui/calendar-view.js';
 import './theme-init.js';
+
+const APP_VERSION = '13.1.15';
 
 let deferredPrompt;
 let newWorker;
@@ -20,7 +23,7 @@ let newWorker;
 const isStandalone = () => window.matchMedia('(display-mode: standalone)').matches;
 // --- 2. GESTIÓN DE SERVICE WORKER & ACTUALIZACIONES ---
 
-console.log('Qumran Watch v13.1.14 - System Online');
+console.log('Qumran Watch v' + APP_VERSION + ' - System Online');
 if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) {
     window.addEventListener('load', function () {
         navigator.serviceWorker
@@ -41,6 +44,8 @@ const QumranApp = {
 
     init: () => {
         initTheme();
+        const verEl = document.getElementById('app-version');
+        if (verEl) verEl.textContent = 'v' + APP_VERSION;
         QumranApp.setupListeners();
         const hasMemory = QumranApp.loadStoredLocation();
         if (!hasMemory) QumranApp.getLocationAndSun();
@@ -300,25 +305,7 @@ const QumranApp = {
         list.innerHTML = "<div class='text-center' style='padding:20px;'>Calculando ciclo sagrado...</div>";
         setTimeout(() => {
             const festivals = getFestivalsForYear(y);
-            let html = '';
-            festivals.forEach(({ date: d, q, index: fIdx }) => {
-                const f = QumranData.FIESTAS[fIdx];
-                let dateLabel = d.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
-                if (f.dur > 1) {
-                    const end = new Date(d.getTime() + (f.dur - 1) * 86400000);
-                    dateLabel += ' - ' + end.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
-                }
-                const nombreMes = QumranData.MESES[q.m];
-                html += `
-                    <div class="edu-card fiesta interactive-card" data-index="${fIdx}" data-year="${y}">
-                        <div class="edu-card-title">${f.n}</div>
-                        <div class="edu-card-subtitle">${f.es}</div>
-                        <div class="card-meta-info">
-                            <span>${dateLabel}</span>
-                            <span class="q-date">Día ${q.d} &bull; ${nombreMes}</span>
-                        </div></div>`;
-            });
-            list.innerHTML = html || "<div class='card'>No se encontraron fiestas.</div>";
+            renderCalendarView(festivals, y);
         }, 50);
     },
     showToast: (msg) => {
