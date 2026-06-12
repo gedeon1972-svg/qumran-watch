@@ -4,16 +4,17 @@ export function renderCalendarView(festivals, year) {
     const list = document.getElementById('cal-lista');
     if (!list) return;
 
-    const inputGroup = document.getElementById('cal-input-group');
-    if (inputGroup && !document.getElementById('btn-print-cal')) {
-        const btn = document.createElement('button');
-        btn.id = 'btn-print-cal';
-        btn.className = 'btn-action btn-secondary';
-        btn.textContent = '🖨️ Imprimir Calendario';
-        btn.addEventListener('click', function () {
+    const calContainer = list.parentElement;
+    if (calContainer && !document.getElementById('cal-print-toolbar')) {
+        const toolbar = document.createElement('div');
+        toolbar.id = 'cal-print-toolbar';
+        toolbar.className = 'cal-print-toolbar';
+        toolbar.innerHTML =
+            '<button id="btn-print-cal" class="btn-action btn-secondary">\uD83D\uDDA8\uFE0F Imprimir Calendario</button>';
+        toolbar.querySelector('#btn-print-cal').addEventListener('click', function () {
             window.print();
         });
-        inputGroup.appendChild(btn);
+        calContainer.insertBefore(toolbar, list);
     }
 
     let html = '';
@@ -25,8 +26,7 @@ export function renderCalendarView(festivals, year) {
             dateLabel += ' - ' + end.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
         }
         const nombreMes = QumranData.MESES[q.m];
-        html += `
-            <div class="edu-card fiesta interactive-card" data-index="${fIdx}" data-year="${year}">
+        html += `            <div class="edu-card fiesta interactive-card" data-index="${fIdx}" data-year="${year}">
                 <div class="edu-card-title">${f.n}</div>
                 <div class="edu-card-subtitle">${f.es}</div>
                 <div class="card-meta-info">

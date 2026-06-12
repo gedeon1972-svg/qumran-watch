@@ -31,7 +31,7 @@
     font-display: swap;
 }
 
-/* --- VARIABLES CSS — TEMA CLARO (por defecto) --- */
+/* --- VARIABLES CSS â€” TEMA CLARO (por defecto) --- */
 
 :root {
     --bg-body: #e5d9c5;
@@ -46,7 +46,7 @@
     --bg-lecture: #f0eadc;
     --bg-gold-subtle: rgba(107, 81, 22, 0.1);
 
-    /* Textos — todos pasan WCAG AA 4.5:1 sobre #e5d9c5 */
+    /* Textos â€” todos pasan WCAG AA 4.5:1 sobre #e5d9c5 */
     --text-primary: #2c1810; /* contraste 15:1 ? */
     --text-secondary: #3d2b1f; /* contraste 10:1 ? */
     --text-white: #2c1810; /* contraste 15:1 ? */
@@ -54,11 +54,11 @@
     --text-muted: #5a4a30; /* contraste 5.2:1 ? (era #8a7a50 ? 3.5:1 ?) */
     --text-subtle: #4a3828; /* contraste 6.8:1 ? */
 
-    /* Nav — colores sobre fondo oscuro */
+    /* Nav â€” colores sobre fondo oscuro */
     --nav-text: #e8ddc8;
     --nav-text-active: #d4af37;
 
-    /* Colores de marca — oscurecidos para modo claro */
+    /* Colores de marca â€” oscurecidos para modo claro */
     --gold: #7a6020; /* contraste 5.3:1 ? (era #b8962e ? 2.7:1 ?) */
     --gold-dark: #5a4515; /* contraste 7.1:1 ? */
     --gold-bg: rgba(122, 96, 32, 0.08);
@@ -79,7 +79,7 @@
     --transition-theme: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
 }
 
-/* --- VARIABLES — TEMA OSCURO --- */
+/* --- VARIABLES â€” TEMA OSCURO --- */
 
 .dark-theme {
     --bg-body: #1a120b;
@@ -399,7 +399,7 @@ h2 {
     color: var(--text-primary);
 }
 
-/* --- NAVEGACIÓN INFERIOR --- */
+/* --- NAVEGACIÃ“N INFERIOR --- */
 
 .nav-bar {
     position: fixed;
@@ -454,7 +454,7 @@ h2 {
     }
 }
 
-/* --- INSTRUCCIÓN DEL MESÍAS --- */
+/* --- INSTRUCCIÃ“N DEL MESÃAS --- */
 
 .messiah-theme {
     font-family: 'Cinzel', serif;
@@ -613,7 +613,7 @@ h2 {
     border-radius: 0 5px 5px 0;
 }
 
-/* Vigía e Instalación */
+/* VigÃ­a e InstalaciÃ³n */
 .watcher-alert {
     background: var(--bg-alert);
     border: 1px solid var(--red);
@@ -665,6 +665,29 @@ h2 {
     }
 }
 
+.pwa-install-banner {
+    display: none;
+    background: var(--card-bg);
+    border: 1px solid var(--gold);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.4s ease;
+}
+
+.cal-print-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 12px;
+}
+
+.cal-print-toolbar .btn-action {
+    font-size: 0.85rem;
+    padding: 8px 16px;
+}
+
 /* --- MODALES --- */
 
 #modal-fiesta,
@@ -706,7 +729,7 @@ h2 {
     cursor: pointer;
 }
 
-/* --- ACTUALIZACIÓN (TOAST) --- */
+/* --- ACTUALIZACIÃ“N (TOAST) --- */
 
 .update-toast {
     position: fixed;
@@ -994,7 +1017,7 @@ h2 {
     box-shadow: 0 2px 12px rgba(212, 175, 55, 0.15);
 }
 .interactive-card::after {
-    content: '➔';
+    content: 'âž”';
     position: absolute;
     right: 15px;
     top: 50%;

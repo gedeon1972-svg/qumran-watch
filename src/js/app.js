@@ -1,4 +1,4 @@
-﻿/* * src/js/app.js
+/* * src/js/app.js
  * EL ESP�RITU (CONTROLADOR PRINCIPAL)
  * V13.0.0: Reconstrucci�n Modular Blindada
  */
@@ -16,11 +16,11 @@ import { renderCalendarView } from './ui/calendar-view.js';
 import { renderSunView } from './ui/sun-view.js';
 import { renderSaberGrid, renderEstudioModal } from './ui/estudio-view.js';
 import { renderFiestaModal } from './ui/fiesta-view.js';
+import { initPwaPrompt } from './ui/pwa-install.js';
 import './theme-init.js';
 
-const APP_VERSION = '13.1.17';
+const APP_VERSION = '13.1.18';
 
-let deferredPrompt;
 let newWorker;
 
 const isStandalone = () => window.matchMedia('(display-mode: standalone)').matches;
@@ -49,6 +49,7 @@ const QumranApp = {
         initTheme();
         const verEl = document.getElementById('app-version');
         if (verEl) verEl.textContent = 'v' + APP_VERSION;
+        initPwaPrompt();
         QumranApp.setupListeners();
         const hasMemory = QumranApp.loadStoredLocation();
         if (!hasMemory) QumranApp.getLocationAndSun();
@@ -73,18 +74,6 @@ const QumranApp = {
         document.getElementById('nav-cal').addEventListener('click', (e) => QumranApp.nav('cal', e.currentTarget));
         document.getElementById('nav-con').addEventListener('click', (e) => QumranApp.nav('con', e.currentTarget));
         document.getElementById('nav-edu').addEventListener('click', (e) => QumranApp.nav('edu', e.currentTarget));
-        // Instalaci�n PWA
-        const installBtn = document.getElementById('btn-install');
-        if (installBtn) {
-            installBtn.addEventListener('click', async () => {
-                if (deferredPrompt) {
-                    deferredPrompt.prompt();
-                    await deferredPrompt.userChoice;
-                    deferredPrompt = null;
-                    installBtn.style.display = 'none';
-                }
-            });
-        }
         // Interacci�n Hoy
         document.getElementById('heb-fiesta').addEventListener('click', QumranApp.openFiestaHoy);
         document.getElementById('geo-btn').addEventListener('click', () => QumranApp.getLocationAndSun(true));
