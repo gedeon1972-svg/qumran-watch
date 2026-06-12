@@ -1,4 +1,5 @@
-﻿import { expect, test, describe, vi, beforeEach, afterEach } from 'vitest';
+import { expect, test, describe, vi, beforeEach, afterEach } from 'vitest';
+import { renderHoyView } from '../src/js/ui/hoy-view.js';
 
 let mockDoc, mockElements, appRef;
 
@@ -202,12 +203,11 @@ afterEach(() => {
 });
 
 describe('Estructura', () => {
-    test('debe tener todos los métodos principales', () => {
+    test('debe tener todos los m�todos principales', () => {
         expect(appRef).toBeDefined();
         expect(typeof appRef.init).toBe('function');
         expect(typeof appRef.nav).toBe('function');
         expect(typeof appRef.loadStoredLocation).toBe('function');
-        expect(typeof appRef.checkWatcher).toBe('function');
         expect(typeof appRef.renderHoy).toBe('function');
         expect(typeof appRef.openFiesta).toBe('function');
         expect(typeof appRef.openFiestaHoy).toBe('function');
@@ -225,12 +225,12 @@ describe('nav', () => {
         expect(mockElements['view-hoy'].classList.contains('active')).toBe(false);
     });
 
-    test('pushState en navegación manual', () => {
+    test('pushState en navegaci�n manual', () => {
         appRef.nav('cal', null, false);
         expect(window.history.pushState).toHaveBeenCalledWith({ view: 'cal' }, '', '#cal');
     });
 
-    test('no pushState en evento histórico', () => {
+    test('no pushState en evento hist�rico', () => {
         appRef.nav('con', null, true);
         expect(window.history.pushState).not.toHaveBeenCalled();
     });
@@ -248,36 +248,65 @@ describe('loadStoredLocation', () => {
     });
 });
 
-describe('checkWatcher', () => {
-    test('alerta en día de preparación (idxSem=5)', () => {
-        appRef.checkWatcher(new Date(2024, 0, 5), { idxSem: 5, m: 0, d: 5, special: false });
+describe('renderHoyView (antes checkWatcher)', () => {
+    function makeModel(overrides) {
+        return Object.assign(
+            {
+                gregDate: 'viernes, 5 de enero',
+                special: false,
+                hebDate: '5 del mes 1',
+                hebDia: 'D�a 5',
+                turno: 'Gamul',
+                estacion: 'Primavera',
+                alertMsg: '',
+                omerDay: null,
+                yamimNoraIm: null,
+                halakha: { theme: '', hebrew: '', context: '', philology: '', quote: '', action: '' },
+                festival: null,
+                puerta: 1,
+                shabat: { idxSem: 0, percent: 14, text: 'Faltan 6 d�as para el Shabat' },
+                liturgia: { type: '', main: '', title: '', context: '', text: '' },
+            },
+            overrides,
+        );
+    }
+
+    test('alerta en d�a de preparaci�n (idxSem=5)', () => {
+        renderHoyView(
+            makeModel({
+                alertMsg: '<strong>�D�a de Preparaci�n!</strong><br>El Shabat entra al pr�ximo amanecer.',
+            }),
+        );
         expect(mockElements['alert-container'].style.display).toBe('block');
-        expect(mockElements['alert-msg'].innerHTML).toContain('Día de Preparación');
+        expect(mockElements['alert-msg'].innerHTML).toContain('Preparaci');
     });
 
-    test('muestra Omer en período (mes 0, día 26+)', () => {
-        appRef.checkWatcher(new Date(), { m: 0, d: 28, idxSem: 2, special: false });
+    test('muestra Omer en per�odo (mes 0, d�a 26+)', () => {
+        renderHoyView(makeModel({ omerDay: 3 }));
         expect(mockElements['card-omer'].style.display).toBe('block');
         expect(mockElements['omer-count'].innerText).toBe('3');
     });
 
-    test('oculta Omer fuera de período', () => {
-        appRef.checkWatcher(new Date(), { m: 3, d: 10, idxSem: 2, special: false });
+    test('oculta Omer fuera de per�odo', () => {
+        renderHoyView(makeModel({ omerDay: null }));
         expect(mockElements['card-omer'].style.display).toBe('none');
     });
 
-    test('muestra Yamim Noraim en mes 6, días 1-10', () => {
-        appRef.checkWatcher(new Date(), { m: 6, d: 3, idxSem: 2, special: false });
+    test('muestra Yamim Noraim en mes 6, d�as 1-10', () => {
+        renderHoyView(
+            makeModel({
+                yamimNoraIm: { dia: 3, data: { t: 'D�a de Ayuno', r: 'Jon�s 3' } },
+            }),
+        );
         expect(mockElements['card-teshuva'].style.display).toBe('block');
-        expect(mockElements['teshuva-cmd'].innerText).toContain('DÍA 3');
+        expect(mockElements['teshuva-cmd'].innerText).toContain('3:');
     });
 
-    test('oculta Yamim Noraim fuera del período', () => {
-        appRef.checkWatcher(new Date(), { m: 2, d: 15, idxSem: 2, special: false });
+    test('oculta Yamim Noraim fuera del per�odo', () => {
+        renderHoyView(makeModel({ yamimNoraIm: null }));
         expect(mockElements['card-teshuva'].style.display).toBe('none');
     });
 });
-
 describe('renderSaber y openEstudio', () => {
     test('renderSaber llena grilla', () => {
         appRef.renderSaber();
