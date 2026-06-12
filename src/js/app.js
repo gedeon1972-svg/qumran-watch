@@ -1,4 +1,4 @@
-/* * src/js/app.js
+﻿/* * src/js/app.js
  * EL ESP�RITU (CONTROLADOR PRINCIPAL)
  * V13.0.0: Reconstrucci�n Modular Blindada
  */
@@ -13,9 +13,12 @@ import { storage } from './core/storage.js';
 import { findFestivalDate, getFestivalsForYear, buildHoyViewModel } from './core/calculations.js';
 import { renderHoyView } from './ui/hoy-view.js';
 import { renderCalendarView } from './ui/calendar-view.js';
+import { renderSunView } from './ui/sun-view.js';
+import { renderSaberGrid, renderEstudioModal } from './ui/estudio-view.js';
+import { renderFiestaModal } from './ui/fiesta-view.js';
 import './theme-init.js';
 
-const APP_VERSION = '13.1.15';
+const APP_VERSION = '13.1.16';
 
 let deferredPrompt;
 let newWorker;
@@ -187,34 +190,28 @@ const QumranApp = {
 
     getLocationAndSun: (force = false) => {
         if (navigator.geolocation) {
-            if (force) document.getElementById('geo-btn').innerText = 'Buscando...';
+            if (force) renderSunView(null, 'Buscando...');
             navigator.geolocation.getCurrentPosition(
                 (pos) => {
                     const lat = pos.coords.latitude;
                     const lng = pos.coords.longitude;
                     storage.setItem('qw_lat', lat);
                     storage.setItem('qw_lng', lng);
-                    if (force) document.getElementById('geo-btn').innerText = 'Actualizar Ubicaci�n (GPS)';
-                    QumranApp.updateSunData(lat, lng);
+                    QumranApp.updateSunData(lat, lng, force ? 'Actualizar Ubicación (GPS)' : undefined);
                 },
                 () => {
                     // --- INICIO DEL RESPALDO B�BLICO (JERUSALÉN) ---
                     console.warn('GPS fall� o denegado. Usando Jerusalén.');
-                    if (force) document.getElementById('geo-btn').innerText = 'Jerusalén (GPS Inactivo)';
-
-                    // Coordenadas exactas de Jerusalén
                     const latJerusalen = 31.7683;
                     const lngJerusalen = 35.2137;
-
-                    // Calculamos el tiempo usando el reloj original
-                    QumranApp.updateSunData(latJerusalen, lngJerusalen);
+                    QumranApp.updateSunData(latJerusalen, lngJerusalen, 'Jerusalén (GPS Inactivo)');
                     // --- FIN DEL RESPALDO ---
                 },
             );
         }
     },
 
-    updateSunData: (lat, lng) => {
+    updateSunData: (lat, lng, geoLabel) => {
         const now = new Date();
         const times = QumranSun.calcSunTimes(now, lat, lng);
 
@@ -227,12 +224,7 @@ const QumranApp = {
             QumranApp.sunriseHour = times.riseDecimal;
             QumranApp.renderHoy();
         }
-        document.getElementById('sun-rise').innerText = times.rise;
-        document.getElementById('sun-set').innerText = times.set;
-        document.getElementById('sun-container').style.display = 'flex';
-        const btn = document.getElementById('geo-btn');
-        btn.innerText = '↻ Actualizar Ubicaci�n (GPS)';
-        btn.style.display = 'block';
+        renderSunView({ rise: times.rise, set: times.set }, geoLabel);
     },
 
     renderHoy: () => {
@@ -261,15 +253,15 @@ const QumranApp = {
             dateStr += ' al ' + end.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
         }
 
-        document.getElementById('mod-title').innerText = f.n;
-        document.getElementById('mod-fechas').innerText = dateStr + ` (${year})`;
-        document.getElementById('mod-fechas-heb').innerText = `${f.d} del ${QumranData.MESES[f.m]}\n${f.es}`;
-        document.getElementById('mod-instr').innerText = f.instr;
-        document.getElementById('mod-ref').innerText = f.ref;
-        document.getElementById('mod-note').style.display = f.nota ? 'block' : 'none';
-        if (f.nota) document.getElementById('mod-note').innerText = f.nota;
-        document.getElementById('mod-warn').style.display = f.especial ? 'block' : 'none';
-        document.getElementById('modal-fiesta').style.display = 'flex';
+        renderFiestaModal({
+            title: f.n,
+            fechas: dateStr + ' (' + year + ')',
+            fechasHeb: f.d + ' del ' + QumranData.MESES[f.m] + '\n' + f.es,
+            instr: f.instr,
+            ref: f.ref,
+            nota: f.nota || null,
+            especial: f.especial || false,
+        });
     },
 
     openFiestaHoy: () => {
@@ -277,23 +269,13 @@ const QumranApp = {
     },
 
     renderSaber: () => {
-        const container = document.getElementById('edu-grid');
-        if (!container) return;
-        container.innerHTML = '';
-        let htmlCards = '';
-        QumranData.ESTUDIOS.forEach((item, idx) => {
-            htmlCards += `<div class="edu-card interactive-card" data-index="${idx}"><div class="edu-card-title">${item.t}</div><div class="edu-card-subtitle">${item.s}</div></div>`;
-        });
-        container.innerHTML = htmlCards;
+        renderSaberGrid(QumranData.ESTUDIOS);
     },
 
     openEstudio: (index) => {
         const estudio = QumranData.ESTUDIOS[index];
         if (!estudio) return;
-        document.getElementById('lec-title').innerText = estudio.t;
-        document.getElementById('lec-meta').innerText = estudio.s;
-        document.getElementById('lec-body').innerHTML = estudio.c;
-        document.getElementById('modal-lectura').style.display = 'flex';
+        renderEstudioModal(estudio);
     },
 
     renderCalendar: () => {
