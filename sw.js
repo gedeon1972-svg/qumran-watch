@@ -4,21 +4,13 @@
  * network-first para navegaciones, fallback offline.
  */
 
-const CACHE_NAME = 'qumran-cache-v13.1.10';
+const CACHE_NAME = 'qumran-cache-v13.1.11';
 
 const URLS_TO_CACHE = [
-    './',
-    './index.html',
-    './manifest.json',
-    './icon.png',
-    './src/js/app.js',
-    './src/js/theme-init.js',
-    './src/css/styles.css',
-    './src/css/animations.css',
-    './src/css/fonts/david-libre-v17-latin-regular.woff2',
-    './src/css/fonts/david-libre-v17-latin-700.woff2',
-    './src/css/fonts/cinzel-v26-latin-regular.woff2',
-    './src/css/fonts/cinzel-v26-latin-700.woff2',
+    '/qumran-watch/',
+    '/qumran-watch/index.html',
+    '/qumran-watch/manifest.json',
+    '/qumran-watch/icon.png',
 ];
 
 const OFFLINE_RESPONSE = new Response(
@@ -41,7 +33,7 @@ function isAsset(url) {
 }
 
 self.addEventListener('install', (event) => {
-    console.log('[SW] Instalando v13.1.10...');
+    console.log('[SW] Instalando v13.1.11...');
     event.waitUntil(
         caches
             .open(CACHE_NAME)
@@ -63,7 +55,7 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('activate', (event) => {
-    console.log('[SW] Activado v13.1.10');
+    console.log('[SW] Activado v13.1.11');
     event.waitUntil(
         caches
             .keys()
