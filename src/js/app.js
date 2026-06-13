@@ -20,7 +20,7 @@ import { initPwaPrompt } from './ui/pwa-install.js';
 import { getSunriseTime } from './core/time-translator.js';
 import './theme-init.js';
 
-const APP_VERSION = '13.1.25';
+const APP_VERSION = '13.1.26';
 
 let newWorker;
 

@@ -1,5 +1,5 @@
 /**
- * sw.js - EL GUARDIÃƒÆ’Ã‚ÂN DEL UMBRAL (v13.1.25)
+ * sw.js - EL GUARDIÃƒÆ’Ã‚ÂN DEL UMBRAL (v13.1.26)
  * Estrategia hÃƒÆ’Ã‚Â­brida: cache-first para assets estÃƒÆ’Ã‚Â¡ticos,
  * network-first para navegaciones, fallback offline.
  */

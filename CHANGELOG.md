@@ -7,6 +7,15 @@
 
 
 
+
+## [13.1.26] - 2026-06-12 - Feature: Implementada tarjeta visual enriquecida para la Estacion (Primavera/Verano/Otonio/Invierno) en la vista principal.
+
+### Added
+- Componente src/js/ui/estacion-dashboard.js con renderEstacionCard() (ya existente desde v13.1.22, confirmado y estable)
+- Integracion en hoy-view.js con import y reemplazo del texto plano
+- SVGs por estacion, subtitulo "Estacion Actual", titulo destacado
+
+
 ## [13.1.25] - 2026-06-12 - Hotfix: Fix CSS Flexbox wrapping issue and render order for Vigia progress bar.
 
 ### Fixed
