@@ -4,6 +4,8 @@
  * No realiza cálculos — solo consume las propiedades del ViewModel.
  */
 
+import { renderMishmarCard } from './mishmar-dashboard.js';
+
 /**
  * Renderiza la vista "Hoy" a partir del ViewModel.
  * @param {object} model - ViewModel generado por buildHoyViewModel
@@ -52,7 +54,8 @@ export function renderHoyView(model) {
     // Hebrew date / day / priestly course / season
     document.getElementById('heb-date').innerText = model.hebDate;
     document.getElementById('heb-dia').innerText = model.hebDia;
-    document.getElementById('heb-turno').innerText = model.turno;
+    const turnoContainer = document.getElementById('heb-turno').parentNode;
+    renderMishmarCard(model.turno, turnoContainer);
     document.getElementById('heb-estacion').innerText = model.estacion;
 
     // Halakha (Messiah's Instruction)

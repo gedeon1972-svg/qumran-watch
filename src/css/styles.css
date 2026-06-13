@@ -291,6 +291,71 @@ h2 {
     border-top: 1px solid var(--faint);
 }
 
+/* --- Mishmar Card (Priestly Course Dashboard) --- */
+.mishmar-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--bg-card-alt);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-top: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    transition: var(--transition-theme);
+}
+.mishmar-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--gold-bg);
+    color: var(--gold);
+}
+.mishmar-content {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+.mishmar-subtitle {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--faint);
+    font-family: 'Cinzel', serif;
+    line-height: 1.2;
+}
+.mishmar-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-accent);
+    font-family: 'David Libre', serif;
+    line-height: 1.3;
+    margin-top: 2px;
+}
+
+@media print {
+    .mishmar-card {
+        background: #fff !important;
+        color: #000 !important;
+        border: 1px solid #999 !important;
+        box-shadow: none !important;
+    }
+    .mishmar-icon {
+        background: #f0f0f0 !important;
+        color: #333 !important;
+    }
+    .mishmar-subtitle {
+        color: #555 !important;
+    }
+    .mishmar-title {
+        color: #000 !important;
+    }
+}
+
 .info-block-center {
     background: var(--bg-highlight);
     border-radius: 6px;

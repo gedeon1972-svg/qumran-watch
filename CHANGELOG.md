@@ -3,6 +3,16 @@
 ## [Unreleased]
 
 
+
+## [13.1.21] - 2026-06-12 - Feature: Tarjeta visual dedicada para el Turno Sacerdotal (Mishmar) en la vista principal.
+
+### Added
+- New component: src/js/ui/mishmar-dashboard.js with renderMishmarCard()
+- Imported and integrated in hoy-view.js ? replaces static heb-turno text with rich card
+- CSS styles: .mishmar-card, .mishmar-icon, .mishmar-title, .mishmar-subtitle
+- Print-friendly styles for mishmar-card
+
+
 ## [13.1.20] - 2026-06-12 - Feature: Motor de precision solar astronomica y advertencias dinamicas del Vigia para el inicio del dia.
 
 ### Added
