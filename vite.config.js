@@ -1,7 +1,13 @@
 import { defineConfig } from 'vite';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const pkg = require('./package.json');
 
 export default defineConfig({
     base: '/qumran-watch/',
+    define: {
+        __APP_VERSION__: JSON.stringify(pkg.version),
+    },
     publicDir: 'public',
     build: {
         outDir: 'dist',
@@ -18,6 +24,7 @@ export default defineConfig({
         },
     },
     test: {
+        globals: true,
         coverage: {
             provider: 'v8',
             reporter: ['text', 'html'],

@@ -1,4 +1,4 @@
-﻿import js from '@eslint/js';
+import js from '@eslint/js';
 import security from 'eslint-plugin-security';
 
 export default [
@@ -23,6 +23,8 @@ export default [
                 Promise: 'readonly',
                 Response: 'readonly',
                 Request: 'readonly',
+                // Inyectada en tiempo de build por Vite (vite.config.js → define)
+                __APP_VERSION__: 'readonly',
             },
         },
         rules: {

@@ -20,7 +20,8 @@ import { initPwaPrompt } from './ui/pwa-install.js';
 import { getSunriseTime } from './core/time-translator.js';
 import './theme-init.js';
 
-const APP_VERSION = '13.1.29';
+// Versión inyectada automáticamente por Vite desde package.json (vite.config.js → define)
+const APP_VERSION = typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : '0.0.0-dev';
 
 // --- 2. GESTIÓN DE SERVICE WORKER & ACTUALIZACIONES ---
 
