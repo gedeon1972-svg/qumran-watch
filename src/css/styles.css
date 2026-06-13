@@ -597,7 +597,7 @@ h2 {
     color: var(--text-primary);
 }
 
-/* --- NAVEGACIÃƒâ€œN INFERIOR --- */
+/* --- NAVEGACIÓN INFERIOR --- */
 
 .nav-bar {
     position: fixed;
@@ -652,7 +652,7 @@ h2 {
     }
 }
 
-/* --- INSTRUCCIÃƒâ€œN DEL MESÃƒÂAS --- */
+/* --- INSTRUCCIÓN DEL MESÍAS --- */
 
 .messiah-theme {
     font-family: 'Cinzel', serif;
@@ -811,7 +811,7 @@ h2 {
     border-radius: 0 5px 5px 0;
 }
 
-/* VigÃƒÂ­a e InstalaciÃƒÂ³n */
+/* Vigía e Instalación */
 .watcher-alert {
     background: var(--bg-alert);
     border: 1px solid var(--red);
@@ -927,7 +927,7 @@ h2 {
     cursor: pointer;
 }
 
-/* --- ACTUALIZACIÃƒâ€œN (TOAST) --- */
+/* --- ACTUALIZACIÓN (TOAST) --- */
 
 .update-toast {
     position: fixed;
@@ -1204,6 +1204,15 @@ h2 {
 
 /* --- INTERACTIVE CARD (hover) --- */
 
+.card-link {
+    text-align: right;
+    font-size: 0.8rem;
+    color: var(--gold);
+    margin-top: 8px;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
 .interactive-card {
     transition:
         border-color 0.3s ease,
@@ -1216,7 +1225,7 @@ h2 {
     box-shadow: 0 2px 12px rgba(212, 175, 55, 0.15);
 }
 .interactive-card::after {
-    content: 'Ã¢Å¾â€';
+    content: '\2794';
     position: absolute;
     right: 15px;
     top: 50%;
