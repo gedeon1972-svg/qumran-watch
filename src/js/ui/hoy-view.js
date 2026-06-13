@@ -5,6 +5,7 @@
  */
 
 import { renderMishmarCard } from './mishmar-dashboard.js';
+import { renderEstacionCard } from './estacion-dashboard.js';
 
 /**
  * Renderiza la vista "Hoy" a partir del ViewModel.
@@ -56,7 +57,8 @@ export function renderHoyView(model) {
     document.getElementById('heb-dia').innerText = model.hebDia;
     const turnoContainer = document.getElementById('heb-turno').parentNode;
     renderMishmarCard(model.turno, turnoContainer);
-    document.getElementById('heb-estacion').innerText = model.estacion;
+    const estContainer = document.getElementById('heb-estacion').parentNode;
+    renderEstacionCard(model.estacion, estContainer);
 
     // Halakha (Messiah's Instruction)
     document.getElementById('messiah-theme').innerText = model.halakha.theme;

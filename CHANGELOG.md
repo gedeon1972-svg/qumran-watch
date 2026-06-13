@@ -4,6 +4,17 @@
 
 
 
+
+## [13.1.22] - 2026-06-12 - Feature: Tarjeta visual para la Estacion actual y Barra de progreso/cuenta regresiva para el inicio del nuevo dia (Amanecer).
+
+### Added
+- New component: src/js/ui/estacion-dashboard.js with renderEstacionCard() ? seasonal SVG icons per station
+- Imported and integrated in hoy-view.js ? replaces static heb-estacion text with rich card
+- Day transition progress bar in calculateVigiaStatus() ? shows countdown hours/min + progress bar
+- CSS styles: .estacion-card, .estacion-icon, .estacion-title, .estacion-subtitle, .day-transition-bar, .progress-bar-container, .progress-bar-fill
+- Print-friendly styles for estacion-card; day-transition-bar hidden in print
+
+
 ## [13.1.21] - 2026-06-12 - Feature: Tarjeta visual dedicada para el Turno Sacerdotal (Mishmar) en la vista principal.
 
 ### Added
