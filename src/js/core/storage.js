@@ -1,4 +1,4 @@
-﻿/**
+/**
  * src/js/storage.js
  * Wrapper localStorage con try/catch — fallback a memoria en modo privado/incógnito
  */
@@ -9,6 +9,7 @@ export const storage = {
         try {
             return localStorage.getItem(key);
         } catch {
+            // eslint-disable-next-line security/detect-object-injection
             return memory[key] !== undefined ? memory[key] : null;
         }
     },
@@ -16,6 +17,7 @@ export const storage = {
         try {
             localStorage.setItem(key, value);
         } catch {
+            // eslint-disable-next-line security/detect-object-injection
             memory[key] = String(value);
         }
     },
@@ -23,6 +25,7 @@ export const storage = {
         try {
             localStorage.removeItem(key);
         } catch {
+            // eslint-disable-next-line security/detect-object-injection
             delete memory[key];
         }
     },
@@ -30,6 +33,7 @@ export const storage = {
         try {
             localStorage.clear();
         } catch {
+            // eslint-disable-next-line security/detect-object-injection
             Object.keys(memory).forEach((k) => delete memory[k]);
         }
     },

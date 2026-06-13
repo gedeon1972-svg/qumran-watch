@@ -1,8 +1,8 @@
-﻿(function () {
+(function () {
     let theme;
     try {
         theme = localStorage.getItem('qw_theme');
-    } catch (_) {
+    } catch {
         theme = null;
     }
     if (!theme) {

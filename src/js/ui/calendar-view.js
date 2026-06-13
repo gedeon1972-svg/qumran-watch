@@ -24,12 +24,14 @@ export function renderCalendarView(festivals, year) {
         const d = _a.date;
         const q = _a.q;
         const fIdx = _a.index;
+        // eslint-disable-next-line security/detect-object-injection
         const f = QumranData.FIESTAS[fIdx];
         let dateLabel = d.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
         if (f.dur > 1) {
             const end = new Date(d.getTime() + (f.dur - 1) * 86400000);
             dateLabel += ' - ' + end.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
         }
+         
         const nombreMes = QumranData.MESES[q.m];
         html +=
             '<div class="edu-card fiesta interactive-card" data-index="' +

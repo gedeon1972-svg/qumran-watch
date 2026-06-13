@@ -1,11 +1,11 @@
-﻿import { QumranData } from '../core/data.js';
+import { QumranData } from '../core/data.js';
 import { QumranCalendar } from '../core/calendar.js';
 
 function findQumranNewYear(year) {
-    var start = new Date(year, 2, 15);
-    for (var i = -15; i < 390; i++) {
-        var d = new Date(start.getTime() + i * 86400000);
-        var q = QumranCalendar.calculate(d);
+    const start = new Date(year, 2, 15);
+    for (let i = -15; i < 390; i++) {
+        const d = new Date(start.getTime() + i * 86400000);
+        const q = QumranCalendar.calculate(d);
         if (q && !q.special && q.m === 0 && q.d === 1) {
             return d;
         }
@@ -13,64 +13,65 @@ function findQumranNewYear(year) {
     return null;
 }
 
-var MONTH_DAYS = [30, 30, 31, 30, 30, 31, 30, 30, 31, 30, 30, 31];
+const MONTH_DAYS = [30, 30, 31, 30, 30, 31, 30, 30, 31, 30, 30, 31];
 
 export function generatePrintHtml(year) {
-    var newYear = findQumranNewYear(year);
+    /* eslint-disable security/detect-object-injection */
+    const newYear = findQumranNewYear(year);
     if (!newYear) {
         return '<p>No se pudo calcular el a\u00f1o de Qumr\u00e1n para ' + year + '.</p>';
     }
 
-    var firstQ = QumranCalendar.calculate(newYear);
-    var qYear = firstQ ? firstQ.y : year;
+    const firstQ = QumranCalendar.calculate(newYear);
+    const qYear = firstQ ? firstQ.y : year;
 
     // Build festival lookup: key = "m-d"
-    var festivalLookup = {};
-    for (var fi = 0; fi < QumranData.FIESTAS.length; fi++) {
-        var f = QumranData.FIESTAS[fi];
-        var key = f.m + '-' + f.d;
+    const festivalLookup = {};
+    for (let fi = 0; fi < QumranData.FIESTAS.length; fi++) {
+        const f = QumranData.FIESTAS[fi];
+        const key = f.m + '-' + f.d;
         if (!festivalLookup[key]) festivalLookup[key] = [];
         festivalLookup[key].push({ name: f.n, dur: f.dur });
     }
 
-    var monthsHtml = '';
-    for (var m = 0; m < 12; m++) {
-        var daysInMonth = MONTH_DAYS[m];
-        var monthName = QumranData.MESES[m];
+    let monthsHtml = '';
+    for (let m = 0; m < 12; m++) {
+        const daysInMonth = MONTH_DAYS[m];
+        const monthName = QumranData.MESES[m];
 
         // Compute offset from year start to first day of this month
-        var firstDayOffset = 0;
-        for (var k = 0; k < m; k++) firstDayOffset += MONTH_DAYS[k];
-        var firstDate = new Date(newYear.getTime() + firstDayOffset * 86400000);
-        var firstQCalc = QumranCalendar.calculate(firstDate);
-        var firstWeekday = firstQCalc ? firstQCalc.idxSem : 0;
-        var emptyCells = firstWeekday; // 0-6
+        let firstDayOffset = 0;
+        for (let k = 0; k < m; k++) firstDayOffset += MONTH_DAYS[k];
+        const firstDate = new Date(newYear.getTime() + firstDayOffset * 86400000);
+        const firstQCalc = QumranCalendar.calculate(firstDate);
+        const firstWeekday = firstQCalc ? firstQCalc.idxSem : 0;
+        const emptyCells = firstWeekday; // 0-6
 
         // Build day cells
-        var cells = '';
-        for (var e = 0; e < emptyCells; e++) {
+        let cells = '';
+        for (let e = 0; e < emptyCells; e++) {
             cells += '<div class="dc empty"></div>';
         }
 
-        for (var d = 1; d <= daysInMonth; d++) {
-            var dayOffset = firstDayOffset + (d - 1);
-            var date = new Date(newYear.getTime() + dayOffset * 86400000);
-            var q = QumranCalendar.calculate(date);
-            var weekIdx = q ? q.idxSem : 0;
+        for (let d = 1; d <= daysInMonth; d++) {
+            const dayOffset = firstDayOffset + (d - 1);
+            const date = new Date(newYear.getTime() + dayOffset * 86400000);
+            const q = QumranCalendar.calculate(date);
+            const weekIdx = q ? q.idxSem : 0;
 
-            var gregStr = date.toLocaleDateString('es-ES', {
+            const gregStr = date.toLocaleDateString('es-ES', {
                 day: 'numeric',
                 month: 'short'
             }).replace(/\./g, '');
 
-            var festKey = m + '-' + d;
-            var festList = festivalLookup[festKey];
-            var festName = festList ? festList[0].name : '';
+            const festKey = m + '-' + d;
+            const festList = festivalLookup[festKey];
+            const festName = festList ? festList[0].name : '';
 
-            var isShabbat = weekIdx === 6;
-            var isFestival = !!festList;
+            const isShabbat = weekIdx === 6;
+            const isFestival = !!festList;
 
-            var cls = 'dc';
+            let cls = 'dc';
             if (isShabbat) cls += ' shab';
             if (isFestival) cls += ' fest';
 
@@ -137,8 +138,8 @@ export function generatePrintHtml(year) {
 }
 
 export function openPrintWindow(year) {
-    var html = generatePrintHtml(year);
-    var win = window.open('');
+    const html = generatePrintHtml(year);
+    const win = window.open('');
     if (!win) {
         window.alert('Permite ventanas emergentes para imprimir el calendario.');
         return;

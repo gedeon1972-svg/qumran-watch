@@ -9,25 +9,26 @@ import { QumranCalendar } from './core/calendar.js';
 
 export const QumranICS = {
     generateAndDownload: (year) => {
-        // Calcular inicio dinámico: buscar 1 de Aviv (Mes 1, Día 1) del año solicitado
+        // Calcular inicio dinÃ¡mico: buscar 1 de Aviv (Mes 1, DÃ­a 1) del aÃ±o solicitado
         const startDate = QumranICS.findLiturgicalStart(year);
         if (!startDate) {
-            throw new Error('No se pudo determinar el inicio del año litúrgico para ' + year);
+            throw new Error('No se pudo determinar el inicio del aÃ±o litÃºrgico para ' + year);
         }
 
-        // Cabecera estándar del archivo ICS
+        // Cabecera estÃ¡ndar del archivo ICS
         let icsContent = 'BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Qumran Watch//ES\nCALSCALE:GREGORIAN\n';
 
-        // Calculamos 400 días para cubrir el año litúrgico completo
+        // Calculamos 400 dÃ­as para cubrir el aÃ±o litÃºrgico completo
         for (let i = 0; i < 400; i++) {
             const d = new Date(startDate.getTime() + i * 86400000);
             const q = QumranCalendar.calculate(d);
 
             if (!q || q.special) continue;
 
-            // 1. Añadir Alertas de las Fiestas (Moedim)
+            // 1. AÃ±adir Alertas de las Fiestas (Moedim)
             const fIdx = QumranData.FIESTAS.findIndex((x) => x.m === q.m && x.d === q.d);
             if (fIdx !== -1) {
+        // eslint-disable-next-line security/detect-object-injection
                 const f = QumranData.FIESTAS[fIdx];
                 const dateStr = d
                     .toISOString()
@@ -40,7 +41,7 @@ export const QumranICS = {
                 icsContent += `DTSTART;VALUE=DATE:${dateStr}\n`;
                 icsContent += `DTEND;VALUE=DATE:${dateStr}\n`;
 
-                // Configuración de ALARMA PUSH nativa (1 día antes)
+                // ConfiguraciÃ³n de ALARMA PUSH nativa (1 dÃ­a antes)
                 icsContent += 'BEGIN:VALARM\n';
                 icsContent += 'TRIGGER:-P1D\n';
                 icsContent += 'ACTION:DISPLAY\n';
@@ -49,24 +50,24 @@ export const QumranICS = {
                 icsContent += 'END:VEVENT\n';
             }
 
-            // 2. Añadir Alertas del Shabat (Aviso de Preparación el viernes)
+            // 2. AÃ±adir Alertas del Shabat (Aviso de PreparaciÃ³n el viernes)
             if (q.idxSem === 6) {
-                // Si es Sábado en Qumrán
+                // Si es SÃ¡bado en QumrÃ¡n
                 const dateStr = d
                     .toISOString()
                     .replace(/-|:|\.\d+/g, '')
                     .substring(0, 8);
 
                 icsContent += 'BEGIN:VEVENT\n';
-                icsContent += `SUMMARY:Shabat (Qumrán)\n`;
+                icsContent += `SUMMARY:Shabat (QumrÃ¡n)\n`;
                 icsContent += `DTSTART;VALUE=DATE:${dateStr}\n`;
                 icsContent += `DTEND;VALUE=DATE:${dateStr}\n`;
 
-                // Configuración de ALARMA PUSH nativa (12 horas antes)
+                // ConfiguraciÃ³n de ALARMA PUSH nativa (12 horas antes)
                 icsContent += 'BEGIN:VALARM\n';
                 icsContent += 'TRIGGER:-PT12H\n';
                 icsContent += 'ACTION:DISPLAY\n';
-                icsContent += `DESCRIPTION:Día de Preparación para el Shabat\n`;
+                icsContent += `DESCRIPTION:DÃ­a de PreparaciÃ³n para el Shabat\n`;
                 icsContent += 'END:VALARM\n';
                 icsContent += 'END:VEVENT\n';
             }
@@ -87,8 +88,8 @@ export const QumranICS = {
     },
 
     findLiturgicalStart: (year) => {
-        // Buscar 1 de Aviv (Mes 0, Día 1) escaneando desde el 1 de Marzo
-        // Se necesitan ~45 días por la deriva del año de 364 días
+        // Buscar 1 de Aviv (Mes 0, DÃ­a 1) escaneando desde el 1 de Marzo
+        // Se necesitan ~45 dÃ­as por la deriva del aÃ±o de 364 dÃ­as
         const base = new Date(year, 2, 1);
         for (let i = 0; i < 50; i++) {
             const d = new Date(base.getTime() + i * 86400000);
