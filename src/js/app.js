@@ -21,7 +21,7 @@ import { getSunriseTime } from './core/time-translator.js';
 import './theme-init.js';
 
 // Versión inyectada automáticamente por Vite desde package.json (vite.config.js → define)
-const APP_VERSION = typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : '0.0.0-dev';
+const APP_VERSION = __APP_VERSION__;
 
 // --- 2. GESTIÓN DE SERVICE WORKER & ACTUALIZACIONES ---
 
