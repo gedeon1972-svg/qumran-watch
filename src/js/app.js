@@ -20,7 +20,7 @@ import { initPwaPrompt } from './ui/pwa-install.js';
 import { getSunriseTime } from './core/time-translator.js';
 import './theme-init.js';
 
-const APP_VERSION = '13.1.22';
+const APP_VERSION = '13.1.23';
 
 let newWorker;
 
@@ -290,49 +290,62 @@ const QumranApp = {
         if (!sunriseData) return;
         const now = new Date();
         const currentHour = now.getHours() + now.getMinutes() / 60;
-        const alertContainer = document.getElementById('alert-container');
-        const alertMsg = document.getElementById('alert-msg');
-        if (!alertContainer || !alertMsg) return;
-        const existing = document.getElementById('vigia-solar-msg');
-        const existingBar = document.getElementById('day-transition-bar');
-        if (existing) existing.remove();
+
+        // --- Bar in sun-container (below sun icons) ---
+        const sunContainer = document.getElementById('sun-container');
+        const existingBar = document.getElementById('vigia-progress-container');
         if (existingBar) existingBar.remove();
+
         if (currentHour < sunriseData.firstLight) {
             const minsToFirstLight = Math.round((sunriseData.firstLight - currentHour) * 60);
             const hoursLeft = Math.floor(minsToFirstLight / 60);
             const minsLeft = minsToFirstLight % 60;
-            const yesterday = new Date(now.getTime() - 86400000);
-            const qPrev = QumranCalendar.calculate(yesterday);
-            const prevDayLabel = qPrev ? qPrev.d + ' del ' + QumranData.MESES[qPrev.m] : 'dia anterior';
-
-            // Progress bar container
-            const barDiv = document.createElement('div');
-            barDiv.id = 'day-transition-bar';
-            barDiv.className = 'day-transition-bar';
-
-            let progressPct = Math.round((currentHour / sunriseData.firstLight) * 100);
+            const nightDuration = sunriseData.firstLight;
+            let progressPct = Math.round((currentHour / nightDuration) * 100);
             if (progressPct < 0) progressPct = 0;
             if (progressPct > 100) progressPct = 100;
 
-            barDiv.innerHTML =
-                '<div class="transition-message"><strong>Vigia Solar:</strong> Aun en ' +
-                prevDayLabel +
-                '</div>' +
-                '<div class="transition-countdown">' +
-                '<span class="countdown-icon">?</span> ' +
-                'Faltan ' +
+            const progressHTML = document.createElement('div');
+            progressHTML.id = 'vigia-progress-container';
+            progressHTML.className = 'vigia-progress-container';
+            progressHTML.innerHTML =
+                '<div class="vigia-progress-label">' +
+                '? Faltan <span id="vigia-hours">' +
                 hoursLeft +
-                ' h y ' +
+                '</span>h ' +
+                '<span id="vigia-mins">' +
                 minsLeft +
-                ' min para el inicio del nuevo dia.</div>' +
-                '<div class="progress-bar-container">' +
-                '<div class="progress-bar-fill" style="width:' +
+                '</span>m para el Nuevo Dia</div>' +
+                '<div class="vigia-progress-bar-bg">' +
+                '<div class="vigia-progress-bar-fill" style="width:' +
                 progressPct +
                 '%"></div>' +
                 '</div>';
 
-            alertMsg.appendChild(barDiv);
-            alertContainer.style.display = 'block';
+            if (sunContainer) sunContainer.appendChild(progressHTML);
+
+            // --- Also keep the watcher alert message ---
+            const alertContainer = document.getElementById('alert-container');
+            const alertMsg = document.getElementById('alert-msg');
+            if (alertContainer && alertMsg) {
+                const alertExisting = document.getElementById('vigia-solar-msg');
+                if (alertExisting) alertExisting.remove();
+                const yesterday = new Date(now.getTime() - 86400000);
+                const qPrev = QumranCalendar.calculate(yesterday);
+                const prevDayLabel = qPrev ? qPrev.d + ' del ' + QumranData.MESES[qPrev.m] : 'dia anterior';
+                const solarMsg = document.createElement('div');
+                solarMsg.id = 'vigia-solar-msg';
+                solarMsg.style.cssText =
+                    'margin-top:8px;padding-top:8px;border-top:1px solid rgba(212,175,55,0.3);font-size:0.9rem;';
+                solarMsg.innerHTML =
+                    '<strong>Vigia Solar:</strong> Aun en ' +
+                    prevDayLabel +
+                    '. El nuevo dia comenzara en ~' +
+                    minsToFirstLight +
+                    ' min.';
+                alertMsg.appendChild(solarMsg);
+                alertContainer.style.display = 'block';
+            }
         }
     },
 

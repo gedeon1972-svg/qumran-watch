@@ -5,6 +5,15 @@
 
 
 
+
+## [13.1.23] - 2026-06-12 - Hotfix: Correccion terminologica (Amanecer/Ocaso) y renderizado forzado de la barra de progreso del Vigia en madrugada.
+
+### Fixed
+- index.html: 'SALIDA DEL SOL' -> 'AMANECER', 'PUESTA DEL SOL' -> 'OCASO'
+- app.js calculateVigiaStatus(): progress bar now injected into #sun-container (below sun icons) instead of only #alert-msg
+- Added CSS .vigia-progress-container, .vigia-progress-label, .vigia-progress-bar-bg, .vigia-progress-bar-fill with dark-mode + print support
+
+
 ## [13.1.22] - 2026-06-12 - Feature: Tarjeta visual para la Estacion actual y Barra de progreso/cuenta regresiva para el inicio del nuevo dia (Amanecer).
 
 ### Added
