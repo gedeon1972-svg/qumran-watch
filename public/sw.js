@@ -1,6 +1,6 @@
 /**
- * sw.js - EL GUARDIÃƒÆ’Ã‚ÂN DEL UMBRAL (v13.1.26)
- * Estrategia hÃƒÆ’Ã‚Â­brida: cache-first para assets estÃƒÆ’Ã‚Â¡ticos,
+ * sw.js - EL GUARDIÃƒÆ’Ã†â€™Ãƒâ€šÃ‚ÂN DEL UMBRAL (v13.1.27)
+ * Estrategia hÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­brida: cache-first para assets estÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡ticos,
  * network-first para navegaciones, fallback offline.
  */
 
@@ -14,7 +14,7 @@ const URLS_TO_CACHE = [
 ];
 
 const OFFLINE_RESPONSE = new Response(
-    '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Sin ConexiÃƒÆ’Ã‚Â³n ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Qumran Watch</title><style>body{background:#1a120b;color:#d4af37;font-family:serif;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:20px;text-align:center}h1{font-size:1.5rem;margin-bottom:1rem}p{color:#c0b090;max-width:400px;line-height:1.6}.icon{font-size:3rem;margin-bottom:1rem}.retry-btn{margin-top:1.5rem;padding:12px 24px;background:#d4af37;color:#1a120b;border:none;border-radius:6px;font-size:1rem;cursor:pointer;font-family:serif}</style></head><body><div class="icon">ÃƒÂ°Ã…Â¸Ã¢â‚¬Å“Ã‚Â¡</div><h1>Sin ConexiÃƒÆ’Ã‚Â³n</h1><p>Qumran Watch necesita conexiÃƒÆ’Ã‚Â³n a internet para cargarse por primera vez.<br>Una vez cargado, funciona completamente offline.</p><button class="retry-btn" onclick="location.reload()">Reintentar</button></body></html>',
+    '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Sin ConexiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³n ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Qumran Watch</title><style>body{background:#1a120b;color:#d4af37;font-family:serif;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:20px;text-align:center}h1{font-size:1.5rem;margin-bottom:1rem}p{color:#c0b090;max-width:400px;line-height:1.6}.icon{font-size:3rem;margin-bottom:1rem}.retry-btn{margin-top:1.5rem;padding:12px 24px;background:#d4af37;color:#1a120b;border:none;border-radius:6px;font-size:1rem;cursor:pointer;font-family:serif}</style></head><body><div class="icon">ÃƒÆ’Ã‚Â°Ãƒâ€¦Ã‚Â¸ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œÃƒâ€šÃ‚Â¡</div><h1>Sin ConexiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³n</h1><p>Qumran Watch necesita conexiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³n a internet para cargarse por primera vez.<br>Una vez cargado, funciona completamente offline.</p><button class="retry-btn" onclick="location.reload()">Reintentar</button></body></html>',
     { headers: { 'Content-Type': 'text/html;charset=UTF-8' } },
 );
 

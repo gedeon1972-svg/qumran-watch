@@ -1,9 +1,9 @@
 /* * src/js/app.js
- * EL ESPï¿½RITU (CONTROLADOR PRINCIPAL)
- * V13.0.0: Reconstrucciï¿½n Modular Blindada
+ * EL ESPÃ¯Â¿Â½RITU (CONTROLADOR PRINCIPAL)
+ * V13.0.0: ReconstrucciÃ¯Â¿Â½n Modular Blindada
  */
 
-// --- 1. IMPORTACIÃ“N DE MÃ“DULOS ---
+// --- 1. IMPORTACIÃƒâ€œN DE MÃƒâ€œDULOS ---
 import { QumranData } from './core/data.js';
 import { QumranCalendar } from './core/calendar.js';
 import { QumranSun } from './core/sun.js';
@@ -20,12 +20,12 @@ import { initPwaPrompt } from './ui/pwa-install.js';
 import { getSunriseTime } from './core/time-translator.js';
 import './theme-init.js';
 
-const APP_VERSION = '13.1.26';
+const APP_VERSION = '13.1.27';
 
 let newWorker;
 
 const isStandalone = () => window.matchMedia('(display-mode: standalone)').matches;
-// --- 2. GESTIÃ“N DE SERVICE WORKER & ACTUALIZACIONES ---
+// --- 2. GESTIÃƒâ€œN DE SERVICE WORKER & ACTUALIZACIONES ---
 
 console.log('Qumran Watch v' + APP_VERSION + ' - System Online');
 if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) {
@@ -45,7 +45,7 @@ if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) {
     });
 }
 
-// --- 4. OBJETO PRINCIPAL DE LA APLICACIÃ“N ---
+// --- 4. OBJETO PRINCIPAL DE LA APLICACIÃƒâ€œN ---
 const QumranApp = {
     todayFiesta: null,
     sunriseHour: 6.0,
@@ -61,7 +61,7 @@ const QumranApp = {
         QumranApp.renderHoy();
         QumranApp.renderSaber();
 
-        // Manejo del historial y botï¿½n "atrÃ¡s"
+        // Manejo del historial y botÃ¯Â¿Â½n "atrÃƒÂ¡s"
         window.history.replaceState({ view: 'hoy' }, '', '#hoy');
         window.addEventListener('popstate', (event) => {
             if (event.state && event.state.view) {
@@ -73,13 +73,13 @@ const QumranApp = {
     },
 
     setupListeners: () => {
-        // Navegaciï¿½n
+        // NavegaciÃ¯Â¿Â½n
         document.getElementById('nav-hoy').addEventListener('click', (e) => QumranApp.nav('hoy', e.currentTarget));
         document.getElementById('nav-lit').addEventListener('click', (e) => QumranApp.nav('lit', e.currentTarget));
         document.getElementById('nav-cal').addEventListener('click', (e) => QumranApp.nav('cal', e.currentTarget));
         document.getElementById('nav-con').addEventListener('click', (e) => QumranApp.nav('con', e.currentTarget));
         document.getElementById('nav-edu').addEventListener('click', (e) => QumranApp.nav('edu', e.currentTarget));
-        // Interacciï¿½n Hoy
+        // InteracciÃ¯Â¿Â½n Hoy
         document.getElementById('heb-fiesta').addEventListener('click', QumranApp.openFiestaHoy);
         document.getElementById('geo-btn').addEventListener('click', () => QumranApp.getLocationAndSun(true));
 
@@ -90,7 +90,7 @@ const QumranApp = {
         document.getElementById('btn-institute-con').addEventListener('click', () => {
             window.open('https://www.descubrelabiblia.online/', '_blank');
         });
-        // El botï¿½n de Telegram se maneja con onclick directo en el HTML segÃºn tu original.
+        // El botÃ¯Â¿Â½n de Telegram se maneja con onclick directo en el HTML segÃƒÂºn tu original.
 
         // Calendario y Alertas
         document.getElementById('btn-render-cal').addEventListener('click', QumranApp.renderCalendar);
@@ -113,7 +113,7 @@ const QumranApp = {
             });
         }
 
-        // Delegaciï¿½n de eventos para listas dinÃ¡micas
+        // DelegaciÃ¯Â¿Â½n de eventos para listas dinÃƒÂ¡micas
         document.getElementById('cal-lista').addEventListener('click', (e) => {
             const row = e.target.closest('.edu-card.fiesta');
             if (row) QumranApp.openFiesta(parseInt(row.dataset.index), parseInt(row.dataset.year));
@@ -191,14 +191,14 @@ const QumranApp = {
                     const lng = pos.coords.longitude;
                     storage.setItem('qw_lat', lat);
                     storage.setItem('qw_lng', lng);
-                    QumranApp.updateSunData(lat, lng, force ? 'Actualizar UbicaciÃ³n (GPS)' : undefined);
+                    QumranApp.updateSunData(lat, lng, force ? 'Actualizar UbicaciÃƒÂ³n (GPS)' : undefined);
                 },
                 () => {
-                    // --- INICIO DEL RESPALDO Bï¿½BLICO (JERUSALÃ‰N) ---
-                    console.warn('GPS fallï¿½ o denegado. Usando JerusalÃ©n.');
+                    // --- INICIO DEL RESPALDO BÃ¯Â¿Â½BLICO (JERUSALÃƒâ€°N) ---
+                    console.warn('GPS fallÃ¯Â¿Â½ o denegado. Usando JerusalÃƒÂ©n.');
                     const latJerusalen = 31.7683;
                     const lngJerusalen = 35.2137;
-                    QumranApp.updateSunData(latJerusalen, lngJerusalen, 'JerusalÃ©n (GPS Inactivo)');
+                    QumranApp.updateSunData(latJerusalen, lngJerusalen, 'JerusalÃƒÂ©n (GPS Inactivo)');
                     // --- FIN DEL RESPALDO ---
                 },
             );
@@ -239,7 +239,7 @@ const QumranApp = {
         const year = forceYear || new Date().getFullYear();
         const foundDate = findFestivalDate(index, year);
 
-        // RESTAURACIÃ“N: DÃ­a de la semana completo
+        // RESTAURACIÃƒâ€œN: DÃƒÂ­a de la semana completo
         let dateStr = foundDate
             ? foundDate.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' })
             : 'Calculando...';
@@ -294,7 +294,7 @@ const QumranApp = {
         const now = new Date();
         const currentHour = now.getHours() + now.getMinutes() / 60;
 
-        // --- Bar in sun-container (below sun icons) ---
+        // --- Simple text line in sun-container ---
         const sunContainer = document.getElementById('sun-container');
         const existingBar = document.getElementById('vigia-progress-container');
         if (existingBar) existingBar.remove();
@@ -303,29 +303,19 @@ const QumranApp = {
             const minsToFirstLight = Math.round((sunriseData.firstLight - currentHour) * 60);
             const hoursLeft = Math.floor(minsToFirstLight / 60);
             const minsLeft = minsToFirstLight % 60;
-            const nightDuration = sunriseData.firstLight;
-            let progressPct = Math.round((currentHour / nightDuration) * 100);
-            if (progressPct < 0) progressPct = 0;
-            if (progressPct > 100) progressPct = 100;
 
-            const progressHTML = document.createElement('div');
-            progressHTML.id = 'vigia-progress-container';
-            progressHTML.className = 'vigia-progress-container';
-            progressHTML.innerHTML =
-                '<div class="vigia-progress-label">' +
-                '? Faltan <span id="vigia-hours">' +
+            const el = document.createElement('div');
+            el.id = 'vigia-progress-container';
+            el.style.cssText =
+                'display:none;width:100%;text-align:center;margin-top:10px;font-size:0.9em;color:#d4af37;';
+            el.innerHTML =
+                '⏳ Faltan <span id="vigia-hours">' +
                 hoursLeft +
-                '</span>h ' +
-                '<span id="vigia-mins">' +
+                '</span>h <span id="vigia-mins">' +
                 minsLeft +
-                '</span>m para el Nuevo Dia</div>' +
-                '<div class="vigia-progress-bar-bg">' +
-                '<div class="vigia-progress-bar-fill" style="width:' +
-                progressPct +
-                '%"></div>' +
-                '</div>';
-
-            if (sunContainer) sunContainer.appendChild(progressHTML);
+                '</span>m para el Nuevo Día';
+            el.style.display = 'block';
+            if (sunContainer) sunContainer.appendChild(el);
 
             // --- Also keep the watcher alert message ---
             const alertContainer = document.getElementById('alert-container');
@@ -335,15 +325,15 @@ const QumranApp = {
                 if (alertExisting) alertExisting.remove();
                 const yesterday = new Date(now.getTime() - 86400000);
                 const qPrev = QumranCalendar.calculate(yesterday);
-                const prevDayLabel = qPrev ? qPrev.d + ' del ' + QumranData.MESES[qPrev.m] : 'dia anterior';
+                const prevDayLabel = qPrev ? qPrev.d + ' del ' + QumranData.MESES[qPrev.m] : 'día anterior';
                 const solarMsg = document.createElement('div');
                 solarMsg.id = 'vigia-solar-msg';
                 solarMsg.style.cssText =
                     'margin-top:8px;padding-top:8px;border-top:1px solid rgba(212,175,55,0.3);font-size:0.9rem;';
                 solarMsg.innerHTML =
-                    '<strong>Vigia Solar:</strong> Aun en ' +
+                    '<strong>Vigía Solar:</strong> Aún en ' +
                     prevDayLabel +
-                    '. El nuevo dia comenzara en ~' +
+                    '. El nuevo día comenzará en ~' +
                     minsToFirstLight +
                     ' min.';
                 alertMsg.appendChild(solarMsg);
@@ -351,7 +341,6 @@ const QumranApp = {
             }
         }
     },
-
     showToast: (msg) => {
         const container = document.getElementById('toast-container');
         if (!container) return;
