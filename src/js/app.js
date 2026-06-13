@@ -22,7 +22,6 @@ import './theme-init.js';
 
 const APP_VERSION = '13.1.29';
 
-
 // --- 2. GESTIÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“N DE SERVICE WORKER & ACTUALIZACIONES ---
 
 console.log('Qumran Watch v' + APP_VERSION + ' - System Online');
@@ -189,14 +188,24 @@ const QumranApp = {
                     const lng = pos.coords.longitude;
                     storage.setItem('qw_lat', lat);
                     storage.setItem('qw_lng', lng);
-                    QumranApp.updateSunData(lat, lng, force ? 'Actualizar UbicaciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n (GPS)' : undefined);
+                    QumranApp.updateSunData(
+                        lat,
+                        lng,
+                        force ? 'Actualizar UbicaciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n (GPS)' : undefined,
+                    );
                 },
                 () => {
                     // --- INICIO DEL RESPALDO BÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½BLICO (JERUSALÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â°N) ---
-                    console.warn('GPS fallÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½ o denegado. Usando JerusalÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©n.');
+                    console.warn(
+                        'GPS fallÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¿ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â½ o denegado. Usando JerusalÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©n.',
+                    );
                     const latJerusalen = 31.7683;
                     const lngJerusalen = 35.2137;
-                    QumranApp.updateSunData(latJerusalen, lngJerusalen, 'JerusalÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©n (GPS Inactivo)');
+                    QumranApp.updateSunData(
+                        latJerusalen,
+                        lngJerusalen,
+                        'JerusalÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©n (GPS Inactivo)',
+                    );
                     // --- FIN DEL RESPALDO ---
                 },
             );
@@ -308,11 +317,11 @@ const QumranApp = {
             el.style.cssText =
                 'display:none;width:100%;text-align:center;margin-top:10px;font-size:0.9em;color:#d4af37;';
             el.innerHTML =
-                'ÃƒÂ¢Ã‚ÂÃ‚Â³ Faltan <span id="vigia-hours">' +
+                '\u23f3 Faltan <span id="vigia-hours">' +
                 hoursLeft +
                 '</span>h <span id="vigia-mins">' +
                 minsLeft +
-                '</span>m para el Nuevo DÃƒÆ’Ã‚Âa';
+                '</span>m para el Nuevo D\u00eda';
             el.style.display = 'block';
             if (sunContainer) sunContainer.appendChild(el);
 
@@ -324,15 +333,15 @@ const QumranApp = {
                 if (alertExisting) alertExisting.remove();
                 const yesterday = new Date(now.getTime() - 86400000);
                 const qPrev = QumranCalendar.calculate(yesterday);
-                const prevDayLabel = qPrev ? qPrev.d + ' del ' + QumranData.MESES[qPrev.m] : 'dÃƒÆ’Ã‚Âa anterior';
+                const prevDayLabel = qPrev ? qPrev.d + ' del ' + QumranData.MESES[qPrev.m] : 'd\u00eda anterior';
                 const solarMsg = document.createElement('div');
                 solarMsg.id = 'vigia-solar-msg';
                 solarMsg.style.cssText =
                     'margin-top:8px;padding-top:8px;border-top:1px solid rgba(212,175,55,0.3);font-size:0.9rem;';
                 solarMsg.innerHTML =
-                    '<strong>VigÃƒÆ’Ã‚Âa Solar:</strong> AÃƒÆ’Ã‚Âºn en ' +
+                    '<strong>Vig\u00eda Solar:</strong> A\u00fan en ' +
                     prevDayLabel +
-                    '. El nuevo dÃƒÆ’Ã‚Âa comenzarÃƒÆ’Ã‚Â¡ en ~' +
+                    '. El nuevo d\u00eda comenzar\u00e1 en ~' +
                     minsToFirstLight +
                     ' min.';
                 alertMsg.appendChild(solarMsg);

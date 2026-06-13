@@ -292,6 +292,13 @@ h2 {
 }
 
 /* --- Mishmar Card (Priestly Course Dashboard) --- */
+/* Shared card layout for mishmar + estacion */
+.mishmar-card,
+.estacion-card {
+    flex: 1;
+    min-height: 150px;
+}
+
 .mishmar-card {
     display: flex;
     align-items: center;
@@ -338,6 +345,13 @@ h2 {
 }
 
 @media print {
+    /* Shared card layout for mishmar + estacion */
+    .mishmar-card,
+    .estacion-card {
+        flex: 1;
+        min-height: 150px;
+    }
+
     .mishmar-card {
         background: #fff !important;
         color: #000 !important;

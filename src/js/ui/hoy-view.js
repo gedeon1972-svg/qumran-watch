@@ -55,10 +55,12 @@ export function renderHoyView(model) {
     // Hebrew date / day / priestly course / season
     document.getElementById('heb-date').innerText = model.hebDate;
     document.getElementById('heb-dia').innerText = model.hebDia;
-    const turnoContainer = document.getElementById('heb-turno').parentNode;
-    renderMishmarCard(model.turno, turnoContainer);
-    const estContainer = document.getElementById('heb-estacion').parentNode;
-    renderEstacionCard(model.estacion, estContainer);
+    const turnoEl = document.getElementById('heb-turno');
+    const turnoContainer = turnoEl && turnoEl.parentNode;
+    if (turnoContainer) renderMishmarCard(model.turno, turnoContainer);
+    const estEl = document.getElementById('heb-estacion');
+    const estContainer = estEl && estEl.parentNode;
+    if (estContainer) renderEstacionCard(model.estacion, estContainer);
 
     // Halakha (Messiah's Instruction)
     document.getElementById('messiah-theme').innerText = model.halakha.theme;
