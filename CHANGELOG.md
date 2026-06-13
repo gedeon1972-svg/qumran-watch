@@ -3,7 +3,22 @@
 ## [Unreleased]
 
 
-## [13.1.29] - 2026-06-13 - Mantenimiento: Resoluci??n completa de advertencias de ESLint, eliminaci??n de variables no utilizadas, correcci??n de espacios irregulares y actualizaci??n de CI runner a Node 24.
+## [13.1.31] - 2026-06-13 - Hotfix: Cache-bust obligatorio para purgar versión corrupta
+
+### Fixed
+- `public/sw.js`: `CACHE_NAME` actualizado de `qumran-cache-v13.1.21` a `qumran-cache-v13.1.31` para forzar la descarga del nuevo Service Worker en todos los dispositivos que tenían la versión con Mojibake.
+- `package.json`: versión bumpeada de 13.1.30 → 13.1.31.
+
+### Context
+El commit anterior (`fix(global): saneamiento profundo de mojibake`) no actualizó el `CACHE_NAME`, lo que habría impedido que el SW se auto-actualizase en usuarios ya instalados. Este hotfix garantiza que la versión limpia se despliegue correctamente en todos los clientes.
+
+## [13.1.30] - 2026-06-13 - Fix: Saneamiento global de Mojibake (encoding UTF-8)
+
+### Fixed
+- Purga completa de caracteres corruptos (Mojibake) en `src/js/app.js`, `src/js/core/calculations.js`, `src/js/core/calendar.js`, `public/sw.js`, `src/css/styles.css`, `CHANGELOG.md`, `LICENSE` y archivos de test.
+- Reemplazo correcto de `CÁNTICO`, `DÍA`, `⏳`, `—`, `Jáyt` y demás secuencias UTF-8 doble-codificadas.
+
+ - Mantenimiento: Resoluci??n completa de advertencias de ESLint, eliminaci??n de variables no utilizadas, correcci??n de espacios irregulares y actualizaci??n de CI runner a Node 24.
 
 ### Changed
 - src/js/ui/print-view.js: refactorizado todo var a const/let para cumplir con no-var
