@@ -20,7 +20,7 @@ import { initPwaPrompt } from './ui/pwa-install.js';
 import { getSunriseTime } from './core/time-translator.js';
 import './theme-init.js';
 
-const APP_VERSION = '13.1.23';
+const APP_VERSION = '13.1.25';
 
 let newWorker;
 
@@ -34,6 +34,10 @@ if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) {
             .register('/qumran-watch/sw.js', { scope: '/qumran-watch/' })
             .then(function (reg) {
                 console.log('SW Registered');
+                console.log(
+                    '[DEBUG VIGIA] Elemento DOM encontrado:',
+                    document.getElementById('vigia-progress-container') !== null,
+                );
             })
             .catch(function (err) {
                 console.error('SW Error:', err);
@@ -56,7 +60,6 @@ const QumranApp = {
         if (!hasMemory) QumranApp.getLocationAndSun();
         QumranApp.renderHoy();
         QumranApp.renderSaber();
-        QumranApp.calculateVigiaStatus();
 
         // Manejo del historial y botï¿½n "atrÃ¡s"
         window.history.replaceState({ view: 'hoy' }, '', '#hoy');
@@ -214,9 +217,9 @@ const QumranApp = {
         if (times && times.riseDecimal) {
             QumranApp.sunriseHour = times.riseDecimal;
             QumranApp.renderHoy();
-            QumranApp.calculateVigiaStatus();
         }
         renderSunView({ rise: times.rise, set: times.set }, geoLabel);
+        QumranApp.calculateVigiaStatus();
     },
 
     renderHoy: () => {

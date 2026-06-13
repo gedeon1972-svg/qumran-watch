@@ -6,6 +6,15 @@
 
 
 
+
+## [13.1.25] - 2026-06-12 - Hotfix: Fix CSS Flexbox wrapping issue and render order for Vigia progress bar.
+
+### Fixed
+- CSS: added flex-wrap: wrap to .sun-container and flex-shrink: 0 to .vigia-progress-container to prevent 0-width collapse
+- JS: reordered updateSunData() to call renderSunView() before calculateVigiaStatus() so the bar is injected into a visible container
+- Removed premature calculateVigiaStatus() call from init() ? updateSunData is now the sole trigger
+
+
 ## [13.1.23] - 2026-06-12 - Hotfix: Correccion terminologica (Amanecer/Ocaso) y renderizado forzado de la barra de progreso del Vigia en madrugada.
 
 ### Fixed
