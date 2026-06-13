@@ -1,71 +1,144 @@
-import { QumranData } from '../core/data.js';
-import { getFestivalsForYear } from '../core/calculations.js';
+﻿import { QumranData } from '../core/data.js';
+import { QumranCalendar } from '../core/calendar.js';
+
+function findQumranNewYear(year) {
+    var start = new Date(year, 2, 15);
+    for (var i = -15; i < 390; i++) {
+        var d = new Date(start.getTime() + i * 86400000);
+        var q = QumranCalendar.calculate(d);
+        if (q && !q.special && q.m === 0 && q.d === 1) {
+            return d;
+        }
+    }
+    return null;
+}
+
+var MONTH_DAYS = [30, 30, 31, 30, 30, 31, 30, 30, 31, 30, 30, 31];
 
 export function generatePrintHtml(year) {
-    const festivals = getFestivalsForYear(year);
-    let rows = '';
-    festivals.forEach(function (item) {
-        const d = item.date;
-        const q = item.q;
-        const f = QumranData.FIESTAS[item.index];
-        const gregLabel = d.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' });
-        const qDate = (q.d || '') + ' ' + (QumranData.MESES[q.m] || '');
-        const festName = f.n;
-        const festDesc = f.es || '';
-        const dur = f.dur > 1 ? ' (' + f.dur + ' dias)' : '';
-        rows +=
-            '<tr>' +
-            '<td>' +
-            qDate +
-            '</td>' +
-            '<td>' +
-            gregLabel +
-            '</td>' +
-            '<td><strong>' +
-            festName +
-            '</strong>' +
-            dur +
-            '</td>' +
-            '<td>' +
-            festDesc +
-            '</td>' +
-            '</tr>';
-    });
+    var newYear = findQumranNewYear(year);
+    if (!newYear) {
+        return '<p>No se pudo calcular el a\u00f1o de Qumr\u00e1n para ' + year + '.</p>';
+    }
 
-    return (
+    var firstQ = QumranCalendar.calculate(newYear);
+    var qYear = firstQ ? firstQ.y : year;
+
+    // Build festival lookup: key = "m-d"
+    var festivalLookup = {};
+    for (var fi = 0; fi < QumranData.FIESTAS.length; fi++) {
+        var f = QumranData.FIESTAS[fi];
+        var key = f.m + '-' + f.d;
+        if (!festivalLookup[key]) festivalLookup[key] = [];
+        festivalLookup[key].push({ name: f.n, dur: f.dur });
+    }
+
+    var monthsHtml = '';
+    for (var m = 0; m < 12; m++) {
+        var daysInMonth = MONTH_DAYS[m];
+        var monthName = QumranData.MESES[m];
+
+        // Compute offset from year start to first day of this month
+        var firstDayOffset = 0;
+        for (var k = 0; k < m; k++) firstDayOffset += MONTH_DAYS[k];
+        var firstDate = new Date(newYear.getTime() + firstDayOffset * 86400000);
+        var firstQCalc = QumranCalendar.calculate(firstDate);
+        var firstWeekday = firstQCalc ? firstQCalc.idxSem : 0;
+        var emptyCells = firstWeekday; // 0-6
+
+        // Build day cells
+        var cells = '';
+        for (var e = 0; e < emptyCells; e++) {
+            cells += '<div class="dc empty"></div>';
+        }
+
+        for (var d = 1; d <= daysInMonth; d++) {
+            var dayOffset = firstDayOffset + (d - 1);
+            var date = new Date(newYear.getTime() + dayOffset * 86400000);
+            var q = QumranCalendar.calculate(date);
+            var weekIdx = q ? q.idxSem : 0;
+
+            var gregStr = date.toLocaleDateString('es-ES', {
+                day: 'numeric',
+                month: 'short'
+            }).replace(/\./g, '');
+
+            var festKey = m + '-' + d;
+            var festList = festivalLookup[festKey];
+            var festName = festList ? festList[0].name : '';
+
+            var isShabbat = weekIdx === 6;
+            var isFestival = !!festList;
+
+            var cls = 'dc';
+            if (isShabbat) cls += ' shab';
+            if (isFestival) cls += ' fest';
+
+            cells += '<div class="' + cls + '">' +
+                '<span class="qnum">' + d + '</span>' +
+                '<span class="gdate">' + gregStr + '</span>' +
+                (festName ? '<span class="fname">' + festName + '</span>' : '') +
+                '</div>';
+        }
+
+        monthsHtml += '<div class="mwrap">' +
+            '<h3 class="mtitle">' + monthName + '</h3>' +
+            '<div class="dheads">' +
+            '<span>Dom</span><span>Lun</span><span>Mar</span><span>Mi\u00e9</span><span>Jue</span><span>Vie</span><span>S\u00e1b</span>' +
+            '</div>' +
+            '<div class="dgrid">' + cells + '</div>' +
+            '</div>';
+    }
+
+    return '' +
         '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">' +
-        '<title>Calendario Qumran ' +
-        year +
-        '</title>' +
+        '<title>Calendario Solar de 364 D\u00edas - ' + qYear + '</title>' +
         '<style>' +
-        'body{font-family:Georgia,serif;color:#222;margin:0;padding:20px;}' +
-        '@page{size:A4;margin:15mm;}' +
-        'h1{text-align:center;font-size:18pt;border-bottom:2px solid #d4af37;padding-bottom:8px;}' +
-        'h2{text-align:center;font-size:12pt;color:#666;margin-top:4px;}' +
-        'table{width:100%;border-collapse:collapse;margin-top:16px;font-size:9pt;}' +
-        'th{background:#d4af37;color:#1a120b;padding:6px 8px;text-align:left;font-size:9pt;}' +
-        'td{padding:5px 8px;border-bottom:1px solid #ddd;vertical-align:top;}' +
-        'tr:nth-child(even){background:#f8f6f0;}' +
-        '.footer{text-align:center;margin-top:20px;font-size:8pt;color:#999;}' +
-        '@media print{body{padding:0;}th{background:#d4af37 !important;color:#000 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}}' +
+        'body{font-family:Georgia,"Times New Roman",serif;color:#222;margin:0;padding:15px;}' +
+        '@page{size:A4 landscape;margin:10mm;}' +
+        'h1{text-align:center;font-size:16pt;border-bottom:2px solid #d4af37;padding-bottom:6px;margin:0 0 4px;}' +
+        'h2{text-align:center;font-size:10pt;color:#666;margin:0 0 12px;font-weight:normal;}' +
+        '.mwrap{' +
+        '  page-break-inside:avoid;break-inside:avoid;' +
+        '  margin-bottom:18px;border:1px solid #ccc;border-radius:6px;padding:8px 10px;' +
+        '}' +
+        '.mtitle{font-size:11pt;margin:0 0 6px;color:#1a120b;border-left:4px solid #d4af37;padding-left:8px;}' +
+        '.dheads{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;font-size:7pt;' +
+        '  font-weight:bold;color:#888;text-transform:uppercase;margin-bottom:4px;}' +
+        '.dgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}' +
+        '.dc{min-height:58px;border:1px solid #e0ddd5;padding:2px 3px;position:relative;background:#fff;}' +
+        '.dc.empty{border-color:transparent;background:transparent;min-height:0;}' +
+        '.qnum{display:block;font-size:14pt;font-weight:bold;color:#1a120b;line-height:1.1;}' +
+        '.gdate{display:block;font-size:6.5pt;color:#999;line-height:1.2;}' +
+        '.fname{display:block;font-size:6pt;font-weight:bold;color:#c00;margin-top:2px;line-height:1.2;}' +
+        '.shab{background:#f8f4e8;}' +
+        '.shab .qnum{color:#8b6914;}' +
+        '.fest{background:#1a120b;border-color:#d4af37;}' +
+        '.fest .qnum{color:#d4af37;}' +
+        '.fest .gdate{color:#a08030;}' +
+        '.fest .fname{color:#ffd700;}' +
+        '.footer{text-align:center;margin-top:8px;font-size:7pt;color:#aaa;}' +
+        '@media print{' +
+        '  body{padding:0;}' +
+        '  .mwrap{page-break-inside:avoid;break-inside:avoid;}' +
+        '  .fest{background:#1a120b !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}' +
+        '  .shab{background:#f8f4e8 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}' +
+        '  .dheads span{font-size:6pt;}' +
+        '  .qnum{font-size:12pt;}' +
+        '  .gdate{font-size:6pt;}' +
+        '  .fname{font-size:5.5pt;}' +
+        '}' +
         '</style></head><body>' +
-        '<h1>Ciclo de Fiestas - Calendario Solar de 364 Dias</h1>' +
-        '<h2>Ano ' +
-        year +
-        ' (Restauracion)</h2>' +
-        '<table><thead><tr>' +
-        '<th>Fecha Qumran</th><th>Fecha Gregoriana</th><th>Fiesta</th><th>Descripcion</th>' +
-        '</tr></thead><tbody>' +
-        rows +
-        '</tbody></table>' +
-        '<div class="footer">Generado por Qumran Watch v13.1.19 - Basado en los Manuscritos del Mar Muerto</div>' +
-        '</body></html>'
-    );
+        '<h1>Calendario Solar de 364 D\u00edas</h1>' +
+        '<h2>A\u00f1o ' + qYear + ' de la Restauraci\u00f3n</h2>' +
+        monthsHtml +
+        '<div class="footer">Generado por Qumran Watch - Basado en los Manuscritos del Mar Muerto (4Q320-4Q321, Jubileos)</div>' +
+        '</body></html>';
 }
 
 export function openPrintWindow(year) {
-    const html = generatePrintHtml(year);
-    const win = window.open('');
+    var html = generatePrintHtml(year);
+    var win = window.open('');
     if (!win) {
         window.alert('Permite ventanas emergentes para imprimir el calendario.');
         return;
