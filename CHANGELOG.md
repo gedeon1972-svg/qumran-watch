@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+
+## [13.1.20] - 2026-06-12 - Feature: Motor de precision solar astronomica y advertencias dinamicas del Vigia para el inicio del dia.
+
+### Added
+- getSunriseTime() in time-translator.js: precise sunrise/first-light calculation using SUNRISE_ANGLE and FIRST_LIGHT_OFFSET
+- calculateVigiaStatus() in app.js: injects solar vigia message when before first light
+- Solar vigia shows "Aun en [dia anterior]. El nuevo dia comenzara en ~X min."
+
+
 ## [13.1.19] - 2026-06-12 - Print Layout + Solar Research Prep
 
 ### Added

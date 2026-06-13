@@ -17,9 +17,10 @@ import { renderSunView } from './ui/sun-view.js';
 import { renderSaberGrid, renderEstudioModal } from './ui/estudio-view.js';
 import { renderFiestaModal } from './ui/fiesta-view.js';
 import { initPwaPrompt } from './ui/pwa-install.js';
+import { getSunriseTime } from './core/time-translator.js';
 import './theme-init.js';
 
-const APP_VERSION = '13.1.19';
+const APP_VERSION = '13.1.20';
 
 let newWorker;
 
@@ -55,6 +56,7 @@ const QumranApp = {
         if (!hasMemory) QumranApp.getLocationAndSun();
         QumranApp.renderHoy();
         QumranApp.renderSaber();
+        QumranApp.calculateVigiaStatus();
 
         // Manejo del historial y botï¿½n "atrÃ¡s"
         window.history.replaceState({ view: 'hoy' }, '', '#hoy');
@@ -212,6 +214,7 @@ const QumranApp = {
         if (times && times.riseDecimal) {
             QumranApp.sunriseHour = times.riseDecimal;
             QumranApp.renderHoy();
+            QumranApp.calculateVigiaStatus();
         }
         renderSunView({ rise: times.rise, set: times.set }, geoLabel);
     },
@@ -278,6 +281,38 @@ const QumranApp = {
             const festivals = getFestivalsForYear(y);
             renderCalendarView(festivals, y);
         }, 50);
+    },
+    calculateVigiaStatus: () => {
+        if (!QumranApp._lastSunData) return;
+        const lat = QumranApp._lastSunData.lat;
+        const lng = QumranApp._lastSunData.lng;
+        const sunriseData = getSunriseTime(lat, lng, new Date());
+        if (!sunriseData) return;
+        const now = new Date();
+        const currentHour = now.getHours() + now.getMinutes() / 60;
+        const alertContainer = document.getElementById('alert-container');
+        const alertMsg = document.getElementById('alert-msg');
+        if (!alertContainer || !alertMsg) return;
+        const existing = document.getElementById('vigia-solar-msg');
+        if (existing) existing.remove();
+        if (currentHour < sunriseData.firstLight) {
+            const minsToFirstLight = Math.round((sunriseData.firstLight - currentHour) * 60);
+            const yesterday = new Date(now.getTime() - 86400000);
+            const qPrev = QumranCalendar.calculate(yesterday);
+            const solarMsg = document.createElement('div');
+            solarMsg.id = 'vigia-solar-msg';
+            solarMsg.style.cssText =
+                'margin-top:8px;padding-top:8px;border-top:1px solid rgba(212,175,55,0.3);font-size:0.9rem;';
+            const prevDayLabel = qPrev ? qPrev.d + ' del ' + QumranData.MESES[qPrev.m] : 'dia anterior';
+            solarMsg.innerHTML =
+                '<strong>Vigia Solar:</strong> Aun en ' +
+                prevDayLabel +
+                '. El nuevo dia comenzara en ~' +
+                minsToFirstLight +
+                ' min.';
+            alertMsg.appendChild(solarMsg);
+            alertContainer.style.display = 'block';
+        }
     },
     showToast: (msg) => {
         const container = document.getElementById('toast-container');

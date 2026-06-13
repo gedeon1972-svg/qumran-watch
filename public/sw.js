@@ -1,10 +1,10 @@
 /**
- * sw.js - EL GUARDIÃƒÆ’Ã‚ÂN DEL UMBRAL (v13.1.19)
+ * sw.js - EL GUARDIÃƒÆ’Ã‚ÂN DEL UMBRAL (v13.1.20)
  * Estrategia hÃƒÆ’Ã‚Â­brida: cache-first para assets estÃƒÆ’Ã‚Â¡ticos,
  * network-first para navegaciones, fallback offline.
  */
 
-const CACHE_NAME = 'qumran-cache-v13.1.19';
+const CACHE_NAME = 'qumran-cache-v13.1.20';
 
 const URLS_TO_CACHE = [
     '/qumran-watch/',
@@ -33,7 +33,7 @@ function isAsset(url) {
 }
 
 self.addEventListener('install', (event) => {
-    console.log('[SW] Instalando v13.1.19...');
+    console.log('[SW] Instalando v13.1.20...');
     event.waitUntil(
         caches
             .open(CACHE_NAME)
@@ -55,7 +55,7 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('activate', (event) => {
-    console.log('[SW] Activado v13.1.19');
+    console.log('[SW] Activado v13.1.20');
     event.waitUntil(
         caches
             .keys()
