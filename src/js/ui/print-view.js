@@ -59,10 +59,12 @@ export function generatePrintHtml(year) {
             const q = QumranCalendar.calculate(date);
             const weekIdx = q ? q.idxSem : 0;
 
-            const gregStr = date.toLocaleDateString('es-ES', {
-                day: 'numeric',
-                month: 'short'
-            }).replace(/\./g, '');
+            const gregStr = date
+                .toLocaleDateString('es-ES', {
+                    day: 'numeric',
+                    month: 'short',
+                })
+                .replace(/\./g, '');
 
             const festKey = m + '-' + d;
             const festList = festivalLookup[festKey];
@@ -75,25 +77,40 @@ export function generatePrintHtml(year) {
             if (isShabbat) cls += ' shab';
             if (isFestival) cls += ' fest';
 
-            cells += '<div class="' + cls + '">' +
-                '<span class="qnum">' + d + '</span>' +
-                '<span class="gdate">' + gregStr + '</span>' +
+            cells +=
+                '<div class="' +
+                cls +
+                '">' +
+                '<span class="qnum">' +
+                d +
+                '</span>' +
+                '<span class="gdate">' +
+                gregStr +
+                '</span>' +
                 (festName ? '<span class="fname">' + festName + '</span>' : '') +
                 '</div>';
         }
 
-        monthsHtml += '<div class="mwrap">' +
-            '<h3 class="mtitle">' + monthName + '</h3>' +
+        monthsHtml +=
+            '<div class="mwrap">' +
+            '<h3 class="mtitle">' +
+            monthName +
+            '</h3>' +
             '<div class="dheads">' +
             '<span>Dom</span><span>Lun</span><span>Mar</span><span>Mi\u00e9</span><span>Jue</span><span>Vie</span><span>S\u00e1b</span>' +
             '</div>' +
-            '<div class="dgrid">' + cells + '</div>' +
+            '<div class="dgrid">' +
+            cells +
+            '</div>' +
             '</div>';
     }
 
-    return '' +
+    return (
+        '' +
         '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">' +
-        '<title>Calendario Solar de 364 D\u00edas - ' + qYear + '</title>' +
+        '<title>Calendario Solar de 364 D\u00edas - ' +
+        qYear +
+        '</title>' +
         '<style>' +
         'body{font-family:Georgia,"Times New Roman",serif;color:#222;margin:0;padding:15px;}' +
         '@page{size:A4 landscape;margin:10mm;}' +
@@ -131,10 +148,13 @@ export function generatePrintHtml(year) {
         '}' +
         '</style></head><body>' +
         '<h1>Calendario Solar de 364 D\u00edas</h1>' +
-        '<h2>A\u00f1o ' + qYear + ' de la Restauraci\u00f3n</h2>' +
+        '<h2>A\u00f1o ' +
+        qYear +
+        ' de la Restauraci\u00f3n</h2>' +
         monthsHtml +
         '<div class="footer">Generado por Qumran Watch - Basado en los Manuscritos del Mar Muerto (4Q320-4Q321, Jubileos)</div>' +
-        '</body></html>';
+        '</body></html>'
+    );
 }
 
 export function openPrintWindow(year) {

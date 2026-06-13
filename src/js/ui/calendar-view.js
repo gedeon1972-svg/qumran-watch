@@ -31,7 +31,7 @@ export function renderCalendarView(festivals, year) {
             const end = new Date(d.getTime() + (f.dur - 1) * 86400000);
             dateLabel += ' - ' + end.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
         }
-         
+
         const nombreMes = QumranData.MESES[q.m];
         html +=
             '<div class="edu-card fiesta interactive-card" data-index="' +

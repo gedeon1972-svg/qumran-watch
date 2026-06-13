@@ -19,13 +19,13 @@ describe('QumranSun.calcSunTimes', () => {
         expect(result.set).toMatch(/^\d{2}:\d{2}$/);
     });
 
-    test('riseDecimal debe ser un nÃºmero finito', () => {
+    test('riseDecimal debe ser un número finito', () => {
         const result = QumranSun.calcSunTimes(new Date(2024, 5, 15), JERUSALEM.lat, JERUSALEM.lng);
         expect(typeof result.riseDecimal).toBe('number');
         expect(Number.isFinite(result.riseDecimal)).toBe(true);
     });
 
-    test('para la fecha ancla (20 Mar 2019) debe dar resultado vÃ¡lido en JerusalÃ©n', () => {
+    test('para la fecha ancla (20 Mar 2019) debe dar resultado válido en Jerusalén', () => {
         const anchor = new Date(2019, 2, 20);
         const result = QumranSun.calcSunTimes(anchor, JERUSALEM.lat, JERUSALEM.lng);
         expect(result).not.toBeNull();
@@ -49,7 +49,7 @@ describe('QumranSun.calcSunTimes', () => {
         expect(setH).toBeLessThan(24);
     });
 
-    test('para fechas en equinoccio, el dÃ­a debe durar ~12h en el ecuador', () => {
+    test('para fechas en equinoccio, el día debe durar ~12h en el ecuador', () => {
         const equinox = new Date(2024, 2, 20);
         const result = QumranSun.calcSunTimes(equinox, EQUATOR.lat, EQUATOR.lng);
         const riseH = Math.floor(result.riseDecimal);

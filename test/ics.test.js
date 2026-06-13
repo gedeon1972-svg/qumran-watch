@@ -21,12 +21,12 @@ describe('QumranICS.findLiturgicalStart', () => {
         expect(q.d).toBe(1);
     });
 
-    test('para aÃ±o anterior al ancla (2018) debe retornar null', () => {
+    test('para año anterior al ancla (2018) debe retornar null', () => {
         const start = QumranICS.findLiturgicalStart(2018);
         expect(start).toBeNull();
     });
 
-    test('para aÃ±os futuros debe encontrar fecha', () => {
+    test('para años futuros debe encontrar fecha', () => {
         const start = QumranICS.findLiturgicalStart(2026);
         expect(start).toBeInstanceOf(Date);
         const q = QumranCalendar.calculate(start);
@@ -57,7 +57,7 @@ describe('QumranICS.generateAndDownload', () => {
         });
     });
 
-    test('debe lanzar error para aÃ±o invÃ¡lido (2018)', () => {
+    test('debe lanzar error para año inválido (2018)', () => {
         expect(() => QumranICS.generateAndDownload(2018)).toThrow();
     });
 

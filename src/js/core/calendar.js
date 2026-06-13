@@ -1,15 +1,15 @@
 /**
  * @module calendar
- * @description Motor matemÃƒÂ¡tico del Calendario Solar de 364 DÃƒÂas.
+ * @description Motor matemático del Calendario Solar de 364 Días.
  *
  * Basado en los Manuscritos del Mar Muerto (4Q320-4Q321, 4QMMT) y el
- * libro de Enoc/Jubileos. Implementa el ciclo sexenal de 2191 dÃƒÂas
- * con semana de ajuste intercalar en el aÃƒÂ±o 6.
+ * libro de Enoc/Jubileos. Implementa el ciclo sexenal de 2191 días
+ * con semana de ajuste intercalar en el año 6.
  *
  * El sistema Mishmarot (24 turnos sacerdotales) sigue la secuencia
  * de Prophecy Vine / The Creation Calendar:
- *   AÃƒÂ±o 1: Gamul (ÃƒÂndice 21) Ã¢â€ â€™ AÃƒÂ±o 2: JedaÃƒÂas (1) Ã¢â€ â€™ AÃƒÂ±o 3: MijamÃƒÂn (5)
- *   AÃƒÂ±o 4: SecanÃƒÂas (9) Ã¢â€ â€™ AÃƒÂ±o 5: Jesebeab (13) Ã¢â€ â€™ AÃƒÂ±o 6: Afses (17)
+ *   Año 1: Gamul (índice 21) → Año 2: Jedaías (1) → Año 3: Mijamín (5)
+ *   Año 4: Secanías (9) → Año 5: Jesebeab (13) → Año 6: Afses (17)
  *
  * @author Qumran Watch
  * @version 13.0.0
@@ -20,7 +20,7 @@ import { QumranData } from './data.js';
 export const QumranCalendar = {
     calculate: (dateObj) => {
         if (!QumranData || !QumranData.ANCHOR) {
-            console.error('Error CrÃƒÂtico: No se cargÃƒÂ³ QumranData.');
+            console.error('Error Crítico: No se cargó QumranData.');
             return null;
         }
 
@@ -89,7 +89,7 @@ export const QumranCalendar = {
             idxSem: indiceSemana,
             turno: QumranCalendar.getTurno(diff),
             signo: signoDelAnio,
-            est: mesQ < 3 ? 'Primavera' : mesQ < 6 ? 'Verano' : mesQ < 9 ? 'OtoÃƒÂ±o' : 'Invierno',
+            est: mesQ < 3 ? 'Primavera' : mesQ < 6 ? 'Verano' : mesQ < 9 ? 'Otoño' : 'Invierno',
             // eslint-disable-next-line security/detect-object-injection
             puerta: QumranData.PUERTAS_SOLARES ? QumranData.PUERTAS_SOLARES[mesQ] : 0,
             dCountYear: diasAcumulados,
@@ -100,7 +100,7 @@ export const QumranCalendar = {
     getTurno: (totalDays) => {
         if (!QumranData || !QumranData.TURNOS) return 'Desconocido';
 
-        // Ciclo sexenal de 2191 dÃƒÂas (364*5 + 371)
+        // Ciclo sexenal de 2191 días (364*5 + 371)
         const YEAR_DAYS = [364, 364, 364, 364, 364, 371];
         let rem = totalDays % 2191;
         let yearInCycle = 0;

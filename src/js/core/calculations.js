@@ -1,6 +1,6 @@
-/** * src/js/utils/calculations.js * Funciones de cÃ¯Â¿Â½lculo puras Ã¯Â¿Â½ sin efectos secundarios, fÃ¯Â¿Â½cilmente testeables. */ import { QumranData } from './data.js';
+/** * src/js/utils/calculations.js * Funciones de cálculo puras — sin efectos secundarios, fácilmente testeables. */ import { QumranData } from './data.js';
 import { QumranCalendar } from './calendar.js';
-/** * Encuentra la fecha gregoriana de una fiesta de QumrÃ¯Â¿Â½n en un aÃ¯Â¿Â½o dado. * @param {number} festivalIndex - Ã¯Â¿Â½ndice en QumranData.FIESTAS * @param {number} year - AÃ¯Â¿Â½o gregoriano * @returns {Date|null} */ export function findFestivalDate(
+/** * Encuentra la fecha gregoriana de una fiesta de Qumrán en un año dado. * @param {number} festivalIndex - índice en QumranData.FIESTAS * @param {number} year - Año gregoriano * @returns {Date|null} */ export function findFestivalDate(
     festivalIndex,
     year,
 ) {
@@ -17,7 +17,7 @@ import { QumranCalendar } from './calendar.js';
     }
     return null;
 }
-/** * Calcula el dÃ¯Â¿Â½a de la Cuenta del Omer (1-49) o null si no aplica. * @param {object} qDate - Resultado de QumranCalendar.calculate * @returns {number|null} */ export function calcOmerDay(
+/** * Calcula el día de la Cuenta del Omer (1-49) o null si no aplica. * @param {object} qDate - Resultado de QumranCalendar.calculate * @returns {number|null} */ export function calcOmerDay(
     qDate,
 ) {
     if (!qDate || qDate.m === undefined || qDate.special) return null;
@@ -26,7 +26,7 @@ import { QumranCalendar } from './calendar.js';
     if (qDate.m === 2 && qDate.d <= 15) return 35 + qDate.d;
     return null;
 }
-/** * Obtiene todos los festivales de un aÃ¯Â¿Â½o gregoriano. * @param {number} year - AÃ¯Â¿Â½o gregoriano * @returns {Array<{date: Date, q: object, index: number}>} */ export function getFestivalsForYear(
+/** * Obtiene todos los festivales de un año gregoriano. * @param {number} year - Año gregoriano * @returns {Array<{date: Date, q: object, index: number}>} */ export function getFestivalsForYear(
     year,
 ) {
     const test = new Date(year, 2, 5);
@@ -42,7 +42,7 @@ import { QumranCalendar } from './calendar.js';
     }
     return results;
 }
-/** * Genera mensajes de alerta del vigÃ¯Â¿Â½a. * @param {Date} hoy - Fecha gregoriana actual * @param {object} qHoy - Resultado de QumranCalendar.calculate * @returns {{ msg: string, omerDay: number|null }} */ export function getWatcherAlerts(
+/** * Genera mensajes de alerta del vigía. * @param {Date} hoy - Fecha gregoriana actual * @param {object} qHoy - Resultado de QumranCalendar.calculate * @returns {{ msg: string, omerDay: number|null }} */ export function getWatcherAlerts(
     hoy,
     qHoy,
 ) {
@@ -61,8 +61,8 @@ import { QumranCalendar } from './calendar.js';
                     '<strong>\u00a1Atenci\u00f3n!</strong><br>En ' +
                     i +
                     ' d\u00eda(s) es <strong>' +
-                            // eslint-disable-next-line security/detect-object-injection
-                            QumranData.FIESTAS[fIdx].n +
+                    // eslint-disable-next-line security/detect-object-injection
+                    QumranData.FIESTAS[fIdx].n +
                     '</strong>.';
             }
         }
@@ -73,7 +73,7 @@ import { QumranCalendar } from './calendar.js';
 
 /**
  * Construye el ViewModel para la vista "Hoy".
- * FunciÃƒÂ³n pura: recibe datos, retorna un objeto plano con strings listos para renderizar.
+ * Función pura: recibe datos, retorna un objeto plano con strings listos para renderizar.
  * @param {Date} date - Fecha gregoriana (ya ajustada por salida del sol)
  * @param {object} qData - Resultado de QumranCalendar.calculate(date)
  * @param {object} sunData - { rise, set, riseDecimal, lat, lng }
@@ -94,8 +94,8 @@ export function buildHoyViewModel(date, qData) {
             gregDate,
             special: true,
             hebDate: 'SEMANA DE AJUSTE SOLAR',
-            hebDia: 'DÃƒÂ­a ' + diaEspecial + ' de 7 Ã¢â‚¬Â¢ Sincronizando Equinoccio',
-            gateActive: 'Puerta 4 (AlineaciÃƒÂ³n)',
+            hebDia: 'Día ' + diaEspecial + ' de 7 • Sincronizando Equinoccio',
+            gateActive: 'Puerta 4 (Alineación)',
         };
     }
 
@@ -115,23 +115,22 @@ export function buildHoyViewModel(date, qData) {
 
     if (qData.idxSem === 6) {
         percent = 100;
-         
+
         s = QumranData.CANTICOS_SHABAT[Math.floor((qData.dCountYear || 0) / 7) % 13];
         litType = 'LITURGIA CELESTIAL';
-        litMain = 'CÃƒÂNTICO DEL SACRIFICIO DEL SHABAT';
+        litMain = 'CÁNTICO DEL SACRIFICIO DEL SHABAT';
     } else {
-         
         s = QumranData.SALMOS[qData.idxSem];
         litType = 'LITURGIA DEL TEMPLO';
-        litMain = 'SALMO DEL DÃƒÂA';
+        litMain = 'SALMO DEL DÍA';
     }
 
     return {
         gregDate,
         special: false,
-         
+
         hebDate: qData.d + ' del ' + QumranData.MESES[qData.m],
-         
+
         hebDia: QumranData.DIAS[qData.idxSem],
         turno: qData.turno,
         estacion: qData.est,
@@ -139,7 +138,6 @@ export function buildHoyViewModel(date, qData) {
         omerDay,
         yamimNoraIm:
             qData.m === 6 && qData.d >= 1 && qData.d <= 10
-                 
                 ? { dia: qData.d, data: QumranData.YAMIM_NORAIM[qData.d - 1] }
                 : null,
         halakha: {
@@ -156,7 +154,7 @@ export function buildHoyViewModel(date, qData) {
         shabat: {
             idxSem: qData.idxSem,
             percent,
-            text: qData.idxSem === 6 ? 'Ã‚Â¡SHABAT SHALOM!' : 'Faltan ' + (6 - qData.idxSem) + ' dÃƒÂ­as para el Shabat',
+            text: qData.idxSem === 6 ? '¡SHABAT SHALOM!' : 'Faltan ' + (6 - qData.idxSem) + ' días para el Shabat',
             shabatBg: qData.idxSem === 6 ? '#fff' : undefined,
         },
         liturgia: {

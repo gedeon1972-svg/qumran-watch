@@ -2,7 +2,7 @@ import { expect, test, describe } from 'vitest';
 import { QumranData } from '../src/js/core/data.js';
 
 describe('QumranData — ANCHOR', () => {
-    test('ANCHOR debe tener coordenadas vÃ¡lidas', () => {
+    test('ANCHOR debe tener coordenadas válidas', () => {
         expect(QumranData.ANCHOR).toBeDefined();
         expect(QumranData.ANCHOR.y).toBe(2019);
         expect(QumranData.ANCHOR.m).toBe(2);
@@ -16,7 +16,7 @@ describe('QumranData — MESES', () => {
         expect(QumranData.MESES).toHaveLength(12);
     });
 
-    test('cada mes debe ser un string no vacÃ­o', () => {
+    test('cada mes debe ser un string no vacío', () => {
         QumranData.MESES.forEach((mes) => {
             expect(typeof mes).toBe('string');
             expect(mes.length).toBeGreaterThan(0);
@@ -25,11 +25,11 @@ describe('QumranData — MESES', () => {
 });
 
 describe('QumranData — DIAS', () => {
-    test('debe tener exactamente 7 dÃ­as', () => {
+    test('debe tener exactamente 7 días', () => {
         expect(QumranData.DIAS).toHaveLength(7);
     });
 
-    test('cada dÃ­a debe ser un string no vacÃ­o', () => {
+    test('cada día debe ser un string no vacío', () => {
         QumranData.DIAS.forEach((dia) => {
             expect(typeof dia).toBe('string');
             expect(dia.length).toBeGreaterThan(0);
@@ -42,14 +42,14 @@ describe('QumranData — TURNOS (Sacerdotales)', () => {
         expect(QumranData.TURNOS).toHaveLength(24);
     });
 
-    test('cada turno debe ser un string no vacÃ­o', () => {
+    test('cada turno debe ser un string no vacío', () => {
         QumranData.TURNOS.forEach((turno) => {
             expect(typeof turno).toBe('string');
             expect(turno.length).toBeGreaterThan(0);
         });
     });
 
-    test('Gamul debe estar en el Ã­ndice 21', () => {
+    test('Gamul debe estar en el índice 21', () => {
         expect(QumranData.TURNOS[21]).toBe('Gamul');
     });
 });
@@ -59,7 +59,7 @@ describe('QumranData — PUERTAS_SOLARES', () => {
         expect(QumranData.PUERTAS_SOLARES).toHaveLength(12);
     });
 
-    test('todos los valores deben ser nÃºmeros entre 1 y 6', () => {
+    test('todos los valores deben ser números entre 1 y 6', () => {
         QumranData.PUERTAS_SOLARES.forEach((puerta) => {
             expect(typeof puerta).toBe('number');
             expect(puerta).toBeGreaterThanOrEqual(1);
@@ -69,7 +69,7 @@ describe('QumranData — PUERTAS_SOLARES', () => {
 });
 
 describe('QumranData — YAMIM_NORAIM', () => {
-    test('debe tener exactamente 10 dÃ­as', () => {
+    test('debe tener exactamente 10 días', () => {
         expect(QumranData.YAMIM_NORAIM).toHaveLength(10);
     });
 
@@ -112,7 +112,7 @@ describe('QumranData — FIESTAS', () => {
         });
     });
 
-    test('los dÃ­as de mes deben ser vÃ¡lidos (1-31)', () => {
+    test('los días de mes deben ser válidos (1-31)', () => {
         QumranData.FIESTAS.forEach((fiesta) => {
             expect(fiesta.m).toBeGreaterThanOrEqual(0);
             expect(fiesta.m).toBeLessThanOrEqual(6);
@@ -159,11 +159,11 @@ describe('QumranData — SALMOS', () => {
 });
 
 describe('QumranData — CANTICOS_SHABAT', () => {
-    test('debe tener exactamente 13 cÃ¡nticos', () => {
+    test('debe tener exactamente 13 cánticos', () => {
         expect(QumranData.CANTICOS_SHABAT).toHaveLength(13);
     });
 
-    test('cada cÃ¡ntico debe tener t, c, v', () => {
+    test('cada cántico debe tener t, c, v', () => {
         QumranData.CANTICOS_SHABAT.forEach((cantico) => {
             expect(typeof cantico.t).toBe('string');
             expect(typeof cantico.c).toBe('string');
@@ -177,7 +177,7 @@ describe('QumranData — HALAKHA', () => {
         expect(QumranData.HALAKHA).toHaveLength(52);
     });
 
-    test('cada halajÃ¡ debe tener t, h, c, f, q, a, r', () => {
+    test('cada halajá debe tener t, h, c, f, q, a, r', () => {
         QumranData.HALAKHA.forEach((hal) => {
             expect(typeof hal.t).toBe('string');
             expect(typeof hal.h).toBe('string');
