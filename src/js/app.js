@@ -83,21 +83,25 @@ const QumranApp = {
 
         // Comunidad y Recursos
         document.getElementById('btn-podcast-con').addEventListener('click', () => {
-            window.open('https://youtube.com/playlist?list=PLr4MABEXstnDLUVcD7EenO4vN8EglZoSz', '_blank');
+            window.open(
+                'https://youtube.com/playlist?list=PLr4MABEXstnDLUVcD7EenO4vN8EglZoSz',
+                '_blank',
+                'noopener,noreferrer',
+            );
         });
         document.getElementById('btn-institute-con').addEventListener('click', () => {
-            window.open('https://www.descubrelabiblia.online/', '_blank');
+            window.open('https://www.descubrelabiblia.online/', '_blank', 'noopener,noreferrer');
         });
         document.getElementById('card-evangelio').addEventListener('click', () => {
-            window.open('https://www.descubreelevangelio.org/', '_blank');
+            window.open('https://www.descubreelevangelio.org/', '_blank', 'noopener,noreferrer');
         });
         document.getElementById('card-edifica').addEventListener('click', () => {
-            window.open('https://www.edificamicasa.com/', '_blank');
+            window.open('https://www.edificamicasa.com/', '_blank', 'noopener,noreferrer');
         });
         document.getElementById('card-whatsapp').addEventListener('click', () => {
-            window.open('https://chat.whatsapp.com/JC2v8lmTQaXJP0xIaeZWb7?mode=gi_t', '_blank');
+            window.open('https://chat.whatsapp.com/JC2v8lmTQaXJP0xIaeZWb7?mode=gi_t', '_blank', 'noopener,noreferrer');
         });
-        // El botón de Telegram se maneja con onclick directo en el HTML según tu original.
+        // El botï¿½n de Telegram se maneja con onclick directo en el HTML segï¿½n tu original.
 
         // Calendario y Alertas
         document.getElementById('btn-render-cal').addEventListener('click', QumranApp.renderCalendar);
@@ -113,7 +117,11 @@ const QumranApp = {
                     const alertBox = document.getElementById('alert-container');
                     const alertMsg = document.getElementById('alert-msg');
                     if (alertBox && alertMsg) {
-                        alertMsg.innerHTML = `<strong>Error al generar calendario:</strong> ${err.message}`;
+                        alertMsg.innerHTML = '';
+                        const errStrong = document.createElement('strong');
+                        errStrong.appendChild(document.createTextNode('Error al generar calendario: '));
+                        alertMsg.appendChild(errStrong);
+                        alertMsg.appendChild(document.createTextNode(err.message || ''));
                         alertBox.style.display = 'block';
                     }
                 }

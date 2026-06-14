@@ -1,6 +1,16 @@
 import { QumranData } from '../core/data.js';
 import { QumranCalendar } from '../core/calendar.js';
 
+function htmlEscape(str) {
+    return String(str).replace(/[&<>"']/g, function (m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        if (m === '"') return '&quot;';
+        if (m === "'") return '&#39;';
+        return m;
+    });
+}
 function findQumranNewYear(year) {
     const start = new Date(year, 2, 15);
     for (let i = -15; i < 390; i++) {
@@ -19,7 +29,7 @@ export function generatePrintHtml(year) {
     /* eslint-disable security/detect-object-injection */
     const newYear = findQumranNewYear(year);
     if (!newYear) {
-        return '<p>No se pudo calcular el a\u00f1o de Qumr\u00e1n para ' + year + '.</p>';
+        return '<p>No se pudo calcular el a\u00f1o de Qumr\u00e1n para ' + htmlEscape(year) + '.</p>';
     }
 
     const firstQ = QumranCalendar.calculate(newYear);
@@ -159,7 +169,7 @@ export function generatePrintHtml(year) {
 
 export function openPrintWindow(year) {
     const html = generatePrintHtml(year);
-    const win = window.open('');
+    const win = window.open('', '_blank', 'noopener,noreferrer');
     if (!win) {
         window.alert('Permite ventanas emergentes para imprimir el calendario.');
         return;
