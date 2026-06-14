@@ -88,7 +88,16 @@ const QumranApp = {
         document.getElementById('btn-institute-con').addEventListener('click', () => {
             window.open('https://www.descubrelabiblia.online/', '_blank');
         });
-        // El botÃ³n de Telegram se maneja con onclick directo en el HTML segÃºn tu original.
+        document.getElementById('card-evangelio').addEventListener('click', () => {
+            window.open('https://www.descubreelevangelio.org/', '_blank');
+        });
+        document.getElementById('card-edifica').addEventListener('click', () => {
+            window.open('https://www.edificamicasa.com/', '_blank');
+        });
+        document.getElementById('card-whatsapp').addEventListener('click', () => {
+            window.open('https://chat.whatsapp.com/JC2v8lmTQaXJP0xIaeZWb7?mode=gi_t', '_blank');
+        });
+        // El botón de Telegram se maneja con onclick directo en el HTML según tu original.
 
         // Calendario y Alertas
         document.getElementById('btn-render-cal').addEventListener('click', QumranApp.renderCalendar);

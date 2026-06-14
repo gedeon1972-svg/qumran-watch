@@ -69,6 +69,9 @@
     --blue: #1a5f8a; /* contraste 5.5:1 ? */
     --blue-light: #1565a8; /* contraste 5.0:1 ? (era #3498db ? 2.6:1 ?) */
     --telegram: #0f6b9a; /* contraste 5.2:1 ? */
+    --evangelio: #6b3fa0;
+    --edifica: #b86a1a;
+    --whatsapp: #1a7a3a;
     --yellow: #8a6a00; /* contraste 5.1:1 ? (era #f1c40f ? 1.5:1 ?) */
 
     --gate-active-color: #ffffff;
@@ -1127,6 +1130,49 @@ h2 {
 .dark-theme .telegram-link {
     color: #fff;
 }
+
+.card-evangelio {
+    border-left: 4px solid var(--evangelio);
+}
+.lbl-evangelio {
+    color: var(--evangelio);
+}
+.evangelio-link {
+    color: var(--text-white);
+    text-decoration: none;
+}
+.dark-theme .evangelio-link {
+    color: #fff;
+}
+
+.card-edifica {
+    border-left: 4px solid var(--edifica);
+}
+.lbl-edifica {
+    color: var(--edifica);
+}
+.edifica-link {
+    color: var(--text-white);
+    text-decoration: none;
+}
+.dark-theme .edifica-link {
+    color: #fff;
+}
+
+.card-whatsapp {
+    border-left: 4px solid var(--whatsapp);
+}
+.lbl-whatsapp {
+    color: var(--whatsapp);
+}
+.whatsapp-link {
+    color: var(--text-white);
+    text-decoration: none;
+}
+.dark-theme .whatsapp-link {
+    color: #fff;
+}
+
 .fundamento-txt {
     text-align: center;
     margin-bottom: 25px;
