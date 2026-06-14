@@ -1143,11 +1143,8 @@ h2 {
     color: var(--evangelio);
 }
 .evangelio-link {
-    color: var(--text-white);
+    color: var(--gold);
     text-decoration: none;
-}
-.dark-theme .evangelio-link {
-    color: #fff;
 }
 
 .card-edifica {
@@ -1157,11 +1154,8 @@ h2 {
     color: var(--edifica);
 }
 .edifica-link {
-    color: var(--text-white);
+    color: var(--gold);
     text-decoration: none;
-}
-.dark-theme .edifica-link {
-    color: #fff;
 }
 
 .card-whatsapp {
@@ -1171,11 +1165,8 @@ h2 {
     color: var(--whatsapp);
 }
 .whatsapp-link {
-    color: var(--text-white);
+    color: var(--gold);
     text-decoration: none;
-}
-.dark-theme .whatsapp-link {
-    color: #fff;
 }
 
 .fundamento-txt {
