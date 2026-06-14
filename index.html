@@ -17,11 +17,16 @@
         worker-src 'self';
         base-uri 'self';
         form-action 'none';
+        object-src 'none';
+        manifest-src 'self';
+        media-src 'none';
+        frame-src 'none';
         upgrade-insecure-requests;
     "
         />
 
         <meta name="theme-color" content="#1a120b" />
+        <meta http-equiv="Permissions-Policy" content="geolocation=(self), camera=(), microphone=(), payment=(), usb=()" />
         <meta
             name="description"
             content="Herramienta litúrgica para los Hijos de Sadoc. Calendario 364 días y enseñanzas del Mesías."
