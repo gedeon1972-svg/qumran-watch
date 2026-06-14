@@ -1115,7 +1115,7 @@ h2 {
     color: var(--gold);
 }
 .card-telegram {
-    border-left-color: var(--telegram);
+    border-left: 4px solid var(--telegram);
 }
 .lbl-telegram {
     color: var(--blue-light);
