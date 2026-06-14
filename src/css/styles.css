@@ -290,6 +290,28 @@ h2 {
     padding-top: 15px;
     border-top: 1px solid var(--faint);
 }
+.info-grid > * {
+    min-width: 0;
+}
+
+@media (max-width: 479px) {
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+    .mishmar-card,
+    .estacion-card {
+        padding: 12px;
+    }
+    .mishmar-icon,
+    .estacion-icon {
+        width: 36px;
+        height: 36px;
+    }
+    .mishmar-title,
+    .estacion-title {
+        font-size: 1.1rem;
+    }
+}
 
 /* --- Mishmar Card (Priestly Course Dashboard) --- */
 /* Shared card layout for mishmar + estacion */
