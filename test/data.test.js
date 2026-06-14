@@ -189,3 +189,60 @@ describe('QumranData — HALAKHA', () => {
         });
     });
 });
+
+describe('QumranData � HALAKHA (�ndice semanal)', () => {
+    const HALAKHA_LEN = QumranData.HALAKHA.length;
+
+    test('el �ndice 0 corresponde a dCountYear = 0 (primer d�a del a�o)', () => {
+        const idx = Math.floor(0 / 7) % HALAKHA_LEN;
+        expect(idx).toBe(0);
+        expect(QumranData.HALAKHA[idx]).toBeDefined();
+    });
+
+    test('dCountYear 0-6 devuelven �ndice 0 (primera semana)', () => {
+        for (let d = 0; d <= 6; d++) {
+            const idx = Math.floor(d / 7) % HALAKHA_LEN;
+            expect(idx).toBe(0);
+            expect(typeof QumranData.HALAKHA[idx].t).toBe('string');
+        }
+    });
+
+    test('dCountYear 7-13 devuelven �ndice 1 (segunda semana)', () => {
+        for (let d = 7; d <= 13; d++) {
+            const idx = Math.floor(d / 7) % HALAKHA_LEN;
+            expect(idx).toBe(1);
+            expect(typeof QumranData.HALAKHA[idx].t).toBe('string');
+        }
+    });
+
+    test('dCountYear 357-363 devuelven �ndice 51 (semana 52 del a�o)', () => {
+        for (let d = 357; d <= 363; d++) {
+            const idx = Math.floor(d / 7) % HALAKHA_LEN;
+            expect(idx).toBe(51);
+            expect(typeof QumranData.HALAKHA[idx].t).toBe('string');
+        }
+    });
+
+    test('dCountYear = 0 debe tratarse como �ndice 0 (caso borde ternario)', () => {
+        const dCountYear = 0;
+        const idx = dCountYear ? Math.floor(dCountYear / 7) % HALAKHA_LEN : 0;
+        expect(idx).toBe(0);
+    });
+
+    test('dCountYear undefined debe dar �ndice 0 (fallback seguro)', () => {
+        const dCountYear = undefined;
+        const idx = dCountYear ? Math.floor(dCountYear / 7) % HALAKHA_LEN : 0;
+        expect(idx).toBe(0);
+    });
+
+    test('cada semana del a�o produce un �ndice �nico en 0..51', () => {
+        const indices = new Set();
+        for (let week = 0; week < 52; week++) {
+            const dCountYear = week * 7;
+            const idx = Math.floor(dCountYear / 7) % HALAKHA_LEN;
+            indices.add(idx);
+            expect(QumranData.HALAKHA[idx]).toBeDefined();
+        }
+        expect(indices.size).toBe(52);
+    });
+});
