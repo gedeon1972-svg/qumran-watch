@@ -167,6 +167,9 @@ const QumranApp = {
         document
             .getElementById('btn-close-lectura')
             .addEventListener('click', () => (document.getElementById('modal-lectura').style.display = 'none'));
+        document.getElementById('btn-close-mishmar').addEventListener('click', function () {
+            document.getElementById('modal-mishmar').style.display = 'none';
+        });
     },
 
     nav: (viewId, btn, isHistoryEvent = false) => {
