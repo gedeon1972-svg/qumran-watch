@@ -939,7 +939,8 @@ h2 {
 #modal-fiesta,
 #modal-lectura,
 #modal-license,
-#modal-privacy {
+#modal-privacy,
+#modal-mishmar {
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
