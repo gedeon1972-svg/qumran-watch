@@ -169,15 +169,25 @@ export function generatePrintHtml(year) {
 
 export function openPrintWindow(year) {
     const html = generatePrintHtml(year);
-    const win = window.open('', '_blank');
-    if (!win) {
-        window.alert('Permite ventanas emergentes para imprimir el calendario.');
-        return;
-    }
-    win.document.write(html);
-    win.document.close();
-    win.focus();
-    win.onload = function () {
-        win.print();
+    const iframe = document.createElement('iframe');
+    iframe.setAttribute('style', 'position:absolute;left:-9999px;top:0;width:1px;height:1px;');
+    iframe.setAttribute('title', 'Calendario para imprimir');
+    document.body.appendChild(iframe);
+    const doc = iframe.contentDocument || iframe.contentWindow.document;
+    doc.open();
+    doc.write(html);
+    doc.close();
+    const doPrint = function () {
+        try {
+            iframe.contentWindow.focus();
+            iframe.contentWindow.print();
+        } catch (e) {
+            /* silencioso */
+        }
+        setTimeout(function () {
+            if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
+        }, 2000);
     };
+    iframe.contentWindow.onload = doPrint;
+    setTimeout(doPrint, 1500);
 }
