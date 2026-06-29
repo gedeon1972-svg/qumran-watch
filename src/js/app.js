@@ -1,4 +1,4 @@
-/* * src/js/app.js
+﻿/* * src/js/app.js
  * EL ESPÍRITU (CONTROLADOR PRINCIPAL)
  * V13.0.0: Reconstrucción Modular Blindada
  */

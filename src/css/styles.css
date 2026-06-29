@@ -1,4 +1,4 @@
-@import './animations.css';
+﻿@import './animations.css';
 /* --- FUENTES LOCALES (OFFLINE) --- */
 
 @font-face {
@@ -928,7 +928,8 @@ h2 {
 #modal-lectura,
 #modal-license,
 #modal-privacy,
-#modal-mishmar {
+#modal-mishmar,
+#modal-estacion {
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;

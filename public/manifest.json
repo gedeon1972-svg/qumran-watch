@@ -1,4 +1,4 @@
-{
+﻿{
     "name": "Qumran Watch",
     "short_name": "Qumran",
     "description": "Calendario Sagrado 364 dÃƒÂ­as, turnos sacerdotales, sincronizaciÃƒÂ³n solar GPS y alertas ICS.",
@@ -34,5 +34,5 @@
             "purpose": "any maskable"
         }
     ],
-    "version": "13.1.44"
+    "version": "13.1.45"
 }
