@@ -169,7 +169,7 @@ export function generatePrintHtml(year) {
 
 export function openPrintWindow(year) {
     const html = generatePrintHtml(year);
-    const win = window.open('', '_blank', 'noopener,noreferrer');
+    const win = window.open('', '_blank');
     if (!win) {
         window.alert('Permite ventanas emergentes para imprimir el calendario.');
         return;
@@ -177,7 +177,7 @@ export function openPrintWindow(year) {
     win.document.write(html);
     win.document.close();
     win.focus();
-    setTimeout(function () {
+    win.onload = function () {
         win.print();
-    }, 500);
+    };
 }
