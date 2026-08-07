@@ -1,10 +1,10 @@
-/**
- * sw.js - EL GUARDIAN DEL UMBRAL (v13.1.47)
+﻿/**
+ * sw.js - EL GUARDIAN DEL UMBRAL (v13.1.48)
  * Estrategia hibrida: cache-first para assets estaticos,
  * network-first para navegaciones, fallback offline.
  */
 
-const CACHE_NAME = 'qumran-cache-v13.1.47';
+const CACHE_NAME = 'qumran-cache-v13.1.48';
 
 const URLS_TO_CACHE = [
     '/qumran-watch/',
@@ -34,7 +34,7 @@ function isAsset(url) {
 }
 
 self.addEventListener('install', (event) => {
-    console.log('[SW] Instalando v13.1.47...');
+    console.log('[SW] Instalando v13.1.48...');
     event.waitUntil(
         caches
             .open(CACHE_NAME)
@@ -56,7 +56,7 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('activate', (event) => {
-    console.log('[SW] Activado v13.1.47');
+    console.log('[SW] Activado v13.1.48');
     event.waitUntil(
         caches
             .keys()
