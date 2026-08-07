@@ -20,7 +20,7 @@
 
 | ID | Entregable | Descripción | Done |
 |----|------------|-------------|------|
-| 2.1 | **Workbox SW** | Migrar sw.js a Workbox: precacheManifest, runtime caching, expiration | NO |
+| 2.1 | **Workbox SW** | Migrar sw.js a Workbox: precacheManifest, runtime caching, expiration | **DONE** v13.1.52 |
 | 2.2 | **Background Sync ICS** | Cola de generacion .ics offline -> sync al recuperar red | NO |
 | 2.3 | **Periodic Background Sync** | Actualizar datos solares (sunrise/sunset) diariamente en background | NO |
 
@@ -43,7 +43,7 @@
 | 4.1 | **IndexedDB cache datos** | Mover FIESTAS/ESTUDIOS/HALAKHA fuera del bundle JS | NO |
 | 4.2 | **Web Worker calculos** | Offload NOAA sun calc a worker | NO |
 | 4.3 | **Modulepreload polyfill** | Carga paralela modulos ES | NO |
-| 4.4 | **SW Update UX suave** | Toast "Nueva version" -> skipWaiting + clients.claim() sin parpadeo | NO |
+| 4.4 | **SW Update UX suave** | Toast 'Nueva version' -> skipWaiting + clients.claim() sin parpadeo | NO |
 
 ---
 
@@ -65,4 +65,5 @@
 | 2026-08-07 | v13.1.48 | 1.2 Shortcuts en manifest | cb7ba2f | 4 shortcuts: Hoy, Ciclo, Saber, Red; tests+build OK |
 | 2026-08-07 | v13.1.49 | 1.3 Screenshots reales | 827fad3 | 2 screenshots: mobile 540x720, desktop 1280x720; canvas generados; tests+build OK |
 | 2026-08-07 | v13.1.50 | 1.4 Brotli compression | 505ec17 | vite-plugin-compression dual .br/.gz; JS 86KB->31KB .br; tests+build OK |
-| 2026-08-07 | v13.1.51 | 1.5 Lighthouse CI workflow | (pendiente) | lighthouserc.json budgets + .github/workflows/lighthouse.yml; @lhci/cli; tests+build OK |
+| 2026-08-07 | v13.1.51 | 1.5 Lighthouse CI workflow | 9cf0b0c | lighthouserc.json budgets + .github/workflows/lighthouse.yml; @lhci/cli; tests+build OK |
+| 2026-08-07 | v13.1.52 | 2.1 Workbox SW | (pendiente) | injectManifest con 19 assets, CDN workbox-sw.js, runtime caching; tests+build OK |
