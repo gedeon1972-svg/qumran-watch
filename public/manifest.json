@@ -50,11 +50,18 @@
     ],
     "screenshots": [
         {
-            "src": "./icon.png",
-            "sizes": "512x512",
+            "src": "./screenshots/screenshot-mobile.png",
+            "sizes": "540x720",
             "type": "image/png",
             "form_factor": "narrow",
-            "label": "Vista principal con calendario 364 dias"
+            "label": "Vista mobile: Hoy con fecha hebrea, Mishmar, sincronizacion solar y Omer"
+        },
+        {
+            "src": "./screenshots/screenshot-desktop.png",
+            "sizes": "1280x720",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "Vista desktop: Grid completo con Hoy, Solar, Mishmar, Omer e Instruccion del Mesias"
         }
     ],
     "icons": [
@@ -101,5 +108,5 @@
             "purpose": "any maskable"
         }
     ],
-    "version": "13.1.48"
+    "version": "13.1.49"
 }
