@@ -11,7 +11,7 @@
 | 1.1 | **Iconos PWA completos** | Generar 192, 144, 96, 72, 48, 32px + maskable desde icon.png (512px) | **DONE** v13.1.47 |
 | 1.2 | **Shortcuts en manifest** | Accesos directos: Hoy, Ciclo, Saber, Red | **DONE** v13.1.48 |
 | 1.3 | **Screenshots reales** | 2 capturas (mobile narrow + desktop wide) en manifest | **DONE** v13.1.49 |
-| 1.4 | **Brotli compression** | vite-plugin-compression con brotli + gzip | NO |
+| 1.4 | **Brotli compression** | vite-plugin-compression con brotli + gzip | **DONE** v13.1.50 |
 | 1.5 | **Lighthouse CI workflow** | .github/workflows/lighthouse.yml con budget PWA >= 90 | NO |
 
 ---
@@ -63,4 +63,5 @@
 | 2026-08-07 | v13.1.46 | — | d431198, 0d5f77a | Baseline: fix offline + repo clean |
 | 2026-08-07 | v13.1.47 | 1.1 Iconos PWA completos | 2a8ab98 | 7 iconos generados, manifest actualizado, tests+build OK |
 | 2026-08-07 | v13.1.48 | 1.2 Shortcuts en manifest | cb7ba2f | 4 shortcuts: Hoy, Ciclo, Saber, Red; tests+build OK |
-| 2026-08-07 | v13.1.49 | 1.3 Screenshots reales | (pendiente) | 2 screenshots: mobile 540x720, desktop 1280x720; canvas generados; tests+build OK |
+| 2026-08-07 | v13.1.49 | 1.3 Screenshots reales | 827fad3 | 2 screenshots: mobile 540x720, desktop 1280x720; canvas generados; tests+build OK |
+| 2026-08-07 | v13.1.50 | 1.4 Brotli compression | (pendiente) | vite-plugin-compression dual .br/.gz; JS 86KB->31KB .br; tests+build OK |
