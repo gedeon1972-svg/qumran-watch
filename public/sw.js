@@ -1,22 +1,23 @@
 ﻿/**
- * sw.js - EL GUARDIAN DEL UMBRAL (v13.1.45)
+ * sw.js - EL GUARDIAN DEL UMBRAL (v13.1.46)
  * Estrategia hibrida: cache-first para assets estaticos,
  * network-first para navegaciones, fallback offline.
  */
 
-const CACHE_NAME = 'qumran-cache-v13.1.45';
+const CACHE_NAME = 'qumran-cache-v13.1.46';
 
 const URLS_TO_CACHE = [
     '/qumran-watch/',
     '/qumran-watch/index.html',
     '/qumran-watch/manifest.json',
     '/qumran-watch/icon.png',
+    '/qumran-watch/src/js/index.js',
+    '/qumran-watch/src/css/index.css',
+    '/qumran-watch/src/css/fonts/cinzel-v26-latin-regular.woff2',
+    '/qumran-watch/src/css/fonts/cinzel-v26-latin-700.woff2',
+    '/qumran-watch/src/css/fonts/david-libre-v17-latin-regular.woff2',
+    '/qumran-watch/src/css/fonts/david-libre-v17-latin-700.woff2',
 ];
-
-const OFFLINE_RESPONSE = new Response(
-    '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Sin Conexi\u00f3n \u2014 Qumran Watch</title><style>body{background:#1a120b;color:#d4af37;font-family:serif;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:20px;text-align:center}h1{font-size:1.5rem;margin-bottom:1rem}p{color:#c0b090;max-width:400px;line-height:1.6}.icon{font-size:3rem;margin-bottom:1rem}.retry-btn{margin-top:1.5rem;padding:12px 24px;background:#d4af37;color:#1a120b;border:none;border-radius:6px;font-size:1rem;cursor:pointer;font-family:serif}</style></head><body><div class="icon">\uD83D\uDCE1</div><h1>Sin Conexi\u00f3n</h1><p>Qumran Watch necesita conexi\u00f3n a internet para cargarse por primera vez.<br>Una vez cargado, funciona completamente offline.</p><button id="retry-btn">Reintentar</button><script>document.getElementById(\u0027retry-btn\u0027).addEventListener(\u0027click\u0027,function(){location.reload()})</script></body></html>',
-    { headers: { 'Content-Type': 'text/html;charset=UTF-8' } },
-);
 
 function isNavigation(request) {
     return request.mode === 'navigate';
@@ -33,7 +34,7 @@ function isAsset(url) {
 }
 
 self.addEventListener('install', (event) => {
-    console.log('[SW] Instalando v13.1.45...');
+    console.log('[SW] Instalando v13.1.46...');
     event.waitUntil(
         caches
             .open(CACHE_NAME)
@@ -41,7 +42,7 @@ self.addEventListener('install', (event) => {
                 return Promise.allSettled(
                     URLS_TO_CACHE.map((url) => {
                         return cache.add(url).catch((err) => {
-                            console.warn(`[SW] No se pudo cachear: ${url}`, err);
+                            console.warn('[SW] No se pudo cachear: ' + url, err);
                         });
                     }),
                 );
@@ -55,7 +56,7 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('activate', (event) => {
-    console.log('[SW] Activado v13.1.45');
+    console.log('[SW] Activado v13.1.46');
     event.waitUntil(
         caches
             .keys()
@@ -85,10 +86,12 @@ self.addEventListener('fetch', (event) => {
                         caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
                         return response;
                     }
-                    return caches.match('./index.html').then((cached) => cached || OFFLINE_RESPONSE);
+                    return caches
+                        .match('/qumran-watch/index.html')
+                        .then((cached) => cached || caches.match('/qumran-watch/index.html'));
                 })
                 .catch(() => {
-                    return caches.match('./index.html').then((cached) => cached || OFFLINE_RESPONSE);
+                    return caches.match('/qumran-watch/index.html');
                 }),
         );
         return;
@@ -108,7 +111,7 @@ self.addEventListener('fetch', (event) => {
                 })
                 .catch(() => {});
 
-            return cached || fetchPromise || OFFLINE_RESPONSE;
+            return cached || fetchPromise;
         }),
     );
 });
