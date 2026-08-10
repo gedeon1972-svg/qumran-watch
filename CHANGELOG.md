@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+## [13.1.57] - 2026-08-10 - Performance: Code-splitting + modulepreload (4.3)
+
+### Changed
+- `vite.config.js`: `build.modulePreload.polyfill=false` (polyfill obsoleto y bloqueado por la CSP `script-src 'self'`; navegadores modernos soportan modulepreload nativamente)
+- `vite.config.js`: `manualChunks` agrupa `src/js/core/*` en chunk `core` — carga paralela vía `<link rel=modulepreload>`; bundle monolítico 95KB -> index 43KB + core 50KB
+- `public/sw.js`: Regenerado con injectManifest, v13.1.57 (20 assets)
+- `package.json`, `package-lock.json`, `public/manifest.json`, `public/sw-workbox.js`: version 13.1.56 -> 13.1.57
+
 ## [13.1.56] - 2026-08-10 - Feature: Notificaciones locales (FASE 3)
 
 ### Added

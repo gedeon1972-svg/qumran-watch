@@ -35,8 +35,14 @@ export default defineConfig({
     ],
     build: {
         outDir: 'dist',
+        modulePreload: {
+            polyfill: false,
+        },
         rollupOptions: {
             output: {
+                manualChunks(id) {
+                    if (id.includes('/src/js/core/')) return 'core';
+                },
                 entryFileNames: 'src/js/[name].js',
                 chunkFileNames: 'src/js/[name].js',
                 assetFileNames: (assetInfo) => {
