@@ -14,6 +14,15 @@
 - `README.md`: actualizado a v13.1.59 (badges, estructura real del repo, scripts, CI/CD, changelog resumido)
 - `PLAN_MEJORAS.md`: 5.1 marcado DONE + fila en Log de Ejecucion
 
+## [13.1.60] - 2026-08-10 - FASE 5: Cobertura storage + worker-client (5.2)
+
+### Added
+- `test/storage.test.js`: 5 tests del wrapper localStorage (fallback a memoria en modo incognito)
+- `test/sun-worker-client.test.js`: 5 tests del Web Worker client (resolucion OK, error del worker, postMessage lanza, timeout 1s, onerror -> fallback)
+
+### Changed
+- Cobertura `storage.js` 47% -> 100% y `sun-worker-client.js` 31% -> 96.87% statements (superan objetivo >=80% de la 5.2)
+
 ## [Unreleased]
 
 ### Notes
