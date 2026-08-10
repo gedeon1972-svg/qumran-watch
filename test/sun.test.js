@@ -67,3 +67,23 @@ describe('QumranSun.calcSunTimes', () => {
         expect(summer.riseDecimal).not.toBe(winter.riseDecimal);
     });
 });
+
+describe('Web Worker NOAA (4.2)', () => {
+    test('calcSunTimesAsync retorna mismo resultado que el sincrono (fallback en Node)', async () => {
+        const { calcSunTimesAsync } = await import('../src/js/core/sun-worker-client.js');
+        const { QumranSun } = await import('../src/js/core/sun.js');
+        const date = new Date(2024, 5, 15);
+        const expected = QumranSun.calcSunTimes(date, JERUSALEM.lat, JERUSALEM.lng);
+        const result = await calcSunTimesAsync(date, JERUSALEM.lat, JERUSALEM.lng);
+        expect(result).toEqual(expected);
+    });
+
+    test('sun-algo es la fuente unica del algoritmo (mismo resultado que QumranSun)', async () => {
+        const { calcSunTimesPure } = await import('../src/js/core/sun-algo.js');
+        const { QumranSun } = await import('../src/js/core/sun.js');
+        const date = new Date(2024, 5, 15);
+        expect(calcSunTimesPure(date, JERUSALEM.lat, JERUSALEM.lng)).toEqual(
+            QumranSun.calcSunTimes(date, JERUSALEM.lat, JERUSALEM.lng),
+        );
+    });
+});

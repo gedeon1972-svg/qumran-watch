@@ -2,6 +2,21 @@
 
 ## [Unreleased]
 
+## [13.1.58] - 2026-08-10 - Performance: Web Worker para calculo NOAA (4.2)
+
+### Added
+- `src/js/core/sun-algo.js`: Algoritmo NOAA puro (sin estado/DOM), fuente unica compartida entre main thread y worker
+- `src/js/core/sun-worker.js`: Web Worker ES module que ejecuta el algoritmo NOAA fuera del main thread
+- `src/js/core/sun-worker-client.js`: `calcSunTimesAsync(date, lat, lng)` con worker si disponible y fallback sincrono (timeout 1s / worker ausente / error)
+- `test/sun.test.js`: Tests del worker client (igualdad con sincrono) y verificacion de fuente unica (91 totales)
+
+### Changed
+- `src/js/core/sun.js`: Ahora re-exporta desde `sun-algo.js` (API identica, sin cambios de comportamiento)
+- `src/js/app.js`: `updateSunData` usa `calcSunTimesAsync` (render asincrono con fallback inmediato)
+- `vite.config.js`: `worker.format=es` con `entryFileNames: assets/[name].js` — el worker se emite como `assets/sun-worker.js` (sin hash, compatible con sw precache)
+- `public/sw.js`: Regenerado con injectManifest, v13.1.58 (21 assets, incluye worker)
+- `package.json`, `package-lock.json`, `public/manifest.json`, `public/sw-workbox.js`: version 13.1.57 -> 13.1.58
+
 ## [13.1.57] - 2026-08-10 - Performance: Code-splitting + modulepreload (4.3)
 
 ### Changed

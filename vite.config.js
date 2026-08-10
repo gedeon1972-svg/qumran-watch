@@ -11,6 +11,15 @@ export default defineConfig({
         __APP_VERSION__: JSON.stringify(pkg.version),
     },
     publicDir: 'public',
+    worker: {
+        format: 'es',
+        rollupOptions: {
+            output: {
+                entryFileNames: 'assets/[name].js',
+                chunkFileNames: 'assets/[name].js',
+            },
+        },
+    },
     plugins: [
         viteCompression({
             algorithm: 'brotliCompress',

@@ -19,6 +19,7 @@ import { renderFiestaModal } from './ui/fiesta-view.js';
 import { initPwaPrompt } from './ui/pwa-install.js';
 import { getSunriseTime } from './core/time-translator.js';
 import { Notifications } from './core/notifications.js';
+import { calcSunTimesAsync } from './core/sun-worker-client.js';
 import './theme-init.js';
 
 // Versión inyectada automáticamente por Vite desde package.json (vite.config.js → define)
@@ -326,9 +327,9 @@ const QumranApp = {
         }
     },
 
-    updateSunData: (lat, lng, geoLabel) => {
+    updateSunData: async (lat, lng, geoLabel) => {
         const now = new Date();
-        const times = QumranSun.calcSunTimes(now, lat, lng);
+        const times = await calcSunTimesAsync(now, lat, lng);
 
         const _newData = { rise: times.rise, set: times.set, riseDecimal: times.riseDecimal, lat, lng };
         if (QumranApp._lastSunData && JSON.stringify(_newData) === JSON.stringify(QumranApp._lastSunData)) {
