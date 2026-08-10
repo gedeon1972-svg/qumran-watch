@@ -23,6 +23,16 @@
 ### Changed
 - Cobertura `storage.js` 47% -> 100% y `sun-worker-client.js` 31% -> 96.87% statements (superan objetivo >=80% de la 5.2)
 
+## [13.1.62] - 2026-08-10 - FASE 5: Cobertura notifications + time-translator (5.4)
+
+### Added
+- `test/notifications-full.test.js`: 15 tests del sistema de notificaciones (permission, requestPermission concedido/denied, scheduleUpcoming agenda y evita duplicados, retorno 0 sin soporte/permiso, checkDue muestra y marca hoy, showLocal con/sin permiso y si la API lanza, notifyServiceWorker con worker activo/sin serviceWorker/ready rechazado)
+- `test/time-translator.test.js`: 8 tests de traduccion de tiempo (getQumranEquivalent prev/current/null/NaN/undefined y minutos decimales; getSunriseTime Jerusalen con firstLight=sunrise-0.5 validado contra SOLAR_DATA_CONFIG.FIRST_LIGHT_OFFSET y lat 90 -> null)
+
+### Changed
+- Cobertura `notifications.js` 63% -> 100% y `time-translator.js` 72% -> 100% statements
+- Cobertura global statements 80.47% -> 82.02%
+
 ## [13.1.61] - 2026-08-10 - FASE 5: Cobertura print-view + pwa-install (5.3)
 
 ### Added
