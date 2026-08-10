@@ -5,6 +5,9 @@
 ### Notes
 - **4.1 IndexedDB cache datos**: marcado como CUBIERTO por 4.3. Evaluacion: el objetivo (reducir el JS inicial bloqueante) ya esta resuelto por el code-split de core/ (data.js en core.js, 21.1KB gzip, precacheados offline por el SW). Refactor a IndexedDB requeriria fetch async en primer render (flash de carga), async en 8 importadores y reescritura de data.test.js (30 tests) sin beneficio real.
 
+### Added
+- `PLAN_MEJORAS.md`: FASE 5 Industrializacion (CMMI Nivel 3) con 13 micro-entregables (5.1-5.13): cobertura statements>=80%, branches>=60%, gate de cobertura en CI, E2E Playwright (5 flujos), branch protection con PR obligatorio, release tagging
+
 ## [13.1.58] - 2026-08-10 - Performance: Web Worker para calculo NOAA (4.2)
 
 ### Added

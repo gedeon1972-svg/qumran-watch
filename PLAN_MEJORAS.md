@@ -47,6 +47,30 @@
 
 ---
 
+
+## FASE 5: Industrializacion (CMMI Nivel 3) — Semanas 4-6
+
+**Diagnostico base (2026-08-10):** cobertura 66% statements / 41% branches; sin E2E; flujos criticos (GPS, notificaciones, descarga ICS, instalacion PWA) solo con tests unitarios.
+
+**Regla de micro-entregas:** un commit por fila (patch version bump), tests+build+lint en cada commit, registro en CHANGELOG y en el Log de Ejecucion.
+
+| ID | Micro-entregable | Descripcion | Done |
+|----|------------------|-------------|------|
+| 5.1 | **Cobertura idb + notif-store** | Subir idb.js y notif-store.js de ~26-31% a >=80% statements (tests de CRUD, index date, markShown, cleanup) | NO |
+| 5.2 | **Cobertura storage + worker-client** | Subir storage.js (47%) y sun-worker-client.js (31%) a >=80% (fallback sincrono, timeout, error de worker) | NO |
+| 5.3 | **Cobertura print-view + pwa-install** | Subir print-view.js (4.6%) y pwa-install.js (3.3%) a >=80% (render, beforeinstallprompt, appinstalled) | NO |
+| 5.4 | **Cobertura notifications + time-translator** | Subir notifications.js (63%) y time-translator.js (72%) a >=80% (checkDue, scheduleUpcoming, permiso denegado) | NO |
+| 5.5 | **Cobertura branches core** | Subir branches de 41% a >=60% (edge cases: polar, sin datos, anio fuera de rango, GPS fallo) | NO |
+| 5.6 | **Gate de cobertura en CI** | Thresholds en vite.config (statements>=80, branches>=60) + ci.yml falla el build si no se cumple | NO |
+| 5.7 | **E2E setup + smoke** | Playwright + @playwright/test: setup, webServer (vite preview), smoke de carga de la app y navegacion SPA | NO |
+| 5.8 | **E2E GPS fallback** | Flujo: denegar geolocalizacion -> se muestra fallback Jerusalen y sunrise/sunset visibles | NO |
+| 5.9 | **E2E descarga ICS** | Flujo: navegar a Ciclo, generar, click export -> se descarga .ics valido (BEGIN/END:VCALENDAR) | NO |
+| 5.10 | **E2E permiso notificaciones** | Flujo: aceptar permiso -> toast de activacion; denegar -> mensaje de fallback | NO |
+| 5.11 | **E2E instalacion PWA** | Flujo: beforeinstallprompt -> se muestra boton INSTALAR; appinstalled -> boton se oculta | NO |
+| 5.12 | **Branch protection + PR** | Ruleset en GitHub: PR obligatorio, 1 review, status checks (ci + coverage), sin push directo a main | NO |
+| 5.13 | **Release tagging** | Workflow: tag vX.Y.Z + GitHub Release automatico por merge a main, lectura de version desde package.json | NO |
+
+---
 ## Reglas de Seguimiento
 
 1. **Un micro-entregable por commit** (patch version bump)
