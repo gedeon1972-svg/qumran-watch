@@ -30,7 +30,7 @@ export const Notifications = {
         if (typeof Notification === 'undefined') return 'unsupported';
         try {
             return await Notification.requestPermission();
-        } catch (e) {
+        } catch {
             return 'denied';
         }
     },
@@ -94,7 +94,7 @@ export const Notifications = {
         if (!Notifications.supported || Notification.permission !== 'granted') return;
         try {
             new Notification(title, { body, icon: ICON, tag: 'qumran-' + title });
-        } catch (e) {
+        } catch {
             // Algunos navegadores solo permiten notificaciones desde el SW
         }
     },

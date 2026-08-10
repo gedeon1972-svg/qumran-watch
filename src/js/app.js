@@ -6,7 +6,6 @@
 // --- 1. IMPORTACIÓN DE MÓDULOS ---
 import { QumranData } from './core/data.js';
 import { QumranCalendar } from './core/calendar.js';
-import { QumranSun } from './core/sun.js';
 import { QumranICS } from './ics.js';
 import { initTheme } from './theme.js';
 import { storage } from './core/storage.js';

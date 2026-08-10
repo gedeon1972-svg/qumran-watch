@@ -181,7 +181,7 @@ export function openPrintWindow(year) {
         try {
             iframe.contentWindow.focus();
             iframe.contentWindow.print();
-        } catch (e) {
+        } catch {
             /* silencioso */
         }
         setTimeout(function () {

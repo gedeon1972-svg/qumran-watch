@@ -56,7 +56,7 @@
 
 | ID | Micro-entregable | Descripcion | Done |
 |----|------------------|-------------|------|
-| 5.1 | **Cobertura idb + notif-store** | Subir idb.js y notif-store.js de ~26-31% a >=80% statements (tests de CRUD, index date, markShown, cleanup) | NO |
+| 5.1 | **Cobertura idb + notif-store** | Subir idb.js y notif-store.js de ~26-31% a >=80% statements (tests de CRUD, index date, markShown, cleanup) | **DONE** v13.1.59 (100% statements en ambos via fake-indexeddb, 13 tests) |
 | 5.2 | **Cobertura storage + worker-client** | Subir storage.js (47%) y sun-worker-client.js (31%) a >=80% (fallback sincrono, timeout, error de worker) | NO |
 | 5.3 | **Cobertura print-view + pwa-install** | Subir print-view.js (4.6%) y pwa-install.js (3.3%) a >=80% (render, beforeinstallprompt, appinstalled) | NO |
 | 5.4 | **Cobertura notifications + time-translator** | Subir notifications.js (63%) y time-translator.js (72%) a >=80% (checkDue, scheduleUpcoming, permiso denegado) | NO |
@@ -97,4 +97,5 @@
 | 2026-08-10 | v13.1.56 | 3.2+3.3 Notificaciones locales | 86b7be3 | notif-store.js (IndexedDB), notifications.js (computeUpcoming + checkDue + prompt), SW showDueNotifications + CHECK_NOTIFICATIONS; 89 tests+build+lint OK |
 | 2026-08-10 | v13.1.57 | 4.3 Modulepreload / code-split | 302db29 | manualChunks core/ (index 43KB + core 50KB paralelos) + modulePreload.polyfill=false (CSP 'self'); 89 tests+build OK |
 | 2026-08-10 | v13.1.58 | 4.2 Web Worker NOAA | b9c0c26 | sun-algo.js (fuente unica), sun-worker.js + sun-worker-client.js con fallback, vite worker config sin hash; 91 tests+build+lint OK |
+| 2026-08-10 | v13.1.59 | 5.1 Cobertura idb + notif-store | (en commit) | test/idb.test.js con fake-indexeddb, 13 tests; idb.js y notif-store.js al 100% statements; lint 0 warnings; fix deploy eliminando canvas |
 | 2026-08-10 | v13.1.58 | 4.1 IndexedDB cache datos | CUBIERTO | Evaluado: objetivo (reducir JS inicial) ya resuelto por 4.3 code-split + SW precache; refactor a IDB romperia 8 importadores y 30+ tests sin beneficio |

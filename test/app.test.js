@@ -354,7 +354,6 @@ describe('Evento DOMContentLoaded', () => {
 
     describe('Actualizacion SW y toasts', () => {
         test('showToast crea toast clicable con onClick', () => {
-            const container = mockElements['toast-container'];
             const onClick = vi.fn();
             appRef.showToast('Nueva version disponible', onClick);
             const created = mockDoc.createElement.mock.results[0].value;

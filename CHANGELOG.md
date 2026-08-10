@@ -1,5 +1,19 @@
 # Changelog
 
+## [13.1.59] - 2026-08-10 - FASE 5: Cobertura IndexedDB + fix deploy CI (5.1)
+
+### Added
+- `test/idb.test.js`: 13 tests con `fake-indexeddb` (devDependency nueva, sin dependencias runtime)
+- Cobertura `src/js/core/idb.js` (100% statements) y `src/js/core/notif-store.js` (100% statements): CRUD, index date, markShown, cleanup
+
+### Fixed
+- **Deploy bloqueado desde v13.1.48**: `canvas@2.11.2` (devDependency muerta, no usada en el proyecto) no tenia binario precompilado para Node 24 (ABI v137) y fallaba el `npm install` en GitHub Actions, impidiendo CI, Lighthouse y el despliegue a GitHub Pages. Eliminada del package.json
+- **Lint 0 warnings (cero deuda)**: 7 `no-unused-vars` resueltos (import huérfano `QumranSun`, catch `(e)`/`(err)` sin usar) y 10 falsos positivos de `security/detect-object-injection` en tests documentados con excepción por scope en `eslint.config.mjs` para `test/**/*.js`
+
+### Docs
+- `README.md`: actualizado a v13.1.59 (badges, estructura real del repo, scripts, CI/CD, changelog resumido)
+- `PLAN_MEJORAS.md`: 5.1 marcado DONE + fila en Log de Ejecucion
+
 ## [Unreleased]
 
 ### Notes

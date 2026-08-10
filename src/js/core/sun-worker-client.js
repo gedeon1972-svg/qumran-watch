@@ -27,7 +27,7 @@ function getWorker() {
         worker = w;
         workerOk = true;
         return w;
-    } catch (err) {
+    } catch {
         return null;
     }
 }
@@ -55,7 +55,7 @@ export async function calcSunTimesAsync(date, lat, lng) {
         });
         try {
             w.postMessage({ id, date: date.getTime(), lat, lng });
-        } catch (err) {
+        } catch {
             clearTimeout(timer);
             pending.delete(id);
             resolve(calcSunTimesPure(date, lat, lng));

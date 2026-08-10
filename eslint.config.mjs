@@ -25,6 +25,14 @@ export default [
     }
   },
   {
+    files: ['test/**/*.js'],
+    rules: {
+      // Accesos a estructuras de datos internas con indices calculados/validados
+      // o claves fijas de mocks. El plugin no distingue claves controladas.
+      'security/detect-object-injection': 'off'
+    }
+  },
+  {
     files: ['public/sw.js', 'public/sw-workbox.js'],
     languageOptions: {
       ecmaVersion: 'latest',
