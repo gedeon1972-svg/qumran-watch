@@ -69,6 +69,7 @@
 | 2026-08-07 | v13.1.52 | 2.1 Workbox SW | 78cb0f9 | injectManifest con 19 assets, CDN workbox-sw.js, runtime caching; tests+build OK |
 | 2026-08-10 | v13.1.53 | 2.2 Background Sync ICS | dd59cdf | IndexedDB queue (idb.js), queueICSForSync(), processICSSyncQueue(), SW ics-sync handler, offline-aware btn-export-ics; 79 tests+build OK |
 | 2026-08-10 | v13.1.54 | 2.3 Periodic Background Sync | 62630fb | Registro periodicsync 'sun-data' (diario, Chromium), handler REFRESH_SOLAR, fallback si no soportado; 80 tests+build OK |
+| 2026-08-10 | v13.1.55 | 4.4 SW Update UX suave | 98ecc74 | setupSWUpdate con toast clicable + SKIP_WAITING bajo demanda, sin skipWaiting automatico; 83 tests+build OK |
 | 2026-08-10 | v13.1.56 | 3.2+3.3 Notificaciones locales | 86b7be3 | notif-store.js (IndexedDB), notifications.js (computeUpcoming + checkDue + prompt), SW showDueNotifications + CHECK_NOTIFICATIONS; 89 tests+build+lint OK |
 | 2026-08-10 | v13.1.57 | 4.3 Modulepreload / code-split | 302db29 | manualChunks core/ (index 43KB + core 50KB paralelos) + modulePreload.polyfill=false (CSP 'self'); 89 tests+build OK |
 | 2026-08-10 | v13.1.58 | 4.2 Web Worker NOAA | b9c0c26 | sun-algo.js (fuente unica), sun-worker.js + sun-worker-client.js con fallback, vite worker config sin hash; 91 tests+build+lint OK |
