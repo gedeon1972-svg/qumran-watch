@@ -23,6 +23,16 @@
 ### Changed
 - Cobertura `storage.js` 47% -> 100% y `sun-worker-client.js` 31% -> 96.87% statements (superan objetivo >=80% de la 5.2)
 
+## [13.1.63] - 2026-08-10 - Fix encoding: README mojibake + BOM en 29 archivos
+
+### Fixed
+- `README.md`: corregido mojibake (doble codificacion UTF-8/CP1252 heredada de HEAD) que mostraba caracteres corruptos (doble codificación de vocales acentuadas y guiones largos) Reversion exacta byte-a-byte, contenido intacto
+- Removido BOM UTF-8 (EF BB BF) de 29 archivos (md, html, css, js, sw, tests): PowerShell 5.1 lo introducia al escribir con `Set-Content -Encoding utf8`. El BOM ya habia roto el parser de LHCI (lighthouserc.json) en el pasado
+
+### Added
+- `scripts/check-encoding.cjs`: detector de BOM UTF-8 y patrones de mojibake en todo el repo
+- `npm run check:encoding` en package.json, ejecutado en CI y en pre-commit (lint-staged)
+
 ## [13.1.62] - 2026-08-10 - FASE 5: Cobertura notifications + time-translator (5.4)
 
 ### Added

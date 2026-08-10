@@ -1,4 +1,4 @@
-﻿import { describe, it, expect, vi, afterEach } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import 'fake-indexeddb/auto';
 import { Notifications } from '../src/js/core/notifications.js';
 import { notifStore } from '../src/js/core/notif-store.js';

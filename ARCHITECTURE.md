@@ -1,4 +1,4 @@
-﻿# Qumran Watch — Architecture Guide
+# Qumran Watch — Architecture Guide
 
 ## Overview
 Qumran Watch is a **100% offline PWA** that restores the **364-day Solar Calendar** from the Dead Sea Scrolls. It provides GPS-based sunrise/sunset syncing, a 24-course priestly cycle (Mishmarot), ICS calendar export, and a library of biblical studies.

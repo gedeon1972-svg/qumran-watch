@@ -1,4 +1,4 @@
-﻿import { describe, it, expect } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { getQumranEquivalent, getSunriseTime } from '../src/js/core/time-translator.js';
 
 describe('time-translator: getQumranEquivalent (5.4)', () => {

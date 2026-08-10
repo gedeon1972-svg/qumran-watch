@@ -1,4 +1,4 @@
-﻿import { expect, test, describe } from 'vitest';
+import { expect, test, describe } from 'vitest';
 import { QumranData } from '../src/js/core/data.js';
 import { buildHoyViewModel } from '../src/js/core/calculations.js';
 

@@ -1,4 +1,4 @@
-﻿# Plan de Mejoras - Qumran Watch
+# Plan de Mejoras - Qumran Watch
 **Versión base:** v13.1.46 | **Fecha:** 2026-08-07
 **Objetivo:** Lighthouse PWA >= 90, UX offline completa, zero regression
 

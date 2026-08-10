@@ -1,4 +1,4 @@
-﻿/**
+/**
  * src/js/ui/estacion-dashboard.js
  * VISTA (Dumb View): Renderiza la tarjeta visual de la Estacion actual.
  */

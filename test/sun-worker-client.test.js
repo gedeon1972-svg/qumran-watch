@@ -1,4 +1,4 @@
-﻿import { describe, it, expect, vi, afterEach } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import { calcSunTimesPure } from '../src/js/core/sun-algo.js';
 
 const JERUSALEM = { lat: 31.7683, lng: 35.2137 };

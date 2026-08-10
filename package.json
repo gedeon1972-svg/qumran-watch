@@ -1,7 +1,7 @@
 {
   "name": "qumran-watch",
   "private": true,
-  "version": "13.1.62",
+  "version": "13.1.63",
   "description": "Herramienta liturgica profesional con calendario 364 dias, sincronizacion GPS y alertas ICS.",
   "author": "Cristian Salinas <gedeon1972@gmail.com>",
   "type": "module",
@@ -12,6 +12,7 @@
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "lint": "eslint src/ public/ test/",
+    "check:encoding": "node scripts/check-encoding.cjs",
     "format": "prettier --write \"src/**/*.js\" \"src/**/*.css\" \"test/**/*.js\" \"public/sw.js\"",
     "format:check": "prettier --check \"src/**/*.js\" \"src/**/*.css\" \"test/**/*.js\" \"public/sw.js\"",
     "prepare": "husky",

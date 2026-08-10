@@ -1,4 +1,4 @@
-﻿# Auditoría de Desacoplamiento — Fase 2
+# Auditoría de Desacoplamiento — Fase 2
 
 ## Resumen Ejecutivo
 

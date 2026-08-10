@@ -1,4 +1,4 @@
-﻿/**
+/**
  * src/js/core/idb.js
  * IndexedDB wrapper para colas offline (ICS sync, etc.)
  */

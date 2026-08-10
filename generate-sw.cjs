@@ -1,4 +1,4 @@
-﻿const { injectManifest } = require('workbox-build');
+const { injectManifest } = require('workbox-build');
 const fs = require('fs');
 const path = require('path');
 

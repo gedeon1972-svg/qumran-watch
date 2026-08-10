@@ -1,4 +1,4 @@
-﻿// src/js/core/notif-store.js
+// src/js/core/notif-store.js
 const DB_NAME = 'qumran-notif-db';
 const DB_VERSION = 1;
 const STORE = 'schedule';

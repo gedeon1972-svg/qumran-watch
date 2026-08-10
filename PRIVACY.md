@@ -1,4 +1,4 @@
-﻿# Política de Privacidad
+# Política de Privacidad
 
 **Qumran Watch** es una Aplicación Web Progresiva (PWA) 100% frontend.
 

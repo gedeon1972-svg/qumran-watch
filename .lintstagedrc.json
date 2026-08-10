@@ -1,4 +1,12 @@
 {
-  "*.js": ["eslint --fix", "prettier --write"],
-  "*.css": ["prettier --write"]
+  "*.js": [
+    "eslint --fix",
+    "prettier --write"
+  ],
+  "*.css": [
+    "prettier --write"
+  ],
+  "*.{js,cjs,mjs,md,html,css,json}": [
+    "node scripts/check-encoding.cjs"
+  ]
 }

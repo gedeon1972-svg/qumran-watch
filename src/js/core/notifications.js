@@ -1,4 +1,4 @@
-﻿// src/js/core/notifications.js
+// src/js/core/notifications.js
 // Notificaciones locales sin backend: Notification API + Periodic Background Sync.
 // Arquitectura compatible con GitHub Pages estatico (no requiere servidor de push).
 import { QumranData } from './data.js';

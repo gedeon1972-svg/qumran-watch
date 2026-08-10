@@ -76,6 +76,16 @@ Qumran Watch es una PWA litúrgica que restaura el Calendario Solar de 364 Días
 - Si la instrucción del usuario entra en conflicto con código que ya funciona correctamente, o si te falta información para garantizar que no romperás nada, DETENTE. Explícale el conflicto al usuario y espera su confirmación antes de aplicar cualquier cambio.
 <!-- END:directivas-globales -->
 
+
+<!-- BEGIN:regla-encoding -->
+# REGLA DE ENCODING (OBLIGATORIA)
+- Todos los archivos de texto se escriben en **UTF-8 SIN BOM**.
+- **PROHIBIDO** usar `Set-Content`/redirecciones de PowerShell para escribir archivos del repo: PS 5.1 añade BOM UTF-8 (EF BB BF). Usar siempre Node (`fs.writeFileSync` con encoding utf8) o el tool de edición.
+- El mojibake (doble codificación UTF-8/CP1252, p.ej. la letra "á" aparece como dos caracteres corruptos) es un defecto crítico: corrompe el README y la UI.
+- Antes de commitear, ejecutar `npm run check:encoding` (detecta BOM y mojibake en todo el repo). El CI ya lo valida en cada push.
+- El pre-commit (lint-staged) ejecuta el detector sobre los archivos staged.
+<!-- END:regla-encoding -->
+
 <!-- BEGIN:docs-specialist -->
 # Documentation Specialist
 Skill disponible en `.agents/agents/docs/docs-specialist.json`. Se activa con `LoadSkill docs-specialist`. Especialista en mantener README, CHANGELOG, ADR y guías de onboarding.

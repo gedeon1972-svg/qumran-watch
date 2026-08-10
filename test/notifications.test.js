@@ -1,4 +1,4 @@
-﻿// test/notifications.test.js
+// test/notifications.test.js
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { QumranData } from '../src/js/core/data.js';
 

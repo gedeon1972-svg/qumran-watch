@@ -1,4 +1,4 @@
-﻿import { describe, it, expect, vi, afterEach } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import { storage } from '../src/js/core/storage.js';
 
 describe('storage (wrapper localStorage con fallback memoria)', () => {

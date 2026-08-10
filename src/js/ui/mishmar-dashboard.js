@@ -1,4 +1,4 @@
-﻿/**
+/**
  * src/js/ui/mishmar-dashboard.js
  * VISTA (Dumb View): Renderiza la tarjeta visual del Turno Sacerdotal (Mishmar).
  */

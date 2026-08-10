@@ -1,4 +1,4 @@
-﻿import { describe, it, expect, vi, afterEach } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import { generatePrintHtml, openPrintWindow } from '../src/js/ui/print-view.js';
 import { QumranData } from '../src/js/core/data.js';
 

@@ -1,4 +1,4 @@
-﻿import { expect, test, describe, vi, beforeEach, afterEach } from 'vitest';
+import { expect, test, describe, vi, beforeEach, afterEach } from 'vitest';
 import { renderHoyView } from '../src/js/ui/hoy-view.js';
 
 let mockDoc, mockElements, appRef;

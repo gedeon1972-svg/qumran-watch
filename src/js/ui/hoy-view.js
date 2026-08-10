@@ -1,4 +1,4 @@
-﻿/**
+/**
  * src/js/ui/hoy-view.js
  * VISTA (Dumb View): Renderiza el DOM para la vista "Hoy".
  * No realiza cálculos — solo consume las propiedades del ViewModel.
