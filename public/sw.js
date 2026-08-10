@@ -12,7 +12,7 @@ console.log('[SW] Workbox SW v13.1.53 iniciando...');
 precacheAndRoute(
     [
         { revision: '830bb116a513550c5858d60ded660753', url: 'privacy.html' },
-        { revision: 'aa69646254e2655cc5d568272cbc634e', url: 'manifest.json' },
+        { revision: '56878ed6b1c71b5d1ea4a6ae57ea5332', url: 'manifest.json' },
         { revision: 'c9572888756e5c887d1b56b6dff80e51', url: 'license.html' },
         { revision: '950230d03a16b61ad6ef4c11c9b867a5', url: 'index.html' },
         { revision: 'f214d4ac2c7f2e2c94e366ca34c5c92e', url: 'icon.png' },
