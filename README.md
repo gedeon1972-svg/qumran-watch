@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/github/license/gedeon1972-svg/qumran-watch)](LICENSE)
 [![PWA](https://img.shields.io/badge/PWA-100%25%20Offline-blue)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)
 [![JavaScript](https://img.shields.io/badge/ES6-Modules-yellow)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
-[![Version](https://img.shields.io/badge/version-13.1.63-gold)](package.json)
+[![Version](https://img.shields.io/badge/version-13.1.64-gold)](package.json)
 
 Aplicación Web Progresiva (PWA) que restaura el **Calendario Solar de 364 Días** de los Manuscritos del Mar Muerto, con sincronización GPS, ciclo de 24 turnos sacerdotales (Mishmarot), alertas ICS y biblioteca de estudios bíblicos. Funciona **100% offline**.
 
@@ -181,6 +181,9 @@ El plan completo de evolución (FASES 1-5, incluyendo industrialización a CMMI 
 ## Changelog
 
 El historial completo está en [CHANGELOG.md](CHANGELOG.md). Resumen reciente:
+
+### 13.1.64 (2026-08-10)
+Cobertura de branches del core: calculations.js al 81.81% y sun-worker.js al 100% (5.5).
 
 ### 13.1.63 (2026-08-10)
 Fix de encoding: corregido mojibake en README (doble codificacion heredada) y removido BOM UTF-8 de 29 archivos. Detector `check:encoding` activo en CI y pre-commit.

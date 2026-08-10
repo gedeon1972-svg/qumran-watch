@@ -23,6 +23,17 @@
 ### Changed
 - Cobertura `storage.js` 47% -> 100% y `sun-worker-client.js` 31% -> 96.87% statements (superan objetivo >=80% de la 5.2)
 
+## [13.1.64] - 2026-08-10 - FASE 5: Cobertura branches core (5.5)
+
+### Added
+- `test/calculations.test.js`: ampliado de 8 a 25 tests — calcOmerDay (null/special, mes 0 d>=26, mes 1, mes 2 <=15/>15), findFestivalDate (indice invalido, Rosh Hashana, PESAJ), getFestivalsForYear (>=5 fiestas, coherencia con QumranData.FIESTAS), getWatcherAlerts (preparacion idxSem 5, preparacion+festival con separador <hr>, sin alertas, qHoy null), buildHoyViewModel edge cases (shabat idxSem 6 liturgia celestial, no-shabat liturgia templo, dia de fiesta)
+- `test/sun-worker.test.js`: 4 tests del Web Worker NOAA — registra onmessage, responde con calcSunTimesPure, tolera data null, captura error del algoritmo
+
+### Changed
+- Cobertura `calculations.js` branches 60.71% -> 81.81% y `sun-worker.js` 0% -> 100% (stmts/branches/funcs/lines)
+- Cobertura global branches 80.92% -> 84.21% y statements 82.02% -> 83.06%
+- js/core branches 86% -> 90.8%
+
 ## [13.1.63] - 2026-08-10 - Fix encoding: README mojibake + BOM en 29 archivos
 
 ### Fixed
