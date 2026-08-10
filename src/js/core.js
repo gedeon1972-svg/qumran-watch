@@ -1,0 +1,258 @@
+const l={ANCHOR:{y:2019,m:2,d:20},MESES:["Mes 1 (Aviv)","Mes 2 (Ziv)","Mes 3 (Siván)","Mes 4","Mes 5 (Av)","Mes 6 (Elul)","Mes 7 (Etanim)","Mes 8 (Bul)","Mes 9","Mes 10","Mes 11","Mes 12"],DIAS:["Yom Rishon (Día Uno)","Yom Sheni (Día Dos)","Yom Shlishi (Día Tres)","Yom Revii (Día Cuatro)","Yom Hamishi (Día Cinco)","Yom Shishi (Día Seis)","Shabat (Reposo)"],TURNOS:["Yehoiarib","Jedaiah","Harim","Seorim","Malquías","Mijamín","Hacoz","Abías","Jesúa","Secanías","Eliasib","Jaquim","Hupa","Jesebeab","Bilga","Imer","Hezir","Hapises","Petaías","Ezequiel","Jaquín","Gamul","Delaía","Maaziah"],PUERTAS_SOLARES:[4,5,6,6,5,4,3,2,1,1,2,3],YAMIM_NORAIM:[{t:"El Despertar",r:"Rom 13:11"},{t:"La Confesión",r:"1 Juan 1:9"},{t:"Reconciliación",r:"Mt 5:24"},{t:"Restitución",r:"Lc 19:8"},{t:"Humildad",r:"Stg 4:10"},{t:"Ayuno de Palabras",r:"Sant 1:26"},{t:"Caridad",r:"Prov 21:3"},{t:"Santidad del Cuerpo",r:"1 Cor 6:19"},{t:"Perdón Absoluto",r:"Mc 11:25"},{t:"Aflicción de Alma",r:"Lev 16"}],FIESTAS:[{m:0,d:1,n:"Rosh Hashaná",es:"Inicio de Año (Mes 1)",instr:"Tocad trompeta en el inicio del mes...",ref:"Salmo 81:3-4",nota:"NOTA DE ESTUDIO: La palabra 'Jodesh' implica renovación solar (Tekufah)."},{m:0,d:10,n:"Selección Cordero",es:"Separación del Cordero",instr:"En el décimo día de este mes tomarán cada uno un cordero...",ref:"Éxodo 12:3"},{m:0,d:14,n:"PESAJ",es:"Cena de Pascua",instr:"Y lo guardaréis hasta el día catorce... entre las dos tardes.",ref:"Éxodo 12:6"},{m:0,d:15,n:"Hag Hamatzot",es:"Panes Sin Levadura",dur:7,instr:"Siete días comeréis panes sin levadura...",ref:"Éxodo 12:15-16"},{m:0,d:26,n:"Bikurim",es:"Primicias (Omer)",instr:"Traeréis la gavilla de las primicias de vuestra siega...",ref:"Levítico 23:10-11"},{m:1,d:14,n:"Pesaj Sheni",es:"Segunda Pascua",instr:"Si alguno de vosotros estuviere inmundo o lejos...",ref:"Números 9:10-11"},{m:2,d:15,n:"SHAVUOT",es:"Fiesta de las Semanas",instr:"Y contaréis siete semanas cumplidas...",ref:"Levítico 23:15-16"},{m:3,d:1,n:"Inicio Verano",es:"Estación de Verano",instr:"Tú has establecido todos los términos de la tierra...",ref:"Salmo 74:17"},{m:4,d:3,n:"Tirosh",es:"Fiesta del Vino Nuevo",instr:"Cuando siegues tu mies... traerás vino nuevo.",ref:"Rollo del Templo 11QT"},{m:5,d:22,n:"Yitzhar",es:"Fiesta del Aceite",instr:"Ofrenda de las primicias del aceite fresco...",ref:"Rollo del Templo 11QT"},{m:6,d:1,n:"YOM TERUAH",es:"Fiesta de las Trompetas",instr:"En el mes séptimo, al primero del mes...",ref:"Levítico 23:24"},{m:6,d:10,n:"YOM KIPUR",es:"Día de Expiación",especial:!0,instr:"A los diez días de este mes séptimo será día de expiación...",ref:"Levítico 23:32"},{m:6,d:15,n:"SUCOT",es:"Fiesta de los Tabernáculos",dur:7,instr:"En tabernáculos habitaréis siete días...",ref:"Levítico 23:42"},{m:6,d:22,n:"Shemini Atzeret",es:"El Octavo Día",instr:"El octavo día tendréis solemnidad...",ref:"Números 29:35"}],ESTUDIOS:[{t:"1. El Ancla: La Señal de 2019",s:"La Sincronización del Génesis con la Historia.",c:`<p>Para restaurar el calendario de los Hijos de Sadoc, era necesario identificar un 'Punto Cero' en nuestra era que replicara las condiciones exactas de la Semana de la Creación descrita en Génesis 1:14-19.</p><p>El Creador estableció las luminarias en el <strong>Día Cuarto (Miércoles)</strong>. Por tanto, el reloj divino original comenzó con una alineación triple:</p><ul><li><strong>Día de la Semana:</strong> Miércoles (Día 4).</li><li><strong>Posición Solar:</strong> Equinoccio de Primavera (Tekufah Nisan, inicio del año solar).</li><li><strong>Posición Lunar:</strong> Luna Llena (Luminaria Mayor de la noche, creada 'completa').</li></ul><p>Investigaciones astronómicas recientes confirmaron que el <strong>20 de Marzo de 2019</strong> ocurrió esta alineación perfecta en Jerusalén: fue Miércoles, fue Equinoccio y hubo Superluna Llena. Además, coincidió con el inicio del turno sacerdotal de <strong>Gamul</strong>, tal como predicen los manuscritos de Qumrán (4Q320).</p><p>Este evento marcó el inicio de un nuevo ciclo de 6 años, sirviendo como el ancla inamovible desde la cual proyectamos todo el calendario.</p><div class="verse-box">"E hizo Dios las dos grandes lumbreras... y las puso en la expansión de los cielos... y fue la tarde y la mañana el día cuarto." (Génesis 1:16-19)</div>`},{t:"2. El Inicio del Día",s:"La Luz vence a las Tinieblas.",c:`<p>Una de las desviaciones más grandes del judaísmo tradicional (rabínico/babilónico) es comenzar el día al atardecer. Sin embargo, la Escritura y la práctica del Templo dictan que el día comienza con la <strong>Luz</strong>.</p><p><strong>Evidencia Bíblica:</strong> En Génesis 1, Dios llama a la Luz 'Día' y a las Tinieblas 'Noche'. Son entidades separadas. La frase <em>"y fue la tarde y la mañana un día"</em> señala la conclusión completa de un ciclo de 24 horas, no su comienzo. El orden es: Luz (trabajo) -> Oscuridad (descanso) -> Nuevo Amanecer (cierre del día).</p><p><strong>Evidencia del Templo:</strong> El sacrificio diario (Tamid) y la limpieza del altar siempre comenzaban con el amanecer. Ningún sacrificio se iniciaba en la oscuridad.</p><p>Por esta razón, Qumrán Watch utiliza un algoritmo que conecta con tu GPS para cambiar la fecha solo cuando el sol aparece en tu horizonte local (Equilux/Amanecer), restaurando el ritmo biológico y espiritual original.</p>`},{t:"3. El Año Perfecto (364)",s:"Orden Matemático vs. Caos Lunar.",c:`<p>El calendario de Enoc y Jubileos consta estrictamente de <strong>364 días</strong>. A diferencia del calendario lunar (354 días) que requiere añadir un mes extra (Adar II) arbitrariamente, o el gregoriano (365) que rompe las semanas, el año de 364 días es matemáticamente perfecto.</p><ul><li>Es divisible exactamente por 7 (52 semanas x 7 = 364).</li><li>Garantiza que las Fiestas de YHWH caigan <strong>siempre en el mismo día de la semana</strong> eternamente.</li><li>Pesaj siempre es en Martes; Shavuot siempre es en Domingo; Yom Kipur siempre es en Viernes.</li></ul><p>Esto evita que las fiestas solemnes entren en conflicto con el Shabat semanal, eliminando la confusión rabínica sobre qué hacer cuando un 'Sábado Alto' cae en viernes o domingo.</p><div class="verse-box">"Y mandaras a los hijos de Israel que observen los años de acuerdo con este computo: trescientos sesenta y cuatro días, y (esto) constituirá un año completo..." (Jubileos 6:32)</div>`},{t:"4. El Ciclo Sacerdotal (6 Años)",s:"La Sincronización de los Mishmarot.",c:'<p>Dado que el año solar real dura 365.25 días y el calendario bíblico tiene 364, existe un desfase anual de 1.25 días. ¿Cómo mantenían los Hijos de Sadoc la alineación con las estaciones?</p><p>Utilizaban un <strong>Ciclo de 6 Años</strong> basado en la rotación de los 24 turnos sacerdotales (1 Crónicas 24). En 6 años, el desfase acumulado es de exactamente 7.5 días (una semana completa). Al final del sexto año, se añadía una semana intercalar para "resetear" el ciclo solar sin romper la cuenta del Shabat.</p><p><strong>El Orden de los Sacerdotes:</strong> Cada año del ciclo comienza con un turno sacerdotal específico, sirviendo como un reloj infalible:</p><ul><li><strong>Año 1:</strong> Comienza con <strong>Gamul</strong> (Como en 2019 y 2025).</li><li><strong>Año 2:</strong> Comienza con <strong>Jedaías</strong> (Yedaiah).</li><li><strong>Año 3:</strong> Comienza con <strong>Mijamín</strong> (Miyamin).</li><li><strong>Año 4:</strong> Comienza con <strong>Secanías</strong> (Shecaniah).</li><li><strong>Año 5:</strong> Comienza con <strong>Jesebeab</strong> (Yeshebeab).</li><li><strong>Año 6:</strong> Comienza con <strong>Hapises</strong> (Aphses).</li></ul><p>Este ciclo de 294 años (Jubileos) asegura que el tiempo sagrado y el tiempo astronómico caminen juntos.</p>'},{t:"5. Hijos de Sadoc",s:"Los Guardianes de la Alianza.",c:`<p>El término 'Zadokita' se refiere a los <strong>Bnei Tzadok</strong>, el linaje legítimo de sumos sacerdotes descendientes de Aarón a través de Sadoc (el primer Sumo Sacerdote del Templo de Salomón).</p><p>Durante el periodo del Segundo Templo, el sacerdocio fue corrompido por la influencia helenista y política (los Asmoneos/Macabeos), quienes usurparon el cargo e impusieron el calendario lunar griego (seleúcida). Los verdaderos sacerdotes de Sadoc se negaron a profanar los tiempos sagrados y se retiraron al desierto (Qumrán).</p><p>Ellos preservaron los textos que hoy conocemos como los Rollos del Mar Muerto, manteniendo la pureza del calendario solar y esperando la restauración final. Usar este calendario es un acto de alineación con ese remanente fiel.</p><div class="verse-box">"Mas los sacerdotes levitas hijos de Sadoc, que guardaron el ordenamiento de mi santuario... ellos se acercarán a mí para ministrarme." (Ezequiel 44:15)</div>`},{t:"6. Fiestas Perdidas",s:"El Ciclo de las Primicias.",c:"<p>Levítico 23 es solo el resumen. El <strong>Rollo del Templo (11Q19)</strong> encontrado en Qumrán detalla un ciclo agrícola mucho más completo que el judaísmo moderno ha olvidado.</p><p>El calendario sigue un patrón de 'cuentas de 50 días' (Pentecostés múltiples) para celebrar cada provisión de la tierra:</p><ul><li><strong>Primicias de Cebada:</strong> Durante los Panes sin Levadura (Mes 1).</li><li><strong>Shavuot (Trigo):</strong> 50 días después (Mes 3).</li><li><strong>Tirosh (Vino Nuevo):</strong> 50 días después del Trigo (Mes 5).</li><li><strong>Yitzhar (Aceite):</strong> 50 días después del Vino (Mes 6).</li><li><strong>Ofrenda de Leña:</strong> 6 días de sacrificios de madera tras el Aceite.</li></ul><p>Estas fiestas conectan al creyente con la provisión física y espiritual de YHWH en sus estaciones precisas.</p>"},{t:"7. Tekufot (Estaciones)",s:"Los Cuatro Días Intercalares.",c:"<p>Para llegar a la suma de 364 días, el calendario no usa 12 meses idénticos. Sigue un patrón trimestral de <strong>30, 30 y 31 días</strong>.</p><p>Ese día '31' al final de cada estación (o el día 1 de la nueva estación, según la interpretación) se llama <strong>Tekufah</strong> (Giro). Enoc 72 y 82 describen estos 4 días como 'líderes' que no se cuentan dentro del cómputo regular de los meses, sino que sirven de puentes entre las estaciones (Primavera, Verano, Otoño, Invierno).</p><p>Son días de transición espiritual y astronómica, donde el sol cambia de 'puerta' en el horizonte. En esta App, están marcados como el día 1 de los meses 1, 4, 7 y 10.</p>"},{t:"8. Guerra de Luz",s:"El Propósito Final del Calendario.",c:"<p>¿Por qué es tan importante el calendario? Según el <strong>Rollo de la Guerra (1QM)</strong>, existe un conflicto cósmico entre los Hijos de la Luz (quienes obedecen la Torá y los tiempos divinos) y los Hijos de las Tinieblas.</p><p>Belial (el adversario) busca 'cambiar los tiempos y la ley' (Daniel 7:25) para desconectar a la humanidad de la fuente de poder divino. Guardar el calendario Zadokita es un acto de <strong>guerra espiritual</strong>. Es declarar lealtad al Rey del Universo y sincronizarse con Su ejército angelical.</p><p>No se trata solo de fechas, sino de estar en el lugar correcto, en el tiempo correcto, para la batalla final.</p>"}],SALMOS:[{t:"Salmo 24",c:"LOS LEVITAS LO CANTABAN EL 1er DÍA: Porque en el primer día de la creación, YHWH tomó posesión de Su mundo, lo fundó y ejerció Su dominio sobre él (Talmud de Babilonia, Rosh Hashaná 31a).",v:`De YHWH es la tierra y su plenitud;
+El mundo, y los que en él habitan.
+Porque él la fundó sobre los mares,
+Y la afirmó sobre los ríos.
+¿Quién subirá al monte de YHWH?
+¿Y quién estará en su lugar santo?
+El limpio de manos y puro de corazón;
+El que no ha elevado su alma a cosas vanas,
+Ni jurado con engaño.
+Él recibirá bendición de YHWH,
+Y justicia del Dios de salvación.
+Tal es la generación de los que le buscan,
+De los que buscan tu rostro, oh Dios de Jacob.
+Alzad, oh puertas, vuestras cabezas,
+Y alzaos vosotras, puertas eternas,
+Y entrará el Rey de gloria.
+¿Quién es este Rey de gloria?
+YHWH el fuerte y valiente,
+YHWH el poderoso en batalla.
+Alzad, oh puertas, vuestras cabezas,
+Y alzaos vosotras, puertas eternas,
+Y entrará el Rey de gloria.
+¿Quién es este Rey de gloria?
+YHWH de los ejércitos,
+Él es el Rey de la gloria.`},{t:"Salmo 48",c:"LOS LEVITAS LO CANTABAN EL 2do DÍA: Porque en el segundo día, YHWH dividió las aguas superiores de las inferiores, separándose a Sí mismo para reinar en lo alto (Rosh Hashaná 31a).",v:`Grande es YHWH, y digno de ser en gran manera alabado
+En la ciudad de nuestro Dios, en su monte santo.
+Hermosa provincia, el gozo de toda la tierra,
+Es el monte de Sion, a los lados del norte,
+La ciudad del gran Rey.
+En sus palacios Dios es conocido por refugio.
+Porque he aquí los reyes de la tierra se reunieron;
+Pasaron todos.
+Y viéndola ellos así, se maravillaron,
+Se turbaron, se apresuraron a huir.
+Les tomó allí temblor;
+Dolor como de mujer que da a luz.
+Con viento solano quiebras tú las naves de Tarsis.
+Como lo oímos, así lo hemos visto
+En la ciudad de YHWH de los ejércitos, en la ciudad de nuestro Dios;
+La afirmará Dios para siempre.
+Nos acordamos de tu misericordia, oh Dios,
+En medio de tu templo.
+Conforme a tu nombre, oh Dios,
+Así es tu loor hasta los fines de la tierra;
+De justicia está llena tu diestra.
+Se alegrará el monte de Sion;
+Se gozarán las hijas de Judá
+Por tus juicios.
+Andad alrededor de Sion, y rodeadla;
+Contad sus torres.
+Considerad bien sus antemuros,
+Mirad sus palacios,
+Para que lo contéis a la generación venidera.
+Porque este Dios es Dios nuestro eternamente y para siempre;
+Él nos guiará aun más allá de la muerte.`},{t:"Salmo 82",c:"LOS LEVITAS LO CANTABAN EL 3er DÍA: Porque en el tercer día apareció la tierra seca, el escenario donde los jueces dictarían justicia y donde Dios juzgará a la humanidad.",v:`Dios está en la reunión de los dioses;
+En medio de los dioses juzga.
+¿Hasta cuándo juzgaréis injustamente,
+Y aceptaréis las personas de los impíos?
+Defended al débil y al huérfano;
+Haced justicia al afligido y al menesteroso.
+Librad al afligido y al necesitado;
+Libradlo de mano de los impíos.
+No saben, no entienden,
+Andan en tinieblas;
+Tiemblan todos los cimientos de la tierra.
+Yo dije: Vosotros sois dioses,
+Y todos vosotros hijos del Altísimo;
+Pero como hombres moriréis,
+Y como cualquiera de los príncipes caeréis.
+Levántate, oh Dios, juzga la tierra;
+Porque tú heredarás todas las naciones.`},{t:"Salmo 94",c:"LOS LEVITAS LO CANTABAN EL 4to DÍA: Porque en el cuarto día creó el sol, la luna y las estrellas, y YHWH tomará venganza futura de todos aquellos que idolatran a los cuerpos celestes.",v:`YHWH, Dios de las venganzas,
+Dios de las venganzas, muéstrate.
+Engrandécete, oh Juez de la tierra;
+Da el pago a los soberbios.
+¿Hasta cuándo los impíos,
+Hasta cuándo, oh YHWH, se gozarán los impíos?
+¿Hasta cuándo pronunciarán, hablarán cosas duras,
+Y se vanagloriarán todos los que hacen iniquidad?
+A tu pueblo, oh YHWH, quebrantan,
+Y a tu heredad afligen.
+A la viuda y al extranjero matan,
+Y a los huérfanos quitan la vida.
+Y dijeron: No verá JAH,
+Ni entenderá el Dios de Jacob.
+Entended, necios del pueblo;
+Y vosotros, fatuos, ¿cuándo seréis sabios?
+El que hizo el oído, ¿no oirá?
+El que formó el ojo, ¿no verá?
+El que castiga a las naciones, ¿no reprenderá?
+¿No sabrá el que enseña al hombre la ciencia?
+YHWH conoce los pensamientos de los hombres,
+Que son vanidad.
+Bienaventurado el hombre a quien tú, JAH, corriges,
+Y en tu ley lo instruyes,
+Para hacerle descansar en los días de aflicción,
+En tanto que para el impío se cava el hoyo.
+Porque no abandonará YHWH a su pueblo,
+Ni desamparará su heredad,
+Sino que el juicio será vuelto a la justicia,
+Y en pos de ella irán todos los rectos de corazón.
+¿Quién se levantará por mí contra los malignos?
+¿Quién estará por mí contra los que hacen iniquidad?
+Si no me ayudara YHWH,
+Pronto moraría mi alma en el silencio.
+Cuando yo decía: Mi pie resbala,
+Tu misericordia, oh YHWH, me sustentaba.
+En la multitud de mis pensamientos dentro de mí,
+Tus consolaciones alegraban mi alma.
+¿Se juntará contigo el trono de iniquidades
+Que hace agravio bajo forma de ley?
+Se juntan contra la vida del justo,
+Y condenan la sangre inocente.
+Mas YHWH me ha sido por refugio,
+Y mi Dios por roca de mi confianza.
+Y él hará volver sobre ellos su iniquidad,
+Y los destruirá en su propia maldad;
+Los destruirá YHWH nuestro Dios.`},{t:"Salmo 81",c:"LOS LEVITAS LO CANTABAN EL 5to DÍA: Porque en el quinto día creó las aves y las criaturas marinas, multitud de seres vivientes destinados a cantar y alabar Su nombre.",v:`Cantad con gozo a Dios, fortaleza nuestra;
+Al Dios de Jacob aclamad con júbilo.
+Entonad canción, y tañed el pandero,
+El arpa deliciosa y el salterio.
+Tocad la trompeta en el inicio del mes (Jodesh),
+En el día señalado, en el día de nuestra fiesta solemne.
+Porque estatuto es de Israel,
+Ordenanza del Dios de Jacob.
+Lo constituyó como testimonio en José
+Cuando salió por la tierra de Egipto.
+Oí lenguaje que no entendía;
+Aparté su hombro de la carga;
+Sus manos se descargaron de los cestos.
+En la calamidad clamaste, y yo te libré;
+Te respondí en lo secreto del trueno;
+Te probé junto a las aguas de Meriba.
+Oye, pueblo mío, y te amonestaré.
+Israel, si me oyeres,
+No habrá en ti dios ajeno,
+Ni te inclinarás a dios extraño.
+Yo soy YHWH tu Dios,
+Que te hice subir de la tierra de Egipto;
+Abre tu boca, y yo la llenaré.
+Pero mi pueblo no oyó mi voz,
+E Israel no me quiso a mí.
+Los dejé, por tanto, a la dureza de su corazón;
+Caminaron en sus propios consejos.
+¡Oh, si me hubiera oído mi pueblo,
+Si en mis caminos hubiera andado Israel!
+En un momento habría yo derribado a sus enemigos,
+Y vuelto mi mano contra sus adversarios.
+Los que aborrecen a YHWH se le habrían sometido,
+Y el tiempo de ellos sería para siempre.
+Les sustentaría Dios con lo mejor del trigo,
+Y con miel de la peña les saciaría.`},{t:"Salmo 93",c:"LOS LEVITAS LO CANTABAN EL 6to DÍA: Porque en el sexto día YHWH terminó Su obra, coronando la creación con el hombre, y se vistió de majestad como Rey absoluto sobre todo el universo.",v:`YHWH reina; se vistió de magnificencia;
+YHWH se vistió, se ciñó de poder.
+Afirmó también el mundo, y no se moverá.
+Firme es tu trono desde entonces;
+Tú eres eternamente.
+Alzaron los ríos, oh YHWH,
+Los ríos alzaron su sonido;
+Alzaron los ríos sus ondas.
+YHWH en las alturas es más poderoso
+Que el estruendo de las muchas aguas,
+Más que las recias ondas del mar.
+Tus testimonios son muy firmes;
+La santidad conviene a tu casa,
+Oh YHWH, por los siglos y para siempre.`},{t:"Salmo 92",c:"EL SALMO DEL SHABAT: El cántico por excelencia del día de reposo. Los sabios enseñan que es una profecía litúrgica: 'El canto para el tiempo venidero, para el Día que será todo Shabat y descanso para la vida eterna' (Mishná Tamid 7:4).",v:`Bueno es alabarte, oh YHWH,
+Y cantar salmos a tu nombre, oh Altísimo;
+Anunciar por la mañana tu misericordia,
+Y tu fidelidad cada noche,
+En el decacordio y en el salterio,
+En tono suave con el arpa.
+Por cuanto me has alegrado, oh YHWH, con tus obras;
+En las obras de tus manos me gozo.
+¡Cuán grandes son tus obras, oh YHWH!
+Muy profundos son tus pensamientos.
+El hombre necio no sabe,
+Y el insensato no entiende esto.
+Cuando brotan los impíos como la hierba,
+Y florecen todos los que hacen iniquidad,
+Es para ser destruidos eternamente.
+Mas tú, YHWH, para siempre eres Altísimo.
+Porque he aquí tus enemigos, oh YHWH,
+Porque he aquí, perecerán tus enemigos;
+Serán esparcidos todos los que hacen maldad.
+Pero tú aumentarás mis fuerzas como las del búfalo;
+Seré ungido con aceite fresco.
+Y mirarán mis ojos sobre mis enemigos;
+Oirán mis oídos de los que se levantaron contra mí, de los malignos.
+El justo florecerá como la palmera;
+Crecerá como cedro en el Líbano.
+Plantados en la casa de YHWH,
+En los atrios de nuestro Dios florecerán.
+Aun en la vejez fructificarán;
+Estarán vigorosos y verdes,
+Para anunciar que YHWH mi fortaleza es recto,
+Y que en él no hay injusticia.`}],CANTICOS_SHABAT:[{t:"Cántico del 1er Shabat (Manuscrito 4Q400)",c:"LITURGIA CELESTIAL: Los Hijos de Sadoc en Qumrán enseñaban que mientras los sacerdotes terrenales ofrecían incienso, los ángeles en el cielo cantaban estos himnos. Este primer fragmento llama a los príncipes angelicales a bendecir la majestad divina.",v:`Alabad al Dios de los seres gloriosos, oh vosotros, dioses entre los seres divinos más santos.
+Y exaltad Su majestad, oh los de eterna santidad.
+Porque Él ha establecido los fundamentos de la alabanza suprema para todos los espíritus del conocimiento.
+Ellos son los príncipes santos, los ministros en el Templo celestial,
+que se congregan en el concilio de la pureza eterna.
+No hay impureza en sus atrios, ni hay decreto de engaño en sus lenguas.`},{t:"Cántico del 2do Shabat (Manuscrito 4Q400)",c:"LITURGIA CELESTIAL: Describe la pureza requerida en el sacerdocio celestial. Los ángeles son vistos como sacerdotes eternos que no necesitan expiación, a diferencia de los humanos.",v:`Bendecid, oh seres semejantes a dioses, al Rey de la majestad santa.
+Él los purificó con el fuego de Su verdad y los separó para ser sacerdotes del núcleo de la congregación divina.
+Ellos declaran la justicia de Sus juicios,
+y la rectitud de todo Su proceder.
+Porque ellos son la congregación de los elegidos eternos,
+y ante Él rinden adoración siete veces, con siete palabras de alabanza maravillosa.`},{t:"Cántico del 3er Shabat (Manuscrito 4Q401)",c:"LITURGIA CELESTIAL: Se centra en las asambleas angelicales y los coros celestiales. Muestra la jerarquía de las inteligencias que alaban a YHWH sin cesar.",v:`Cantad cánticos de gozo, oh espíritus exaltados,
+al Dios de la belleza y de la santidad excelsa.
+Levantad vuestras voces, oh asambleas de los santos,
+junto con los príncipes de la pureza.
+Porque la gloria de Su reino gobierna sobre todos los cimientos del abismo,
+y Su majestad está sobre las alturas de las nubes.
+Que todos los espíritus inmortales se postren ante Su trono.`},{t:"Cántico del 4to Shabat (Manuscrito 4Q401)",c:"LITURGIA CELESTIAL: Este fragmento detalla cómo las palabras de poder y decreto emanan de los seres celestiales bajo el mandato absoluto del Creador.",v:`Alabad, oh príncipes del consejo, al Dios de toda comprensión.
+Porque de Su boca salen los estatutos de rectitud,
+y de Sus labios los decretos que mantienen el universo.
+Los vigilantes del cielo guardan Sus misterios,
+y los santos declaran Su conocimiento a las generaciones.
+No hay rebelión en Sus ejércitos, ni oscuridad en Sus campamentos luminosos.`},{t:"Cántico del 5to Shabat (Manuscrito 4Q402)",c:"LITURGIA CELESTIAL: Un himno que conecta el diseño divino de la naturaleza con la predestinación. Dios diseñó los cielos y la tierra como un Templo cósmico.",v:`Exaltad al Dios de la predestinación maravillosa,
+oh todos vosotros, espíritus de rectitud.
+Porque antes de que Él creara los ángeles santos,
+Él ya había determinado sus obras para la eternidad.
+Él extendió el firmamento por Su conocimiento,
+y estableció las estrellas en sus rutas perfectas.
+Todo sucede según el misterio de Su voluntad.`},{t:"Cántico del 6to Shabat (Manuscrito 4Q403)",c:"LITURGIA CELESTIAL: Uno de los fragmentos más famosos. Describe a los Siete Arcángeles (Príncipes Principales) que bendicen al Creador con siete himnos cada uno, sumando cuarenta y nueve bendiciones.",v:`Y el primer príncipe supremo bendecirá en el Nombre de Su santidad majestuosa, con siete palabras asombrosas.
+Y el segundo príncipe bendecirá al Rey de la gloria, con siete palabras de su gracia.
+Y el tercero bendecirá al Rey de todos los exaltados, con siete palabras de conocimiento puro.
+Y el séptimo príncipe bendecirá al Rey de la bondad, con siete palabras de paz eterna.
+¡Aleluya al Creador de las siete luces celestiales!`},{t:"Cántico del 7mo Shabat (Manuscrito 4Q403)",c:"LITURGIA CELESTIAL: Enfocado en la arquitectura sagrada. Describe los atrios del Templo Celestial y las esculturas vivientes que alaban a Dios desde las paredes del santuario de arriba.",v:`¡Bendecid, oh habitantes de los santuarios más santos!
+Cantad al Dios que habita en el Tabernáculo Supremo.
+Porque desde los pilares de fuego hasta los cimientos de zafiro,
+todo en Su templo grita: ¡Gloria!
+Los ángeles esculpidos en las paredes celestiales tienen aliento de vida,
+y las puertas de la eternidad cantan cuando se abren para el Rey de gloria.`},{t:"Cántico del 8vo Shabat (Manuscrito 4Q403)",c:"LITURGIA CELESTIAL: Continúa la descripción del Templo en los cielos. Los umbrales, los altares y el mobiliario celestial participan en la adoración, no son objetos muertos.",v:`Cantad, oh querubines de la presencia, sobre el propiciatorio de la gloria.
+Alabad, oh espíritus de luz que ministráis en el altar celestial.
+El olor grato de vuestras alabanzas sube como incienso purísimo.
+Los umbrales de las puertas de zafiro tiemblan por la voz de los que alaban,
+y el fuego que arde sin consumirse da testimonio de Su eternidad.`},{t:"Cántico del 9no Shabat (Manuscrito 4Q404)",c:"LITURGIA CELESTIAL: Se centra en las vestiduras sagradas de los sumos sacerdotes angelicales, tejidas no con hilo, sino con luz pura, conocimiento y gloria multicolor.",v:`Bendecid al Dios de las maravillas,
+oh ministros vestidos con ropas de luces entretejidas.
+Llevan coronas de pureza y pectorales de verdad luminosa.
+Sus vestiduras brillan como relámpagos de mil colores,
+tejidas por los espíritus de la sabiduría eterna.
+No hay mancha en sus linos celestiales, ni sombra en sus vestiduras sacerdotales.`},{t:"Cántico del 10mo Shabat (Manuscrito 4Q404)",c:"LITURGIA CELESTIAL: Describe el velo (Parojet) del Lugar Santísimo celestial, guardado por ángeles que ocultan y revelan los misterios divinos según la voluntad de YHWH.",v:`Exaltad al Rey que se oculta detrás del velo de gloria luminosa.
+Los ángeles del conocimiento tejen la cortina del Lugar Santísimo.
+Detrás de ella habita la Presencia (Shekinah) que ningún ojo puede resistir.
+Solo los espíritus más excelsos son admitidos en el secreto de Su consejo,
+para escuchar el trueno de Su voz silenciosa.`},{t:"Cántico del 11vo Shabat (Manuscrito 4Q405)",c:"LITURGIA CELESTIAL: Un poderoso poema basado en la visión de Ezequiel. Describe la Merkavah, el Carro-Trono Divino, y a los ángeles Ofanim (ruedas vivientes) girando y cantando.",v:`Alabad al Rey de gloria, oh querubines de Su carro de fuego (Merkavah).
+Cuando los seres vivientes se mueven, se oye la voz del clamor celestial.
+Y las Ruedas Vivientes (Ofanim) alaban junto con ellos:
+¡Bendita sea la gloria de YHWH desde la morada de Su santidad!
+El estruendo de sus alas es como el sonido de muchas aguas,
+un himno de majestad que hace temblar el firmamento.`},{t:"Cántico del 12vo Shabat (Manuscrito 4Q405)",c:"LITURGIA CELESTIAL: Describe la procesión litúrgica final en el cielo. Los campamentos de ángeles marchan en un orden perfecto y matemático, glorificando a Dios.",v:`Bendecid al Señor de los ejércitos, oh campamentos de los seres supremos.
+Ellos marchan en escuadrones de luz, sin romper jamás su orden.
+Cada ángel conoce su puesto y cada espíritu conoce su cántico.
+La paz absoluta gobierna sus formaciones,
+y la obediencia es el estandarte que levantan sobre la creación.`},{t:"Cántico del 13er Shabat (Manuscrito 11Q17)",c:"LITURGIA CELESTIAL: El clímax del ciclo trimestral de trece semanas. Los sumos sacerdotes angelicales presentan el sacrificio de alabanza que sella y protege la creación.",v:`Cantad, oh sumos sacerdotes de la eternidad,
+al Dios que perfecciona el universo.
+Ellos levantan la ofrenda de lenguas purificadas,
+un holocausto espiritual que aplaca el juicio.
+¡Santo, Santo, Santo es YHWH de los Ejércitos celestiales y terrenales!
+Que Su nombre sea magnificado por todos los espíritus y toda la carne,
+desde ahora y para siempre. ¡Amén!`}],HALAKHA:[{t:"La Verdad",h:"Emet (אֱמֶת)",c:"Sermón del Monte",f:"Emet implica firmeza, estabilidad y fiabilidad. Que tu 'sí' sea tan sólido como un contrato escrito ante el Cielo.",q:"Sea vuestro hablar: Sí, sí; no, no.",a:"Evita hoy toda exageración o juramento. Que tu palabra baste.",r:"Mt 5:37"},{t:"Amor Radical",h:"Ahavá (אַהֲבָה)",c:"Justicia del Reino",f:"Ahavá no es solo un sentimiento, es una acción de voluntad y lealtad. Es elegir buscar el bien del otro, incluso del enemigo.",q:"Amad a vuestros enemigos, bendecid a los que os maldicen.",a:"Ora hoy por alguien que te ofendió sin hablar mal de él.",r:"Mt 5:44"},{t:"Mirada Pura",h:"Ayin Tovah (עַיִן טוֹבָה)",c:"La Lámpara del Cuerpo",f:"Tener 'Buen Ojo' en hebreo significa ser generoso y no envidioso. La forma en que miras al mundo define la luz de tu alma.",q:"Si tu ojo es bueno, todo tu cuerpo estará lleno de luz.",a:"Cuida lo que miras hoy. Evita la codicia visual.",r:"Mt 6:22"},{t:"Tesoro Real",h:"Otzar (אוֹצָר)",c:"Sobre la Ansiedad",f:"Donde pones tu seguridad (tu tesoro), allí está tu lealtad. El tesoro celestial es lo que das, no lo que guardas.",q:"Donde esté vuestro tesoro, allí estará también vuestro corazón.",a:"Da una ofrenda secreta a un necesitado hoy.",r:"Mt 6:21"},{t:"Sin Afán",h:"Bitachon (בִּטָּחוֹן)",c:"Providencia Divina",f:"Confianza activa. No es pasividad, es la certeza de que el Padre sustenta. El afán divide la mente; la fe la unifica.",q:"No os afanéis por el día de mañana.",a:"Cuando sientas ansiedad, da gracias por 3 cosas que ya tienes.",r:"Mt 6:34"},{t:"Regla de Oro",h:"Chesed (חֶסֶד)",c:"Torá y Profetas",f:"Amor leal. Haz por otros lo que quisieras para ti.",q:"Todas las cosas que queráis que los hombres hagan con vosotros, así también haced.",a:"Haz un favor proactivo antes de que te lo pidan.",r:"Mt 7:12"},{t:"Cimiento",h:"Emunah (אֱמוּנָה)",c:"Los dos constructores",f:"Fidelidad. No es solo creer, es construir vida sobre la obediencia.",q:"El que oye estas palabras y las hace, le compararé a un hombre prudente.",a:"Obedece una instrucción difícil hoy sin quejarte.",r:"Mt 7:24"},{t:"Misericordia",h:"Rachamim (רַחֲמִים)",c:"Llamado de Mateo",f:"Amor entrañable, como el de una madre (Rechem).",q:"Misericordia quiero, y no sacrificio.",a:"Muestra compasión con alguien que cometa un error hoy.",r:"Mt 9:13"},{t:"Humildad",h:"Anavah (עֲנָוָה)",c:"Contra los Fariseos",f:"Conocer tu lugar ante Dios. No es debilidad, es control del ego.",q:"El que se humilla será enaltecido.",a:"Cede el mejor lugar o el paso a otra persona hoy.",r:"Mt 23:12"},{t:"Perdón",h:"Selichah (סְלִיחָה)",c:"Parábola del siervo",f:"Soltar la deuda. El perdón libera al acreedor más que al deudor.",q:"No te digo hasta siete, sino aun hasta setenta veces siete.",a:"Perdona una deuda emocional pendiente hoy.",r:"Mt 18:22"},{t:"Vigilancia",h:"Shokéd (שֹׁקֵד)",c:"Discurso del Monte",f:"Estar alerta, como el almendro que despierta primero.",q:"Velad, pues, porque no sabéis a qué hora ha de venir vuestro Señor.",a:"Vive esta hora como si Yeshua llegara hoy.",r:"Mt 24:42"},{t:"Servicio",h:"Avodá (עֲבוֹדָה)",c:"Petición de Santiago y Juan",f:"Servicio y Adoración son la misma palabra. Servir es adorar.",q:"El Hijo del Hombre no vino para ser servido, sino para servir.",a:"Sirve en la tarea más humilde de tu casa hoy.",r:"Mt 20:28"},{t:"Luz",h:"Or (אוֹר)",c:"Sal y Luz",f:"La luz no hace ruido, solo alumbra. Tus obras hablan más que tu voz.",q:"Así alumbre vuestra luz delante de los hombres.",a:"Haz una buena obra pública que glorifique al Padre.",r:"Mt 5:16"},{t:"Ira",h:"Ka'as (כַּעַס)",c:"Homicidio del corazón",f:"La ira es idolatría del yo. Quien se enoja, pierde la sabiduría.",q:"Cualquiera que se enoje contra su hermano, será culpable de juicio.",a:"Controla tu temperamento hoy; no respondas mal.",r:"Mt 5:22"},{t:"Reconciliación",h:"Shalom (שָׁלוֹם)",c:"Ofrenda en el altar",f:"Restaurar la plenitud. El altar espera hasta que la paz vuelva.",q:"Deja allí tu ofrenda... y anda, reconcíliate primero.",a:"Llama a alguien con quien estés enemistado.",r:"Mt 5:24"},{t:"Segunda Milla",h:"Nedivut (נְדִיבוּת)",c:"Resistencia no violenta",f:"Generosidad del espíritu. Hacer más de lo requerido rompe la opresión.",q:"A cualquiera que te obligue a llevar carga por una milla, ve con él dos.",a:"Haz más de lo que se te exige en tu trabajo hoy.",r:"Mt 5:41"},{t:"Secreto",h:"Seter (סֵתֶר)",c:"Limosna y Oración",f:"El lugar oculto donde habita el Altísimo. La intimidad requiere privacidad.",q:"Tu Padre que ve en lo secreto te recompensará en público.",a:"Ora a solas 10 minutos sin decirle a nadie.",r:"Mt 6:6"},{t:"El Pan",h:"Lechem (לֶחֶם)",c:"Padre Nuestro",f:"Sustento diario. Reconocer que todo viene de Su mano, día a día.",q:"El pan nuestro de cada día, dánoslo hoy.",a:"Agradece por cada comida y comparte tu pan.",r:"Mt 6:11"},{t:"Juicio",h:"Mishpat (מִשְׁפָּט)",c:"La viga y la paja",f:"Justicia. Al juzgar al otro, estableces la medida para ti mismo.",q:"No juzguéis, para que no seáis juzgados.",a:"Si ves un error en otro, calla y ora por él.",r:"Mt 7:1"},{t:"La Puerta",h:"Delet (דֶּלֶת)",c:"Dos caminos",f:"La entrada al Reino requiere despojarse de cargas innecesarias.",q:"Entrad por la puerta estrecha.",a:"Elige el camino difícil pero correcto hoy.",r:"Mt 7:13"},{t:"Frutos",h:"Peri (פְּרִי)",c:"Falsos profetas",f:"El resultado visible de la esencia invisible. El carácter es la prueba.",q:"Por sus frutos los conoceréis.",a:"Que tus acciones de hoy muestren paciencia y bondad.",r:"Mt 7:20"},{t:"Confesión",h:"Todah (תּוֹדָה)",c:"Envío de los doce",f:"Confesión y agradecimiento. Reconocer públicamente la verdad.",q:"A cualquiera que me confiese delante de los hombres, yo también le confesaré.",a:"Habla de Yeshua a alguien hoy.",r:"Mt 10:32"},{t:"Descanso",h:"Menuchah (מְנוּחָה)",c:"Yugo fácil",f:"Reposo del alma. No es inactividad, es paz en medio de la labor.",q:"Venid a mí todos los que estáis trabajados... y yo os haré descansar.",a:"Dedica 15 min a reposar en Su presencia.",r:"Mt 11:28"},{t:"Palabras",h:"Lashon (לָשׁוֹן)",c:"El árbol y el fruto",f:"La lengua revela el corazón. La vida y la muerte están en su poder.",q:"De toda palabra ociosa que hablen los hombres, de ella darán cuenta.",a:"Evita el chisme y la queja hoy.",r:"Mt 12:36"},{t:"Sembrador",h:"Zera (זֶרַע)",c:"Parábolas del Reino",f:"La semilla es la Palabra. El corazón es la tierra que decide el fruto.",q:"El que fue sembrado en buena tierra, éste es el que oye y entiende.",a:"Medita en la Escritura profundamente hoy.",r:"Mt 13:23"},{t:"Limpieza",h:"Taharah (טָהֳרָה)",c:"Tradiciones humanas",f:"Pureza ritual vs moral. Lo interno define lo externo.",q:"Lo que sale de la boca, esto contamina al hombre.",a:"Purifica tu vocabulario hoy.",r:"Mt 15:11"},{t:"Fe",h:"Emunah (אֱמוּנָה)",c:"El joven lunático",f:"Confianza total en el poder de Dios, aunque sea pequeña como semilla.",q:"Si tuvierais fe como un grano de mostaza...",a:"Ora por un imposible creyendo.",r:"Mt 17:20"},{t:"Niños",h:"Yeladim (יְלָדִים)",c:"Grandeza en el Reino",f:"Inocencia, dependencia y falta de ambición de poder.",q:"Si no os volvéis y os hacéis como niños, no entraréis en el reino.",a:"Mantén la inocencia y la capacidad de asombro hoy.",r:"Mt 18:3"},{t:"Acuerdo",h:"Echad (אֶחָד)",c:"Disciplina eclesial",f:"Unidad. Cuando dos corazones laten como uno, Dios está allí.",q:"Si dos de vosotros se pusieren de acuerdo... les será hecho.",a:"Ora con tu pareja o amigo por una meta común.",r:"Mt 18:19"},{t:"Honra",h:"Kavod (כָּבוֹד)",c:"Joven rico",f:"Dar peso, importancia y respeto a quienes nos dieron la vida.",q:"Honra a tu padre y a tu madre.",a:"Llama o visita a tus padres para bendecirlos.",r:"Mt 19:19"},{t:"Grandeza",h:"Gedulah (גְּדֻלָּה)",c:"Petición de Zebedeos",f:"En el Reino, subir es bajar. El esclavo de todos es el rey de todos.",q:"El que quiera hacerse grande entre vosotros será vuestro servidor.",a:"Busca cómo servir, no cómo ser servido.",r:"Mt 20:26"},{t:"Fe Activa",h:"Bitachon (בִּטָּחוֹן)",c:"La higuera estéril",f:"Certeza de que la oración ya ha sido respondida en el cielo.",q:"Todo lo que pidiereis en oración, creyendo, lo recibiréis.",a:"Pide con certeza, sin dudar.",r:"Mt 21:22"},{t:"Amor Total",h:"Shema (שְׁמַע)",c:"El Gran Mandamiento",f:"Escucha y obedece. Amar con todo el ser, sin reservas.",q:"Amarás al Señor tu Dios con todo tu corazón.",a:"Dile a Dios que lo amas con voz audible.",r:"Mt 22:37"},{t:"Prójimo",h:"Rea (רֵעַ)",c:"Segundo Mandamiento",f:"El otro no es ajeno, es tu espejo. Tu compañero de pacto.",q:"Amarás al Señor tu Dios como a ti mismo.",a:"Trata al extraño con la dignidad de un rey.",r:"Mt 22:39"},{t:"Justicia",h:"Tzedaká (צְדָקָה)",c:"Ay de los Escribas",f:"Justicia social y rectitud. Más importante que el diezmo de la menta.",q:"¡Ay de vosotros... que dejáis lo más importante: la justicia, la misericordia y la fe!",a:"Sé justo en tus tratos comerciales hoy.",r:"Mt 23:23"},{t:"Retorno",h:"Shuv (שׁוּב)",c:"Señales del fin",f:"El regreso. La esperanza de la redención final es visible.",q:"Como el relámpago que sale del oriente... así será la venida del Hijo.",a:"Mira al cielo y recuerda Su promesa.",r:"Mt 24:27"},{t:"Talentos",h:"Kishronot (כִּשְׁרוֹנוֹת)",c:"Parábola de los talentos",f:"Responsabilidad. Usar lo dado para el Reino.",q:"Bien, buen siervo y fiel; sobre poco has sido fiel.",a:"Haz tu trabajo con excelencia, aunque nadie te vea.",r:"Mt 25:21"},{t:"El Menor",h:"Katan (קָטָן)",c:"Juicio de las naciones",f:"El rostro de Dios se esconde en el rostro del necesitado.",q:"En cuanto lo hicisteis a uno de estos mis hermanos más pequeños, a mí lo hicisteis.",a:"Ayuda al más vulnerable que encuentres.",r:"Mt 25:40"},{t:"La Copa",h:"Kos (כּוֹס)",c:"Última Cena",f:"Pacto de sangre. Participar de su vida y de su entrega.",q:"Bebed de ella todos; porque esto es mi sangre.",a:"Recuerda el sacrificio de Yeshua antes de comer.",r:"Mt 26:27"},{t:"Discipulado",h:"Talmidim (תַּלְמִידִים)",c:"Gran Comisión",f:"Hacer aprendices que imiten al Maestro, no solo creyentes.",q:"Id, y haced discípulos a todas las naciones.",a:"Enseña un principio bíblico a alguien hoy.",r:"Mt 28:19"},{t:"Autoridad",h:"Samchut (סַמְכוּת)",c:"Gran Comisión",f:"Poder delegado. Actuar en Nombre del Rey.",q:"Toda potestad me es dada en el cielo y en la tierra.",a:"Camina con la seguridad de un hijo del Rey.",r:"Mt 28:18"},{t:"Sábado",h:"Shabat (שַׁבָּת)",c:"Espigas en Shabat",f:"Cesar. El día es para el hombre, para su restauración y libertad.",q:"El día de reposo fue hecho por causa del hombre.",a:"Prepárate para deleitarte en el Shabat.",r:"Mr 2:27"},{t:"Dar",h:"Natan (נָתַן)",c:"El sermón del llano",f:"Dar es un ciclo. Lo que das, regresa multiplicado.",q:"Dad, y se os dará; medida buena... rebosando.",a:"Sé generoso hoy con tu tiempo o dinero.",r:"Lc 6:38"},{t:"Negación",h:"Mesirut Nefesh (מְסִירוּת נֶפֶשׁ)",c:"Seguimiento",f:"Entrega del alma. Poner la voluntad de Dios sobre la propia.",q:"Si alguno quiere venir en pos de mí, niéguese a sí mismo.",a:"Di 'no' a un deseo egoísta hoy.",r:"Lc 9:23"},{t:"Arado",h:"Charishah (חֲרִישָׁה)",c:"Discipulado radical",f:"Enfoque. No se puede hacer surcos rectos mirando atrás.",q:"Ninguno que poniendo su mano en el arado mira hacia atrás, es apto.",a:"No añores el pasado; enfócate en lo que viene.",r:"Lc 9:62"},{t:"Prójimo II",h:"Rea (רֵעַ)",c:"Buen Samaritano",f:"La misericordia define al prójimo, no la raza.",q:"¿Quién de estos tres te parece que fue el prójimo?",a:"Sé un buen samaritano con quien no se lo espera.",r:"Lc 10:36"},{t:"Luz Interior",h:"Or (אוֹר)",c:"Lámpara del cuerpo",f:"La conciencia debe estar iluminada por la verdad, no oscurecida.",q:"Mira pues, no suceda que la luz que en ti hay, sea tinieblas.",a:"Examina tus intenciones más profundas.",r:"Lc 11:35"},{t:"Vida",h:"Chayim (חַיִּים)",c:"El rico insensato",f:"La vida verdadera no está en las cosas, sino en la conexión con Dios.",q:"La vida del hombre no consiste en la abundancia de los bienes que posee.",a:"Valora una relación más que una posesión hoy.",r:"Lc 12:15"},{t:"Banquete",h:"Seudáh (סְעוּדָה)",c:"Los invitados",f:"El Reino es un banquete de gracia para los indignos.",q:"Cuando hagas banquete, llama a los pobres.",a:"Comparte tu comida con alguien humilde.",r:"Lc 14:13"},{t:"Fidelidad",h:"Ne'eman (נֶאֱמָן)",c:"Mayordomo infiel",f:"Integridad en lo pequeño. Dios prueba en lo invisible.",q:"El que es fiel en lo muy poco, también en lo más es fiel.",a:"Cuida los detalles pequeños hoy.",r:"Lc 16:10"},{t:"Gratitud",h:"Todah (תּוֹדָה)",c:"Los diez leprosos",f:"Reconocer el bien recibido completa el milagro.",q:"¿No eran diez los que fueron limpiados? Y los nueve, ¿dónde están?",a:"Agradece a quien te ha servido hoy.",r:"Lc 17:17"},{t:"Oración",h:"Tefilah (תְּפִלָּה)",c:"Juez injusto",f:"Conexión constante. No desmayar es tener 'Chutzpah' (audacia) santa.",q:"Orar siempre, y no desmayar.",a:"Mantén una conversación continua con Dios.",r:"Lc 18:1"}]},B={FIRST_LIGHT_OFFSET:-.5},v={calculate:e=>{if(!l||!l.ANCHOR)return console.error("Error Crítico: No se cargó QumranData."),null;const a=new Date(l.ANCHOR.y,l.ANCHOR.m,l.ANCHOR.d),o=Math.floor((e-a)/864e5);if(o<0)return null;const n=2191;let s=o%n;const t=Math.floor(o/n);let r=1,i=0,d=!1;for(let c=1;c<=6;c++){const z=c===6?371:364;if(s<z){r=c,c===6&&(d=!0),i=s;break}s-=z}const u=l.ANCHOR.y+t*6+(r-1);if(d&&i>=364)return{special:!0,turno:v.getTurno(o),signo:v.getTurno(o-i),idxSem:i%7+3,dCountYear:i,m:0,d:0,mensaje:"SEMANA DE AJUSTE SOLAR (TEKUFAH)"};const h=[30,30,31,30,30,31,30,30,31,30,30,31];let g=i,m=0,f=0;for(let c=0;c<12;c++){if(g<h[c]){m=c,f=g+1;break}g-=h[c]}const y=(3+o)%7,A=o-i,b=v.getTurno(A);return{y:u,m,d:f,idxSem:y,turno:v.getTurno(o),signo:b,est:m<3?"Primavera":m<6?"Verano":m<9?"Otoño":"Invierno",puerta:l.PUERTAS_SOLARES?l.PUERTAS_SOLARES[m]:0,dCountYear:i,special:!1}},getTurno:e=>{if(!l||!l.TURNOS)return"Desconocido";const a=[364,364,364,364,364,371];let o=e%2191,n=0;for(let i=0;i<a.length;i++){if(o<a[i]||i===a.length-1){n=i;break}o-=a[i]}const s=Math.floor(o/7),r=(21+(n*52+s))%24;return l.TURNOS[r]}},F="qumran-watch-db",G=1,p="ics-queue";let j=null;function I(){return j||(j=new Promise((e,a)=>{const o=indexedDB.open(F,G);o.onerror=()=>a(o.error),o.onsuccess=()=>e(o.result),o.onupgradeneeded=n=>{const s=n.target.result;if(!s.objectStoreNames.contains(p)){const t=s.createObjectStore(p,{keyPath:"id",autoIncrement:!0});t.createIndex("status","status",{unique:!1}),t.createIndex("timestamp","timestamp",{unique:!1})}}}),j)}const ne={async add(e){const a=await I();return new Promise((o,n)=>{const r=a.transaction(p,"readwrite").objectStore(p).add({...e,timestamp:Date.now(),status:"pending"});r.onsuccess=()=>o(r.result),r.onerror=()=>n(r.error)})},async getAll(e=null){const a=await I();return new Promise((o,n)=>{const t=a.transaction(p,"readonly").objectStore(p),r=e?t.index("status").getAll(e):t.getAll();r.onsuccess=()=>o(r.result),r.onerror=()=>n(r.error)})},async update(e,a){const o=await I();return new Promise((n,s)=>{const r=o.transaction(p,"readwrite").objectStore(p),i=r.get(e);i.onsuccess=()=>{const d=i.result;if(d){Object.assign(d,a);const u=r.put(d);u.onsuccess=()=>n(),u.onerror=()=>s(u.error)}else s(new Error("Item not found"))},i.onerror=()=>s(i.error)})},async delete(e){const a=await I();return new Promise((o,n)=>{const r=a.transaction(p,"readwrite").objectStore(p).delete(e);r.onsuccess=()=>o(),r.onerror=()=>n(r.error)})},async clear(e=null){const a=await this.getAll(e);for(const o of a)await this.delete(o.id)}},q={},se={getItem(e){try{return localStorage.getItem(e)}catch{return q[e]!==void 0?q[e]:null}},setItem(e,a){try{localStorage.setItem(e,a)}catch{q[e]=String(a)}},removeItem(e){try{localStorage.removeItem(e)}catch{delete q[e]}},clear(){try{localStorage.clear()}catch{Object.keys(q).forEach(e=>delete q[e])}}};function re(e,a){var s;const o=(s=l.FIESTAS)==null?void 0:s[e];if(!o)return null;const n=new Date(a,2,20);for(let t=-20;t<370;t++){const r=new Date(n.getTime()+t*864e5),i=v.calculate(r);if(i&&!i.special&&i.m===o.m&&i.d===o.d)return r}return null}function w(e){return!e||e.m===void 0||e.special?null:e.m===0&&e.d>=26?e.d-25:e.m===1?5+e.d:e.m===2&&e.d<=15?35+e.d:null}function ie(e){const a=new Date(e,2,5),o=[];for(let n=0;n<380;n++){const s=new Date(a.getTime()+n*864e5),t=v.calculate(s);if(!t||t.special)continue;const r=l.FIESTAS.findIndex(i=>i.m===t.m&&i.d===t.d);r!==-1&&o.push({date:s,q:t,index:r})}return o}function J(e,a){let o="";(a==null?void 0:a.idxSem)===5&&(o+="<strong>¡Día de Preparación!</strong><br>El Shabat entra al próximo amanecer.");for(let s=1;s<=3;s++){const t=new Date(e.getTime()+s*864e5),r=v.calculate(t);if(r&&!r.special){const i=l.FIESTAS.findIndex(d=>d.m===r.m&&d.d===r.d);i!==-1&&(o!==""&&(o+="<br><hr style='border-color:var(--gold); opacity:0.3; margin:8px 0;'>"),o+="<strong>¡Atención!</strong><br>En "+s+" día(s) es <strong>"+l.FIESTAS[i].n+"</strong>.")}}const n=w(a);return{msg:o,omerDay:n}}function te(e,a){const o=e.toLocaleDateString("es-ES",{weekday:"long",day:"numeric",month:"long"});if(!a)return{gregDate:o};if(a.special){const m=a.dCountYear-2184;return{gregDate:o,special:!0,hebDate:"SEMANA DE AJUSTE SOLAR",hebDia:"Día "+m+" de 7 • Sincronizando Equinoccio",gateActive:"Puerta 4 (Alineación)"}}const n=J(e,a),s=w(a),t=a.dCountYear?Math.floor(a.dCountYear/7)%l.HALAKHA.length:0,r=l.HALAKHA[t],i=l.FIESTAS.findIndex(m=>m.m===a.m&&m.d===a.d);let d=(a.idxSem+1)/7*100,u=null,h="",g="";return a.idxSem===6?(d=100,u=l.CANTICOS_SHABAT[Math.floor((a.dCountYear||0)/7)%13],h="LITURGIA CELESTIAL",g="CÁNTICO DEL SACRIFICIO DEL SHABAT"):(u=l.SALMOS[a.idxSem],h="LITURGIA DEL TEMPLO",g="SALMO DEL DÍA"),{gregDate:o,special:!1,hebDate:a.d+" del "+l.MESES[a.m],hebDia:l.DIAS[a.idxSem],turno:a.turno,estacion:a.est,alertMsg:n.msg,omerDay:s,yamimNoraIm:a.m===6&&a.d>=1&&a.d<=10?{dia:a.d,data:l.YAMIM_NORAIM[a.d-1]}:null,halakha:{theme:r.t,hebrew:r.h||"",context:r.c?"Contexto: "+r.c:"",philology:r.f||"",quote:"“"+r.q+"”",action:r.a+" ("+r.r+")"},festival:i!==-1?{index:i,name:"★ "+l.FIESTAS[i].n}:null,puerta:a.puerta,shabat:{idxSem:a.idxSem,percent:d,text:a.idxSem===6?"¡SHABAT SHALOM!":"Faltan "+(6-a.idxSem)+" días para el Shabat",shabatBg:a.idxSem===6?"#fff":void 0},liturgia:{type:h,main:g,title:u&&u.t||"",context:u&&u.c||"",text:u&&u.v||""}}}function Y(e,a,o){const n=Math.PI/180,s=180/Math.PI,t=new Date(e.getFullYear(),0,0),r=e-t,i=Math.floor(r/(1e3*60*60*24)),d=o/15,u=f=>{const y=i+((f?6:18)-d)/24,A=.9856*y-3.289;let b=A+1.916*Math.sin(A*n)+.02*Math.sin(2*A*n)+282.634;b>360?b-=360:b<0&&(b+=360);let c=s*Math.atan(.91764*Math.tan(b*n));c>360?c-=360:c<0&&(c+=360);const z=Math.floor(b/90)*90,W=Math.floor(c/90)*90;c=c+(z-W),c=c/15;const x=.39782*Math.sin(b*n),Q=Math.cos(Math.asin(x)),D=(Math.cos(90.833*n)-x*Math.sin(a*n))/(Q*Math.cos(a*n));if(D>1||D<-1)return null;let M=(f?360-s*Math.acos(D):s*Math.acos(D))/15+c-.06571*y-6.622-d;M>24?M-=24:M<0&&(M+=24);const U=-e.getTimezoneOffset()/60;let T=M+U;return T>24?T-=24:T<0&&(T+=24),T},h=u(!0),g=u(!1),m=f=>{if(f===null)return"--:--";const y=Math.floor(f),A=Math.floor((f-y)*60);return`${y.toString().padStart(2,"0")}:${A.toString().padStart(2,"0")}`};return{rise:m(h),set:m(g),riseDecimal:h}}const k={calcSunTimes:(e,a,o)=>Y(e,a,o)};function le(e,a,o){const n=k.calcSunTimes(o,e,a);return!n||n.riseDecimal==null?null:{sunrise:n.riseDecimal,firstLight:n.riseDecimal+B.FIRST_LIGHT_OFFSET}}const V="qumran-notif-db",_=1,S="schedule";let P=null;function K(){return P||(P=new Promise((e,a)=>{const o=indexedDB.open(V,_);o.onerror=()=>a(o.error),o.onsuccess=()=>e(o.result),o.onupgradeneeded=n=>{const s=n.target.result;s.objectStoreNames.contains(S)||s.createObjectStore(S,{keyPath:"id",autoIncrement:!0}).createIndex("date","date",{unique:!1})}}),P)}function C(e){return K().then(a=>a.transaction(S,e))}const L={async add(e){const a=await C("readwrite");return new Promise((o,n)=>{const s=a.objectStore(S).add({...e,timestamp:Date.now()});s.onsuccess=()=>o(s.result),s.onerror=()=>n(s.error)})},async getAll(){const e=await C("readonly");return new Promise((a,o)=>{const n=e.objectStore(S).getAll();n.onsuccess=()=>a(n.result),n.onerror=()=>o(n.error)})},async findByDate(e){const a=await C("readonly");return new Promise((o,n)=>{const s=a.objectStore(S).index("date").getAll(e);s.onsuccess=()=>o(s.result[0]||null),s.onerror=()=>n(s.error)})},async markShown(e){const a=await C("readwrite");return new Promise((o,n)=>{const s=a.objectStore(S),t=s.get(e);t.onsuccess=()=>{const r=t.result;if(!r)return o();r.shown=!0;const i=s.put(r);i.onsuccess=()=>o(),i.onerror=()=>n(i.error)},t.onerror=()=>n(t.error)})},async delete(e){const a=await C("readwrite");return new Promise((o,n)=>{const s=a.objectStore(S).delete(e);s.onsuccess=()=>o(),s.onerror=()=>n(s.error)})},async cleanup(){const e=await L.getAll(),a=Date.now();for(const o of e)o.shown&&a-(o.timestamp||0)>30*24*60*60*1e3&&await L.delete(o.id)}},$=864e5,Z="/qumran-watch/icon.png";function R(e){return e.getFullYear()+"-"+String(e.getMonth()+1).padStart(2,"0")+"-"+String(e.getDate()).padStart(2,"0")}const E={supported:!1,init(){return E.supported=typeof window<"u"&&"Notification"in window,E.supported},permission(){return typeof Notification<"u"?Notification.permission:"denied"},async requestPermission(){if(typeof Notification>"u")return"unsupported";try{return await Notification.requestPermission()}catch{return"denied"}},computeUpcoming(e=10){const a=new Date,o=new Date(a.getFullYear(),a.getMonth(),a.getDate()),n=[];for(let s=1;s<=e;s++){const t=new Date(o.getTime()+s*$),r=v.calculate(t);if(!r||r.special)continue;r.idxSem===5&&n.push({date:R(t),type:"shabat",title:"Dia de Preparacion",body:"El Shabat entra manana al amanecer."});const i=l.FIESTAS.findIndex(d=>d.m===r.m&&d.d===r.d);if(i!==-1){const d=l.FIESTAS[i];n.push({date:R(t),type:"fiesta",title:"Fiesta de YHWH: "+d.n,body:d.es})}}return n},async scheduleUpcoming(e=10){if(!E.supported||Notification.permission!=="granted")return 0;const a=E.computeUpcoming(e);let o=0;for(const n of a)await L.findByDate(n.date)||(await L.add({...n,shown:!1}),o++);return o},async checkDue(){if(!E.supported||Notification.permission!=="granted")return 0;const e=R(new Date),a=await L.getAll();let o=0;for(const n of a)n.date===e&&!n.shown&&(E.showLocal(n.title,n.body),await L.markShown(n.id),o++);return o},showLocal(e,a){if(!(!E.supported||Notification.permission!=="granted"))try{new Notification(e,{body:a,icon:Z,tag:"qumran-"+e})}catch{}},notifyServiceWorker(){typeof navigator<"u"&&"serviceWorker"in navigator&&navigator.serviceWorker.ready.then(e=>{e.active&&e.active.postMessage({type:"CHECK_NOTIFICATIONS"})}).catch(()=>{})}};let O=null,N=!1,X=0;const H=new Map;function ee(){if(O)return O;if(typeof Worker>"u")return null;try{const e=new Worker(new URL("/qumran-watch/assets/sun-worker.js",import.meta.url),{type:"module"});return e.onmessage=a=>{const{id:o,result:n,error:s}=a.data||{},t=H.get(o);t&&(H.delete(o),s?t.reject(new Error(s)):t.resolve(n))},e.onerror=()=>{N=!1},O=e,N=!0,e}catch{return null}}async function de(e,a,o){const n=ee();if(!n||!N)return Y(e,a,o);const s=++X;return new Promise((t,r)=>{const i=setTimeout(()=>{H.delete(s),t(Y(e,a,o))},1e3);H.set(s,{resolve:d=>{clearTimeout(i),t(d)},reject:d=>{clearTimeout(i),r(d)}});try{n.postMessage({id:s,date:e.getTime(),lat:a,lng:o})}catch{clearTimeout(i),H.delete(s),t(Y(e,a,o))}})}export{E as N,v as Q,l as a,ie as b,te as c,de as d,re as f,le as g,ne as i,se as s};

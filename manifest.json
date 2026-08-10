@@ -1,4 +1,4 @@
-﻿{
+{
     "name": "Qumran Watch",
     "short_name": "Qumran",
     "description": "Calendario Sagrado 364 dias, turnos sacerdotales, sincronizacion solar GPS y alertas ICS.",
@@ -24,37 +24,64 @@
             "short_name": "Hoy",
             "description": "Vista principal del dia actual",
             "url": "/qumran-watch/#hoy",
-            "icons": [{ "src": "./icons/icon-96x96.png", "sizes": "96x96" }]
+            "icons": [
+                {
+                    "src": "./icons/icon-96x96.png",
+                    "sizes": "96x96"
+                }
+            ]
         },
         {
             "name": "Ciclo",
             "short_name": "Ciclo",
             "description": "Ciclo de fiestas anual",
             "url": "/qumran-watch/#cal",
-            "icons": [{ "src": "./icons/icon-96x96.png", "sizes": "96x96" }]
+            "icons": [
+                {
+                    "src": "./icons/icon-96x96.png",
+                    "sizes": "96x96"
+                }
+            ]
         },
         {
             "name": "Saber",
             "short_name": "Saber",
             "description": "Biblioteca de estudios biblicos",
             "url": "/qumran-watch/#edu",
-            "icons": [{ "src": "./icons/icon-96x96.png", "sizes": "96x96" }]
+            "icons": [
+                {
+                    "src": "./icons/icon-96x96.png",
+                    "sizes": "96x96"
+                }
+            ]
         },
         {
             "name": "Red",
             "short_name": "Red",
             "description": "Comunidad y recursos",
             "url": "/qumran-watch/#con",
-            "icons": [{ "src": "./icons/icon-96x96.png", "sizes": "96x96" }]
+            "icons": [
+                {
+                    "src": "./icons/icon-96x96.png",
+                    "sizes": "96x96"
+                }
+            ]
         }
     ],
     "screenshots": [
         {
-            "src": "./icon.png",
-            "sizes": "512x512",
+            "src": "./screenshots/screenshot-mobile.png",
+            "sizes": "540x720",
             "type": "image/png",
             "form_factor": "narrow",
-            "label": "Vista principal con calendario 364 dias"
+            "label": "Vista mobile: Hoy con fecha hebrea, Mishmar, sincronizacion solar y Omer"
+        },
+        {
+            "src": "./screenshots/screenshot-desktop.png",
+            "sizes": "1280x720",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "Vista desktop: Grid completo con Hoy, Solar, Mishmar, Omer e Instruccion del Mesias"
         }
     ],
     "icons": [
@@ -101,5 +128,5 @@
             "purpose": "any maskable"
         }
     ],
-    "version": "13.1.48"
+    "version": "13.1.59"
 }
