@@ -23,6 +23,16 @@
 ### Changed
 - Cobertura `storage.js` 47% -> 100% y `sun-worker-client.js` 31% -> 96.87% statements (superan objetivo >=80% de la 5.2)
 
+## [13.1.61] - 2026-08-10 - FASE 5: Cobertura print-view + pwa-install (5.3)
+
+### Added
+- `test/print-view.test.js`: 6 tests de generar el HTML del calendario imprimible (12 meses, fiestas, shabat, error pre-ancla) y openPrintWindow con iframe mockeado (contentDocument, fallo de print, limpieza con timeout)
+- `test/pwa-install.test.js`: 5 tests del banner de instalacion (standalone early-return, iOS iPhone, Android beforeinstallprompt con prompt funcional, reuso de banner existente, deteccion iPad MacIntel)
+
+### Changed
+- Cobertura `print-view.js` 4.6% -> 96.89% y `pwa-install.js` 3.3% -> 100% statements
+- Cobertura global statements 72.52% -> 80.47% (supera objetivo >=80%)
+
 ## [Unreleased]
 
 ### Notes

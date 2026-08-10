@@ -58,7 +58,7 @@
 |----|------------------|-------------|------|
 | 5.1 | **Cobertura idb + notif-store** | Subir idb.js y notif-store.js de ~26-31% a >=80% statements (tests de CRUD, index date, markShown, cleanup) | **DONE** v13.1.59 (100% statements en ambos via fake-indexeddb, 13 tests) |
 | 5.2 | **Cobertura storage + worker-client** | Subir storage.js (47%) y sun-worker-client.js (31%) a >=80% (fallback sincrono, timeout, error de worker) | **DONE** v13.1.60 (storage 100%, worker-client 96.87%) |
-| 5.3 | **Cobertura print-view + pwa-install** | Subir print-view.js (4.6%) y pwa-install.js (3.3%) a >=80% (render, beforeinstallprompt, appinstalled) | NO |
+| 5.3 | **Cobertura print-view + pwa-install** | Subir print-view.js (4.6%) y pwa-install.js (3.3%) a >=80% (render, beforeinstallprompt, appinstalled) | **DONE** v13.1.61 (print-view 96.89%, pwa-install 100%) |
 | 5.4 | **Cobertura notifications + time-translator** | Subir notifications.js (63%) y time-translator.js (72%) a >=80% (checkDue, scheduleUpcoming, permiso denegado) | NO |
 | 5.5 | **Cobertura branches core** | Subir branches de 41% a >=60% (edge cases: polar, sin datos, anio fuera de rango, GPS fallo) | NO |
 | 5.6 | **Gate de cobertura en CI** | Thresholds en vite.config (statements>=80, branches>=60) + ci.yml falla el build si no se cumple | NO |
@@ -97,6 +97,7 @@
 | 2026-08-10 | v13.1.56 | 3.2+3.3 Notificaciones locales | 86b7be3 | notif-store.js (IndexedDB), notifications.js (computeUpcoming + checkDue + prompt), SW showDueNotifications + CHECK_NOTIFICATIONS; 89 tests+build+lint OK |
 | 2026-08-10 | v13.1.57 | 4.3 Modulepreload / code-split | 302db29 | manualChunks core/ (index 43KB + core 50KB paralelos) + modulePreload.polyfill=false (CSP 'self'); 89 tests+build OK |
 | 2026-08-10 | v13.1.58 | 4.2 Web Worker NOAA | b9c0c26 | sun-algo.js (fuente unica), sun-worker.js + sun-worker-client.js con fallback, vite worker config sin hash; 91 tests+build+lint OK |
+| 2026-08-10 | v13.1.61 | 5.3 Cobertura print-view + pwa-install | (en commit) | test/print-view.test.js (6 tests: HTML 12 meses, fiestas/shabat, error pre-ancla, openPrintWindow con iframe mock) + test/pwa-install.test.js (5 tests: standalone, iOS, Android, reuse banner, iPad); print-view 96.89% y pwa-install 100% statements. Cobertura global statements 80.47% |
 | 2026-08-10 | v13.1.60 | 5.2 Cobertura storage + worker-client | (en commit) | test/storage.test.js (5 tests, incluye fallback memoria en incognito) + test/sun-worker-client.test.js (5 tests: worker OK, error, postMessage throw, timeout 1s, onerror); storage 100% y worker-client 96.87% statements |
 | 2026-08-10 | v13.1.59 | 5.1 Cobertura idb + notif-store | (en commit) | test/idb.test.js con fake-indexeddb, 13 tests; idb.js y notif-store.js al 100% statements; lint 0 warnings; fix deploy eliminando canvas |
 | 2026-08-10 | v13.1.58 | 4.1 IndexedDB cache datos | CUBIERTO | Evaluado: objetivo (reducir JS inicial) ya resuelto por 4.3 code-split + SW precache; refactor a IDB romperia 8 importadores y 30+ tests sin beneficio |

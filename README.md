@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/github/license/gedeon1972-svg/qumran-watch)](LICENSE)
 [![PWA](https://img.shields.io/badge/PWA-100%25%20Offline-blue)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)
 [![JavaScript](https://img.shields.io/badge/ES6-Modules-yellow)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
-[![Version](https://img.shields.io/badge/version-13.1.60-gold)](package.json)
+[![Version](https://img.shields.io/badge/version-13.1.61-gold)](package.json)
 
 AplicaciÃ³n Web Progresiva (PWA) que restaura el **Calendario Solar de 364 DÃ­as** de los Manuscritos del Mar Muerto, con sincronizaciÃ³n GPS, ciclo de 24 turnos sacerdotales (Mishmarot), alertas ICS y biblioteca de estudios bÃ­blicos. Funciona **100% offline**.
 
@@ -182,7 +182,7 @@ El plan completo de evoluciÃ³n (FASES 1-5, incluyendo industrializaciÃ³n a C
 
 El historial completo estÃ¡ en [CHANGELOG.md](CHANGELOG.md). Resumen reciente:
 
-### 13.1.60 (2026-08-10)
+### 13.1.61 (2026-08-10)
 Cobertura de mÃ³dulos IndexedDB (idb + notif-store) al 100% (5.1), lint 0 warnings (cero deuda), fix de despliegue eliminando devDependency muerta `canvas` que bloqueaba CI.
 
 ### 13.1.58 (2026-08-10)
