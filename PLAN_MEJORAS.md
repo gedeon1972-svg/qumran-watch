@@ -40,7 +40,7 @@
 
 | ID | Entregable | Descripción | Done |
 |----|------------|-------------|------|
-| 4.1 | **IndexedDB cache datos** | Mover FIESTAS/ESTUDIOS/HALAKHA fuera del bundle JS | NO |
+| 4.1 | **IndexedDB cache datos** | Mover FIESTAS/ESTUDIOS/HALAKHA fuera del bundle JS | **CUBIERTO** por 4.3 (code-split) + SW precache: data.js en core.js 21KB gzip, carga paralela, 100% offline |
 | 4.2 | **Web Worker calculos** | Offload NOAA sun calc a worker | **DONE** v13.1.58 (sun-algo.js puro + worker sin hash + fallback sincrono) |
 | 4.3 | **Modulepreload polyfill** | Carga paralela modulos ES | **DONE** v13.1.57 (code-split core/ + modulepreload, sin polyfill inline por CSP) |
 | 4.4 | **SW Update UX suave** | Toast 'Nueva version' -> skipWaiting + clients.claim() sin parpadeo | **DONE** v13.1.55 |
@@ -71,4 +71,5 @@
 | 2026-08-10 | v13.1.54 | 2.3 Periodic Background Sync | 62630fb | Registro periodicsync 'sun-data' (diario, Chromium), handler REFRESH_SOLAR, fallback si no soportado; 80 tests+build OK |
 | 2026-08-10 | v13.1.56 | 3.2+3.3 Notificaciones locales | 86b7be3 | notif-store.js (IndexedDB), notifications.js (computeUpcoming + checkDue + prompt), SW showDueNotifications + CHECK_NOTIFICATIONS; 89 tests+build+lint OK |
 | 2026-08-10 | v13.1.57 | 4.3 Modulepreload / code-split | 302db29 | manualChunks core/ (index 43KB + core 50KB paralelos) + modulePreload.polyfill=false (CSP 'self'); 89 tests+build OK |
-| 2026-08-10 | v13.1.58 | 4.2 Web Worker NOAA | (nuevo) | sun-algo.js (fuente unica), sun-worker.js + sun-worker-client.js con fallback, vite worker config sin hash; 91 tests+build+lint OK |
+| 2026-08-10 | v13.1.58 | 4.2 Web Worker NOAA | b9c0c26 | sun-algo.js (fuente unica), sun-worker.js + sun-worker-client.js con fallback, vite worker config sin hash; 91 tests+build+lint OK |
+| 2026-08-10 | v13.1.58 | 4.1 IndexedDB cache datos | CUBIERTO | Evaluado: objetivo (reducir JS inicial) ya resuelto por 4.3 code-split + SW precache; refactor a IDB romperia 8 importadores y 30+ tests sin beneficio |
