@@ -71,6 +71,7 @@ function buildDoc() {
         'btn-install',
         'btn-refresh',
         'update-toast',
+        'toast-container',
         'geo-btn',
         'sun-container',
         'sun-rise',
@@ -349,5 +350,27 @@ describe('renderCalendar', () => {
 describe('Evento DOMContentLoaded', () => {
     test('registra listener al importar', () => {
         expect(mockDoc.addEventListener).toHaveBeenCalledWith('DOMContentLoaded', expect.any(Function));
+    });
+
+    describe('Actualizacion SW y toasts', () => {
+        test('showToast crea toast clicable con onClick', () => {
+            const container = mockElements['toast-container'];
+            const onClick = vi.fn();
+            appRef.showToast('Nueva version disponible', onClick);
+            const created = mockDoc.createElement.mock.results[0].value;
+            expect(created.tag).toBe('div');
+            expect(created.classList.add).toHaveBeenCalledWith('toast-clickable');
+            expect(created.addEventListener).toHaveBeenCalledWith('click', onClick);
+        });
+
+        test('showToast sin onClick crea toast normal', () => {
+            appRef.showToast('msg normal');
+            const created = mockDoc.createElement.mock.results[0].value;
+            expect(created.classList.add).not.toHaveBeenCalledWith('toast-clickable');
+        });
+
+        test('setupSWUpdate es una funcion', () => {
+            expect(typeof appRef.setupSWUpdate).toBe('function');
+        });
     });
 });

@@ -1,4 +1,4 @@
-﻿// sw-workbox.js - Workbox Service Worker para Qumran Watch v13.1.54
+﻿// sw-workbox.js - Workbox Service Worker para Qumran Watch v13.1.55
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/7.1.0/workbox-sw.js');
 
 const { precacheAndRoute, cleanupOutdatedCaches } = workbox.precaching;
@@ -7,16 +7,16 @@ const { NetworkFirst, CacheFirst, StaleWhileRevalidate } = workbox.strategies;
 const { ExpirationPlugin } = workbox.expiration;
 const { CacheableResponsePlugin } = workbox.cacheableResponse;
 
-console.log('[SW] Workbox SW v13.1.54 iniciando...');
+console.log('[SW] Workbox SW v13.1.55 iniciando...');
 
 precacheAndRoute(
     [
         { revision: '830bb116a513550c5858d60ded660753', url: 'privacy.html' },
-        { revision: '56878ed6b1c71b5d1ea4a6ae57ea5332', url: 'manifest.json' },
+        { revision: 'd51fc995349ddc5cf5e020eb6c69da34', url: 'manifest.json' },
         { revision: 'c9572888756e5c887d1b56b6dff80e51', url: 'license.html' },
         { revision: '950230d03a16b61ad6ef4c11c9b867a5', url: 'index.html' },
         { revision: 'f214d4ac2c7f2e2c94e366ca34c5c92e', url: 'icon.png' },
-        { revision: '022a532fb87b689feb3ea236a1d1425d', url: 'src/js/index.js' },
+        { revision: 'd9b205ad15d68c1f7caa5e5cdcd6bc35', url: 'src/js/index.js' },
         { revision: '6f409fee918068d9b004dc3be0a6740d', url: 'src/css/index.css' },
         { revision: '2d8904c9b0cd7cb2929d0bb613047f58', url: 'src/css/fonts/david-libre-v17-latin-regular.woff2' },
         { revision: '1d9878b23b606fc71d20a4ed5bd2ce1f', url: 'src/css/fonts/david-libre-v17-latin-700.woff2' },
@@ -37,11 +37,9 @@ cleanupOutdatedCaches();
 self.addEventListener('message', (event) => {
     if (event.data && (event.data.action === 'skipWaiting' || event.data.type === 'SKIP_WAITING')) {
         self.skipWaiting();
+        self.clients.claim();
     }
 });
-
-self.skipWaiting();
-self.clients.claim();
 
 // HTML/Navigation -> NetworkFirst
 registerRoute(
@@ -135,4 +133,4 @@ async function handleSunSync() {
     }
 }
 
-console.log('[SW] Workbox SW v13.1.54 listo');
+console.log('[SW] Workbox SW v13.1.55 listo');

@@ -1279,6 +1279,11 @@ h2 {
     pointer-events: auto;
 }
 
+.toast-clickable {
+    cursor: pointer;
+    border: 2px solid #000;
+}
+
 /* --- INTERACTIVE CARD (hover) --- */
 
 .card-link {

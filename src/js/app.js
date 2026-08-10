@@ -33,6 +33,7 @@ if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) {
             .then(function (registration) {
                 console.log('SW Registered');
                 QumranApp.registerPeriodicSync(registration);
+                QumranApp.setupSWUpdate(registration);
                 console.log(
                     '[DEBUG VIGIA] Elemento DOM encontrado:',
                     document.getElementById('vigia-progress-container') !== null,
@@ -215,6 +216,26 @@ const QumranApp = {
         } catch (err) {
             console.warn('[SW] No se pudo registrar periodic sync:', err);
         }
+    },
+
+    setupSWUpdate: (registration) => {
+        let refreshing = false;
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+            if (refreshing) return;
+            refreshing = true;
+            window.location.reload();
+        });
+        registration.addEventListener('updatefound', () => {
+            const newWorker = registration.installing;
+            if (!newWorker) return;
+            newWorker.addEventListener('statechange', () => {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                    QumranApp.showToast('Nueva versión disponible — toca para actualizar', () => {
+                        newWorker.postMessage({ type: 'SKIP_WAITING' });
+                    });
+                }
+            });
+        });
     },
 
     refreshSolarData: () => {
@@ -417,15 +438,19 @@ const QumranApp = {
             }
         }
     },
-    showToast: (msg) => {
+    showToast: (msg, onClick) => {
         const container = document.getElementById('toast-container');
         if (!container) return;
         const toast = document.createElement('div');
         toast.className = 'toast';
         toast.textContent = msg;
+        if (onClick) {
+            toast.classList.add('toast-clickable');
+            toast.addEventListener('click', onClick);
+        }
         container.appendChild(toast);
         toast.addEventListener('animationend', () => toast.remove());
-        setTimeout(() => toast.remove(), 3000);
+        setTimeout(() => toast.remove(), onClick ? 8000 : 3000);
     },
 };
 

@@ -2,6 +2,19 @@
 
 ## [Unreleased]
 
+## [13.1.55] - 2026-08-10 - Feature: SW Update UX suave
+
+### Added
+- `src/js/app.js`: `QumranApp.setupSWUpdate()` detecta nueva version (updatefound), muestra toast clicable 'Nueva version disponible', envia SKIP_WAITING y recarga al activarse (controllerchange) sin parpadeo
+- `src/js/app.js`: `showToast(msg, onClick)` ahora soporta accion clicable
+- `src/css/styles.css`: clase `.toast-clickable`
+- `test/app.test.js`: Tests para showToast con/sin onClick y setupSWUpdate
+
+### Changed
+- `public/sw-workbox.js`: Se removio skipWaiting/claim automatico; ahora el claim ocurre solo cuando el usuario confirma via toast (mensaje SKIP_WAITING)
+- `public/sw.js`: Regenerado con injectManifest, v13.1.55
+- `package.json`, `package-lock.json`, `public/manifest.json`: version 13.1.54 -> 13.1.55
+
 ## [13.1.54] - 2026-08-10 - Feature: Periodic Background Sync (solar data)
 
 ### Added

@@ -43,7 +43,7 @@
 | 4.1 | **IndexedDB cache datos** | Mover FIESTAS/ESTUDIOS/HALAKHA fuera del bundle JS | NO |
 | 4.2 | **Web Worker calculos** | Offload NOAA sun calc a worker | NO |
 | 4.3 | **Modulepreload polyfill** | Carga paralela modulos ES | NO |
-| 4.4 | **SW Update UX suave** | Toast 'Nueva version' -> skipWaiting + clients.claim() sin parpadeo | NO |
+| 4.4 | **SW Update UX suave** | Toast 'Nueva version' -> skipWaiting + clients.claim() sin parpadeo | **DONE** v13.1.55 |
 
 ---
 
