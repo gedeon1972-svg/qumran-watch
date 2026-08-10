@@ -30,9 +30,9 @@
 
 | ID | Entregable | Descripción | Done |
 |----|------------|-------------|------|
-| 3.1 | **VAPID keys + Push API** | Generar claves, suscripcion, endpoint en serverless (GitHub Pages compatible) | NO |
-| 3.2 | **Notificaciones programadas** | Fiestas, Shabat (viernes atardecer), Omer, Tequfot | NO |
-| 3.3 | **Permission UX** | Prompt contextual + fallback si denegado | NO |
+| 3.1 | **VAPID keys + Push API** | Generar claves, suscripcion, endpoint en serverless (GitHub Pages compatible) | **NO APLICA** (requiere backend; GH Pages es estatico) |
+| 3.2 | **Notificaciones programadas** | Fiestas, Shabat (viernes atardecer), Omer, Tequfot | **DONE** v13.1.56 (local via Notification API + periodic sync, sin backend) |
+| 3.3 | **Permission UX** | Prompt contextual + fallback si denegado | **DONE** v13.1.56 (toast clicable contextual + fallback) |
 
 ---
 
@@ -67,5 +67,6 @@
 | 2026-08-07 | v13.1.50 | 1.4 Brotli compression | 505ec17 | vite-plugin-compression dual .br/.gz; JS 86KB->31KB .br; tests+build OK |
 | 2026-08-07 | v13.1.51 | 1.5 Lighthouse CI workflow | 9cf0b0c | lighthouserc.json budgets + .github/workflows/lighthouse.yml; @lhci/cli; tests+build OK |
 | 2026-08-07 | v13.1.52 | 2.1 Workbox SW | 78cb0f9 | injectManifest con 19 assets, CDN workbox-sw.js, runtime caching; tests+build OK |
-| 2026-08-10 | v13.1.53 | 2.2 Background Sync ICS | (pendiente) | IndexedDB queue (idb.js), queueICSForSync(), processICSSyncQueue(), SW ics-sync handler, offline-aware btn-export-ics; 79 tests+build OK |
-| 2026-08-10 | v13.1.54 | 2.3 Periodic Background Sync | (pendiente) | Registro periodicsync 'sun-data' (diario, Chromium), handler REFRESH_SOLAR, fallback si no soportado; 80 tests+build OK |
+| 2026-08-10 | v13.1.53 | 2.2 Background Sync ICS | dd59cdf | IndexedDB queue (idb.js), queueICSForSync(), processICSSyncQueue(), SW ics-sync handler, offline-aware btn-export-ics; 79 tests+build OK |
+| 2026-08-10 | v13.1.54 | 2.3 Periodic Background Sync | 62630fb | Registro periodicsync 'sun-data' (diario, Chromium), handler REFRESH_SOLAR, fallback si no soportado; 80 tests+build OK |
+| 2026-08-10 | v13.1.56 | 3.2+3.3 Notificaciones locales | (nuevo) | notif-store.js (IndexedDB), notifications.js (computeUpcoming + checkDue + prompt), SW showDueNotifications + CHECK_NOTIFICATIONS; 89 tests+build+lint OK |

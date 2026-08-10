@@ -2,6 +2,22 @@
 
 ## [Unreleased]
 
+## [13.1.56] - 2026-08-10 - Feature: Notificaciones locales (FASE 3)
+
+### Added
+- `src/js/core/notif-store.js`: Wrapper IndexedDB (db `qumran-notif-db`, store `schedule`) para la agenda de notificaciones
+- `src/js/core/notifications.js`: `Notifications` con `init()`, `computeUpcoming(days)` (Shabat preparacion + Fiestas proximos 10 dias), `checkDue()`, `scheduleUpcoming()`, `requestPermission()` y `notifyServiceWorker()`
+- `src/js/app.js`: `QumranApp.setupNotifications()` — si permiso granted programa y avisa al SW; si default muestra toast clicable contextual a los 4s
+- `public/sw-workbox.js`: `showDueNotifications()` — SW lee agenda de IndexedDB, muestra Notification y marca como completada; integrado en mensaje `CHECK_NOTIFICATIONS` y `periodicsync`
+- `test/notifications.test.js`: Tests de computeUpcoming, init y permission (89 totales)
+
+### Changed
+- `public/sw.js`: Regenerado con injectManifest, v13.1.56
+- `package.json`, `package-lock.json`, `public/manifest.json`: version 13.1.55 -> 13.1.56
+
+### Notes
+- Push real (VAPID) NO APLICA: GitHub Pages no puede alojar un endpoint de push. Se implemento un subset viable 100% offline con Notification API local + Periodic Background Sync (funciona en Chromium con la app abierta/instalada, sin backend).
+
 ## [13.1.55] - 2026-08-10 - Feature: SW Update UX suave
 
 ### Added

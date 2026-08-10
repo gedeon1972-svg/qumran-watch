@@ -1,4 +1,4 @@
-﻿// sw-workbox.js - Workbox Service Worker para Qumran Watch v13.1.55
+﻿// sw-workbox.js - Workbox Service Worker para Qumran Watch v13.1.56
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/7.1.0/workbox-sw.js');
 
 const { precacheAndRoute, cleanupOutdatedCaches } = workbox.precaching;
@@ -7,7 +7,7 @@ const { NetworkFirst, CacheFirst, StaleWhileRevalidate } = workbox.strategies;
 const { ExpirationPlugin } = workbox.expiration;
 const { CacheableResponsePlugin } = workbox.cacheableResponse;
 
-console.log('[SW] Workbox SW v13.1.55 iniciando...');
+console.log('[SW] Workbox SW v13.1.56 iniciando...');
 
 precacheAndRoute(self.__WB_MANIFEST || []);
 cleanupOutdatedCaches();
@@ -16,6 +16,9 @@ self.addEventListener('message', (event) => {
     if (event.data && (event.data.action === 'skipWaiting' || event.data.type === 'SKIP_WAITING')) {
         self.skipWaiting();
         self.clients.claim();
+    }
+    if (event.data && event.data.type === 'CHECK_NOTIFICATIONS') {
+        event.waitUntil(showDueNotifications());
     }
 });
 
@@ -94,7 +97,7 @@ async function handleICSSync() {
 // Periodic Background Sync para actualizar datos solares diariamente
 self.addEventListener('periodicsync', (event) => {
     if (event.tag === 'sun-data') {
-        event.waitUntil(handleSunSync());
+        event.waitUntil(Promise.all([handleSunSync(), showDueNotifications()]));
     }
 });
 
@@ -111,4 +114,66 @@ async function handleSunSync() {
     }
 }
 
-console.log('[SW] Workbox SW v13.1.55 listo');
+// Notificaciones locales (sin backend): leer agenda de IndexedDB y mostrar Notification
+function openNotifDb() {
+    return new Promise((resolve, reject) => {
+        const req = indexedDB.open('qumran-notif-db', 1);
+        req.onerror = () => reject(req.error);
+        req.onsuccess = () => resolve(req.result);
+        req.onupgradeneeded = (e) => {
+            const db = e.target.result;
+            if (!db.objectStoreNames.contains('schedule')) {
+                const s = db.createObjectStore('schedule', { keyPath: 'id', autoIncrement: true });
+                s.createIndex('date', 'date', { unique: false });
+            }
+        };
+    });
+}
+
+function isoToday() {
+    const d = new Date();
+    return (
+        d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0')
+    );
+}
+
+async function showDueNotifications() {
+    try {
+        if (!self.registration || !self.registration.showNotification) return;
+        const db = await openNotifDb();
+        const today = isoToday();
+        const items = await new Promise((resolve, reject) => {
+            const tx = db.transaction('schedule', 'readonly');
+            const req = tx.objectStore('schedule').index('date').getAll(today);
+            req.onsuccess = () => resolve(req.result || []);
+            req.onerror = () => reject(req.error);
+        });
+        for (const item of items) {
+            if (item.shown) continue;
+            await self.registration.showNotification(item.title, {
+                body: item.body,
+                icon: '/qumran-watch/icon.png',
+                tag: 'qumran-' + item.title,
+            });
+            await new Promise((resolve) => {
+                const tx = db.transaction('schedule', 'readwrite');
+                const store = tx.objectStore('schedule');
+                const g = store.get(item.id);
+                g.onsuccess = () => {
+                    const it = g.result;
+                    if (it) {
+                        it.shown = true;
+                        store.put(it);
+                    }
+                    resolve();
+                };
+                g.onerror = () => resolve();
+            });
+        }
+        console.log('[SW] Notificaciones locales: ' + items.length + ' pendientes para hoy');
+    } catch (err) {
+        console.error('[SW] Error en notificaciones locales:', err);
+    }
+}
+
+console.log('[SW] Workbox SW v13.1.56 listo');

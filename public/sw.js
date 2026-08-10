@@ -1,4 +1,4 @@
-﻿// sw-workbox.js - Workbox Service Worker para Qumran Watch v13.1.55
+﻿// sw-workbox.js - Workbox Service Worker para Qumran Watch v13.1.56
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/7.1.0/workbox-sw.js');
 
 const { precacheAndRoute, cleanupOutdatedCaches } = workbox.precaching;
@@ -7,17 +7,17 @@ const { NetworkFirst, CacheFirst, StaleWhileRevalidate } = workbox.strategies;
 const { ExpirationPlugin } = workbox.expiration;
 const { CacheableResponsePlugin } = workbox.cacheableResponse;
 
-console.log('[SW] Workbox SW v13.1.55 iniciando...');
+console.log('[SW] Workbox SW v13.1.56 iniciando...');
 
 precacheAndRoute(
     [
         { revision: '830bb116a513550c5858d60ded660753', url: 'privacy.html' },
-        { revision: 'd51fc995349ddc5cf5e020eb6c69da34', url: 'manifest.json' },
+        { revision: '217d1fbeccc6e5269beda53cc2a0d0c8', url: 'manifest.json' },
         { revision: 'c9572888756e5c887d1b56b6dff80e51', url: 'license.html' },
         { revision: '950230d03a16b61ad6ef4c11c9b867a5', url: 'index.html' },
         { revision: 'f214d4ac2c7f2e2c94e366ca34c5c92e', url: 'icon.png' },
-        { revision: 'd9b205ad15d68c1f7caa5e5cdcd6bc35', url: 'src/js/index.js' },
-        { revision: '6f409fee918068d9b004dc3be0a6740d', url: 'src/css/index.css' },
+        { revision: 'a7aea01134d4e9d73d67840b91e5ebbd', url: 'src/js/index.js' },
+        { revision: '961b051e8832d3d48163b7649f872924', url: 'src/css/index.css' },
         { revision: '2d8904c9b0cd7cb2929d0bb613047f58', url: 'src/css/fonts/david-libre-v17-latin-regular.woff2' },
         { revision: '1d9878b23b606fc71d20a4ed5bd2ce1f', url: 'src/css/fonts/david-libre-v17-latin-700.woff2' },
         { revision: '63126eeda8319b882d8d9320edc8ca5a', url: 'src/css/fonts/cinzel-v26-latin-regular.woff2' },
@@ -38,6 +38,9 @@ self.addEventListener('message', (event) => {
     if (event.data && (event.data.action === 'skipWaiting' || event.data.type === 'SKIP_WAITING')) {
         self.skipWaiting();
         self.clients.claim();
+    }
+    if (event.data && event.data.type === 'CHECK_NOTIFICATIONS') {
+        event.waitUntil(showDueNotifications());
     }
 });
 
@@ -116,7 +119,7 @@ async function handleICSSync() {
 // Periodic Background Sync para actualizar datos solares diariamente
 self.addEventListener('periodicsync', (event) => {
     if (event.tag === 'sun-data') {
-        event.waitUntil(handleSunSync());
+        event.waitUntil(Promise.all([handleSunSync(), showDueNotifications()]));
     }
 });
 
@@ -133,4 +136,66 @@ async function handleSunSync() {
     }
 }
 
-console.log('[SW] Workbox SW v13.1.55 listo');
+// Notificaciones locales (sin backend): leer agenda de IndexedDB y mostrar Notification
+function openNotifDb() {
+    return new Promise((resolve, reject) => {
+        const req = indexedDB.open('qumran-notif-db', 1);
+        req.onerror = () => reject(req.error);
+        req.onsuccess = () => resolve(req.result);
+        req.onupgradeneeded = (e) => {
+            const db = e.target.result;
+            if (!db.objectStoreNames.contains('schedule')) {
+                const s = db.createObjectStore('schedule', { keyPath: 'id', autoIncrement: true });
+                s.createIndex('date', 'date', { unique: false });
+            }
+        };
+    });
+}
+
+function isoToday() {
+    const d = new Date();
+    return (
+        d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0')
+    );
+}
+
+async function showDueNotifications() {
+    try {
+        if (!self.registration || !self.registration.showNotification) return;
+        const db = await openNotifDb();
+        const today = isoToday();
+        const items = await new Promise((resolve, reject) => {
+            const tx = db.transaction('schedule', 'readonly');
+            const req = tx.objectStore('schedule').index('date').getAll(today);
+            req.onsuccess = () => resolve(req.result || []);
+            req.onerror = () => reject(req.error);
+        });
+        for (const item of items) {
+            if (item.shown) continue;
+            await self.registration.showNotification(item.title, {
+                body: item.body,
+                icon: '/qumran-watch/icon.png',
+                tag: 'qumran-' + item.title,
+            });
+            await new Promise((resolve) => {
+                const tx = db.transaction('schedule', 'readwrite');
+                const store = tx.objectStore('schedule');
+                const g = store.get(item.id);
+                g.onsuccess = () => {
+                    const it = g.result;
+                    if (it) {
+                        it.shown = true;
+                        store.put(it);
+                    }
+                    resolve();
+                };
+                g.onerror = () => resolve();
+            });
+        }
+        console.log('[SW] Notificaciones locales: ' + items.length + ' pendientes para hoy');
+    } catch (err) {
+        console.error('[SW] Error en notificaciones locales:', err);
+    }
+}
+
+console.log('[SW] Workbox SW v13.1.56 listo');

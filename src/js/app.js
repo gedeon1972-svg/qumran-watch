@@ -18,6 +18,7 @@ import { renderSaberGrid, renderEstudioModal } from './ui/estudio-view.js';
 import { renderFiestaModal } from './ui/fiesta-view.js';
 import { initPwaPrompt } from './ui/pwa-install.js';
 import { getSunriseTime } from './core/time-translator.js';
+import { Notifications } from './core/notifications.js';
 import './theme-init.js';
 
 // Versión inyectada automáticamente por Vite desde package.json (vite.config.js → define)
@@ -60,6 +61,7 @@ const QumranApp = {
         if (!hasMemory) QumranApp.getLocationAndSun();
         QumranApp.renderHoy();
         QumranApp.renderSaber();
+        QumranApp.setupNotifications();
 
         // Manejo del historial y botón "atrás"
         window.history.replaceState({ view: 'hoy' }, '', '#hoy');
@@ -197,6 +199,29 @@ const QumranApp = {
                     }
                 }
             });
+        }
+    },
+
+    setupNotifications: () => {
+        if (!Notifications.init()) return;
+        const perm = Notifications.permission();
+        if (perm === 'granted') {
+            Notifications.checkDue().then(() => Notifications.scheduleUpcoming());
+            Notifications.notifyServiceWorker();
+        } else if (perm === 'default') {
+            // Prompt contextual: toast clicable 4 segundos despues de abrir
+            setTimeout(() => {
+                QumranApp.showToast('Toca para activar recordatorios de Shabat y Fiestas', async () => {
+                    const res = await Notifications.requestPermission();
+                    if (res === 'granted') {
+                        const n = await Notifications.scheduleUpcoming();
+                        QumranApp.showToast('Recordatorios activados: ' + n + ' programados');
+                        Notifications.notifyServiceWorker();
+                    } else {
+                        QumranApp.showToast('Recordatorios no activados');
+                    }
+                });
+            }, 4000);
         }
     },
 
