@@ -107,12 +107,18 @@ const QumranApp = {
         document.getElementById('btn-render-cal').addEventListener('click', QumranApp.renderCalendar);
         const btnExportICS = document.getElementById('btn-export-ics');
         if (btnExportICS) {
-            btnExportICS.addEventListener('click', () => {
+            btnExportICS.addEventListener('click', async () => {
                 const y = document.getElementById('cal-year')
                     ? parseInt(document.getElementById('cal-year').value)
                     : new Date().getFullYear();
                 try {
-                    QumranICS.generateAndDownload(y);
+                    if (navigator.onLine) {
+                        QumranICS.generateAndDownload(y);
+                        QumranApp.showToast('Calendario ICS generado');
+                    } else {
+                        await QumranICS.queueICSForSync(y);
+                        QumranApp.showToast('Sin conexión. Calendario encolado para sincronizar cuando haya red.');
+                    }
                 } catch (err) {
                     const alertBox = document.getElementById('alert-container');
                     const alertMsg = document.getElementById('alert-msg');
@@ -173,6 +179,20 @@ const QumranApp = {
         document.getElementById('btn-close-estacion').addEventListener('click', function () {
             document.getElementById('modal-estacion').style.display = 'none';
         });
+
+        // Listener para mensajes del Service Worker (procesar ICS sync)
+        if (navigator.serviceWorker) {
+            navigator.serviceWorker.addEventListener('message', async (event) => {
+                if (event.data && event.data.type === 'PROCESS_ICS_SYNC') {
+                    try {
+                        const result = await QumranICS.processICSSyncQueue();
+                        QumranApp.showToast('Sincronización ICS completada: ' + result.processed + ' calendarios');
+                    } catch (err) {
+                        console.error('Error en ICS sync:', err);
+                    }
+                }
+            });
+        }
     },
 
     nav: (viewId, btn, isHistoryEvent = false) => {

@@ -6,6 +6,7 @@
 
 import { QumranData } from './core/data.js';
 import { QumranCalendar } from './core/calendar.js';
+import { idb } from './core/idb.js';
 
 export const QumranICS = {
     generateAndDownload: (year) => {
@@ -85,6 +86,61 @@ export const QumranICS = {
         a.click();
         document.body.removeChild(a);
         window.URL.revokeObjectURL(url);
+    },
+
+    // Encolar generacion ICS para sincronizacion en background
+    async queueICSForSync(year) {
+        try {
+            const id = await idb.add({ year, status: 'pending' });
+            // Registrar background sync si esta disponible
+            if ('serviceWorker' in navigator && 'sync' in window.ServiceWorkerRegistration.prototype) {
+                const registration = await navigator.serviceWorker.ready;
+                await registration.sync.register('ics-sync');
+            }
+            return id;
+        } catch (err) {
+            console.warn('No se pudo encolar ICS para sync:', err);
+            // Fallback: generar directamente si hay conexion
+            if (navigator.onLine) {
+                QumranICS.generateAndDownload(year);
+            }
+            throw err;
+        }
+    },
+
+    // Procesar cola de sincronizacion ICS
+    async processICSSyncQueue() {
+        const pending = await idb.getAll('pending');
+        if (pending.length === 0) return { processed: 0 };
+
+        let processed = 0;
+        for (const item of pending) {
+            try {
+                // Marcar como procesando
+                await idb.update(item.id, { status: 'processing' });
+
+                // Generar y descargar el ICS
+                QumranICS.generateAndDownload(item.year);
+
+                // Marcar como completado
+                await idb.update(item.id, { status: 'completed', completedAt: Date.now() });
+                processed++;
+            } catch (err) {
+                console.error('Error procesando ICS sync:', err);
+                await idb.update(item.id, { status: 'failed', error: err.message });
+            }
+        }
+
+        // Limpiar completados antiguos (> 24h)
+        const completed = await idb.getAll('completed');
+        const now = Date.now();
+        for (const item of completed) {
+            if (now - (item.completedAt || item.timestamp) > 24 * 60 * 60 * 1000) {
+                await idb.delete(item.id);
+            }
+        }
+
+        return { processed };
     },
 
     findLiturgicalStart: (year) => {

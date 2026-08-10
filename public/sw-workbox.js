@@ -1,4 +1,4 @@
-﻿// sw-workbox.js - Workbox Service Worker para Qumran Watch v13.1.52
+﻿// sw-workbox.js - Workbox Service Worker para Qumran Watch v13.1.53
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/7.1.0/workbox-sw.js');
 
 const { precacheAndRoute, cleanupOutdatedCaches } = workbox.precaching;
@@ -7,7 +7,7 @@ const { NetworkFirst, CacheFirst, StaleWhileRevalidate } = workbox.strategies;
 const { ExpirationPlugin } = workbox.expiration;
 const { CacheableResponsePlugin } = workbox.cacheableResponse;
 
-console.log('[SW] Workbox SW v13.1.52 iniciando...');
+console.log('[SW] Workbox SW v13.1.53 iniciando...');
 
 precacheAndRoute(self.__WB_MANIFEST || []);
 cleanupOutdatedCaches();
@@ -72,4 +72,25 @@ registerRoute(
     }),
 );
 
-console.log('[SW] Workbox SW v13.1.52 listo');
+// Background Sync para ICS
+self.addEventListener('sync', (event) => {
+    if (event.tag === 'ics-sync') {
+        event.waitUntil(handleICSSync());
+    }
+});
+
+async function handleICSSync() {
+    console.log('[SW] Background sync: ics-sync iniciado');
+    try {
+        // Notificar a la app principal para procesar la cola
+        const clients = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+        for (const client of clients) {
+            client.postMessage({ type: 'PROCESS_ICS_SYNC' });
+        }
+        console.log('[SW] Background sync: ics-sync completado');
+    } catch (err) {
+        console.error('[SW] Background sync error:', err);
+    }
+}
+
+console.log('[SW] Workbox SW v13.1.53 listo');

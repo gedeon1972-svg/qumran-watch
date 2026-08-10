@@ -2,6 +2,22 @@
 
 ## [Unreleased]
 
+## [13.1.53] - 2026-08-10 - Feature: Background Sync ICS (offline queue)
+
+### Added
+- `src/js/core/idb.js`: IndexedDB wrapper para cola offline (add, getAll, update, delete, clear) con store 'ics-queue'
+- `QumranICS.queueICSForSync(year)`: Encola generacion ICS en IndexedDB y registra background sync ('ics-sync')
+- `QumranICS.processICSSyncQueue()`: Procesa items pendientes, genera/descarga ICS, limpia completados >24h
+- `public/sw-workbox.js`: Handler de Background Sync para 'ics-sync' que envia PROCESS_ICS_SYNC a clientes
+- `src/js/app.js`: Listener de mensajes del SW procesa PROCESS_ICS_SYNC; btn-export-ics ahora usa navigator.onLine con fallback offline
+
+### Fixed
+- `src/js/ics.js`: Template literals corrompidos restaurados (backticks + ${var} interpolation), BOM eliminado, newline final agregado
+
+### Changed
+- `public/sw.js`: Regenerado con injectManifest, v13.1.53, 19 assets precacheados + background sync
+- `package.json`, `package-lock.json`, `public/manifest.json`: version 13.1.52 -> 13.1.53
+
 
 ## [13.1.31] - 2026-06-13 - Hotfix: Cache-bust obligatorio para purgar versión corrupta
 

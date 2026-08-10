@@ -1,4 +1,10 @@
-﻿export default [
+import js from '@eslint/js';
+import security from 'eslint-plugin-security';
+import globals from 'globals';
+
+export default [
+  js.configs.recommended,
+  security.configs.recommended,
   {
     ignores: ['dist/', 'node_modules/', 'coverage/', '*.config.js', '*.config.mjs']
   },
@@ -7,7 +13,15 @@
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
-      globals: { browser: true, es2022: true, node: true }
+      globals: { ...globals.browser, ...globals.node, __APP_VERSION__: 'readonly' }
+    },
+    rules: {
+      'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      'no-console': 'off',
+      'no-undef': 'error',
+      'prefer-const': 'warn',
+      eqeqeq: ['warn', 'smart'],
+      'no-var': 'error'
     }
   },
   {

@@ -21,7 +21,7 @@
 | ID | Entregable | Descripción | Done |
 |----|------------|-------------|------|
 | 2.1 | **Workbox SW** | Migrar sw.js a Workbox: precacheManifest, runtime caching, expiration | **DONE** v13.1.52 |
-| 2.2 | **Background Sync ICS** | Cola de generacion .ics offline -> sync al recuperar red | NO |
+| 2.2 | **Background Sync ICS** | Cola de generacion .ics offline -> sync al recuperar red | **DONE** v13.1.53 |
 | 2.3 | **Periodic Background Sync** | Actualizar datos solares (sunrise/sunset) diariamente en background | NO |
 
 ---
@@ -66,4 +66,5 @@
 | 2026-08-07 | v13.1.49 | 1.3 Screenshots reales | 827fad3 | 2 screenshots: mobile 540x720, desktop 1280x720; canvas generados; tests+build OK |
 | 2026-08-07 | v13.1.50 | 1.4 Brotli compression | 505ec17 | vite-plugin-compression dual .br/.gz; JS 86KB->31KB .br; tests+build OK |
 | 2026-08-07 | v13.1.51 | 1.5 Lighthouse CI workflow | 9cf0b0c | lighthouserc.json budgets + .github/workflows/lighthouse.yml; @lhci/cli; tests+build OK |
-| 2026-08-07 | v13.1.52 | 2.1 Workbox SW | (pendiente) | injectManifest con 19 assets, CDN workbox-sw.js, runtime caching; tests+build OK |
+| 2026-08-07 | v13.1.52 | 2.1 Workbox SW | 78cb0f9 | injectManifest con 19 assets, CDN workbox-sw.js, runtime caching; tests+build OK |
+| 2026-08-10 | v13.1.53 | 2.2 Background Sync ICS | (pendiente) | IndexedDB queue (idb.js), queueICSForSync(), processICSSyncQueue(), SW ics-sync handler, offline-aware btn-export-ics; 79 tests+build OK |

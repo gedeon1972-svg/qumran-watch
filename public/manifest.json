@@ -24,28 +24,48 @@
             "short_name": "Hoy",
             "description": "Vista principal del dia actual",
             "url": "/qumran-watch/#hoy",
-            "icons": [{ "src": "./icons/icon-96x96.png", "sizes": "96x96" }]
+            "icons": [
+                {
+                    "src": "./icons/icon-96x96.png",
+                    "sizes": "96x96"
+                }
+            ]
         },
         {
             "name": "Ciclo",
             "short_name": "Ciclo",
             "description": "Ciclo de fiestas anual",
             "url": "/qumran-watch/#cal",
-            "icons": [{ "src": "./icons/icon-96x96.png", "sizes": "96x96" }]
+            "icons": [
+                {
+                    "src": "./icons/icon-96x96.png",
+                    "sizes": "96x96"
+                }
+            ]
         },
         {
             "name": "Saber",
             "short_name": "Saber",
             "description": "Biblioteca de estudios biblicos",
             "url": "/qumran-watch/#edu",
-            "icons": [{ "src": "./icons/icon-96x96.png", "sizes": "96x96" }]
+            "icons": [
+                {
+                    "src": "./icons/icon-96x96.png",
+                    "sizes": "96x96"
+                }
+            ]
         },
         {
             "name": "Red",
             "short_name": "Red",
             "description": "Comunidad y recursos",
             "url": "/qumran-watch/#con",
-            "icons": [{ "src": "./icons/icon-96x96.png", "sizes": "96x96" }]
+            "icons": [
+                {
+                    "src": "./icons/icon-96x96.png",
+                    "sizes": "96x96"
+                }
+            ]
         }
     ],
     "screenshots": [
@@ -108,5 +128,5 @@
             "purpose": "any maskable"
         }
     ],
-    "version": "13.1.52"
+    "version": "13.1.53"
 }

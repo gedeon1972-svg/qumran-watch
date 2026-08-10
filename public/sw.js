@@ -1,4 +1,4 @@
-﻿// sw-workbox.js - Workbox Service Worker para Qumran Watch v13.1.52
+﻿// sw-workbox.js - Workbox Service Worker para Qumran Watch v13.1.53
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/7.1.0/workbox-sw.js');
 
 const { precacheAndRoute, cleanupOutdatedCaches } = workbox.precaching;
@@ -7,16 +7,16 @@ const { NetworkFirst, CacheFirst, StaleWhileRevalidate } = workbox.strategies;
 const { ExpirationPlugin } = workbox.expiration;
 const { CacheableResponsePlugin } = workbox.cacheableResponse;
 
-console.log('[SW] Workbox SW v13.1.52 iniciando...');
+console.log('[SW] Workbox SW v13.1.53 iniciando...');
 
 precacheAndRoute(
     [
         { revision: '830bb116a513550c5858d60ded660753', url: 'privacy.html' },
-        { revision: '84ecaedf46f2b176ca5eafaef170b1ad', url: 'manifest.json' },
+        { revision: 'aa69646254e2655cc5d568272cbc634e', url: 'manifest.json' },
         { revision: 'c9572888756e5c887d1b56b6dff80e51', url: 'license.html' },
         { revision: '950230d03a16b61ad6ef4c11c9b867a5', url: 'index.html' },
         { revision: 'f214d4ac2c7f2e2c94e366ca34c5c92e', url: 'icon.png' },
-        { revision: 'ab5f5ffc6583751d7748125df13a62d6', url: 'src/js/index.js' },
+        { revision: '022a532fb87b689feb3ea236a1d1425d', url: 'src/js/index.js' },
         { revision: '6f409fee918068d9b004dc3be0a6740d', url: 'src/css/index.css' },
         { revision: '2d8904c9b0cd7cb2929d0bb613047f58', url: 'src/css/fonts/david-libre-v17-latin-regular.woff2' },
         { revision: '1d9878b23b606fc71d20a4ed5bd2ce1f', url: 'src/css/fonts/david-libre-v17-latin-700.woff2' },
@@ -94,4 +94,25 @@ registerRoute(
     }),
 );
 
-console.log('[SW] Workbox SW v13.1.52 listo');
+// Background Sync para ICS
+self.addEventListener('sync', (event) => {
+    if (event.tag === 'ics-sync') {
+        event.waitUntil(handleICSSync());
+    }
+});
+
+async function handleICSSync() {
+    console.log('[SW] Background sync: ics-sync iniciado');
+    try {
+        // Notificar a la app principal para procesar la cola
+        const clients = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+        for (const client of clients) {
+            client.postMessage({ type: 'PROCESS_ICS_SYNC' });
+        }
+        console.log('[SW] Background sync: ics-sync completado');
+    } catch (err) {
+        console.error('[SW] Background sync error:', err);
+    }
+}
+
+console.log('[SW] Workbox SW v13.1.53 listo');
