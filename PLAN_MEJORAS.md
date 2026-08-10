@@ -22,7 +22,7 @@
 |----|------------|-------------|------|
 | 2.1 | **Workbox SW** | Migrar sw.js a Workbox: precacheManifest, runtime caching, expiration | **DONE** v13.1.52 |
 | 2.2 | **Background Sync ICS** | Cola de generacion .ics offline -> sync al recuperar red | **DONE** v13.1.53 |
-| 2.3 | **Periodic Background Sync** | Actualizar datos solares (sunrise/sunset) diariamente en background | NO |
+| 2.3 | **Periodic Background Sync** | Actualizar datos solares (sunrise/sunset) diariamente en background | **DONE** v13.1.54 |
 
 ---
 
@@ -68,3 +68,4 @@
 | 2026-08-07 | v13.1.51 | 1.5 Lighthouse CI workflow | 9cf0b0c | lighthouserc.json budgets + .github/workflows/lighthouse.yml; @lhci/cli; tests+build OK |
 | 2026-08-07 | v13.1.52 | 2.1 Workbox SW | 78cb0f9 | injectManifest con 19 assets, CDN workbox-sw.js, runtime caching; tests+build OK |
 | 2026-08-10 | v13.1.53 | 2.2 Background Sync ICS | (pendiente) | IndexedDB queue (idb.js), queueICSForSync(), processICSSyncQueue(), SW ics-sync handler, offline-aware btn-export-ics; 79 tests+build OK |
+| 2026-08-10 | v13.1.54 | 2.3 Periodic Background Sync | (pendiente) | Registro periodicsync 'sun-data' (diario, Chromium), handler REFRESH_SOLAR, fallback si no soportado; 80 tests+build OK |

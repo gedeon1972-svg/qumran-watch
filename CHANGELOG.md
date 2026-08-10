@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+## [13.1.54] - 2026-08-10 - Feature: Periodic Background Sync (solar data)
+
+### Added
+- `public/sw-workbox.js`: Handler `periodicsync` para tag 'sun-data' que notifica REFRESH_SOLAR a clientes
+- `src/js/app.js`: `QumranApp.registerPeriodicSync()` registra 'sun-data' diario (24h) cuando la API esta disponible y con permiso otorgado
+- `src/js/app.js`: `QumranApp.refreshSolarData()` recalcula sunrise/sunset al recibir REFRESH_SOLAR del SW
+- `test/pwa.test.js`: Auditoria de handler periodicsync en sw.js
+
+### Changed
+- `public/sw.js`: Regenerado con injectManifest, v13.1.54
+- `package.json`, `package-lock.json`, `public/manifest.json`: version 13.1.53 -> 13.1.54
+
 ## [13.1.53] - 2026-08-10 - Feature: Background Sync ICS (offline queue)
 
 ### Added

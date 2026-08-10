@@ -30,8 +30,9 @@ if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) {
     window.addEventListener('load', function () {
         navigator.serviceWorker
             .register('/qumran-watch/sw.js', { scope: '/qumran-watch/' })
-            .then(function () {
+            .then(function (registration) {
                 console.log('SW Registered');
+                QumranApp.registerPeriodicSync(registration);
                 console.log(
                     '[DEBUG VIGIA] Elemento DOM encontrado:',
                     document.getElementById('vigia-progress-container') !== null,
@@ -183,6 +184,9 @@ const QumranApp = {
         // Listener para mensajes del Service Worker (procesar ICS sync)
         if (navigator.serviceWorker) {
             navigator.serviceWorker.addEventListener('message', async (event) => {
+                if (event.data && event.data.type === 'REFRESH_SOLAR') {
+                    QumranApp.refreshSolarData();
+                }
                 if (event.data && event.data.type === 'PROCESS_ICS_SYNC') {
                     try {
                         const result = await QumranICS.processICSSyncQueue();
@@ -192,6 +196,36 @@ const QumranApp = {
                     }
                 }
             });
+        }
+    },
+
+    registerPeriodicSync: async (registration) => {
+        try {
+            if (!registration || !registration.periodicSync) {
+                console.log('[SW] Periodic Background Sync no soportado en este navegador');
+                return;
+            }
+            const status = await navigator.permissions.query({ name: 'periodic-background-sync' });
+            if (status.state !== 'granted') {
+                console.log('[SW] Permiso periodic-background-sync no otorgado:', status.state);
+                return;
+            }
+            await registration.periodicSync.register('sun-data', { minInterval: 24 * 60 * 60 * 1000 });
+            console.log('[SW] Periodic sync registrado: sun-data (diario)');
+        } catch (err) {
+            console.warn('[SW] No se pudo registrar periodic sync:', err);
+        }
+    },
+
+    refreshSolarData: () => {
+        if (QumranApp._lastSunData) {
+            QumranApp.updateSunData(
+                QumranApp._lastSunData.lat,
+                QumranApp._lastSunData.lng,
+                'Actualización solar periódica',
+            );
+        } else {
+            QumranApp.renderHoy();
         }
     },
 

@@ -1,4 +1,4 @@
-﻿// sw-workbox.js - Workbox Service Worker para Qumran Watch v13.1.53
+﻿// sw-workbox.js - Workbox Service Worker para Qumran Watch v13.1.54
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/7.1.0/workbox-sw.js');
 
 const { precacheAndRoute, cleanupOutdatedCaches } = workbox.precaching;
@@ -7,7 +7,7 @@ const { NetworkFirst, CacheFirst, StaleWhileRevalidate } = workbox.strategies;
 const { ExpirationPlugin } = workbox.expiration;
 const { CacheableResponsePlugin } = workbox.cacheableResponse;
 
-console.log('[SW] Workbox SW v13.1.53 iniciando...');
+console.log('[SW] Workbox SW v13.1.54 iniciando...');
 
 precacheAndRoute(
     [
@@ -115,4 +115,24 @@ async function handleICSSync() {
     }
 }
 
-console.log('[SW] Workbox SW v13.1.53 listo');
+// Periodic Background Sync para actualizar datos solares diariamente
+self.addEventListener('periodicsync', (event) => {
+    if (event.tag === 'sun-data') {
+        event.waitUntil(handleSunSync());
+    }
+});
+
+async function handleSunSync() {
+    console.log('[SW] Periodic sync: sun-data iniciado');
+    try {
+        const clients = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+        for (const client of clients) {
+            client.postMessage({ type: 'REFRESH_SOLAR' });
+        }
+        console.log('[SW] Periodic sync: sun-data completado');
+    } catch (err) {
+        console.error('[SW] Periodic sync error:', err);
+    }
+}
+
+console.log('[SW] Workbox SW v13.1.54 listo');

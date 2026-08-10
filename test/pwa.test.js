@@ -37,4 +37,11 @@ describe('PWA Configuration Audit', () => {
         expect(swContent).toContain('workbox-cdn');
         expect(swContent).toContain('precacheAndRoute');
     });
+
+    it('should register periodicsync handler for sun-data in sw.js', () => {
+        const swContent = fs.readFileSync(path.resolve(__dirname, '../public/sw.js'), 'utf8');
+        expect(swContent).toContain("addEventListener('periodicsync'");
+        expect(swContent).toContain("event.tag === 'sun-data'");
+        expect(swContent).toContain('REFRESH_SOLAR');
+    });
 });
