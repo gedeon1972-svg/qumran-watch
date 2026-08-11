@@ -23,6 +23,17 @@
 ### Changed
 - Cobertura `storage.js` 47% -> 100% y `sun-worker-client.js` 31% -> 96.87% statements (superan objetivo >=80% de la 5.2)
 
+## [13.1.66] - 2026-08-11 - FASE 5: E2E setup + smoke (5.7)
+
+### Added
+- `@playwright/test` ^1.62.1 como devDependency (Chromium installado via `npx playwright install chromium`)
+- `playwright.config.js`: webServer con `vite preview` en puerto 4173 (strictPort), project chromium desktop, trace en retry en CI
+- `e2e/smoke.spec.js`: 4 tests E2E — carga de la app con fecha, reloj solar (salida/puesta), navegacion SPA por las 5 vistas (hoy/lit/cal/edu/con) con hash correcto, y retorno a Hoy desde Ciclo
+- Scripts `test:e2e` y `test:e2e:ui`
+- Job `e2e` en `.github/workflows/ci.yml`: npm ci + playwright install --with-deps chromium + build + playwright test
+- `vite.config.js`: test.exclude ahora incluye `e2e/**` y `**/node_modules/**`
+- Lint ahora cubre `e2e/`
+
 ## [13.1.65] - 2026-08-11 - FASE 5: Gate de cobertura en CI (5.6)
 
 ### Added

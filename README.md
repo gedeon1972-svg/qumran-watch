@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/github/license/gedeon1972-svg/qumran-watch)](LICENSE)
 [![PWA](https://img.shields.io/badge/PWA-100%25%20Offline-blue)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)
 [![JavaScript](https://img.shields.io/badge/ES6-Modules-yellow)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
-[![Version](https://img.shields.io/badge/version-13.1.65-gold)](package.json)
+[![Version](https://img.shields.io/badge/version-13.1.66-gold)](package.json)
 
 Aplicación Web Progresiva (PWA) que restaura el **Calendario Solar de 364 Días** de los Manuscritos del Mar Muerto, con sincronización GPS, ciclo de 24 turnos sacerdotales (Mishmarot), alertas ICS y biblioteca de estudios bíblicos. Funciona **100% offline**.
 
@@ -181,6 +181,9 @@ El plan completo de evolución (FASES 1-5, incluyendo industrialización a CMMI 
 ## Changelog
 
 El historial completo está en [CHANGELOG.md](CHANGELOG.md). Resumen reciente:
+
+### 13.1.66 (2026-08-11)
+E2E setup + smoke: Playwright con 4 tests (carga, reloj solar, navegacion SPA de 5 vistas, retorno a Hoy). Job e2e en CI (5.7).
 
 ### 13.1.65 (2026-08-11)
 Gate de cobertura en CI: thresholds statements>=80, branches>=60, functions>=70, lines>=80. El CI falla si la cobertura baja de los umbrales (5.6).

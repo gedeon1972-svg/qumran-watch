@@ -64,6 +64,7 @@ export default defineConfig({
     },
     test: {
         globals: true,
+        exclude: ['e2e/**', '**/node_modules/**', 'dist/**'],
         coverage: {
             provider: 'v8',
             reporter: ['text', 'html'],

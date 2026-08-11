@@ -1,7 +1,7 @@
 {
   "name": "qumran-watch",
   "private": true,
-  "version": "13.1.65",
+  "version": "13.1.66",
   "description": "Herramienta liturgica profesional con calendario 364 dias, sincronizacion GPS y alertas ICS.",
   "author": "Cristian Salinas <gedeon1972@gmail.com>",
   "type": "module",
@@ -11,17 +11,20 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "lint": "eslint src/ public/ test/",
+    "lint": "eslint src/ public/ test/ e2e/",
     "check:encoding": "node scripts/check-encoding.cjs",
     "format": "prettier --write \"src/**/*.js\" \"src/**/*.css\" \"test/**/*.js\" \"public/sw.js\"",
     "format:check": "prettier --check \"src/**/*.js\" \"src/**/*.css\" \"test/**/*.js\" \"public/sw.js\"",
     "prepare": "husky",
     "lighthouse": "lhci autorun",
-    "generate-sw": "node generate-sw.cjs"
+    "generate-sw": "node generate-sw.cjs",
+  "test:e2e": "playwright test",
+  "test:e2e:ui": "playwright test --ui"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",
     "@lhci/cli": "^0.13.0",
+    "@playwright/test": "^1.62.1",
     "@vitest/coverage-v8": "^1.0.0",
     "eslint": "^9.0.0",
     "eslint-plugin-security": "^4.0.0",
