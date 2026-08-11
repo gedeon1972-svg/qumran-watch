@@ -23,6 +23,11 @@
 ### Changed
 - Cobertura `storage.js` 47% -> 100% y `sun-worker-client.js` 31% -> 96.87% statements (superan objetivo >=80% de la 5.2)
 
+## [13.1.71] - 2026-08-11 - FASE 5: Release tagging (5.13)
+
+### Added
+- `.github/workflows/release.yml`: en cada push a main crea tag `vX.Y.Z` (version leida de package.json, sin duplicar) y publica un GitHub Release prerelease con notas auto-generadas (permission contents: write)
+
 ## [13.1.70] - 2026-08-11 - FASE 5: E2E instalacion PWA (5.11)
 
 ### Added
