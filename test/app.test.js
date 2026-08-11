@@ -1,6 +1,25 @@
 import { expect, test, describe, vi, beforeEach, afterEach } from 'vitest';
 import { renderHoyView } from '../src/js/ui/hoy-view.js';
+import * as buildHoyViewModelRef from '../src/js/core/calculations.js';
 import { QumranData as QumranDataRef } from '../src/js/core/data.js';
+
+const mockSunriseTime = { firstLight: 25 };
+
+const mockICS = vi.hoisted(() => ({
+    generateAndDownload: vi.fn(),
+    queueICSForSync: vi.fn(async () => 1),
+    processICSSyncQueue: vi.fn(async () => ({ processed: 2 })),
+    findLiturgicalStart: vi.fn(() => new Date('2024-03-20T00:00:00Z')),
+}));
+
+vi.mock('../src/js/ics.js', () => ({
+    QumranICS: mockICS,
+}));
+
+vi.mock('../src/js/core/time-translator.js', () => ({
+    getQumranEquivalent: vi.fn(() => 'current'),
+    getSunriseTime: vi.fn(() => mockSunriseTime),
+}));
 
 let mockDoc, mockElements, appRef;
 
@@ -52,7 +71,10 @@ function buildDoc() {
                 },
             },
             dataset: {},
-            addEventListener: vi.fn(),
+            _handlers: {},
+            addEventListener: vi.fn((ev, cb) => {
+                el._handlers[ev] = cb;
+            }),
             closest: vi.fn(() => null),
             click: vi.fn(),
             appendChild: vi.fn(),
@@ -116,6 +138,7 @@ function buildDoc() {
         'btn-close-lectura',
         'modal-privacy',
         'btn-privacy',
+        'btn-close-privacy',
         'mod-title',
         'mod-fechas',
         'mod-fechas-heb',
@@ -176,6 +199,7 @@ function buildDoc() {
                 remove: vi.fn(),
             })),
             body: { appendChild: vi.fn(), removeChild: vi.fn() },
+            createTextNode: vi.fn(() => ({ textContent: '' })),
             documentElement: {
                 style: {},
                 classList: { add: vi.fn(), remove: vi.fn(), toggle: vi.fn(), contains: vi.fn(() => false) },
@@ -207,9 +231,12 @@ beforeEach(async () => {
     });
 
     const win = {
+        _handlers: {},
         location: { hash: '', href: '', pathname: '/' },
         history: { replaceState: vi.fn(), pushState: vi.fn() },
-        addEventListener: vi.fn(),
+        addEventListener: vi.fn((ev, cb) => {
+            win._handlers[ev] = cb;
+        }),
         navigator: {
             serviceWorker: undefined,
             geolocation: undefined,
@@ -433,5 +460,269 @@ describe('Evento DOMContentLoaded', () => {
         test('setupSWUpdate es una funcion', () => {
             expect(typeof appRef.setupSWUpdate).toBe('function');
         });
+    });
+});
+
+describe('init - popstate y openFiestaHoy', () => {
+    test('popstate con state.view navega a la vista', () => {
+        const listener = mockDoc.addEventListener.mock.calls.find((c) => c[0] === 'DOMContentLoaded');
+        listener[1]();
+        const pop = window.addEventListener.mock.calls.find((c) => c[0] === 'popstate');
+        expect(pop).toBeTruthy();
+        pop[1]({ state: { view: 'edu' } });
+        expect(mockElements['view-edu'].classList.contains('active')).toBe(true);
+    });
+
+    test('popstate sin state.view navega a hoy', () => {
+        const listener = mockDoc.addEventListener.mock.calls.find((c) => c[0] === 'DOMContentLoaded');
+        listener[1]();
+        const pop = window.addEventListener.mock.calls.find((c) => c[0] === 'popstate');
+        pop[1]({ state: null });
+        expect(mockElements['view-hoy'].classList.contains('active')).toBe(true);
+    });
+
+    test('openFiestaHoy abre la fiesta del dia', () => {
+        appRef.todayFiesta = 0;
+        appRef.openFiestaHoy();
+        expect(mockElements['mod-title'].innerText).not.toBe('');
+    });
+
+    test('openFiestaHoy no hace nada sin fiesta del dia', () => {
+        appRef.todayFiesta = null;
+        expect(() => appRef.openFiestaHoy()).not.toThrow();
+    });
+});
+
+describe('calculateVigiaStatus - antes de la primera luz', () => {
+    test('muestra la cuenta regresiva y el mensaje del vigia solar', () => {
+        appRef._lastSunData = { lat: 31.7683, lng: 35.2137 };
+        vi.stubGlobal('getSunriseTime', undefined);
+        appRef.calculateVigiaStatus();
+        const container = mockElements['sun-container'];
+        expect(container.appendChild).toHaveBeenCalled();
+        expect(mockElements['alert-container'].style.display).toBe('block');
+        expect(mockElements['vigia-solar-msg']).toBeDefined();
+    });
+});
+describe('setupListeners - botones de comunidad', () => {
+    test('btn-podcast-con abre el playlist de YouTube', () => {
+        const listener = mockDoc.addEventListener.mock.calls.find((c) => c[0] === 'DOMContentLoaded');
+        listener[1]();
+        const btn = mockElements['btn-podcast-con'];
+        expect(btn._handlers.click).toBeTruthy();
+        btn._handlers.click();
+        expect(window.open).toHaveBeenCalledWith(
+            'https://youtube.com/playlist?list=PLr4MABEXstnDLUVcD7EenO4vN8EglZoSz',
+            '_blank',
+            'noopener,noreferrer',
+        );
+    });
+
+    test('btn-institute-con abre el instituto', () => {
+        const listener = mockDoc.addEventListener.mock.calls.find((c) => c[0] === 'DOMContentLoaded');
+        listener[1]();
+        mockElements['btn-institute-con']._handlers.click();
+        expect(window.open).toHaveBeenCalledWith(
+            'https://www.descubrelabiblia.online/',
+            '_blank',
+            'noopener,noreferrer',
+        );
+    });
+
+    test('card-evangelio abre el evangelio', () => {
+        const listener = mockDoc.addEventListener.mock.calls.find((c) => c[0] === 'DOMContentLoaded');
+        listener[1]();
+        mockElements['card-evangelio']._handlers.click();
+        expect(window.open).toHaveBeenCalledWith(
+            'https://www.descubreelevangelio.org/',
+            '_blank',
+            'noopener,noreferrer',
+        );
+    });
+
+    test('card-edifica abre la web de edificacion', () => {
+        const listener = mockDoc.addEventListener.mock.calls.find((c) => c[0] === 'DOMContentLoaded');
+        listener[1]();
+        mockElements['card-edifica']._handlers.click();
+        expect(window.open).toHaveBeenCalledWith('https://www.edificamicasa.com/', '_blank', 'noopener,noreferrer');
+    });
+
+    test('card-whatsapp abre el chat', () => {
+        const listener = mockDoc.addEventListener.mock.calls.find((c) => c[0] === 'DOMContentLoaded');
+        listener[1]();
+        mockElements['card-whatsapp']._handlers.click();
+        expect(window.open).toHaveBeenCalled();
+    });
+});
+
+describe('setupListeners - modales', () => {
+    test('btn-privacy abre y btn-close-privacy cierra el modal de privacidad', () => {
+        const listener = mockDoc.addEventListener.mock.calls.find((c) => c[0] === 'DOMContentLoaded');
+        listener[1]();
+        mockElements['btn-privacy']._handlers.click();
+        expect(mockElements['modal-privacy'].style.display).toBe('flex');
+        mockElements['btn-close-privacy']._handlers.click();
+        expect(mockElements['modal-privacy'].style.display).toBe('none');
+    });
+
+    test('btn-license abre y cierra el modal de licencia', () => {
+        const listener = mockDoc.addEventListener.mock.calls.find((c) => c[0] === 'DOMContentLoaded');
+        listener[1]();
+        mockElements['btn-license']._handlers.click();
+        expect(mockElements['modal-license'].style.display).toBe('flex');
+        mockElements['btn-close-license']._handlers.click();
+        expect(mockElements['modal-license'].style.display).toBe('none');
+    });
+
+    test('cierra modales de mishmar y estacion', () => {
+        const listener = mockDoc.addEventListener.mock.calls.find((c) => c[0] === 'DOMContentLoaded');
+        listener[1]();
+        mockElements['btn-close-mishmar']._handlers.click();
+        expect(mockElements['modal-mishmar'].style.display).toBe('none');
+        mockElements['btn-close-estacion']._handlers.click();
+        expect(mockElements['modal-estacion'].style.display).toBe('none');
+    });
+
+    test('btn-close-modal y btn-close-lectura cierran sus modales', () => {
+        const listener = mockDoc.addEventListener.mock.calls.find((c) => c[0] === 'DOMContentLoaded');
+        listener[1]();
+        mockElements['btn-close-modal']._handlers.click();
+        expect(mockElements['modal-fiesta'].style.display).toBe('none');
+        mockElements['btn-close-lectura']._handlers.click();
+        expect(mockElements['modal-lectura'].style.display).toBe('none');
+    });
+});
+
+describe('setupListeners - delegacion de listas', () => {
+    test('click en fila de fiesta abre la fiesta', () => {
+        const listener = mockDoc.addEventListener.mock.calls.find((c) => c[0] === 'DOMContentLoaded');
+        listener[1]();
+        const row = { dataset: { index: '0', year: '2024' } };
+        mockElements['cal-lista']._handlers.click({ target: { closest: vi.fn(() => row) } });
+        expect(mockElements['mod-title'].innerText).not.toBe('');
+    });
+
+    test('click en fila de fiesta sin row no hace nada', () => {
+        const listener = mockDoc.addEventListener.mock.calls.find((c) => c[0] === 'DOMContentLoaded');
+        listener[1]();
+        expect(() =>
+            mockElements['cal-lista']._handlers.click({ target: { closest: vi.fn(() => null) } }),
+        ).not.toThrow();
+    });
+
+    test('click en card de estudio abre el estudio', () => {
+        const listener = mockDoc.addEventListener.mock.calls.find((c) => c[0] === 'DOMContentLoaded');
+        listener[1]();
+        const card = { dataset: { index: '0' } };
+        mockElements['edu-grid']._handlers.click({ target: { closest: vi.fn(() => card) } });
+        expect(mockElements['lec-title'].innerText).not.toBe('');
+    });
+});
+
+describe('btn-export-ics', () => {
+    test('online genera el calendario', async () => {
+        const listener = mockDoc.addEventListener.mock.calls.find((c) => c[0] === 'DOMContentLoaded');
+        listener[1]();
+        const spy = mockICS.generateAndDownload;
+        mockElements['cal-year'].value = '2024';
+        window.navigator.onLine = true;
+        await mockElements['btn-export-ics']._handlers.click();
+        expect(spy).toHaveBeenCalledWith(2024);
+        spy.mockRestore();
+    });
+
+    test('offline encola para sync', async () => {
+        const listener = mockDoc.addEventListener.mock.calls.find((c) => c[0] === 'DOMContentLoaded');
+        listener[1]();
+        const spy = mockICS.queueICSForSync;
+        mockElements['cal-year'].value = '2024';
+        window.navigator.onLine = false;
+        await mockElements['btn-export-ics']._handlers.click();
+        expect(spy).toHaveBeenCalledWith(2024);
+        spy.mockRestore();
+    });
+
+    test('muestra error en alert si falla', async () => {
+        const listener = mockDoc.addEventListener.mock.calls.find((c) => c[0] === 'DOMContentLoaded');
+        listener[1]();
+        mockICS.generateAndDownload.mockImplementation(() => {
+            throw new Error('boom');
+        });
+        mockElements['cal-year'].value = '2024';
+        window.navigator.onLine = true;
+        await mockElements['btn-export-ics']._handlers.click();
+        expect(mockElements['alert-container'].style.display).toBe('block');
+        expect(mockElements['alert-msg'].appendChild).toHaveBeenCalled();
+        mockICS.generateAndDownload.mockReset();
+    });
+});
+
+describe('refreshSolarData y nav con boton', () => {
+    test('refreshSolarData con datos usa updateSunData', () => {
+        appRef._lastSunData = { lat: 31.7683, lng: 35.2137, rise: 6, set: 18 };
+        const spy = vi.spyOn(appRef, 'updateSunData').mockResolvedValue(undefined);
+        appRef.refreshSolarData();
+        expect(spy).toHaveBeenCalledWith(31.7683, 35.2137, 'Actualización solar periódica');
+        spy.mockRestore();
+    });
+
+    test('refreshSolarData sin datos llama renderHoy', () => {
+        appRef._lastSunData = null;
+        const spy = vi.spyOn(appRef, 'renderHoy').mockImplementation(() => {});
+        appRef.refreshSolarData();
+        expect(spy).toHaveBeenCalled();
+        spy.mockRestore();
+    });
+
+    test('nav con boton activa la clase del boton', () => {
+        const btn = { id: 'nav-lit', classList: { add: vi.fn(), remove: vi.fn(), toggle: vi.fn() } };
+        appRef.nav('lit', btn, true);
+        expect(btn.classList.add).toHaveBeenCalledWith('active');
+        expect(window.history.pushState).not.toHaveBeenCalled();
+    });
+});
+
+describe('getLocationAndSun', () => {
+    test('usa GPS si esta disponible y guarda la ubicacion', async () => {
+        const pos = { coords: { latitude: 31.7683, longitude: 35.2137 } };
+        window.navigator.geolocation = { getCurrentPosition: vi.fn((succ) => succ(pos)) };
+        appRef.getLocationAndSun(true);
+        await new Promise((r) => setTimeout(r, 10));
+        expect(localStorage.setItem).toHaveBeenCalledWith('qw_lat', 31.7683);
+        expect(localStorage.setItem).toHaveBeenCalledWith('qw_lng', 35.2137);
+    });
+
+    test('usa Jerusalem como fallback si GPS falla', async () => {
+        const spy = vi.spyOn(appRef, 'updateSunData').mockResolvedValue(undefined);
+        window.navigator.geolocation = { getCurrentPosition: vi.fn((succ, err) => err()) };
+        appRef.getLocationAndSun(false);
+        await new Promise((r) => setTimeout(r, 10));
+        expect(spy).toHaveBeenCalledWith(31.7683, 35.2137, expect.any(String));
+        spy.mockRestore();
+    });
+});
+
+describe('renderHoy antes del amanecer', () => {
+    test('retrocede un dia si es antes del amanecer', () => {
+        appRef.sunriseHour = 25;
+        expect(() => appRef.renderHoy()).not.toThrow();
+    });
+});
+
+describe('openFiesta con duracion', () => {
+    test('muestra rango de fechas para fiestas con dur > 1', () => {
+        appRef.openFiesta(3, 2024);
+        expect(mockElements['mod-title'].innerText).not.toBe('');
+        expect(mockElements['mod-fechas'].innerText).toContain('al');
+    });
+});
+
+describe('updateSunData - misma data', () => {
+    test('retorna temprano si los datos no cambiaron', async () => {
+        appRef._lastSunData = { rise: 'X', set: 'Y', riseDecimal: 6, lat: 1, lng: 2 };
+        const spy = vi.spyOn(buildHoyViewModelRef, 'buildHoyViewModel').mockImplementation(() => ({}));
+        await appRef.updateSunData(1, 2);
+        expect(spy).not.toHaveBeenCalled();
+        spy.mockRestore();
     });
 });

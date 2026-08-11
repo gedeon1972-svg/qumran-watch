@@ -81,7 +81,7 @@
 |----|------------------|-------------|------|
 | 6.1 | **Cobertura ics.js offline** | Subir ics.js funcs de 50% a >=80% (queueICSForSync, processICSSyncQueue, cola IndexedDB offline) | **DONE** v13.1.74 (test/ics.test.js: mock idb hoisted + 7 tests: encolar con/ sin sync, fallback online, cola vacia, procesar+limpieza 24h, no borrar recientes, fail path; ics.js 100% stmts/94% branches/100% funcs; global 88.79/82.56/81.66) |
 | 6.2 | **Cobertura theme branches** | Subir theme.js (50% branches) y theme-init.js (25% branches) a >=80% (toggle claro/oscuro, persistencia, deteccion inicial) | **DONE** v13.1.75 (test/theme.test.js nuevo: 21 tests; theme.js 100/90.9/100, theme-init.js 100/100/100; global 89.45/84.44/82.5) |
-| 6.3 | **Cobertura app.js** | Subir app.js de 58.6% stmts a >=80% (renderHoy, openEstudio, updateSunData, notifyServiceWorker, renderCalendar) | |
+| 6.3 | **Cobertura app.js** | Subir app.js de 58.6% stmts a >=80% (renderHoy, openEstudio, updateSunData, notifyServiceWorker, renderCalendar) | **DONE** v13.1.76 (test/app.test.js +29 tests: popstate, openFiestaHoy, botones comunidad, modales, delegacion, export ICS online/offline/error, refreshSolarData, nav con boton, GPS success/fallback Jerusalem, vigia firstLight; app.js 83.4/80.48/88.88; global 93.5/87.24/84.16) |
 | 6.4 | **Cobertura calendar-view.js branches** | Subir branches de 42.85% a >=80% (print-toolbar, duracion de fiestas, cierre de rango) | |
 | 6.5 | **E2E modo offline** | Flujo: context.setOffline(true) -> app carga desde SW cache (verifica el claim 100% offline) | |
 | 6.6 | **E2E modal fiesta ampliado** | Flujo: navegar a Ciclo, generar, click en fiesta -> modal muestra historia y qumran | |

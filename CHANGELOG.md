@@ -2,6 +2,25 @@
 
 
 
+
+## [13.1.76] - 2026-08-11 - FASE 6: Cobertura app.js (6.3)
+
+### Added
+- `test/app.test.js`: +29 tests (total 52) para app.js
+  - init: popstate con/sin state.view, openFiestaHoy con/sin fiesta
+  - setupListeners: botones de comunidad (podcast, instituto, evangelio, edificacion, whatsapp), modales (privacidad, licencia, mishmar, estacion, lectura), delegacion de listas (cal-lista, edu-grid)
+  - btn-export-ics: online genera, offline encola, error muestra alerta
+  - refreshSolarData con y sin datos, nav con boton
+  - getLocationAndSun: GPS exitoso guarda ubicacion, fallback Jerusalem
+  - calculateVigiaStatus: cuenta regresiva antes de la primera luz
+  - renderHoy antes del amanecer, openFiesta con duracion (rango de fechas)
+- Mocks nuevos: vi.mock de ics.js e time-translator (vi.hoisted), captura de handlers en document/window, createTextNode
+
+### Changed
+- `app.js`: 83.4% stmts / 80.48% branches / 88.88% funcs (antes 58.6%)
+- Cobertura global: 93.5% stmts / 87.24% branches / 84.16% funcs
+- Version a v13.1.76 en `package.json`, `public/manifest.json`, `public/sw-workbox.js` y `public/sw.js` (SW regenerado)
+- 229 tests + lint OK
 ## [13.1.75] - 2026-08-11 - FASE 6: Cobertura tema claro/oscuro (6.2)
 
 ### Added
