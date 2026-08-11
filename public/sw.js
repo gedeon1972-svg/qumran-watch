@@ -1,4 +1,4 @@
-// sw-workbox.js - Workbox Service Worker para Qumran Watch v13.1.78
+// sw-workbox.js - Workbox Service Worker para Qumran Watch v13.1.79
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/7.1.0/workbox-sw.js');
 
 const { precacheAndRoute, cleanupOutdatedCaches } = workbox.precaching;
@@ -7,16 +7,16 @@ const { NetworkFirst, CacheFirst, StaleWhileRevalidate } = workbox.strategies;
 const { ExpirationPlugin } = workbox.expiration;
 const { CacheableResponsePlugin } = workbox.cacheableResponse;
 
-console.log('[SW] Workbox SW v13.1.78 iniciando...');
+console.log('[SW] Workbox SW v13.1.79 iniciando...');
 
 precacheAndRoute(
     [
         { revision: '830bb116a513550c5858d60ded660753', url: 'privacy.html' },
-        { revision: '16603f2aa3f40b213cd8c7049f3305ee', url: 'manifest.json' },
+        { revision: 'a20810cc649a5b63cb33c4a275fa17f1', url: 'manifest.json' },
         { revision: 'c9572888756e5c887d1b56b6dff80e51', url: 'license.html' },
         { revision: 'f1cbc59aab6ea2c2624968a6b3de6a66', url: 'index.html' },
         { revision: 'f214d4ac2c7f2e2c94e366ca34c5c92e', url: 'icon.png' },
-        { revision: 'f870b20a9230097409be6c230e882814', url: 'src/js/index.js' },
+        { revision: '32cb8510421c49e3ad97be35e7586dd8', url: 'src/js/index.js' },
         { revision: 'd5aba1be0ac0004b70f852b8091af83d', url: 'src/js/core.js' },
         { revision: '1a442051dcee6065b76084d3d59a984f', url: 'src/css/index.css' },
         { revision: '2d8904c9b0cd7cb2929d0bb613047f58', url: 'src/css/fonts/david-libre-v17-latin-regular.woff2' },
@@ -200,4 +200,4 @@ async function showDueNotifications() {
     }
 }
 
-console.log('[SW] Workbox SW v13.1.78 listo');
+console.log('[SW] Workbox SW v13.1.79 listo');

@@ -1,3 +1,19 @@
+## [13.1.79] - 2026-08-11 - FASE 6: E2E offline, modal fiesta, tema y navegacion (6.5-6.8)
+
+### Added
+- e2e/offline.spec.js (2 tests): carga offline desde cache del Service Worker tras reload con network offline + navegacion SPA por las 5 vistas sin conexion
+- e2e/fiesta-modal.spec.js (3 tests): generar calendario y abrir fiesta -> modal con historia y citas de Qumran; cerrar modal
+- e2e/theme.spec.js (3 tests): toggle dark-theme (clase + qw_theme), persistencia tras recargar, vuelta a claro
+- e2e/navigation-back.spec.js (2 tests): page.goBack() restaura vista previa via popstate, goForward avanza el historial
+
+### Changed
+- Suite E2E total: 16 -> 26 tests (10 nuevos en 4 specs), todos verdes
+
+### Fixed
+- e2e/theme.spec.js: caracter del toggle verificado como U+263D (media luna) en vez de U+263E
+
+### Validation
+- npm test: 236 tests unitarios pasan; npm run lint limpio; npm run build OK; SW regenerado (21 archivos, 729.61 KB); npx playwright test: 26/26
 # Changelog
 
 
