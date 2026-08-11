@@ -72,6 +72,24 @@
 | 5.14 | **Ampliar modal de fiestas + año actual** | Campos historia/qumran en las 14 fiestas (Escritura + Rollos de Qumrán) renderizados en el modal del ciclo; año en curso por defecto en el selector | **DONE** v13.1.73 (data.js +14 fiestas, fiesta-view.js render condicional, index.html 2 secciones, openFiesta, cal-year dinamico; 3 tests nuevos; fix error preexistente updateSunData en mocks) |
 
 ---
+
+## FASE 6: Cierre de deuda tecnica de cobertura (continuo)
+
+**Diagnostico base (2026-08-11):** cobertura global 87.24% stmts / 82.22% branches / 80% funcs. Archivos con deuda: ics.js (70% stmts / 50% funcs), theme-init.js (25% branches), theme.js (50% branches), calendar-view.js (42.85% branches), app.js (58.6% stmts).
+
+| ID | Micro-entregable | Descripcion | Done |
+|----|------------------|-------------|------|
+| 6.1 | **Cobertura ics.js offline** | Subir ics.js funcs de 50% a >=80% (queueICSForSync, processICSSyncQueue, cola IndexedDB offline) | **DONE** v13.1.74 (test/ics.test.js: mock idb hoisted + 7 tests: encolar con/ sin sync, fallback online, cola vacia, procesar+limpieza 24h, no borrar recientes, fail path; ics.js 100% stmts/94% branches/100% funcs; global 88.79/82.56/81.66) |
+| 6.2 | **Cobertura theme branches** | Subir theme.js (50% branches) y theme-init.js (25% branches) a >=80% (toggle claro/oscuro, persistencia, deteccion inicial) | |
+| 6.3 | **Cobertura app.js** | Subir app.js de 58.6% stmts a >=80% (renderHoy, openEstudio, updateSunData, notifyServiceWorker, renderCalendar) | |
+| 6.4 | **Cobertura calendar-view.js branches** | Subir branches de 42.85% a >=80% (print-toolbar, duracion de fiestas, cierre de rango) | |
+| 6.5 | **E2E modo offline** | Flujo: context.setOffline(true) -> app carga desde SW cache (verifica el claim 100% offline) | |
+| 6.6 | **E2E modal fiesta ampliado** | Flujo: navegar a Ciclo, generar, click en fiesta -> modal muestra historia y qumran | |
+| 6.7 | **E2E tema claro/oscuro** | Flujo: toggle -> clase dark-theme aplicada y persistida en localStorage | |
+| 6.8 | **E2E navegacion atras** | Flujo: navegar a Ciclo, volver con page.goBack() -> restaura vista previa (popstate) | |
+| 6.9 | **npm audit + Dependabot** | Gate de seguridad: npm audit en CI + Dependabot para dependencias dev | |
+| 6.10 | **Gate a11y automatizado** | @axe-core/playwright en E2E: verifica WCAG en cada flujo | |
+---
 ## Reglas de Seguimiento
 
 1. **Un micro-entregable por commit** (patch version bump)

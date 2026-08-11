@@ -1,5 +1,16 @@
 # Changelog
 
+
+## [13.1.74] - 2026-08-11 - FASE 6: Cierre de deuda de cobertura (6.1)
+
+### Added
+- `test/ics.test.js`: mock `idb` hoisted con estado en memoria + 7 tests nuevos para `queueICSForSync` (encolar con/sin background sync, fallback online con error) y `processICSSyncQueue` (cola vacia, procesar + limpieza >24h, no borrar recientes, marcar failed)
+- `ics.js` sube a 100% stmts / 94.11% branches / 100% funcs (antes 70.44% / 50% funcs)
+
+### Changed
+- Cobertura global: 88.79% stmts / 82.56% branches / 81.66% funcs
+- Version a v13.1.74 en `package.json`, `public/manifest.json`, `public/sw-workbox.js` y `public/sw.js` (SW regenerado)
+- 179 tests + lint OK
 ## [13.1.73] - 2026-08-11 - FASE 5: Modal de fiestas ampliado + año actual (5.14)
 
 ### Added
