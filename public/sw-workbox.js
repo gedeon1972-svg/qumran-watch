@@ -1,4 +1,4 @@
-// sw-workbox.js - Workbox Service Worker para Qumran Watch v13.1.77
+// sw-workbox.js - Workbox Service Worker para Qumran Watch v13.1.78
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/7.1.0/workbox-sw.js');
 
 const { precacheAndRoute, cleanupOutdatedCaches } = workbox.precaching;
@@ -7,7 +7,7 @@ const { NetworkFirst, CacheFirst, StaleWhileRevalidate } = workbox.strategies;
 const { ExpirationPlugin } = workbox.expiration;
 const { CacheableResponsePlugin } = workbox.cacheableResponse;
 
-console.log('[SW] Workbox SW v13.1.77 iniciando...');
+console.log('[SW] Workbox SW v13.1.78 iniciando...');
 
 precacheAndRoute(self.__WB_MANIFEST || []);
 cleanupOutdatedCaches();
@@ -176,4 +176,4 @@ async function showDueNotifications() {
     }
 }
 
-console.log('[SW] Workbox SW v13.1.77 listo');
+console.log('[SW] Workbox SW v13.1.78 listo');

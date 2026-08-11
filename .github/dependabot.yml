@@ -1,0 +1,33 @@
+# .github/dependabot.yml
+# Actualizaciones automaticas de dependencias (solo devDependencies en este proyecto)
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/Santiago"
+    versioning-strategy: "auto"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "security"
+    commit-message:
+      prefix: "chore(deps)"
+    groups:
+      test-tooling:
+        patterns:
+          - "vitest"
+          - "@vitest/*"
+          - "@playwright/*"
+          - "playwright"
+          - "@lhci/*"
+      build-tooling:
+        patterns:
+          - "vite"
+          - "@vitejs/*"
+          - "vite-plugin-*"
+          - "terser"
+          - "workbox-*"

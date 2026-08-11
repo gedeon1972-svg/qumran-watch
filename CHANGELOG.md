@@ -4,6 +4,28 @@
 
 
 
+## [13.1.78] - 2026-08-11 - FASE 6: Seguridad deps + Gate a11y (6.9 + 6.10)
+
+### Changed
+- Toolchain actualizada: vitest 1.6.1 -> 4.1.10, @vitest/coverage-v8 -> 4.1.10, vite 5.4.11 -> 8.2.1, @lhci/cli 0.13.0 -> 0.15.1
+- Overrides de npm: tmp ^0.2.6 y uuid ^11.1.1 (eliminan high/critical de la cadena @lhci/cli)
+- npm audit: 0 vulnerabilidades (antes 17: 9 high + 2 critical)
+- `npm audit --audit-level=high` anadido al job validate de .github/workflows/ci.yml
+- Nuevo `.github/dependabot.yml`: npm semanal, grupos test-tooling y build-tooling
+- `test/app.test.js`: stub de URL global preserva el constructor real (requerido por vite 8 module-runner)
+- `test/sun-worker-client.test.js`: mocks de Worker ahora son funciones constructibles (vitest 4 exige function/class en impl)
+- `src/css/styles.css` (tema claro): --gold #7a6020 -> #6d551c, --edifica #b86a1a -> #9c5a16, --nav-text-active #d4af37 -> #d7b545, #app-version opacity 0.5 -> 0.9, .card-link opacity 0.8 -> 1 (WCAG AA 4.5:1)
+- `index.html`: #page-lit-type de h3 a h2 (heading-order axe)
+- Cobertura global con vitest 4: 84.93% stmts / 74.46% branches / 79.29% funcs (instrumenter v8 nuevo; gates 80/60/70 OK)
+
+### Added
+- `e2e/a11y.spec.js`: 5 tests E2E de accesibilidad con @axe-core/playwright sobre las 5 vistas (0 violaciones WCAG)
+
+### Fixed
+- Vitest 4 rompia 54 tests: URL global pisado por stub (app.test.js) y mocks de Worker con arrow functions (sun-worker-client.test.js)
+
+### Tests
+- 236 tests unitarios OK, 16 E2E OK (5 a11y nuevos), lint + encoding OK
 ## [13.1.77] - 2026-08-11 - FASE 6: Cobertura calendar-view (6.4)
 
 ### Added

@@ -87,8 +87,8 @@
 | 6.6 | **E2E modal fiesta ampliado** | Flujo: navegar a Ciclo, generar, click en fiesta -> modal muestra historia y qumran | |
 | 6.7 | **E2E tema claro/oscuro** | Flujo: toggle -> clase dark-theme aplicada y persistida en localStorage | |
 | 6.8 | **E2E navegacion atras** | Flujo: navegar a Ciclo, volver con page.goBack() -> restaura vista previa (popstate) | |
-| 6.9 | **npm audit + Dependabot** | Gate de seguridad: npm audit en CI + Dependabot para dependencias dev | |
-| 6.10 | **Gate a11y automatizado** | @axe-core/playwright en E2E: verifica WCAG en cada flujo | |
+| 6.9 | **npm audit + Dependabot** | Gate de seguridad: npm audit en CI + Dependabot para dependencias dev | **DONE** v13.1.78 (0 vulnerabilidades: vitest 1.6.1->4.1.10, vite 5.4.11->8.2.1, @lhci/cli 0.13->0.15.1, overrides tmp ^0.2.6 + uuid ^11.1.1; test/app.test.js: URL stub preserva constructor; test/sun-worker-client: mocks Worker como funciones constructibles; .github/dependabot.yml creado (npm semanal, grupos test/build-tooling); npm audit --audit-level=high anadido al job validate) |
+| 6.10 | **Gate a11y automatizado** | @axe-core/playwright en E2E: verifica WCAG en cada flujo | **DONE** v13.1.78 (e2e/a11y.spec.js: axe en las 5 vistas, 5 tests verdes; fix WCAG AA en tema claro: --gold #6d551c, --edifica #9c5a16, --nav-text-active #d7b545, app-version opacity 0.9, card-link opacity 1; index.html #page-lit-type h3->h2; tema oscuro ya cumplia) |
 ---
 ## Reglas de Seguimiento
 

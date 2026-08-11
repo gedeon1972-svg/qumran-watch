@@ -56,10 +56,10 @@
 
     /* Nav — colores sobre fondo oscuro */
     --nav-text: #e8ddc8;
-    --nav-text-active: #d4af37;
+    --nav-text-active: #d7b545; /* contraste 4.5:1 sobre bg-nav (era #d4af37 4.27:1) */
 
     /* Colores de marca — oscurecidos para modo claro */
-    --gold: #7a6020; /* contraste 5.3:1 ? (era #b8962e ? 2.7:1 ?) */
+    --gold: #6d551c; /* contraste 5.1:1 sobre #e5d9c5 (era #7a6020 4.28:1) */
     --gold-dark: #5a4515; /* contraste 7.1:1 ? */
     --gold-bg: rgba(122, 96, 32, 0.08);
     --faint: #5a4a30; /* contraste 5.2:1 ? (era #8a7a50 ? 3.5:1 ?) */
@@ -70,7 +70,7 @@
     --blue-light: #1565a8; /* contraste 5.0:1 ? (era #3498db ? 2.6:1 ?) */
     --telegram: #0f6b9a; /* contraste 5.2:1 ? */
     --evangelio: #6b3fa0;
-    --edifica: #b86a1a;
+    --edifica: #9c5a16; /* contraste 4.5:1 sobre #f0eadc (era #b86a1a 3.42:1) */
     --whatsapp: #1a7a3a;
     --yellow: #8a6a00; /* contraste 5.1:1 ? (era #f1c40f ? 1.5:1 ?) */
 
@@ -1069,7 +1069,7 @@ h2 {
     text-decoration: underline;
 }
 #app-version {
-    opacity: 0.5;
+    opacity: 0.9;
     font-size: 0.6rem;
     margin-left: 6px;
     letter-spacing: 0;
@@ -1291,7 +1291,7 @@ h2 {
     font-size: 0.8rem;
     color: var(--gold);
     margin-top: 8px;
-    opacity: 0.8;
+    opacity: 1;
     transition: opacity 0.3s ease;
 }
 

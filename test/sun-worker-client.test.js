@@ -24,7 +24,12 @@ describe('sun-worker-client (5.2)', () => {
             onmessage: null,
             onerror: null,
         };
-        vi.stubGlobal('Worker', vi.fn(() => workerInstance));
+        vi.stubGlobal(
+            'Worker',
+            vi.fn(function () {
+                return workerInstance;
+            }),
+        );
         vi.resetModules();
         const { calcSunTimesAsync } = await import('../src/js/core/sun-worker-client.js');
         const result = await calcSunTimesAsync(date, JERUSALEM.lat, JERUSALEM.lng);
@@ -45,7 +50,12 @@ describe('sun-worker-client (5.2)', () => {
             onmessage: null,
             onerror: null,
         };
-        vi.stubGlobal('Worker', vi.fn(() => workerInstance));
+        vi.stubGlobal(
+            'Worker',
+            vi.fn(function () {
+                return workerInstance;
+            }),
+        );
         vi.resetModules();
         const { calcSunTimesAsync } = await import('../src/js/core/sun-worker-client.js');
         await expect(calcSunTimesAsync(date, JERUSALEM.lat, JERUSALEM.lng)).rejects.toThrow('boom');
@@ -55,11 +65,18 @@ describe('sun-worker-client (5.2)', () => {
         const date = new Date(2024, 5, 15);
         const expected = calcSunTimesPure(date, JERUSALEM.lat, JERUSALEM.lng);
         const workerInstance = {
-            postMessage: vi.fn(() => { throw new Error('worker muerto'); }),
+            postMessage: vi.fn(() => {
+                throw new Error('worker muerto');
+            }),
             onmessage: null,
             onerror: null,
         };
-        vi.stubGlobal('Worker', vi.fn(() => workerInstance));
+        vi.stubGlobal(
+            'Worker',
+            vi.fn(function () {
+                return workerInstance;
+            }),
+        );
         vi.resetModules();
         const { calcSunTimesAsync } = await import('../src/js/core/sun-worker-client.js');
         const result = await calcSunTimesAsync(date, JERUSALEM.lat, JERUSALEM.lng);
@@ -71,7 +88,12 @@ describe('sun-worker-client (5.2)', () => {
         const date = new Date(2024, 5, 15);
         const expected = calcSunTimesPure(date, JERUSALEM.lat, JERUSALEM.lng);
         const workerInstance = { postMessage: vi.fn(), onmessage: null, onerror: null };
-        vi.stubGlobal('Worker', vi.fn(() => workerInstance));
+        vi.stubGlobal(
+            'Worker',
+            vi.fn(function () {
+                return workerInstance;
+            }),
+        );
         vi.resetModules();
         const { calcSunTimesAsync } = await import('../src/js/core/sun-worker-client.js');
         const promise = calcSunTimesAsync(date, JERUSALEM.lat, JERUSALEM.lng);
@@ -84,7 +106,12 @@ describe('sun-worker-client (5.2)', () => {
         const date = new Date(2024, 5, 15);
         const expected = calcSunTimesPure(date, JERUSALEM.lat, JERUSALEM.lng);
         const workerInstance = { postMessage: vi.fn(), onmessage: null, onerror: null };
-        vi.stubGlobal('Worker', vi.fn(() => workerInstance));
+        vi.stubGlobal(
+            'Worker',
+            vi.fn(function () {
+                return workerInstance;
+            }),
+        );
         vi.resetModules();
         const { calcSunTimesAsync } = await import('../src/js/core/sun-worker-client.js');
         // primera llamada queda pendiente en worker

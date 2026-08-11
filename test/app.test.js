@@ -258,7 +258,11 @@ beforeEach(async () => {
     vi.stubGlobal('window', win);
     vi.stubGlobal('navigator', win.navigator);
     vi.stubGlobal('Blob', vi.fn());
-    vi.stubGlobal('URL', { createObjectURL: vi.fn(), revokeObjectURL: vi.fn() });
+    class MockURL extends URL {
+        static createObjectURL = vi.fn();
+        static revokeObjectURL = vi.fn();
+    }
+    vi.stubGlobal('URL', MockURL);
 
     await import('../src/js/app.js');
     appRef = win.QumranApp;

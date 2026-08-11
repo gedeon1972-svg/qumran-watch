@@ -1,132 +1,132 @@
 {
-    "name": "Qumran Watch",
-    "short_name": "Qumran",
-    "description": "Calendario Sagrado 364 dias, turnos sacerdotales, sincronizacion solar GPS y alertas ICS.",
-    "start_url": "/qumran-watch/",
-    "scope": "/qumran-watch/",
-    "display": "standalone",
-    "display_override": [
-        "standalone",
-        "minimal-ui"
-    ],
-    "orientation": "portrait",
-    "theme_color": "#1a120b",
-    "background_color": "#1a120b",
-    "lang": "es",
-    "categories": [
-        "education",
-        "lifestyle",
-        "spiritual"
-    ],
-    "shortcuts": [
+  "name": "Qumran Watch",
+  "short_name": "Qumran",
+  "description": "Calendario Sagrado 364 dias, turnos sacerdotales, sincronizacion solar GPS y alertas ICS.",
+  "start_url": "/qumran-watch/",
+  "scope": "/qumran-watch/",
+  "display": "standalone",
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
+  "orientation": "portrait",
+  "theme_color": "#1a120b",
+  "background_color": "#1a120b",
+  "lang": "es",
+  "categories": [
+    "education",
+    "lifestyle",
+    "spiritual"
+  ],
+  "shortcuts": [
+    {
+      "name": "Hoy",
+      "short_name": "Hoy",
+      "description": "Vista principal del dia actual",
+      "url": "/qumran-watch/#hoy",
+      "icons": [
         {
-            "name": "Hoy",
-            "short_name": "Hoy",
-            "description": "Vista principal del dia actual",
-            "url": "/qumran-watch/#hoy",
-            "icons": [
-                {
-                    "src": "./icons/icon-96x96.png",
-                    "sizes": "96x96"
-                }
-            ]
-        },
-        {
-            "name": "Ciclo",
-            "short_name": "Ciclo",
-            "description": "Ciclo de fiestas anual",
-            "url": "/qumran-watch/#cal",
-            "icons": [
-                {
-                    "src": "./icons/icon-96x96.png",
-                    "sizes": "96x96"
-                }
-            ]
-        },
-        {
-            "name": "Saber",
-            "short_name": "Saber",
-            "description": "Biblioteca de estudios biblicos",
-            "url": "/qumran-watch/#edu",
-            "icons": [
-                {
-                    "src": "./icons/icon-96x96.png",
-                    "sizes": "96x96"
-                }
-            ]
-        },
-        {
-            "name": "Red",
-            "short_name": "Red",
-            "description": "Comunidad y recursos",
-            "url": "/qumran-watch/#con",
-            "icons": [
-                {
-                    "src": "./icons/icon-96x96.png",
-                    "sizes": "96x96"
-                }
-            ]
+          "src": "./icons/icon-96x96.png",
+          "sizes": "96x96"
         }
-    ],
-    "screenshots": [
+      ]
+    },
+    {
+      "name": "Ciclo",
+      "short_name": "Ciclo",
+      "description": "Ciclo de fiestas anual",
+      "url": "/qumran-watch/#cal",
+      "icons": [
         {
-            "src": "./screenshots/screenshot-mobile.png",
-            "sizes": "540x720",
-            "type": "image/png",
-            "form_factor": "narrow",
-            "label": "Vista mobile: Hoy con fecha hebrea, Mishmar, sincronizacion solar y Omer"
-        },
-        {
-            "src": "./screenshots/screenshot-desktop.png",
-            "sizes": "1280x720",
-            "type": "image/png",
-            "form_factor": "wide",
-            "label": "Vista desktop: Grid completo con Hoy, Solar, Mishmar, Omer e Instruccion del Mesias"
+          "src": "./icons/icon-96x96.png",
+          "sizes": "96x96"
         }
-    ],
-    "icons": [
+      ]
+    },
+    {
+      "name": "Saber",
+      "short_name": "Saber",
+      "description": "Biblioteca de estudios biblicos",
+      "url": "/qumran-watch/#edu",
+      "icons": [
         {
-            "src": "./icons/icon-32x32.png",
-            "sizes": "32x32",
-            "type": "image/png",
-            "purpose": "any"
-        },
-        {
-            "src": "./icons/icon-48x48.png",
-            "sizes": "48x48",
-            "type": "image/png",
-            "purpose": "any"
-        },
-        {
-            "src": "./icons/icon-72x72.png",
-            "sizes": "72x72",
-            "type": "image/png",
-            "purpose": "any"
-        },
-        {
-            "src": "./icons/icon-96x96.png",
-            "sizes": "96x96",
-            "type": "image/png",
-            "purpose": "any"
-        },
-        {
-            "src": "./icons/icon-144x144.png",
-            "sizes": "144x144",
-            "type": "image/png",
-            "purpose": "any"
-        },
-        {
-            "src": "./icons/icon-192x192.png",
-            "sizes": "192x192",
-            "type": "image/png",
-            "purpose": "any maskable"
-        },
-        {
-            "src": "./icon.png",
-            "sizes": "512x512",
-            "type": "image/png",
-            "purpose": "any maskable"
+          "src": "./icons/icon-96x96.png",
+          "sizes": "96x96"
         }
-    ],
-    "version": "13.1.77"
+      ]
+    },
+    {
+      "name": "Red",
+      "short_name": "Red",
+      "description": "Comunidad y recursos",
+      "url": "/qumran-watch/#con",
+      "icons": [
+        {
+          "src": "./icons/icon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "./screenshots/screenshot-mobile.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Vista mobile: Hoy con fecha hebrea, Mishmar, sincronizacion solar y Omer"
+    },
+    {
+      "src": "./screenshots/screenshot-desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Vista desktop: Grid completo con Hoy, Solar, Mishmar, Omer e Instruccion del Mesias"
+    }
+  ],
+  "icons": [
+    {
+      "src": "./icons/icon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-48x48.png",
+      "sizes": "48x48",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "version": "13.1.78"
 }
