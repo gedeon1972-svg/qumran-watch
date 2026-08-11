@@ -23,6 +23,11 @@
 ### Changed
 - Cobertura `storage.js` 47% -> 100% y `sun-worker-client.js` 31% -> 96.87% statements (superan objetivo >=80% de la 5.2)
 
+## [13.1.70] - 2026-08-11 - FASE 5: E2E instalacion PWA (5.11)
+
+### Added
+- `e2e/install.spec.js`: 2 tests E2E — `beforeinstallprompt` (disparado via `CustomEvent` + mock de `prompt`/`userChoice`) muestra banner #pwa-install-banner con boton "Instalar ahora"; click en instalar oculta el banner
+
 ## [13.1.69] - 2026-08-11 - FASE 5: E2E permiso notificaciones (5.10)
 
 ### Added
