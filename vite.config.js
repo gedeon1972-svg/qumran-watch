@@ -69,6 +69,12 @@ export default defineConfig({
             reporter: ['text', 'html'],
             include: ['src/js/**'],
             exclude: ['node_modules/', 'dist/'],
+            thresholds: {
+                statements: 80,
+                branches: 60,
+                functions: 70,
+                lines: 80,
+            },
         },
     },
 });

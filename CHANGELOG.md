@@ -23,6 +23,15 @@
 ### Changed
 - Cobertura `storage.js` 47% -> 100% y `sun-worker-client.js` 31% -> 96.87% statements (superan objetivo >=80% de la 5.2)
 
+## [13.1.65] - 2026-08-11 - FASE 5: Gate de cobertura en CI (5.6)
+
+### Added
+- Thresholds de cobertura en `vite.config.js`: statements>=80, branches>=60, functions>=70, lines>=80 sobre `src/js/**`
+- `.github/workflows/ci.yml`: el job validate ahora ejecuta `npm run test:coverage` (antes `npm test`), de modo que el CI falla si la cobertura baja de los umbrales
+
+### Changed
+- Cobertura global: statements 83.06%, branches 84.21%, functions 72.5%, lines 83.06% (todas por encima del gate)
+
 ## [13.1.64] - 2026-08-10 - FASE 5: Cobertura branches core (5.5)
 
 ### Added
