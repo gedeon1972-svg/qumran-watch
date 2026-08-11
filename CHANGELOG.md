@@ -1,5 +1,20 @@
 # Changelog
 
+## [13.1.73] - 2026-08-11 - FASE 5: Modal de fiestas ampliado + año actual (5.14)
+
+### Added
+- `data.js`: campos `historia` y `qumran` en las 14 fiestas del ciclo (Escritura + Rollos de Qumran: 11Q19, 4Q324d, 4Q320, Jubileos 6:32, Enoc 72/82)
+- Modal del ciclo de fiestas: secciones historia y qumran (render condicional en `fiesta-view.js`, contenedores en `index.html`)
+- Selector de anio: por defecto muestra el anio en curso al cargar la app (`app.js` init)
+- `test/app.test.js`: 3 tests nuevos (historia/qumran visibles, ocultos sin datos, anio actual en cal-year)
+
+### Fixed
+- Error no controlado preexistente en `test/app.test.js` al invocar `init` completo: mocks ahora incluyen `remove()`, `matchMedia` y `documentElement.classList`, eliminando el `TypeError` en `calculateVigiaStatus`
+
+### Changed
+- Version a v13.1.73 en `package.json`, `public/manifest.json`, `public/sw-workbox.js` y `public/sw.js` (SW regenerado)
+- 172 tests + build + lint + check:encoding OK
+
 ## [13.1.59] - 2026-08-10 - FASE 5: Cobertura IndexedDB + fix deploy CI (5.1)
 
 ### Added

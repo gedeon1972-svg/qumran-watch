@@ -53,6 +53,8 @@ const QumranApp = {
 
     init: () => {
         initTheme();
+        const calYearEl = document.getElementById('cal-year');
+        if (calYearEl) calYearEl.value = String(new Date().getFullYear());
         const verEl = document.getElementById('app-version');
         if (verEl) verEl.textContent = 'v' + APP_VERSION;
         initPwaPrompt();
@@ -375,6 +377,8 @@ const QumranApp = {
             fechasHeb: f.d + ' del ' + QumranData.MESES[f.m] + '\n' + f.es,
             instr: f.instr,
             ref: f.ref,
+            historia: f.historia || null,
+            qumran: f.qumran || null,
             nota: f.nota || null,
             especial: f.especial || false,
         });

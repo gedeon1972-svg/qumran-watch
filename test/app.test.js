@@ -1,5 +1,6 @@
 import { expect, test, describe, vi, beforeEach, afterEach } from 'vitest';
 import { renderHoyView } from '../src/js/ui/hoy-view.js';
+import { QumranData as QumranDataRef } from '../src/js/core/data.js';
 
 let mockDoc, mockElements, appRef;
 
@@ -55,6 +56,7 @@ function buildDoc() {
             closest: vi.fn(() => null),
             click: vi.fn(),
             appendChild: vi.fn(),
+            remove: vi.fn(),
         };
         els[id] = el;
         return el;
@@ -119,6 +121,8 @@ function buildDoc() {
         'mod-fechas-heb',
         'mod-instr',
         'mod-ref',
+        'mod-historia',
+        'mod-qumran',
         'mod-note',
         'mod-warn',
         'lec-title',
@@ -129,6 +133,19 @@ function buildDoc() {
         'view-cal',
         'view-con',
         'view-edu',
+        'app-version',
+        'card-evangelio',
+        'card-edifica',
+        'card-whatsapp',
+        'modal-estacion',
+        'btn-close-estacion',
+        'modal-license',
+        'btn-close-license',
+        'btn-license',
+        'modal-mishmar',
+        'btn-close-mishmar',
+        'vigia-progress-container',
+        'vigia-solar-msg',
     ].forEach(addEl);
     els['view-hoy'].classList.add('active');
 
@@ -156,9 +173,13 @@ function buildDoc() {
                 style: {},
                 classList: { add: vi.fn(), remove: vi.fn(), toggle: vi.fn() },
                 addEventListener: vi.fn(),
+                remove: vi.fn(),
             })),
             body: { appendChild: vi.fn(), removeChild: vi.fn() },
-            documentElement: { style: {} },
+            documentElement: {
+                style: {},
+                classList: { add: vi.fn(), remove: vi.fn(), toggle: vi.fn(), contains: vi.fn(() => false) },
+            },
             addEventListener: vi.fn(),
         },
         els,
@@ -189,7 +210,21 @@ beforeEach(async () => {
         location: { hash: '', href: '', pathname: '/' },
         history: { replaceState: vi.fn(), pushState: vi.fn() },
         addEventListener: vi.fn(),
-        navigator: { serviceWorker: undefined, geolocation: undefined },
+        navigator: {
+            serviceWorker: undefined,
+            geolocation: undefined,
+            userAgent: '',
+            platform: '',
+            maxTouchPoints: 0,
+            standalone: false,
+        },
+        matchMedia: vi.fn(() => ({
+            matches: false,
+            addListener: vi.fn(),
+            removeListener: vi.fn(),
+            addEventListener: vi.fn(),
+            removeEventListener: vi.fn(),
+        })),
         open: vi.fn(),
         scrollTo: vi.fn(),
     };
@@ -335,6 +370,33 @@ describe('openFiesta', () => {
         appRef.openFiesta(0, 2024);
         expect(mockElements['mod-title'].innerText).not.toBe('');
         expect(mockElements['modal-fiesta'].style.display).toBe('flex');
+    });
+
+    test('muestra historia y qumran cuando la fiesta los tiene (Rosh Hashaná)', () => {
+        appRef.openFiesta(0, 2024);
+        expect(mockElements['mod-historia'].style.display).toBe('block');
+        expect(mockElements['mod-historia'].innerText.length).toBeGreaterThan(20);
+        expect(mockElements['mod-qumran'].style.display).toBe('block');
+        expect(mockElements['mod-qumran'].innerText).toContain('Qumrán');
+    });
+
+    test('oculta historia y qumran cuando la fiesta no los tiene', () => {
+        const f = QumranDataRef.FIESTAS.find((x) => !x.historia);
+        if (!f) return;
+        const idx = QumranDataRef.FIESTAS.indexOf(f);
+        appRef.openFiesta(idx, 2024);
+        expect(mockElements['mod-historia'].style.display).toBe('none');
+        expect(mockElements['mod-qumran'].style.display).toBe('none');
+    });
+});
+
+describe('Año en curso por defecto', () => {
+    test('cal-year toma el año actual al inicializar', () => {
+        const listener = mockDoc.addEventListener.mock.calls.find((c) => c[0] === 'DOMContentLoaded');
+        expect(listener).toBeTruthy();
+        listener[1]();
+        const year = new Date().getFullYear();
+        expect(mockElements['cal-year'].value).toBe(String(year));
     });
 });
 

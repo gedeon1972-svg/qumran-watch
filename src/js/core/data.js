@@ -90,6 +90,9 @@ export const QumranData = {
             instr: 'Tocad trompeta en el inicio del mes...',
             ref: 'Salmo 81:3-4',
             nota: "NOTA DE ESTUDIO: La palabra 'Jodesh' implica renovación solar (Tekufah).",
+            historia:
+                'El primer día del mes primero abre el año sagrado del calendario de 364 días. Es la cabeza del ciclo solar: con la renovación de la lumbrera (Tekufah de Nisan) comienza la cuenta de las estaciones y de todas las fiestas del Señor (Génesis 1:14).',
+            qumran: 'Los manuscritos de Qumrán (4Q320, Mishmarot) sincronizan el inicio del año con el turno sacerdotal de Gamul, y 4Q324d confirma la Tekufah como el día de transición entre estaciones del año de 364 días.',
         },
         {
             m: 0,
@@ -98,6 +101,9 @@ export const QumranData = {
             es: 'Separación del Cordero',
             instr: 'En el décimo día de este mes tomarán cada uno un cordero...',
             ref: 'Éxodo 12:3',
+            historia:
+                'En el décimo día del mes primero, cada familia separaba su cordero para la Pascua (Éxodo 12:3). Este día de "separación" preparaba el sacrificio pascual y prefiguraba la elección del Cordero sin mancha.',
+            qumran: 'El Rollo del Templo (11Q19) detalla el calendario de preparación de la Pascua en el mes primero, confirmando la selección del cordero en el décimo día.',
         },
         {
             m: 0,
@@ -106,6 +112,9 @@ export const QumranData = {
             es: 'Cena de Pascua',
             instr: 'Y lo guardaréis hasta el día catorce... entre las dos tardes.',
             ref: 'Éxodo 12:6',
+            historia:
+                'La noche del día catorce del mes primero, el cordero era inmolado entre las dos tardes (Éxodo 12:6). En el calendario de 364 días Pesaj cae siempre en Martes, y es la primera de las tres grandes fiestas de peregrinación.',
+            qumran: 'El Rollo del Templo (11Q19) y los Mishmarot (4Q320) fijan la Pascua en el calendario solar de 364 días, alineada con el ciclo sacerdotal.',
         },
         {
             m: 0,
@@ -115,6 +124,9 @@ export const QumranData = {
             dur: 7,
             instr: 'Siete días comeréis panes sin levadura...',
             ref: 'Éxodo 12:15-16',
+            historia:
+                'Siete días de panes sin levadura que acompañan a la Pascua (Éxodo 12:15-16). La levadura es figura del pecado; su ausencia enseña la santidad del pueblo redimido que sale de Egipto con pan ázimo.',
+            qumran: 'El Rollo del Templo (11Q19) prescribe la fiesta de los Panes sin Levadura dentro de la cuenta de los 364 días, con la ofrenda de la gavilla de cebada (Bikurim) durante sus días.',
         },
         {
             m: 0,
@@ -123,6 +135,9 @@ export const QumranData = {
             es: 'Primicias (Omer)',
             instr: 'Traeréis la gavilla de las primicias de vuestra siega...',
             ref: 'Levítico 23:10-11',
+            historia:
+                'La gavilla de las primicias de la cosecha de cebada se mecía delante del Señor (Levítico 23:10-11). Es la primera de las cuentas de 50 días (Omer) que conducen a Shavuot, y sombra de la resurrección de Yeshua, primicia de los que duermen (1 Corintios 15:20).',
+            qumran: 'El calendario de Qumrán (11Q19, 4Q319) sitúa la fiesta de las Primicias dentro de la Pascua, iniciando la cuenta del Omer hacia Shavuot.',
         },
         {
             m: 1,
@@ -131,6 +146,9 @@ export const QumranData = {
             es: 'Segunda Pascua',
             instr: 'Si alguno de vosotros estuviere inmundo o lejos...',
             ref: 'Números 9:10-11',
+            historia:
+                'Una segunda oportunidad para celebrar la Pascua un mes después, dada a los que estaban inmundos o en viaje lejano (Números 9:10-11). Muestra la misericordia del Señor y su deseo de que nadie quede fuera de sus fiestas.',
+            qumran: 'El Rollo del Templo (11Q19) contempla la Segunda Pascua en el mes segundo del calendario de 364 días.',
         },
         {
             m: 2,
@@ -139,6 +157,9 @@ export const QumranData = {
             es: 'Fiesta de las Semanas',
             instr: 'Y contaréis siete semanas cumplidas...',
             ref: 'Levítico 23:15-16',
+            historia:
+                'Cincuenta días (siete semanas cumplidas) después de las Primicias (Levítico 23:15-16). En el calendario de 364 días Shavuot cae siempre en Domingo. Celebra la cosecha del trigo y, en el nuevo pacto, el derramamiento del Espíritu Santo (Hechos 2:1-4).',
+            qumran: 'El Rollo del Templo (11Q19) lo llama la fiesta del Trigo Nuevo, primera de las tres cuentas de 50 días (Trigo, Vino, Aceite) del calendario agrícola de Qumrán.',
         },
         {
             m: 3,
@@ -147,6 +168,9 @@ export const QumranData = {
             es: 'Estación de Verano',
             instr: 'Tú has establecido todos los términos de la tierra...',
             ref: 'Salmo 74:17',
+            historia:
+                'El primer día del mes cuarto marca la Tekufah de verano, el giro de las estaciones en el calendario de 364 días. Es un día de transición que el Señor estableció como "líder" entre los meses (Salmo 74:17).',
+            qumran: '4Q324d (descifrado en 2017) revela que los esenios llamaban "Tekufah" a estos días de transición entre estaciones, insertados en la cuenta solar.',
         },
         {
             m: 4,
@@ -155,6 +179,9 @@ export const QumranData = {
             es: 'Fiesta del Vino Nuevo',
             instr: 'Cuando siegues tu mies... traerás vino nuevo.',
             ref: 'Rollo del Templo 11QT',
+            historia:
+                'Cincuenta días después de Shavuot se celebra la fiesta del Vino Nuevo, primicias de la vendimia. Es una de las fiestas que el Rollo del Templo añade al ciclo agrícola y que el judaísmo posterior olvidó.',
+            qumran: 'El Rollo del Templo (11Q19) y 4Q324d describen la fiesta del Vino Nuevo (Tirosh), segunda de las cuentas de 50 días del calendario de Qumrán.',
         },
         {
             m: 5,
@@ -163,6 +190,9 @@ export const QumranData = {
             es: 'Fiesta del Aceite',
             instr: 'Ofrenda de las primicias del aceite fresco...',
             ref: 'Rollo del Templo 11QT',
+            historia:
+                'Cincuenta días después del Vino Nuevo, las primicias del aceite fresco se ofrecían al Señor. Completa la trilogía agrícola de las cuentas de 50 días junto al Trigo y al Vino.',
+            qumran: 'El Rollo del Templo (11Q19) y 4Q324d registran la fiesta del Aceite Nuevo (Yitzhar), tercera cuenta de 50 días del calendario solar de Qumrán.',
         },
         {
             m: 6,
@@ -171,6 +201,9 @@ export const QumranData = {
             es: 'Fiesta de las Trompetas',
             instr: 'En el mes séptimo, al primero del mes...',
             ref: 'Levítico 23:24',
+            historia:
+                'El primer día del mes séptimo se convoca a santa asamblea con toque de trompetas (Levítico 23:24). Es sombra del gran día de la resurrección y del toque final de la trompeta del Señor (1 Corintios 15:52).',
+            qumran: 'Los Mishmarot (4Q320) alinean Yom Teruah con el turno sacerdotal del mes séptimo en el ciclo de 6 años de 364 días.',
         },
         {
             m: 6,
@@ -180,6 +213,9 @@ export const QumranData = {
             especial: true,
             instr: 'A los diez días de este mes séptimo será día de expiación...',
             ref: 'Levítico 23:32',
+            historia:
+                'El único ayuno ordenado en la Torá: día de expiación del santuario y del pueblo (Levítico 23:32; 16:29-31). En el calendario de 364 días cae siempre en Viernes. Es sombra de la expiación consumada por el Mesías (Hebreos 9:24-28).',
+            qumran: 'El Rollo del Templo (11Q19) prescribe el ayuno y la expiación del día décimo del mes séptimo dentro del calendario solar.',
         },
         {
             m: 6,
@@ -189,6 +225,9 @@ export const QumranData = {
             dur: 7,
             instr: 'En tabernáculos habitaréis siete días...',
             ref: 'Levítico 23:42',
+            historia:
+                'Siete días en tabernáculos para recordar que el Señor hizo habitar a Israel en tiendas (Levítico 23:42). Es la tercera fiesta de peregrinación; sombra del Reino donde el Mesías morará con su pueblo (Zacarías 14:16).',
+            qumran: 'El Rollo del Templo (11Q19) dedica extensos pasajes a Sucot y sus ofrendas en el mes séptimo del calendario de 364 días.',
         },
         {
             m: 6,
@@ -197,6 +236,9 @@ export const QumranData = {
             es: 'El Octavo Día',
             instr: 'El octavo día tendréis solemnidad...',
             ref: 'Números 29:35',
+            historia:
+                'El octavo día, asamblea solemne que cierra el ciclo festivo (Números 29:35). El número ocho señala un nuevo comienzo: la restauración final que sigue a las fiestas del séptimo mes.',
+            qumran: 'El Rollo del Templo (11Q19) incluye la asamblea solemne del octavo día al concluir Sucot en el calendario solar.',
         },
     ],
 

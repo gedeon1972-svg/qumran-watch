@@ -69,6 +69,7 @@
 | 5.11 | **E2E instalacion PWA** | Flujo: beforeinstallprompt -> se muestra boton INSTALAR; appinstalled -> boton se oculta | **DONE** v13.1.70 (e2e/install.spec.js: beforeinstallprompt -> banner visible con boton; click instalar -> banner oculto) |
 | 5.12 | **Branch protection + PR** | Ruleset en GitHub: PR obligatorio, 1 review, status checks (ci + coverage), sin push directo a main | **DONE** v13.1.72 (ruleset proteccion-main id 20692454: PR + 1 approval + validate/e2e checks + no deletion/FF; admin bypass) |
 | 5.13 | **Release tagging** | Workflow: tag vX.Y.Z + GitHub Release automatico por merge a main, lectura de version desde package.json | **DONE** v13.1.71 (.github/workflows/release.yml: tag auto desde package.json + Release prerelease) |
+| 5.14 | **Ampliar modal de fiestas + año actual** | Campos historia/qumran en las 14 fiestas (Escritura + Rollos de Qumrán) renderizados en el modal del ciclo; año en curso por defecto en el selector | **DONE** v13.1.73 (data.js +14 fiestas, fiesta-view.js render condicional, index.html 2 secciones, openFiesta, cal-year dinamico; 3 tests nuevos; fix error preexistente updateSunData en mocks) |
 
 ---
 ## Reglas de Seguimiento
@@ -106,3 +107,4 @@
 | 2026-08-10 | v13.1.60 | 5.2 Cobertura storage + worker-client | (en commit) | test/storage.test.js (5 tests, incluye fallback memoria en incognito) + test/sun-worker-client.test.js (5 tests: worker OK, error, postMessage throw, timeout 1s, onerror); storage 100% y worker-client 96.87% statements |
 | 2026-08-10 | v13.1.59 | 5.1 Cobertura idb + notif-store | (en commit) | test/idb.test.js con fake-indexeddb, 13 tests; idb.js y notif-store.js al 100% statements; lint 0 warnings; fix deploy eliminando canvas |
 | 2026-08-10 | v13.1.58 | 4.1 IndexedDB cache datos | CUBIERTO | Evaluado: objetivo (reducir JS inicial) ya resuelto por 4.3 code-split + SW precache; refactor a IDB romperia 8 importadores y 30+ tests sin beneficio |
+| 2026-08-11 | v13.1.73 | 5.14 Modal fiestas ampliado + año actual | (en commit) | data.js: historia+qumran en las 14 fiestas (Escritura + 11QT/4Q324d/4Q320/Jubileos/Enoc); fiesta-view.js render condicional; index.html secciones mod-historia/mod-qumran; app.js openFiesta + cal-year con año en curso en init; test/app.test.js: 3 tests nuevos (historia/qumran visibles, ocultos sin datos, año actual) + mocks con remove()/matchMedia/documentElement.classList (resuelve error no controlado preexistente en updateSunData); manifest.json v13.1.73; SW regenerado; 172 tests+build+lint+encoding OK |

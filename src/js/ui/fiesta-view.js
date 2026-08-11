@@ -11,6 +11,24 @@ export function renderFiestaModal(data) {
     } else {
         noteEl.style.display = 'none';
     }
+    const histEl = document.getElementById('mod-historia');
+    if (histEl) {
+        if (data.historia) {
+            histEl.style.display = 'block';
+            histEl.innerText = data.historia;
+        } else {
+            histEl.style.display = 'none';
+        }
+    }
+    const qumranEl = document.getElementById('mod-qumran');
+    if (qumranEl) {
+        if (data.qumran) {
+            qumranEl.style.display = 'block';
+            qumranEl.innerText = data.qumran;
+        } else {
+            qumranEl.style.display = 'none';
+        }
+    }
     const warnEl = document.getElementById('mod-warn');
     if (warnEl) warnEl.style.display = data.especial ? 'block' : 'none';
     document.getElementById('modal-fiesta').style.display = 'flex';
