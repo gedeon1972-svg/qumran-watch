@@ -23,6 +23,13 @@
 ### Changed
 - Cobertura `storage.js` 47% -> 100% y `sun-worker-client.js` 31% -> 96.87% statements (superan objetivo >=80% de la 5.2)
 
+## [13.1.67] - 2026-08-11 - FASE 5: E2E GPS fallback (5.8)
+
+### Added
+- `e2e/gps-fallback.spec.js`: 2 tests E2E
+  - Geolocalizacion denegada (via `page.addInitScript` que fuerza error): `#geo-btn` muestra "Jerusalen (GPS Inactivo)", `#sun-rise` y `#sun-set` con hora valida (no vacio ni "--:--"), y `qw_lat`/`qw_lng` NO se guardan en localStorage
+  - Geolocalizacion concedida (grantPermissions + setGeolocation Madrid 40.4168,-3.7038): se muestran horas y las coordenadas se persisten en localStorage
+
 ## [13.1.66] - 2026-08-11 - FASE 5: E2E setup + smoke (5.7)
 
 ### Added
