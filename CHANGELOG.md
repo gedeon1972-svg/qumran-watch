@@ -23,6 +23,12 @@
 ### Changed
 - Cobertura `storage.js` 47% -> 100% y `sun-worker-client.js` 31% -> 96.87% statements (superan objetivo >=80% de la 5.2)
 
+## [13.1.69] - 2026-08-11 - FASE 5: E2E permiso notificaciones (5.10)
+
+### Added
+- `e2e/notifications.spec.js`: 2 tests E2E con mock de Notification via `addInitScript` — aceptar permiso -> toast "Recordatorios activados"; denegar -> toast "Recordatorios no activados"
+- El click al toast contextual se hace dentro del navegador (`waitForFunction` + `t.click()`) para sortear el `animationend` que elimina el toast
+
 ## [13.1.68] - 2026-08-11 - FASE 5: E2E descarga ICS (5.9)
 
 ### Added
