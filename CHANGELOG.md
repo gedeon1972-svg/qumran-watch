@@ -3,6 +3,18 @@
 
 
 
+
+## [13.1.77] - 2026-08-11 - FASE 6: Cobertura calendar-view (6.4)
+
+### Added
+- `test/calendar-view.test.js`: 8 tests nuevos para renderCalendarView (sin cal-lista, toolbar insertado/no insertado/sin container, click del boton imprime, rango de fechas con dur>1, sin rango, lista vacia)
+- Mock de print-view con vi.hoisted para openPrintWindow
+
+### Changed
+- `calendar-view.js`: 100% stmts / 90.9% branches / 100% funcs (antes 81.66% / 42.85%)
+- Cobertura global: 93.86% stmts / 87.95% branches / 84.16% funcs
+- Version a v13.1.77 en `package.json`, `public/manifest.json`, `public/sw-workbox.js` y `public/sw.js` (SW regenerado)
+- 236 tests + lint OK
 ## [13.1.76] - 2026-08-11 - FASE 6: Cobertura app.js (6.3)
 
 ### Added
