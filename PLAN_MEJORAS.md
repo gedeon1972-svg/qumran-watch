@@ -67,7 +67,7 @@
 | 5.9 | **E2E descarga ICS** | Flujo: navegar a Ciclo, generar, click export -> se descarga .ics valido (BEGIN/END:VCALENDAR) | **DONE** v13.1.68 (e2e/ics.spec.js: nombre + contenido valido, acceptDownloads) |
 | 5.10 | **E2E permiso notificaciones** | Flujo: aceptar permiso -> toast de activacion; denegar -> mensaje de fallback | **DONE** v13.1.69 (e2e/notifications.spec.js: aceptar -> "Recordatorios activados", denegar -> "no activados") |
 | 5.11 | **E2E instalacion PWA** | Flujo: beforeinstallprompt -> se muestra boton INSTALAR; appinstalled -> boton se oculta | **DONE** v13.1.70 (e2e/install.spec.js: beforeinstallprompt -> banner visible con boton; click instalar -> banner oculto) |
-| 5.12 | **Branch protection + PR** | Ruleset en GitHub: PR obligatorio, 1 review, status checks (ci + coverage), sin push directo a main | NO |
+| 5.12 | **Branch protection + PR** | Ruleset en GitHub: PR obligatorio, 1 review, status checks (ci + coverage), sin push directo a main | **DONE** v13.1.72 (ruleset proteccion-main id 20692454: PR + 1 approval + validate/e2e checks + no deletion/FF; admin bypass) |
 | 5.13 | **Release tagging** | Workflow: tag vX.Y.Z + GitHub Release automatico por merge a main, lectura de version desde package.json | **DONE** v13.1.71 (.github/workflows/release.yml: tag auto desde package.json + Release prerelease) |
 
 ---

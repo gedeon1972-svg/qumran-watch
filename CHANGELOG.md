@@ -23,6 +23,14 @@
 ### Changed
 - Cobertura `storage.js` 47% -> 100% y `sun-worker-client.js` 31% -> 96.87% statements (superan objetivo >=80% de la 5.2)
 
+## [13.1.72] - 2026-08-11 - FASE 5: Branch protection + PR (5.12)
+
+### Added
+- Ruleset `proteccion-main` (id 20692454) en GitHub para `refs/heads/main`: PR obligatorio + 1 approval (dismiss stale), required status checks (validate + e2e con strict policy), bloqueo de deletion y non-fast-forward, admin con bypass
+
+### Changed
+- Flujo de trabajo: los cambios a main ahora entran via Pull Request (con checks en verde), no push directo
+
 ## [13.1.71] - 2026-08-11 - FASE 5: Release tagging (5.13)
 
 ### Added
