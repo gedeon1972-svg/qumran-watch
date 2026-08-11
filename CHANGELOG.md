@@ -1,6 +1,18 @@
 # Changelog
 
 
+
+## [13.1.75] - 2026-08-11 - FASE 6: Cobertura tema claro/oscuro (6.2)
+
+### Added
+- `test/theme.test.js`: 21 tests nuevos para theme.js (getStoredTheme, getSystemTheme, resolveTheme, applyTheme, toggleTheme, initTheme) y theme-init.js IIFE (tema guardado, preferencia del sistema, localStorage con fallback)
+- `theme.js`: 100% stmts / 90.9% branches / 100% funcs
+- `theme-init.js`: 100% stmts / 100% branches / 100% funcs
+
+### Changed
+- Cobertura global: 89.45% stmts / 84.44% branches / 82.5% funcs
+- Version a v13.1.75 en `package.json`, `public/manifest.json`, `public/sw-workbox.js` y `public/sw.js` (SW regenerado)
+- 200 tests + lint OK
 ## [13.1.74] - 2026-08-11 - FASE 6: Cierre de deuda de cobertura (6.1)
 
 ### Added
