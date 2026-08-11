@@ -23,6 +23,12 @@
 ### Changed
 - Cobertura `storage.js` 47% -> 100% y `sun-worker-client.js` 31% -> 96.87% statements (superan objetivo >=80% de la 5.2)
 
+## [13.1.68] - 2026-08-11 - FASE 5: E2E descarga ICS (5.9)
+
+### Added
+- `e2e/ics.spec.js`: 1 test E2E — navegar a Ciclo, generar 2024, exportar, capturar download, verificar nombre `Qumran_Moedim_2024.ics` y contenido valido (BEGIN/END:VCALENDAR, VEVENT, DTSTART, SUMMARY)
+- `playwright.config.js`: `acceptDownloads: true`
+
 ## [13.1.67] - 2026-08-11 - FASE 5: E2E GPS fallback (5.8)
 
 ### Added

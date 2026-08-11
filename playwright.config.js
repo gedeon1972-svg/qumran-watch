@@ -9,6 +9,7 @@ export default defineConfig({
     reporter: 'list',
     use: {
         baseURL: 'http://localhost:4173/qumran-watch/',
+        acceptDownloads: true,
         trace: 'on-first-retry',
     },
     webServer: {

@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/github/license/gedeon1972-svg/qumran-watch)](LICENSE)
 [![PWA](https://img.shields.io/badge/PWA-100%25%20Offline-blue)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)
 [![JavaScript](https://img.shields.io/badge/ES6-Modules-yellow)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
-[![Version](https://img.shields.io/badge/version-13.1.67-gold)](package.json)
+[![Version](https://img.shields.io/badge/version-13.1.68-gold)](package.json)
 
 Aplicación Web Progresiva (PWA) que restaura el **Calendario Solar de 364 Días** de los Manuscritos del Mar Muerto, con sincronización GPS, ciclo de 24 turnos sacerdotales (Mishmarot), alertas ICS y biblioteca de estudios bíblicos. Funciona **100% offline**.
 
@@ -181,6 +181,9 @@ El plan completo de evolución (FASES 1-5, incluyendo industrialización a CMMI 
 ## Changelog
 
 El historial completo está en [CHANGELOG.md](CHANGELOG.md). Resumen reciente:
+
+### 13.1.68 (2026-08-11)
+E2E descarga ICS: genera 2024 y exporta .ics valido (5.9).
 
 ### 13.1.67 (2026-08-11)
 E2E GPS fallback: verifica que al denegar geolocalizacion se usa Jerusalen con salida/puesta visibles, y que al concederla se guardan coordenadas (5.8).
