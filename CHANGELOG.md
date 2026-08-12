@@ -1,3 +1,15 @@
+## [13.1.81] - 2026-08-12 - Fix deploy: Service Worker regenerado + workflow CI corregido
+
+### Fixed
+- .github/workflows/deploy.yml: anadido paso pm run generate-sw entre build y deploy; el SW en dist ahora tiene hashes precache actualizados basados en el contenido real
+- .github/workflows/deploy.yml: cambiado pm install a pm ci para builds deterministas y cache de npm
+- .github/workflows/deploy.yml: anadidos permisos pages: write, id-token: write para compatibilidad con GitHub Pages
+
+### Validation
+- npm test: 236 tests pasan; npm run build OK; npm run generate-sw OK (21 archivos precacheados)
+
+
+
 ## [13.1.80] - 2026-08-11 - Toolchain lint: ESLint 10 + lint-staged 17
 
 ### Changed
