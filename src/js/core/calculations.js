@@ -109,9 +109,9 @@ export function buildHoyViewModel(date, qData) {
     const fIdx = QumranData.FIESTAS.findIndex((x) => x.m === qData.m && x.d === qData.d);
 
     let percent = ((qData.idxSem + 1) / 7) * 100;
-    let s = null;
-    let litType = '';
-    let litMain = '';
+    let s;
+    let litType;
+    let litMain;
 
     if (qData.idxSem === 6) {
         percent = 100;

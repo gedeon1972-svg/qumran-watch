@@ -1,3 +1,14 @@
+## [13.1.80] - 2026-08-11 - Toolchain lint: ESLint 10 + lint-staged 17
+
+### Changed
+- eslint 9.39.5 -> 10.8.1, @eslint/js 9.39.5 -> 10.0.1, lint-staged 15.5.2 -> 17.3.0 (majors; merge de PRs Dependabot #6, #7, #8)
+- globals declarado como devDependency explicita (^17.10.0): eslint 10 ya no lo expone transitivamente en la config flat
+
+### Fixed
+- src/js/core/calculations.js: quitar inicializadores redundantes de s/litType/litMain (regla nueva no-useless-assignment de ESLint 10; las 3 variables se asignan en ambas ramas del if/else, sin cambio de comportamiento)
+
+### Validation
+- npm run lint OK; npm test: 236 tests pasan; npm run build OK; SW regenerado (21 archivos, 729.60 KB); npm audit 0 vulnerabilidades
 ## [13.1.79] - 2026-08-11 - FASE 6: E2E offline, modal fiesta, tema y navegacion (6.5-6.8)
 
 ### Added
