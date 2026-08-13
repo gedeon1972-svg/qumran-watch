@@ -1,4 +1,4 @@
-// sw-workbox.js - Workbox Service Worker para Qumran Watch v13.1.81
+// sw-workbox.js - Workbox Service Worker para Qumran Watch v13.1.82
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/7.1.0/workbox-sw.js');
 
 const { precacheAndRoute, cleanupOutdatedCaches } = workbox.precaching;
@@ -7,33 +7,9 @@ const { NetworkFirst, CacheFirst, StaleWhileRevalidate } = workbox.strategies;
 const { ExpirationPlugin } = workbox.expiration;
 const { CacheableResponsePlugin } = workbox.cacheableResponse;
 
-console.log('[SW] Workbox SW v13.1.81 iniciando...');
+console.log('[SW] Workbox SW v13.1.82 iniciando...');
 
-precacheAndRoute(
-    [
-        { revision: '830bb116a513550c5858d60ded660753', url: 'privacy.html' },
-        { revision: '46ce896f239737aca86aae5112a88252', url: 'manifest.json' },
-        { revision: 'c9572888756e5c887d1b56b6dff80e51', url: 'license.html' },
-        { revision: 'f1cbc59aab6ea2c2624968a6b3de6a66', url: 'index.html' },
-        { revision: 'f214d4ac2c7f2e2c94e366ca34c5c92e', url: 'icon.png' },
-        { revision: 'cc80b6911f67db35fcb56aa3a349b47a', url: 'src/js/index.js' },
-        { revision: '1fb2359992be4ebeedda9af7fd0b85c0', url: 'src/js/core.js' },
-        { revision: '1a442051dcee6065b76084d3d59a984f', url: 'src/css/index.css' },
-        { revision: '2d8904c9b0cd7cb2929d0bb613047f58', url: 'src/css/fonts/david-libre-v17-latin-regular.woff2' },
-        { revision: '1d9878b23b606fc71d20a4ed5bd2ce1f', url: 'src/css/fonts/david-libre-v17-latin-700.woff2' },
-        { revision: '63126eeda8319b882d8d9320edc8ca5a', url: 'src/css/fonts/cinzel-v26-latin-regular.woff2' },
-        { revision: '82175d611596bd4529ca178ff59fb1f4', url: 'src/css/fonts/cinzel-v26-latin-700.woff2' },
-        { revision: 'f3cbad24e40bcc40a28cb3422428f6f3', url: 'screenshots/screenshot-mobile.png' },
-        { revision: '501b5f4b3c05c1493b3159232202824f', url: 'screenshots/screenshot-desktop.png' },
-        { revision: 'cfffe1bdc43de67a79dda9bfda56921a', url: 'icons/icon-96x96.png' },
-        { revision: '5a05b85f35be2bccc989a6944fb64c01', url: 'icons/icon-72x72.png' },
-        { revision: '5275b3630c847fb0d6eca560d7003b5e', url: 'icons/icon-48x48.png' },
-        { revision: 'fc19164b1b3c0a5ef1cec05215e48f82', url: 'icons/icon-32x32.png' },
-        { revision: '29e75c92dc87a39f004eb34346e7ce24', url: 'icons/icon-192x192.png' },
-        { revision: 'ebc09dae95e62cf426329bf34dcfd363', url: 'icons/icon-144x144.png' },
-        { revision: '8b801237234729c3dc34d4f6118aec82', url: 'assets/sun-worker.js' },
-    ] || [],
-);
+precacheAndRoute([{"revision":"c5231de297cf3d6dd0fad1e39b74087e","url":"privacy.html"},{"revision":"94fb7ceaf4292dd22a944029b3d7a687","url":"manifest.json"},{"revision":"50615a3213eb1f61db06fea3d51b7c0f","url":"license.html"},{"revision":"b49e7929460d24bf84c8bfcbe3ccd3a1","url":"index.html"},{"revision":"f214d4ac2c7f2e2c94e366ca34c5c92e","url":"icon.png"},{"revision":"e59ac9ae0eeef21353daf8652a0e4e71","url":"src/js/index.js"},{"revision":"1fb2359992be4ebeedda9af7fd0b85c0","url":"src/js/core.js"},{"revision":"f2f33785997a11b4d2581d0433f48982","url":"src/css/index.css"},{"revision":"2d8904c9b0cd7cb2929d0bb613047f58","url":"src/css/fonts/david-libre-v17-latin-regular.woff2"},{"revision":"1d9878b23b606fc71d20a4ed5bd2ce1f","url":"src/css/fonts/david-libre-v17-latin-700.woff2"},{"revision":"63126eeda8319b882d8d9320edc8ca5a","url":"src/css/fonts/cinzel-v26-latin-regular.woff2"},{"revision":"82175d611596bd4529ca178ff59fb1f4","url":"src/css/fonts/cinzel-v26-latin-700.woff2"},{"revision":"f3cbad24e40bcc40a28cb3422428f6f3","url":"screenshots/screenshot-mobile.png"},{"revision":"501b5f4b3c05c1493b3159232202824f","url":"screenshots/screenshot-desktop.png"},{"revision":"cfffe1bdc43de67a79dda9bfda56921a","url":"icons/icon-96x96.png"},{"revision":"5a05b85f35be2bccc989a6944fb64c01","url":"icons/icon-72x72.png"},{"revision":"5275b3630c847fb0d6eca560d7003b5e","url":"icons/icon-48x48.png"},{"revision":"fc19164b1b3c0a5ef1cec05215e48f82","url":"icons/icon-32x32.png"},{"revision":"29e75c92dc87a39f004eb34346e7ce24","url":"icons/icon-192x192.png"},{"revision":"ebc09dae95e62cf426329bf34dcfd363","url":"icons/icon-144x144.png"},{"revision":"8b801237234729c3dc34d4f6118aec82","url":"assets/sun-worker.js"}] || []);
 cleanupOutdatedCaches();
 
 self.addEventListener('message', (event) => {
@@ -200,4 +176,4 @@ async function showDueNotifications() {
     }
 }
 
-console.log('[SW] Workbox SW v13.1.81 listo');
+console.log('[SW] Workbox SW v13.1.82 listo');
