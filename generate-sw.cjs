@@ -8,7 +8,7 @@ const VERSION = pkg.version;
 async function generateServiceWorker() {
   const { count, size, warnings } = await injectManifest({
     swSrc: path.join(__dirname, 'public', 'sw-workbox.js'),
-    swDest: path.join(__dirname, 'public', 'sw.js'),
+    swDest: path.join(__dirname, 'dist', 'sw.js'),
     globDirectory: path.join(__dirname, 'dist'),
     globPatterns: [
       '**/*.{js,css,html,json,woff2,png,ico}'
@@ -29,6 +29,10 @@ async function generateServiceWorker() {
     console.log('\n\u26a0\ufe0f Advertencias:');
     warnings.forEach(w => console.log('   - ' + w));
   }
+
+  // Sync generado a public/sw.js para mantener el archivo comiteado en sync
+  fs.copyFileSync(path.join(__dirname, 'dist', 'sw.js'), path.join(__dirname, 'public', 'sw.js'));
+  console.log('   public/sw.js sincronizado con dist/sw.js');
 }
 
 generateServiceWorker().catch(err => {

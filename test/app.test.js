@@ -2,6 +2,7 @@ import { expect, test, describe, vi, beforeEach, afterEach } from 'vitest';
 import { renderHoyView } from '../src/js/ui/hoy-view.js';
 import * as buildHoyViewModelRef from '../src/js/core/calculations.js';
 import { QumranData as QumranDataRef } from '../src/js/core/data.js';
+import { getSunriseTime } from '../src/js/core/time-translator.js';
 
 const mockSunriseTime = { firstLight: 25 };
 
@@ -506,6 +507,27 @@ describe('calculateVigiaStatus - antes de la primera luz', () => {
         expect(container.appendChild).toHaveBeenCalled();
         expect(mockElements['alert-container'].style.display).toBe('block');
         expect(mockElements['vigia-solar-msg']).toBeDefined();
+    });
+});
+describe('calculateVigiaStatus - casos edge', () => {
+    test('retorna early si no hay _lastSunData', () => {
+        appRef._lastSunData = null;
+        appRef.calculateVigiaStatus();
+        expect(mockElements['sun-container'].appendChild).not.toHaveBeenCalled();
+    });
+    test('retorna early si getSunriseTime devuelve null', () => {
+        appRef._lastSunData = { lat: 31.7683, lng: 35.2137 };
+        vi.mocked(getSunriseTime).mockReturnValue(null);
+        appRef.calculateVigiaStatus();
+        expect(mockElements['sun-container'].appendChild).not.toHaveBeenCalled();
+        vi.mocked(getSunriseTime).mockReturnValue(mockSunriseTime);
+    });
+    test('no muestra cuenta regresiva si el dia ya comenzo', () => {
+        appRef._lastSunData = { lat: 31.7683, lng: 35.2137 };
+        vi.mocked(getSunriseTime).mockReturnValue({ sunrise: 6, firstLight: 0 });
+        appRef.calculateVigiaStatus();
+        expect(mockElements['sun-container'].appendChild).not.toHaveBeenCalled();
+        vi.mocked(getSunriseTime).mockReturnValue(mockSunriseTime);
     });
 });
 describe('setupListeners - botones de comunidad', () => {

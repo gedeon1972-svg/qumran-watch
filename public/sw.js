@@ -1,4 +1,4 @@
-// sw-workbox.js - Workbox Service Worker para Qumran Watch v13.1.81
+// sw-workbox.js - Workbox Service Worker para Qumran Watch v13.1.82
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/7.1.0/workbox-sw.js');
 
 const { precacheAndRoute, cleanupOutdatedCaches } = workbox.precaching;
@@ -7,18 +7,18 @@ const { NetworkFirst, CacheFirst, StaleWhileRevalidate } = workbox.strategies;
 const { ExpirationPlugin } = workbox.expiration;
 const { CacheableResponsePlugin } = workbox.cacheableResponse;
 
-console.log('[SW] Workbox SW v13.1.81 iniciando...');
+console.log('[SW] Workbox SW v13.1.82 iniciando...');
 
 precacheAndRoute(
     [
         { revision: '830bb116a513550c5858d60ded660753', url: 'privacy.html' },
-        { revision: '46ce896f239737aca86aae5112a88252', url: 'manifest.json' },
+        { revision: '94fb7ceaf4292dd22a944029b3d7a687', url: 'manifest.json' },
         { revision: 'c9572888756e5c887d1b56b6dff80e51', url: 'license.html' },
         { revision: 'f1cbc59aab6ea2c2624968a6b3de6a66', url: 'index.html' },
         { revision: 'f214d4ac2c7f2e2c94e366ca34c5c92e', url: 'icon.png' },
-        { revision: 'cc80b6911f67db35fcb56aa3a349b47a', url: 'src/js/index.js' },
+        { revision: 'e59ac9ae0eeef21353daf8652a0e4e71', url: 'src/js/index.js' },
         { revision: '1fb2359992be4ebeedda9af7fd0b85c0', url: 'src/js/core.js' },
-        { revision: '1a442051dcee6065b76084d3d59a984f', url: 'src/css/index.css' },
+        { revision: 'f2f33785997a11b4d2581d0433f48982', url: 'src/css/index.css' },
         { revision: '2d8904c9b0cd7cb2929d0bb613047f58', url: 'src/css/fonts/david-libre-v17-latin-regular.woff2' },
         { revision: '1d9878b23b606fc71d20a4ed5bd2ce1f', url: 'src/css/fonts/david-libre-v17-latin-700.woff2' },
         { revision: '63126eeda8319b882d8d9320edc8ca5a', url: 'src/css/fonts/cinzel-v26-latin-regular.woff2' },
@@ -200,4 +200,4 @@ async function showDueNotifications() {
     }
 }
 
-console.log('[SW] Workbox SW v13.1.81 listo');
+console.log('[SW] Workbox SW v13.1.82 listo');

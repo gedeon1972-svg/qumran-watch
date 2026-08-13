@@ -1,3 +1,21 @@
+## [13.1.82] - 2026-08-13 - Fix CI bloqueante: audit extract-zip + flake a11y + deploy SW en dist
+
+### Fixed
+- **CI validate (bloqueado desde el 12/08)**: `npm audit --audit-level=high` fallaba con 6 high en `extract-zip` (GHSA-jmr9-qjv8-65gv, sin version parcheada publicada). Se elimino `@lhci/cli` (toolchain Lighthouse CI local, solo dev, nunca desplegada) y su script `npm run lighthouse`; el workflow `lighthouse.yml` sigue funcionando porque `treosh/lighthouse-ci-action@v11` trae su propio LHCI. `npm audit` vuelve a 0 vulnerabilidades
+- **CI e2e (flake intermitente)**: `e2e/a11y.spec.js` fallaba al azar por contraste limite (4.4-4.48:1 vs 4.5:1) en tema claro, medido con blend de antialiasing de axe sobre:
+  - `#btn-render-cal` (`.btn-action`): texto usa ahora `--gold-dark` (#5a4515, ~6:1) en tema claro via `:root:not(.dark-theme) .btn-action:not(.btn-secondary)`
+  - `.lbl-edifica` `--edifica` #9c5a16 -> #935113 (5.11:1) y `--whatsapp` #1a7a3a -> #176f33 (5.21:1)
+  - `--gold` tema claro #6d551c -> #685015 (margen extra en headings/iconos)
+- `generate-sw.cjs`: swDest final a `dist/sw.js` (antes regeneraba `public/sw.js` DESPUES del build, dejando en dist el SW commiteado con hashes potencialmente stale) + sync de vuelta a `public/sw.js`
+
+### Changed
+- Version a v13.1.82 en `package.json`, `package-lock.json`, `public/manifest.json`, `public/sw-workbox.js`, `public/sw.js` (SW regenerado) e `index.html` (vista app-version)
+- README: fila de script `npm run lighthouse` eliminada; descripcion de `generate-sw` actualizada
+- `.github/dependabot.yml`: patron `@lhci/*` removido del grupo test-tooling
+
+### Validation
+- npm test: 239 tests pasan; npm run lint OK; npm run build OK; npm run generate-sw OK (21 archivos precacheados, hashes verificados contra dist); npm audit: 0 vulnerabilidades; npx playwright test: 26/26 (x3, sin flake en a11y)
+
 ## [13.1.81] - 2026-08-12 - Fix deploy: Service Worker regenerado + workflow CI corregido
 
 ### Fixed

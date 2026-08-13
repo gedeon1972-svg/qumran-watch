@@ -59,7 +59,7 @@
     --nav-text-active: #d7b545; /* contraste 4.5:1 sobre bg-nav (era #d4af37 4.27:1) */
 
     /* Colores de marca — oscurecidos para modo claro */
-    --gold: #6d551c; /* contraste 5.1:1 sobre #e5d9c5 (era #7a6020 4.28:1) */
+    --gold: #685015; /* contraste 5.48:1 sobre #e5d9c5 (era #6d551c 5.08:1) */
     --gold-dark: #5a4515; /* contraste 7.1:1 ? */
     --gold-bg: rgba(122, 96, 32, 0.08);
     --faint: #5a4a30; /* contraste 5.2:1 ? (era #8a7a50 ? 3.5:1 ?) */
@@ -70,8 +70,8 @@
     --blue-light: #1565a8; /* contraste 5.0:1 ? (era #3498db ? 2.6:1 ?) */
     --telegram: #0f6b9a; /* contraste 5.2:1 ? */
     --evangelio: #6b3fa0;
-    --edifica: #9c5a16; /* contraste 4.5:1 sobre #f0eadc (era #b86a1a 3.42:1) */
-    --whatsapp: #1a7a3a;
+    --edifica: #935113; /* contraste 5.11:1 sobre #f0eadc (era #9c5a16 4.5:1, flak en axe por antialiasing) */
+    --whatsapp: #176f33; /* contraste 5.21:1 sobre #f0eadc (era #1a7a3a 4.5:1, flak en axe por antialiasing) */
     --yellow: #8a6a00; /* contraste 5.1:1 ? (era #f1c40f ? 1.5:1 ?) */
 
     --gate-active-color: #ffffff;
@@ -627,6 +627,9 @@ h2 {
     cursor: pointer;
     text-transform: uppercase;
     transition: all 0.3s;
+}
+:root:not(.dark-theme) .btn-action:not(.btn-secondary) {
+    color: var(--gold-dark); /* 6.0:1 sobre composite .btn-action; margen frente a blend de antialiasing de axe */
 }
 .btn-action:active {
     background: var(--gold);

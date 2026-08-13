@@ -46,6 +46,8 @@ if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) {
     });
 }
 
+// --- 3. REGISTRO DE SERVICE WORKER & GESTIÓN DE ACTUALIZACIONES ---
+
 // --- 4. OBJETO PRINCIPAL DE LA APLICACIÓN ---
 const QumranApp = {
     todayFiesta: null,

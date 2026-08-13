@@ -23,7 +23,6 @@ updates:
           - "@vitest/*"
           - "@playwright/*"
           - "playwright"
-          - "@lhci/*"
       build-tooling:
         patterns:
           - "vite"

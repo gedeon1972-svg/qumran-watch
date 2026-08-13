@@ -1,7 +1,7 @@
 {
   "name": "qumran-watch",
   "private": true,
-  "version": "13.1.81",
+  "version": "13.1.82",
   "description": "Herramienta liturgica profesional con calendario 364 dias, sincronizacion GPS y alertas ICS.",
   "author": "Cristian Salinas <gedeon1972@gmail.com>",
   "type": "module",
@@ -16,7 +16,6 @@
     "format": "prettier --write \"src/**/*.js\" \"src/**/*.css\" \"test/**/*.js\" \"public/sw.js\"",
     "format:check": "prettier --check \"src/**/*.js\" \"src/**/*.css\" \"test/**/*.js\" \"public/sw.js\"",
     "prepare": "husky",
-    "lighthouse": "lhci autorun",
     "generate-sw": "node generate-sw.cjs",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui"
@@ -24,7 +23,6 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",
     "@eslint/js": "^10.0.1",
-    "@lhci/cli": "^0.15.1",
     "@playwright/test": "^1.62.1",
     "@vitest/coverage-v8": "^4.1.10",
     "eslint": "^10.8.1",
@@ -40,9 +38,7 @@
     "vitest": "^4.1.10",
     "workbox-build": "^7.1.0"
   },
-  "dependencies": {
-    "es-abstract": "^1.24.2"
-  },
+  "dependencies": {},
   "overrides": {
     "tmp": "^0.2.6",
     "uuid": "^11.1.1"

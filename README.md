@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/github/license/gedeon1972-svg/qumran-watch)](LICENSE)
 [![PWA](https://img.shields.io/badge/PWA-100%25%20Offline-blue)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)
 [![JavaScript](https://img.shields.io/badge/ES6-Modules-yellow)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
-[![Version](https://img.shields.io/badge/version-13.1.72-gold)](package.json)
+[![Version](https://img.shields.io/badge/version-13.1.82-gold)](package.json)
 
 Aplicación Web Progresiva (PWA) que restaura el **Calendario Solar de 364 Días** de los Manuscritos del Mar Muerto, con sincronización GPS, ciclo de 24 turnos sacerdotales (Mishmarot), alertas ICS y biblioteca de estudios bíblicos. Funciona **100% offline**.
 
@@ -34,7 +34,7 @@ Aplicación Web Progresiva (PWA) que restaura el **Calendario Solar de 364 Días
 | Herramienta | Propósito |
 |-------------|-----------|
 | [Vite](https://vitejs.dev/) | Bundler y dev server (code-splitting core + modulepreload) |
-| [Vitest](https://vitest.dev/) + [@vitest/coverage-v8](https://www.npmjs.com/package/@vitest/coverage-v8) | Testing y cobertura (104 tests) |
+| [Vitest](https://vitest.dev/) + [@vitest/coverage-v8](https://www.npmjs.com/package/@vitest/coverage-v8) | Testing y cobertura (239 tests) |
 | [Workbox](https://developer.chrome.com/docs/workbox/) | Service Worker con precache + runtime caching |
 | [fake-indexeddb](https://www.npmjs.com/package/fake-indexeddb) | Testing de módulos IndexedDB en Node |
 | [ESLint](https://eslint.org/) (flat config) + [eslint-plugin-security](https://www.npmjs.com/package/eslint-plugin-security) | Linter con reglas de seguridad (0 warnings) |
@@ -103,8 +103,7 @@ Si alguno falla, el commit se rechaza.
 | `npm run lint` | ESLint sobre `src/`, `public/`, `test/` |
 | `npm run format` | Prettier sobre todo el código |
 | `npm run format:check` | Verifica formato sin modificar |
-| `npm run generate-sw` | Regenera `public/sw.js` desde `./dist` (Workbox injectManifest) |
-| `npm run lighthouse` | Auditoría Lighthouse CI local |
+| `npm run generate-sw` | Regenera `dist/sw.js` desde `./dist` y sincroniza `public/sw.js` (Workbox injectManifest) |
 
 ---
 
@@ -181,6 +180,18 @@ El plan completo de evolución (FASES 1-5, incluyendo industrialización a CMMI 
 ## Changelog
 
 El historial completo está en [CHANGELOG.md](CHANGELOG.md). Resumen reciente:
+
+### 13.1.82 (2026-08-13)
+Fix CI bloqueante: audit 0 vulnerabilidades (removido @lhci/cli, extract-zip sin fix upstream), flake a11y resuelto (contraste WCAG AA en tema claro: btn-action, edifica, whatsapp, gold) y SW generado a dist/sw.js.
+
+### 13.1.81 (2026-08-12)
+Fix deploy: Service Worker regenerado a dist/sw.js y sincronizado a public/sw.js; workflow CI corregido con npm ci + permisos Pages. + 3 tests calculateVigiaStatus casos edge (239 tests). + Comentario seccion 3 en app.js.
+
+### 13.1.80 (2026-08-11)
+Toolchain lint: ESLint 10 + lint-staged 17.
+
+### 13.1.79 (2026-08-11)
+FASE 6.5-6.8: E2E offline, modal fiesta, dark-theme, navegacion. 236 tests.
 
 ### 13.1.72 (2026-08-11)
 Branch protection: ruleset PR obligatorio + 1 review + status checks validate/e2e en main (5.12).
